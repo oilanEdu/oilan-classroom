@@ -12,7 +12,7 @@ const Catalog = (props) => {
 
   return (
     <div>
-      Hi
+      Hi everyone
     </div>
   )
 }

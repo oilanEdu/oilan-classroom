@@ -1,0 +1,33 @@
+{
+  "name": "oilan-classroom",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.2.1",
+    "caniuse-lite": "^1.0.30001412",
+    "entities": "^4.4.0",
+    "follow-redirects": "^1.15.2",
+    "jquery": "^3.6.1",
+    "jsdom": "^20.0.0",
+    "next": "12.3.1",
+    "parse5": "^7.1.1",
+    "postcss": "^8.4.16",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
+    "react-cookie": "^4.1.1",
+    "react-dom": "^18.2.0",
+    "react-gtm-module": "^2.0.11",
+    "react-yandex-metrika": "^2.6.0"
+  },
+  "devDependencies": {
+    "country-flag-icons": "^1.5.5",
+    "prop-types": "^15.8.1"
+  }
+}

@@ -1,4 +1,5 @@
 // import styles from '../styles/components/main.module.css'
+import Header from "../src/components/Header/Header";
 import Head from 'next/head'
 import React, {useEffect, useState} from "react";
 import {default as axios} from "axios";

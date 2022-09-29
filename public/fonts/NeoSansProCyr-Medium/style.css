@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Neo Sans Pro';
+    src: local('Neo Sans Pro Medium'), local('Neo-Sans-Pro-Medium'),
+        url('NeoSansProCyr-Medium.woff2') format('woff2'),
+        url('NeoSansProCyr-Medium.woff') format('woff'),
+        url('NeoSansProCyr-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}

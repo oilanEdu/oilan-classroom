@@ -1,0 +1,615 @@
+/* @font-face {
+    font-family: "Rubik Regular";
+    src: url("../../public/fonts/Rubik/Rubik-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Rubik Medium";
+    src: url("../../public/fonts/Rubik/Rubik-Medium.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Rubik Bold";
+    src: url("../../public/fonts/Rubik/Rubik-Bold.ttf") format("truetype");
+} */
+
+.form{
+}
+
+.message{
+    color: green;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+}
+
+.formBody{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+.partnerFormInput{
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    padding: 10px 10px 10px 15px;
+    background: #ebebeb;
+    color: black;
+    font-family: "Rubik Regular";
+}
+.partnerFormInput:focus{
+    outline: none;
+
+}
+.partnerFormInput::placeholder{
+    color: rgba(0,0,0,0.6);
+    font-family: "Rubik Regular";
+}
+.formInput{
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    padding: 10px;
+    background: #f2f2f2;
+    color: black;
+    font-family: "Rubik Medium";
+}
+.select{
+    width: 40%;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    padding: 5px;
+    background: #f2f2f2;
+    font-size: 14px;
+    color: black;
+    font-family: sans-serif;
+}
+.select > *{
+    background: #f2f2f2;
+    color: black;
+    font-family: sans-serif;
+}
+.select:focus{
+    outline: none;
+}
+.selectTitle{
+    font-family: "Rubik Regular";
+    font-size: 16px;
+    color: black;
+}
+.selectBlock{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 0px;
+}
+.formInput:focus{
+    outline: none;
+}
+.formInput::placeholder{
+    color: darkgray;
+    font-family: sans-serif;
+}
+.formSubmit{
+    font-family: sans-serif;
+    font-size: 16px;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: #412FAE;
+    transition: 0.5s;
+    margin: 0;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    font-family: "Rubik Regular";
+}
+.formSubmit:hover{
+    text-decoration: none;
+    animation: none;
+    transition: 0.3s;
+}
+.title{
+    font-family: "Rubik Bold";
+    font-size: 24px;
+    color: black;
+}
+.subtitle{
+    font-family: "Rubik Regular";
+    font-size: 16px;
+    color: black;
+    line-height: 16px;
+}
+
+.courseTitle{
+    font-family: "Rubik Bold";
+    font-size: 24px;
+    color: black;
+}
+.courseDescription{
+    font-family: "Rubik Medium";
+    font-size: 14px;
+    color: black;
+}
+.courseInfoTitle{
+    font-family: "Rubik Bold";
+    color: black
+}
+.titleVector{
+    height: 12px;
+    width: 12px;
+    margin-right: 5px;
+}
+.codeButton{
+    width: 40%;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 5px 15px;
+    background: #007bff;
+    color: white;
+    font-size: 16px;
+    font-family: sans-serif;
+    text-align: center;
+    transition: 0.3s;
+}
+.codeButton:hover{
+    transition: 0.3s;
+    background-color: #0069d9;
+}
+.codeBlock{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+}
+.codeInput{
+    width: 60%;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 5px 15px;
+    background: #f2f2f2;
+    color: black;
+    font-family: sans-serif;
+}
+.codeInput:focus{
+    outline: none;
+}
+.codeInput::placeholder{
+    color: darkgray;
+    font-family: sans-serif;
+}
+.coursePrice{
+    font-family: "Rubik Bold";
+    font-size: 24px;
+    color: black;
+}
+.contactFormBody{
+    width: 100%;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+}
+.contactFormTitle{
+    font-family: 'Rubik Bold';
+    font-size: 20px;
+    color: black;
+}
+.contactFormDesc{
+    font-family: "Rubik Regular";
+    font-size: 14px;
+    color: black;
+    padding-top: 2%;
+}
+.contactFormInputsAreaBlock{
+    width: 100%;
+    text-align: left;
+    -moz-appearance: none;
+}
+.contactFormPhoneInputBody{
+    width: 100%;
+    margin: 20px 0;
+    padding: 0 15px;
+    text-align: center;
+}
+.contactFormMessageBlock{
+    padding: 0 15px;
+}
+.contactFormPhoneInput{
+    width: 50%;
+    border: none;
+    border-radius: 20px 0 0 20px;
+    font-size: 16px;
+    padding: 5px 10px;
+    font-family: sans-serif;
+}
+.contactFormPhoneInput:focus {
+    outline: none;
+}
+.contactFromTextArea{
+    font-family: sans-serif;
+    resize: none;
+    width: 100%;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    outline: none;
+    appearance: none;
+    -moz-appearance: none;
+}
+
+.contactFormButton{
+    font-family: sans-serif;
+    font-size: 16px;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background: #412FAE;
+    transition: 0.5s;
+    margin: 0;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    font-family: "Rubik Regular";
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+.contactFormButton:focus{
+    outline: none;
+}
+.contactFormSubtitle{
+    color: #7d7d7d;
+    font-size: 11px;
+    font-family: sans-serif;
+}
+.contactFormSubtitleBody{
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: center;
+    color: #0016D9;
+    font-family: sans-serif;
+}
+.contactFormFooter{
+    width: 100%;
+    background-color: white;
+}
+.contactFormFooterFlex{
+    display: flex;
+    justify-content: space-between;
+    color: black;
+}
+.contactFormLink{
+    text-decoration: none;
+    color: black;
+    font-family: "Rubik Regular";
+    font-size: 14px;
+    margin-left: 3px;
+}
+.contactFormLink:hover{
+    text-decoration: black;
+    color: black;
+}
+.contactFormIcon{
+    height: 12px;
+    width: 12px;
+}
+.messageBlock{
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    height: 64px;
+    width: 64px;
+    background-color: #263A59;
+}
+.lvlsBlock{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.lvl{
+    border: 3px solid white;
+    background: transparent;
+    height: 48px;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+.lvl>span{
+    color: white;
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+.lvl.active{
+    background: #3258fc;
+    transition: 0.3s;
+}
+.line{
+    background: white;
+    height: 3px;
+    width: 8px;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+.techSupportHeader{
+    padding-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.techSupportInputsWrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+.techSupportInput{
+    width: 100%;
+    color: black;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 5px;
+    box-shadow: 0 2px 13px -5px rgba(0, 0, 0, 0.3);
+}
+.techSupportTextArea{
+    width: 100%;
+    color: black;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: none;
+    resize: none;
+    font-family: "Rubik Regular";
+    border: 1px solid black;
+}
+.techSupportInput:focus, .techSupportTextArea:focus{
+    outline: none;
+}
+.techSupportSubmitNotPressed{
+    border-radius: 10px;
+    padding: 5px 10px;
+    background: #0016D9;
+    color: white;
+    transition: 0.3s;
+    cursor: pointer;
+    box-shadow: 0 2px 13px -5px rgba(0, 0, 0, 0.3);
+    width: 60%;
+    text-align: center;
+}
+
+.techSupportSubmitPressed{
+    border-radius: 10px;
+    padding: 5px 10px;
+    background: green;
+    color: white;
+    transition: 0.3s;
+    cursor: pointer;
+    box-shadow: 0 2px 13px -5px rgba(0, 0, 0, 0.3);
+    width: 60%;
+    text-align: center;
+}
+
+.techSupportSubmit:hover{
+    background: #000a5c;
+}
+.price{
+    font-family: "Rubik Bold";
+}
+.package{
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    color: black;
+}
+.package.selectedPack{
+    border: lightgreen 2px solid;
+    background: #e8fde8;
+}
+.packageTitle{
+    color: black;
+    font-size: 18px;
+    font-family: "Rubik Medium";
+}
+.packId{
+    color: #412FAE;
+    font-size: 18px;
+    font-family: "Rubik Medium";
+}
+.packageCircle{
+    height: 20px;
+    width: 20px;
+    background: transparent;
+    border-radius: 50%;
+    border: 2px solid #c1c1c1;
+}
+.packageCircle.selectedPack{
+    border: lightgreen 2px solid;
+}
+.packageHeader{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.btn{
+    font-size: 16px;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background: #412FAE;
+    transition: 0.5s;
+    margin: 0;
+    font-family: "Rubik Regular";
+    margin-top: 10px;
+}
+.packagePeriodsWrapper{
+    width: 100%;
+    margin-top: 7px;
+}
+.packagePeriod{
+    width: 100%;
+    height: auto;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+.packagePeriodMonth{
+    color: black;
+}
+.packagePeriodPriceWithoutProcent{
+    text-decoration: line-through;
+    color: lightcoral;
+    margin-right: 5px;
+}
+.packagePeriodPrice{
+    color: black;
+    font-weight: 500;
+}
+.paymentFormSelect{
+    padding: 3px 5px;
+    border-radius: 10px;
+    border: 1px #8d8d8d solid;
+    background: transparent;
+    color: black;
+}
+.paymentFormSelect:focus{
+    outline: none;
+}
+.paymentFormSelect > * {
+    color: black;
+}
+
+.selectBlock{
+    color: #777;
+    background-color: #ffffff;
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
+    min-width: 200px;
+    padding: 7px 5px;
+    font-family: sans-serif;
+    font-weight: 400;
+    border: 1px solid transparent;
+    margin-bottom: 5px ;
+    box-shadow: 0 2px 13px -5px rgba(0, 0, 0, 0.3);
+    transition: 0.3s;
+}
+.selectBlock:focus{
+    outline: none;
+    box-shadow: 0 2px 13px rgba(119,148,248,1);
+    border: 1px solid rgba(119,148,248,0.5);
+}
+.selectBlock:hover{
+    box-shadow: 0 2px 13px rgba(119,148,248,1);
+    border: 1px solid rgba(119,148,248,0.5);
+}
+.hideOnMobile{
+    display: block;
+}
+.container{
+    width: 100%;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+    color: black;
+    background-color: rgba(119,148,248,0.5);
+}
+.header{
+    width: 100%;
+    margin-bottom: 10px;
+}
+.pickingCardTitle{
+
+}
+.pickingCardBtn{
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 5px 15px;
+    background: #007bff;
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+    transition: 0.3s;
+}
+.pickingCardBtn:hover{
+    transition: 0.3s;
+    background-color: #0069d9;
+}
+.pickingCardBtn:active{
+    outline: none;
+}
+.footer{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.listItem{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.opportunitiesImage{
+    width: 12px;
+    height: 10px;
+    margin-right: 5px;
+}
+.opportunities{
+    font-family: "Rubik Regular";
+    font-size: 14px;
+}
+@media screen and (max-width: 761px){
+    .hideOnMobile{
+        display: none;
+    }
+    .codeBlock{
+        width: 100%;
+    }
+    .formInputBody{
+        width: 100%;
+    }
+    .codeButton{
+    width: 35%;
+    }
+    .codeInput{
+        width: 65%;
+    }
+    .contactFormPhoneInputBody{
+        width: 100%;
+    }
+    .contactFormPhoneInput{
+        width: 60%;
+    }
+    .contactFormButton{
+        width: 40%;
+    }
+    .contactFormFooterFlex{
+        flex-direction: row;
+    }
+    .partnerFormInput{
+        width: 100%;
+    }
+    .formBody{
+        width: 100%;
+    }
+    .selectBlock{
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}

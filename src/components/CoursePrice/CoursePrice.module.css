@@ -1,0 +1,92 @@
+@font-face {
+  font-family: "Noto Sans Regular";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Medium";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Bold";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Muller Regular";
+  src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Regular.otf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Medium";
+  src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Medium.otf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Bold";
+  src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Bold.otf") format("truetype");
+}
+
+.container {
+  margin: 80px 100px 0;
+}
+
+.container h2 {
+  margin-bottom: 32px;
+  text-transform: uppercase;
+}
+
+.price_content { 
+  background: url(https://realibi.kz/file/28320.png) no-repeat;
+  height: 500px;
+  background-size: contain;
+  position: relative;
+  color: #fff;
+}
+
+.buy {
+  background: url(https://realibi.kz/file/140215.png) no-repeat;
+  background-size: contain;
+  display: block;
+  width: 190px;
+  height: 190px;
+  position: absolute;
+  bottom: -23px;
+  right: 6px;
+}
+.buy:hover {
+  background: url(https://realibi.kz/file/409921.png) no-repeat;
+  background-size: contain;
+}
+
+.possibility {
+  font-family: "Noto Sans Regular";
+  display: block;
+  text-align: center;
+  font-size: 24px;
+  padding: 30px;
+}
+
+.price_info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0 104px;
+}
+
+.price_info_item {
+  margin: 60px 0 20px;
+}
+
+.price_info_item span {
+  background: url(https://realibi.kz/file/774746.png) no-repeat;
+  font-family: "Muller Medium";
+  background-size: contain;
+  background-position: 0 50%;
+  padding-left: 40px;
+  text-transform: uppercase;
+  font-size: 28px;
+}
+
+.price_info_item p {
+  font-family: "Noto Sans Regular";
+  font-size: 16px;
+  margin-left: 40px;
+  margin-bottom: 0;
+}

@@ -1,0 +1,93 @@
+@font-face {
+  font-family: "Noto Sans Regular";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Medium";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Bold";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Regular";
+  src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Regular.otf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Medium";
+  src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Medium.otf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Bold";
+  src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Bold.otf") format("truetype");
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background:#F1FAFF;
+  padding: 80px 0;
+}
+
+.container h1 {
+  font-family: "Muller Medium";
+  font-size: 32px;
+}
+
+.subtitle {
+  font-size: 17px;
+  font-family: "Noto Sans Regular";
+}
+
+.form_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: "Noto Sans Regular";
+  font-size: 16px;
+  margin: 12px 0 0;
+}
+
+.input_container input {
+  width: 400px;
+  margin-top: 12px;
+  padding: 10px 16px;
+  border: 1px solid #A2A7B2;
+  border-radius: 8px;
+}
+
+.button {
+  background: #007AFF;
+  border-radius: 8px;
+  border: none;
+  padding: 13px;
+  font-family: "Noto Sans Bold";
+  font-size: 16px;
+  color: #fff;
+  margin: 32px 0 20px;
+}
+
+.check_off {
+  font-family: "Noto Sans Regular";
+  background: url(https://realibi.kz/file/119055.png) no-repeat;
+  background-size: 24px 24px;
+  background-position: 0 50%;
+  padding-left: 36px;
+  font-size: 17px;
+}
+
+.check_on {
+  font-family: "Noto Sans Regular";
+  background: url(https://realibi.kz/file/349780.png) no-repeat;
+  background-size: 24px 24px;
+  background-position: 0 50%;
+  padding-left: 36px;
+  font-size: 17px;
+}

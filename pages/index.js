@@ -1,22 +1,19 @@
-// import styles from '../styles/components/main.module.css'
-import Header from "../src/components/Header/Header";
-import Head from 'next/head'
-import React, {useEffect, useState} from "react";
-import {default as axios} from "axios";
-import globals from "../src/globals";
-import {useRouter} from "next/router";
-import {Image} from "react-bootstrap";
-import Link from 'next/link'
-import dynamic from 'next/dynamic'
+import ApplicationBlock from "../src/components/ApplicationBlock/ApplicationBlock";
+import CoursePrice from "../src/components/CoursePrice/CoursePrice";
+import Footer from "../src/components/Footer/Footer";
+import Program from "../src/components/Program/Program";
 
-const Catalog = (props) => {
+const Main = (props) => {
 
   return (
     <div>
-      Hi everyone
+      <Program />
+      <CoursePrice />
+      <ApplicationBlock />
+      <Footer />
     </div>
   )
 }
 
-export default Catalog;
+export default Main;
 

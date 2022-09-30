@@ -1,0 +1,239 @@
+@font-face {
+    font-family: "Noto Sans";
+    src: url("../../../public/fonts/noto/NotoSans-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Muller Medium";
+    src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Medium.otf") format("truetype");
+}
+@font-face {
+    font-family: "Muller Regular";
+    src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Regular.otf") format("truetype");
+}
+.container{
+  background-color: #f1faff;
+}
+.mainInfo{
+  width: 90%;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10vh;
+}
+.leftMainInfo{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.flud{
+  font-family: 'Noto Sans';
+  display: flex;
+  flex-direction: row;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  display: flex;
+  align-items: end;
+  color: #1E2432;
+}
+.courseTitle h1{
+  font-family: 'Muller Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  color: #1E2432;
+}
+.courseDescription{
+  width: 70%;
+}
+.courseDescription p{
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  color: #1E2432;
+}
+.courseButton{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 60px;
+  gap: 10px;
+  width: 295px;
+  height: 48px;
+  background: #007AFF;
+  border-radius: 8px;
+  border: none;
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: #FFFFFF;
+}
+.imgBoom{
+  display: flex;
+  width: 180px;
+  height: 120px;
+  background: url(https://realibi.kz/file/987597.png);
+}
+.imgGlobe{
+  position: absolute;
+  width: 350px;
+  height: 250px;
+  left: 1050px;
+  top: 140px;
+  transform: rotate(15deg);
+}
+.imgGirls{
+  position: absolute;
+  width: 566px;
+  height: 620px;
+  left: 774px;
+  top: 60px;
+}
+.imgArrow{
+  position: absolute;
+  width: 741.24px;
+  height: 747.37px;
+  left: 616.03px;
+  top: 251.94px;
+  /*border: 2px dashed #1E2432;*/
+  transform: rotate(-0.15deg);
+}
+.targetPersons{
+  margin-top: 76px;
+  width: 90%;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+}
+.targetPersons h1{
+  font-family: 'Muller Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 150%;
+  text-transform: uppercase;
+  color: #1E2432;
+}
+.items{
+  background: #FFFFFF;
+  border-radius: 32px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 50px;
+}
+.item{
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border-radius: 32px;
+  width: 33.3%;
+  align-items: center;
+}
+.imgEvaluation{
+  width: 100px;
+  height: 100px;
+}
+.imgMedal{
+  width: 100px;
+  height: 100px;
+}
+.imgDiploma{
+  width: 100px;
+  height: 100px;
+}
+.targetTitle{
+  font-family: 'Muller Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 120%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #1E2432;
+}
+.targetDescr{
+  font-family: 'Muller Regular';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #1E2432;
+}
+.courseSquares{
+  margin-top: 76px;
+  width: 90%;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+}
+.courseSquares h1{
+  font-family: 'Muller Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 150%;
+  text-transform: uppercase;
+  color: #1E2432;
+}
+.squares{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.leftSquare{
+  display: flex;
+  flex-direction: column;
+  width: 38%;
+  background: #3A66D7;
+  border-radius: 32px 32px 32px 0px;
+  margin-bottom: 20px;
+  padding: 40px;
+}
+.rightSquare{
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  background: #3A66D7;
+  border-radius: 32px 32px 0px 32px;
+  margin-bottom: 20px;
+  padding: 40px;
+}
+.squareTitle{
+  font-family: 'Muller Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+.squareText{
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+}

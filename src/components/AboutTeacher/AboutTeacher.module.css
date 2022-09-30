@@ -1,0 +1,171 @@
+@font-face {
+    font-family: "Noto Sans";
+    src: url("../../../public/fonts/noto/NotoSans-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Muller Medium";
+    src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Medium.otf") format("truetype");
+}
+@font-face {
+    font-family: "Muller Regular";
+    src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Regular.otf") format("truetype");
+}
+.container{
+  background-color: #f1faff;
+  margin-top: 40px;
+}
+.mainInfo{
+  width: 90%;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+}
+.mainInfo h1{
+  font-family: 'Muller Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  color: #1E2432;
+}
+.previewBlock{
+  background: #FFFFFF;
+  border-radius: 32px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.logoBlock{
+  display: flex;
+  width: 30%;
+}
+.infoBlock{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  padding-top: 50px;
+  padding-left: 64px;
+  padding-right: 145px;
+}
+.infoBlock h1{
+  font-family: 'Muller Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  color: #1E2432;
+}
+.infoBlock p{
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  color: #1E2432;
+  margin-bottom: 32px;
+}
+.courseButton{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 60px;
+  gap: 10px;
+  width: 295px;
+  height: 48px;
+  background: #007AFF;
+  border-radius: 8px;
+  border: none;
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: #FFFFFF;
+}
+.detailInfo{
+  width: 90%;
+  margin-left: 5%;
+  background: #FFFFFF;
+  border-radius: 16px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.detailInfoHeader{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 32px;
+}
+.detailInfoHeader p{
+  font-family: 'Muller Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  /*line-height: 150%;*/
+  display: flex;
+  /*align-items: center;*/
+  text-transform: uppercase;
+  color: #1E2432;
+  margin: 0px;
+}
+.detailInfoContain{
+  display: none;
+}
+.showDetailInfoContain{
+  display: flex;
+  padding: 32px;
+  font-family: 'Noto Sans';
+}
+.showButton{
+  cursor: pointer;
+}
+.diplomaBlock{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.items{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.item{
+  width: 22%;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background: #F5F8FF;
+  border-radius: 16px;
+  margin-bottom: 15px;
+}
+.item p{
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #1E2432;
+}
+.imgTeacher{
+  width: 100%;
+  aspect-ratio: 1/1;
+}

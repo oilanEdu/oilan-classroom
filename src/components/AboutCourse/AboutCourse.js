@@ -6,12 +6,16 @@ import globals from "../../globals";
 import { default as axios } from "axios";
 import { Image } from "react-bootstrap";
 import classnames from 'classnames';
+import ApplicationModal from "../ApplicationModal/ApplicationModal";
 
 export default function AboutCourse(props) {
   
+  const [showSend, setShowSend] = useState(true);
+  const handleShowSend = () => setShowSend(false);
 
   return (
     <div className={styles.container}>
+      <ApplicationModal showSend={showSend} handleShowSend={handleShowSend} />
       <div className={styles.mainInfo}>
         <div className={styles.leftMainInfo}>
           <div className={styles.flud}>

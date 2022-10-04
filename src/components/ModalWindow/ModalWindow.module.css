@@ -23,5 +23,6 @@
 }
 .modal-content{
     border: none;
+    background-color: #F3F3F3 !important;
     /*border-radius:20px;*/
 }

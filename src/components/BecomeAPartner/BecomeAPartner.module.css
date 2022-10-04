@@ -1,15 +1,27 @@
-/* @font-face {
-    font-family: "Rubik Regular";
-    src: url("../../public/fonts/Rubik/Rubik-Regular.ttf") format("truetype");
+@font-face {
+    font-family: "Muller Regular";
+    src: url("../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
 }
 @font-face {
-    font-family: "Rubik Medium";
-    src: url("../../public/fonts/Rubik/Rubik-Medium.ttf") format("truetype");
+    font-family: "Muller Medium";
+    src: url("../../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
 }
 @font-face {
-    font-family: "Rubik Bold";
-    src: url("../../public/fonts/Rubik/Rubik-Bold.ttf") format("truetype");
-} */
+    font-family: "Muller Bold";
+    src: url("../../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Noto Sans Regular";
+    src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Noto Sans Medium";
+    src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Noto Sans Bold";
+    src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+}
 
 .form{
 }
@@ -28,14 +40,13 @@
     flex-direction: column;
 }
 .partnerFormInput{
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 12px;
-    padding: 10px 10px 10px 15px;
-    background: #ebebeb;
-    color: black;
-    font-family: "Rubik Regular";
+    width: 400px;
+    margin: 10px 0;
+    padding: 10px 16px;
+    border: 1px solid #A2A7B2;
+    font-family: "Noto Sans Regular";
+    font-size: 16px;
+    border-radius: 8px;
 }
 .partnerFormInput:focus{
     outline: none;
@@ -95,31 +106,57 @@
 .formSubmit{
     font-family: sans-serif;
     font-size: 16px;
+    line-height: 22px;
     color: white;
-    padding: 10px 20px;
+    padding: 13px 20px;
     border: none;
     border-radius: 5px;
-    background: #412FAE;
+    background: #007AFF;
     transition: 0.5s;
     margin: 0;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
-    font-family: "Rubik Regular";
+    font-family: "Noto Sans Bold";
 }
 .formSubmit:hover{
     text-decoration: none;
     animation: none;
     transition: 0.3s;
 }
+
+.check_off {
+    font-family: "Noto Sans Regular";
+    background: url(https://realibi.kz/file/119055.png) no-repeat;
+    background-size: 24px 24px;
+    background-position: 0 50%;
+    padding-left: 36px;
+    font-size: 17px;
+    color: #000;
+    margin-top: 25px;
+}
+  
+.check_on {
+    font-family: "Noto Sans Regular";
+    background: url(https://realibi.kz/file/349780.png) no-repeat;
+    background-size: 24px 24px;
+    background-position: 0 50%;
+    padding-left: 36px;
+    font-size: 17px;
+    color: #000;
+    margin-top: 25px;
+}
+
 .title{
-    font-family: "Rubik Bold";
-    font-size: 24px;
+    font-family: "Muller Medium";
+    font-size: 22px;
+    text-transform: uppercase;
     color: black;
+    line-height: 150%;
 }
 .subtitle{
-    font-family: "Rubik Regular";
+    font-family: "Noto Sans Regular";
     font-size: 16px;
+    line-height: 150%;
     color: black;
-    line-height: 16px;
 }
 
 .courseTitle{
@@ -559,7 +596,11 @@
     display: flex;
     justify-content: flex-end;
 }
-
+.inputContainer {
+    color: black;
+    font-family: "Noto Sans Regular";
+    font-size: 16px;
+}
 .listItem{
     width: 100%;
     display: flex;

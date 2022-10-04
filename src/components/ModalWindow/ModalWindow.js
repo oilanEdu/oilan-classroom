@@ -8,7 +8,7 @@ export default function ModalWindow(props) {
       <Modal  
         show={props.show} 
         onHide={props.handleClose} 
-        style={{marginTop: '25vh'}}
+        style={{marginTop: '25vh', background: "#F3F3F3"}}
       >
         <Modal.Body 
           className={styles.modalBody} 

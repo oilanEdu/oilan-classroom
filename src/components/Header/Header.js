@@ -1,8 +1,8 @@
 import styles from "./Header.module.css";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { BecomeAPartner } from "../Forms/BecomeAPartnerForm/BecomeAPartner";
-import ModalWindow from "../Modal/ModalWindow";
+import { BecomeAPartner } from "../BecomeAPartner/BecomeAPartner";
+import ModalWindow from "../ModalWindow/ModalWindow";
 import { useRouter } from "next/router";
 import globals from "../../globals";
 import ym from "react-yandex-metrika";

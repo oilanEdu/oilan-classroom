@@ -13,16 +13,16 @@
 
 @font-face {
     font-family: "Muller Regular";
-    src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Regular.otf") format("truetype");
-}
-@font-face {
+    src: url("../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
+  }
+  @font-face {
     font-family: "Muller Medium";
-    src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Medium.otf") format("truetype");
-}
-@font-face {
+    src: url("../../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
+  }
+  @font-face {
     font-family: "Muller Bold";
-    src: url("../../../public/fonts/Muller/MullerNarrow-Trial-Bold.otf") format("truetype");
-}
+    src: url("../../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+  }
 
 .container{
     display: grid;

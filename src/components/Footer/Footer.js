@@ -1,7 +1,7 @@
 import styles from './Footer.module.css'
 import Link from "next/link";
 import React, {useEffect, useState} from "react";
-import {BecomeAPartner} from "../BecomeAPartnerForm/BecomeAPartner";
+import {BecomeAPartner} from "../BecomeAPartner/BecomeAPartner";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import {CourseSearchForm} from "../CourseSearchForm/CourseSearchForm";
 import {default as axios} from "axios";

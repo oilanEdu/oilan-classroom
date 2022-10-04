@@ -85,7 +85,6 @@ const Program = () => {
         </div>
       </div>
     </div>
-    
   </div>
 };
 

@@ -37,6 +37,15 @@
   justify-content: center;
 }
 
+.program_title h2 {
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+.program_block span {
+  font-size: 16px;
+}
+
 .program_title img {
   width: 75px;
   margin: 0 20px;
@@ -131,4 +140,140 @@
 .stage_info p {
   font-size: 14px;
   font-family: "Noto Sans Regular";
+}
+
+
+@media screen and (max-width: 1000px) {
+  .stages {
+    background: url("https://realibi.kz/file/718368.png") no-repeat;
+    background-size: contain;
+    background-position: center;
+    margin: 0;
+  }
+}
+
+/* @media screen and (max-width: 840px) {
+  .stages {
+    margin: 0;
+  }
+} */
+
+@media screen and (max-width: 768px) {
+  .stages {
+    background: url("https://realibi.kz/file/601768.png") no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+  .container {
+    margin: 20px 40px;
+  }
+  .feedback {
+    left: -124px;
+  }
+  .feedback::before {
+    left: 158px;
+  }
+  .education {
+    left: -100px;
+  }
+  .education::before {
+    left: 134px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    margin: 20px 20px;
+  }
+  .stage_block_container {
+    margin-bottom: 150px;
+  }
+  .stage_block_container h2 {
+    margin-bottom: 50px;
+    font-size: 20px;
+  }
+  .stages {
+    background: url("https://realibi.kz/file/658979.png") no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+  .stage span {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+  .stage_info {
+    width: 288px;
+    height: 123px;
+    top: 83px;
+  }
+  .test h3 {
+    font-size: 18px;
+  }
+  .test p, .education p {
+    font-size: 11px;
+  }
+  .test::before {
+    right: 14px;
+  }
+  .feedback {
+    left: -146px;
+  }
+  .education {
+    left: -83px;
+  }
+  .education::before {
+    left: 97px;
+  }
+  .start {
+    left: -12px;
+  }
+  .start::before {
+    left: 26px;
+  }
+  .program_title h2 {
+    font-size: 20px;
+  }
+  .program_block span {
+    font-size: 14px;
+  }
+  .program_title {
+    justify-content: space-between;
+  }
+  .program_block_container {
+    padding: 27px 20px 60px;
+    margin-bottom: 50px;
+  }
+  .program_title img {
+    margin: 0;
+    width: 70px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .container {
+    margin: 20px 10px;
+  }
+  .stage_block_container h2 {
+    font-size: 18px;
+  }
+  .program_title h2 {
+    font-size: 18px;
+  }
+  .program_block span {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .program_title img {
+    width: 60px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .start {
+    left: -2px;
+  }
+  .start::before {
+    left: 17px;
+  }
 }

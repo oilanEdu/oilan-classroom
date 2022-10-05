@@ -3,7 +3,7 @@ import styles from "./Program.module.css";
 import classnames from 'classnames';
 
 const Program = () => {
-  const [startShow, setStartShow] = useState(false);
+  const [startShow, setStartShow] = useState(true);
   const [educationShow, setEducationShow] = useState(false);
   const [feedbackShow, setFeedbackShow] = useState(false);
   const [testShow, setTestShow] = useState(false);

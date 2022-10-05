@@ -3,6 +3,7 @@ import styles from "./ApplicationBlock.module.css";
 import globals from "../../globals";
 import axios from "axios";
 import Backdrop from "../Backdrop/Backdrop";
+import SuccessfullyModal from "../SuccessfullyModal/SuccessfullyModal";
 
 const ApplicationBlock = () => {
   const [check, setCheck] = useState(false);
@@ -22,7 +23,7 @@ const ApplicationBlock = () => {
       alert("Заполните все поля!");
       return false;
     } else {
-      alert("Ваша заявка успешно отправлена");
+      setShowSend(true);
       return true;
     }
   };
@@ -33,7 +34,7 @@ const ApplicationBlock = () => {
       email: email,
       phone: phone,
       course_id: 1
-    }
+    };
 
     axios({
       method: "post",
@@ -49,28 +50,16 @@ const ApplicationBlock = () => {
     }); 
   };
 
+  const onClickNext = () => {
+    setShowSend(false);
+    setFullname("");
+    setEmail("");
+    setPhone("");
+    setCheck(false);
+  };
+
   return <div className={styles.container}>
-    <div style={{
-      transform: `translate(${showSend ? "-50%, -50%" : "-50%, -100%"})`,
-      top: showSend ? "50%" : "0%",
-      opacity: showSend ? 1 : 0
-    }}
-      className={styles.modal}
-    >
-      <span className={styles.close_modal} onClick={handleShowSend}></span>
-      <div className={styles.modal_info}>
-        <h3>Ваша заявка успешно отправлена! </h3>
-        <p>Мы Свяжимся с вами в течении 24 часов.</p>
-      </div>
-      <button 
-        className={styles.modal_button} 
-        onClick={() => {
-          setShowSend(false);
-        }}
-      >
-        Продолжить
-      </button>
-    </div>
+    <SuccessfullyModal show={showSend} onClickNext={onClickNext} handleShow={handleShowSend} />
     <Backdrop show={showSend} />
     <h1>Запишитесь на курс сейчас</h1>
     <span className={styles.subtitle}>
@@ -113,7 +102,8 @@ const ApplicationBlock = () => {
       </label>
       <button 
         className={styles.button}
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
           if (check === false) {
             alert(
               "Прочтите публичную оферту и дайте свое согласие!"

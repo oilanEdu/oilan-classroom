@@ -6,15 +6,27 @@ import globals from "../../globals";
 import { default as axios } from "axios";
 import { Image } from "react-bootstrap";
 import classnames from 'classnames';
+import ApplicationModal from "../ApplicationModal/ApplicationModal";
+import SuccessfullyModal from "../SuccessfullyModal/SuccessfullyModal";
 
 export default function AboutTeacher(props) {
   const [showMainSpecificate, setShowMainSpecificate] = useState(false)
   const [showDiplomas, setShowDiplomas] = useState(false)
   const [showSkill, setShowSkill] = useState(false)
   const [showYourInteres, setShowYourInteres] = useState(false)
+  const [showSend, setShowSend] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  
+  const handleShowSend = () => {
+    setShowSend(false)
+    setShowSuccess(true)
+  };
+  const handleShowSuccess = () => setShowSuccess(false);
 
   return (
     <div className={styles.container}>
+      <SuccessfullyModal show={showSuccess} onClickNext={handleShowSuccess}/>
+      <ApplicationModal showSend={showSend} handleShowSend={handleShowSend} />
       <div className={styles.mainInfo}>
         <h1>ПРЕПОДАВАТЕЛЬ КУРСА</h1>
         <div className={styles.previewBlock}>
@@ -26,7 +38,15 @@ export default function AboutTeacher(props) {
             <p>
               Выпускник Самарского национального университета имени академика С.П. Королева (диплом магистра и бакалавра с отличием по направлению физика). Занимался исследованием в направлении квантовой оптики.
             </p>
-            <button className={styles.courseButton}>Записаться на курс</button>
+            <button 
+              className={styles.courseButton}
+              onClick={(e) => {
+                e.preventDefault();
+                setShowSend(true);
+              }}
+            >
+              Записаться на курс
+            </button>
           </div>
         </div>
       </div>

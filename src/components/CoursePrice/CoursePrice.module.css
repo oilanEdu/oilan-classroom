@@ -36,7 +36,7 @@
 .price_content { 
   background: url(https://realibi.kz/file/28320.png) no-repeat;
   height: 500px;
-  background-size: contain;
+  background-size: 100% 100%;
   position: relative;
   color: #fff;
 }
@@ -67,6 +67,7 @@
 .price_info {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-areas: "full start" "part finish";
   padding: 0 104px;
 }
 
@@ -89,4 +90,183 @@
   font-size: 16px;
   margin-left: 40px;
   margin-bottom: 0;
+}
+
+.full {
+  grid-area: full;
+}
+
+.start {
+  grid-area: start;
+}
+
+.part {
+  grid-area: part;
+}
+
+.finish {
+  grid-area: finish;
+}
+
+@media screen and (max-width: 1280px) {
+  .price_content { 
+    background: url(https://realibi.kz/file/653097.png) no-repeat;
+    background-size: 100% 100%;
+  }
+  .buy {
+    bottom: -13px;
+    right: 18px;
+  }
+  .possibility {
+    padding-left: 150px;
+    padding-right: 0;
+  }
+  .price_info {
+    padding: 0 80px;
+  }
+  .container {
+    margin: 80px 40px 0;
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .price_content { 
+    background: url(https://realibi.kz/file/774548.png) no-repeat;
+    background-size: 100% 100%;
+  }
+  .possibility {
+    font-size: 18px;
+  }
+  .price_info_item span {
+    font-size: 24px;
+  }
+  .price_info {
+    padding: 0 25px;
+    grid-template-columns: 2fr 3fr;
+  }
+}
+
+@media screen and (max-width: 930px) {
+  .price_info_item span {
+    font-size: 20px;
+  }
+  .price_info_item p {
+    font-size: 14px;
+  }
+  .possibility {
+    font-size: 14px;
+    padding-left: 76px;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .price_content { 
+    background: url(https://realibi.kz/file/174912.png) no-repeat;
+    background-size: 100% 100%;
+    height: 415px;
+  }
+  .buy {
+    width: 150px;
+    height: 150px;
+  }
+  .price_info_item {
+    margin: 31px 0 20px;
+  }
+  .price_info {
+    margin-top: 40px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .price_content {
+    background: url(https://realibi.kz/file/611941.png) no-repeat;
+    background-size: 100% 100%;
+  }
+  .price_info_item span {
+    font-size: 16px;
+  }
+  .possibility {
+    font-size: 16px;
+    padding-left: 0px;
+    padding-right: 0;
+  }
+  .buy {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+
+/* @media screen and (max-width: 680px) {
+  .price_content {
+    background: url(https://realibi.kz/file/858575.png) no-repeat;
+    background-size: 100% 100%;
+  }
+} */
+
+@media screen and (max-width: 490px) {
+  .container {
+    margin: 80px 20px 0;
+  }
+  .price_info {
+    grid-template-areas: "start finish" "full full" "part part";
+    margin-top: 10px;
+  }
+  .price_info_item {
+    margin: 8px 0 10px;
+  }
+  .part {
+    padding-right: 80px;
+  }
+  .price_info_item span {
+    font-size: 14px;
+    padding-left: 22px;
+  }
+  .price_info_item p {
+    font-size: 12px;
+    margin-left: 22px;
+  }
+  .buy {
+    bottom: -13px;
+    right: -0px;
+  }
+  .price_info {
+    padding: 0 20px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .container {
+    margin: 80px 10px 0;
+  }
+  .price_content {
+    background: url(https://realibi.kz/file/801547.png) no-repeat;
+    background-size: 100% 100%;
+  }
+  .possibility {
+    font-size: 14px;
+    padding: 18px;
+  }
+  .buy {
+    bottom: 0px;
+    right: -10px
+  }
+  .price_info {
+    margin-top: 30px;
+  }
+  .part {
+    padding-right: 100px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .part {
+    padding-right: 75px;
+  }
+  .price_info {
+    margin-top: 10px;
+  }
+  .possibility {
+    padding: 27px 0;
+  }
 }

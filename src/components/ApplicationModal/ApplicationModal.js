@@ -19,7 +19,6 @@ const ApplicationModal = ({showSend, handleShowSend}) => {
       alert("Заполните все поля!");
       return false;
     } else {
-      alert("Ваша заявка успешно отправлена");
       return true;
     }
   };
@@ -91,7 +90,8 @@ const ApplicationModal = ({showSend, handleShowSend}) => {
         </select>
         <button 
           className={styles.button}
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             if (check === false) {
               alert(
                 "Прочтите публичную оферту и дайте свое согласие!"
@@ -99,6 +99,11 @@ const ApplicationModal = ({showSend, handleShowSend}) => {
             } else {
               if (firstStepValidation ()) {
                 sendApplication();
+                handleShowSend()
+                setFullname("");
+                setConnection("");
+                setPhone("");
+                setCheck(false)
               } else {
                 alert("Заполните пожалуйста все поля.")
               }

@@ -7,14 +7,23 @@ import { default as axios } from "axios";
 import { Image } from "react-bootstrap";
 import classnames from 'classnames';
 import ApplicationModal from "../ApplicationModal/ApplicationModal";
+import SuccessfullyModal from "../SuccessfullyModal/SuccessfullyModal";
 
 export default function AboutCourse(props) {
   
-  const [showSend, setShowSend] = useState(true);
-  const handleShowSend = () => setShowSend(false);
+  const [showSend, setShowSend] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  
+  const handleShowSend = () => {
+    setShowSend(false)
+    setShowSuccess(true)
+  };
+  const handleShowSuccess = () => setShowSuccess(false);
+
 
   return (
     <div className={styles.container}>
+      <SuccessfullyModal show={showSuccess} onClickNext={handleShowSuccess}/>
       <ApplicationModal showSend={showSend} handleShowSend={handleShowSend} />
       <div className={styles.mainInfo}>
         <div className={styles.leftMainInfo}>
@@ -31,7 +40,12 @@ export default function AboutCourse(props) {
             </p>
           </div>
           <div className={styles.buttonBlock}>
-            <button className={styles.courseButton}>Записаться на курс</button>
+            <button 
+              className={styles.courseButton}
+              onClick={() => setShowSend(true)}
+            >
+              Записаться на курс
+            </button>
           </div>
         </div>
         <div className={styles.rightMainInfo}>

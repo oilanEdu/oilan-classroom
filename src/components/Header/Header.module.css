@@ -206,6 +206,9 @@
   .menu {
     display: none;
   }
+  .contact{
+    display: none;
+  }
   .searchBlock {
     order: 2;
   }

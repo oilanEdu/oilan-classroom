@@ -16,6 +16,7 @@ export default function AboutTeacher(props) {
   const [showYourInteres, setShowYourInteres] = useState(false)
   const [showSend, setShowSend] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [allDiplomas, setAllDiplomas] = useState(false);
   
   const handleShowSend = () => {
     setShowSend(false)
@@ -34,7 +35,8 @@ export default function AboutTeacher(props) {
             <Image src={'https://realibi.kz/file/177224.png'} className={styles.imgTeacher}/>
           </div>
           <div className={styles.infoBlock}>
-            <h1>Крюков Андрей Константинович</h1>
+            <h2>Преподаватель курса</h2>
+            <h3>Крюков Андрей Константинович</h3>
             <p>
               Выпускник Самарского национального университета имени академика С.П. Королева (диплом магистра и бакалавра с отличием по направлению физика). Занимался исследованием в направлении квантовой оптики.
             </p>
@@ -57,7 +59,7 @@ export default function AboutTeacher(props) {
             onClick={() => setShowMainSpecificate(!showMainSpecificate)}
             className={styles.showButton}
           >
-            {showMainSpecificate?'-':<Image src={'https://realibi.kz/file/148715.png'} className={styles.imgArrow}/>}
+            {showMainSpecificate?<Image src={'https://realibi.kz/file/904733.png'} className={styles.imgArrow}/>:<Image src={'https://realibi.kz/file/148715.png'} className={styles.imgArrow}/>}
           </p>
         </div>
         <div className={showMainSpecificate?styles.showDetailInfoContain:styles.detailInfoContain}>
@@ -73,16 +75,24 @@ export default function AboutTeacher(props) {
             onClick={() => setShowDiplomas(!showDiplomas)}
             className={styles.showButton}
           >
-            {showDiplomas?'-':<Image src={'https://realibi.kz/file/148715.png'} className={styles.imgArrow}/>}
+            {showDiplomas?<Image src={'https://realibi.kz/file/904733.png'} className={styles.imgArrow}/>:<Image src={'https://realibi.kz/file/148715.png'} className={styles.imgArrow}/>}
           </p>
         </div>
         <div className={showDiplomas?styles.showDetailInfoContain:styles.detailInfoContain}>
-          <div className={styles.diplomaBlock}>
+          <div className={!allDiplomas ? styles.diplomaBlock : styles.diplomaAll}>
             <Image src={'https://realibi.kz/file/939886.png'} className={styles.imgArrow}/>
             <Image src={'https://realibi.kz/file/410531.png'} className={styles.imgArrow}/>
             <Image src={'https://realibi.kz/file/104843.png'} className={styles.imgArrow}/>
             <Image src={'https://realibi.kz/file/683692.png'} className={styles.imgArrow}/>
             <Image src={'https://realibi.kz/file/743376.png'} className={styles.imgArrow}/>
+            <span 
+              onClick={() => setAllDiplomas(!allDiplomas)}
+            >
+              {!allDiplomas 
+                ? "Все 6"
+                : "Скрыть"
+              }
+            </span>
           </div>
         </div>
       </div>
@@ -93,7 +103,7 @@ export default function AboutTeacher(props) {
             onClick={() => setShowSkill(!showSkill)}
             className={styles.showButton}
           >
-            {showSkill?'-':<Image src={'https://realibi.kz/file/148715.png'} className={styles.imgArrow}/>}
+            {showSkill?<Image src={'https://realibi.kz/file/904733.png'} className={styles.imgArrow}/>:<Image src={'https://realibi.kz/file/148715.png'} className={styles.imgArrow}/>}
           </p>
         </div>
         <div className={showSkill?styles.showDetailInfoContain:styles.detailInfoContain}>
@@ -115,7 +125,7 @@ export default function AboutTeacher(props) {
             onClick={() => setShowYourInteres(!showYourInteres)}
             className={styles.showButton}
           >
-            {showYourInteres?'-':<Image src={'https://realibi.kz/file/148715.png'} className={styles.imgArrow}/>}
+            {showYourInteres?<Image src={'https://realibi.kz/file/904733.png'} className={styles.imgArrow}/>:<Image src={'https://realibi.kz/file/148715.png'} className={styles.imgArrow}/>}
           </p>
         </div>
         <div className={showYourInteres?styles.showDetailInfoContain:styles.detailInfoContain}>

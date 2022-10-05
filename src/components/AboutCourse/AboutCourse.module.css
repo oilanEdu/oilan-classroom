@@ -1,8 +1,4 @@
 @font-face {
-    font-family: "Noto Sans";
-    src: url("../../../public/fonts/noto/NotoSans-Regular.ttf") format("truetype");
-}
-@font-face {
   font-family: "Muller Regular";
   src: url("../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
 }
@@ -93,25 +89,25 @@
 }
 .imgGlobe{
   position: absolute;
-  width: 350px;
-  height: 250px;
-  left: 1050px;
-  top: 140px;
+  width: 23%;
+  /*height: 250px;*/
+  right: 3%;
+  top: 16vh;
   transform: rotate(15deg);
 }
 .imgGirls{
   position: absolute;
-  width: 566px;
-  height: 620px;
-  left: 774px;
-  top: 60px;
+  width: 40%;
+  /*height: 620px;*/
+  right: 7%;
+  top: 7vh;
 }
 .imgArrow{
   position: absolute;
-  width: 741.24px;
-  height: 747.37px;
-  left: 616.03px;
-  top: 251.94px;
+  width: 52%;
+  /*height: 747.37px;*/
+  right: 6%;
+  top: 28vh;
   /*border: 2px dashed #1E2432;*/
   transform: rotate(-0.15deg);
 }
@@ -241,4 +237,200 @@
   display: flex;
   align-items: center;
   color: #FFFFFF;
+}
+
+@media (max-width: 1280px){
+  .imgGlobe{
+    width: 27%;
+    right: 3%;
+    top: 16vh;
+  }
+  .imgGirls{
+    width: 46.8%;
+    right: 7%;
+    top: 7vh;
+  }
+  .imgArrow{
+    width: 57%;
+    right: 3%;
+    top: 30vh;
+  }
+}
+
+@media (max-width: 1000px){
+  .courseTitle h1{
+    font-size: 24px;
+  }
+  .courseDescription p{
+    font-size: 14px;
+  }
+  .targetPersons h1{
+    font-size: 24px;
+  }
+  .targetTitle{
+    font-size: 16px;
+  }
+  .targetDescr{
+    font-size: 14px;
+  }
+  .courseSquares h1{
+    font-size: 24px;
+  }
+  .squareTitle{
+    font-size: 20px;
+  }
+  .imgGlobe{
+    width: 27%;
+    right: 1%;
+    top: 16vh;
+  }
+  .imgGirls{
+    width: 58%;
+    right: 1%;
+    top: 7vh;
+  }
+  .imgArrow{
+    width: 60%;
+    right: 3%;
+    top: 38vh;
+  }
+}
+
+@media (max-width: 768px){
+  .flud{
+    font-size: 14px;
+  }
+  .imgBoom{
+    width: 120px;
+    height: 80px;
+    background-size: 100%;
+  }
+  .courseTitle h1{
+    font-size: 20px;
+  }
+  .leftMainInfo{
+    width: 60%;
+  }
+  .courseDescription p{
+    font-size: 12px;
+  }
+  .targetPersons h1{
+    font-size: 20px;
+  }
+  .targetTitle{
+    font-size: 14px;
+  }
+  .targetDescr{
+    font-size: 12px;
+  }
+  .courseSquares h1{
+    font-size: 20px;
+  }
+  .leftSquare{
+    width: 49%;
+  }
+  .rightSquare{
+    width: 49%;
+  }
+  .squareTitle{
+    font-size: 16px;
+  }
+  .squareText{
+    font-size: 14px;
+  }
+  .imgGlobe{
+    width: 40%;
+    right: -12%;
+    top: 12vh;
+  }
+  .imgGirls{
+    width: 58%;
+    right: -15%;
+    top: 14vh;
+  }
+  .imgArrow{
+    display: none;
+  }
+}
+
+@media (max-width: 480px){
+  .courseTitle h1{
+    font-size: 18px;
+  }
+  .targetPersons h1{
+    font-size: 18px;
+  }
+  .courseButton{
+    font-size: 14px;
+  }
+  .items{
+    flex-direction: column;
+  }
+  .item{
+    width: 100%;
+  }
+  .leftMainInfo{
+    width: 80%;
+  }
+  .targetTitle{
+    font-size: 16px;
+  }
+  .targetDescr{
+    font-size: 14px;
+  }
+  .courseSquares h1{
+    font-size: 18px;
+  }
+  .squares{
+    flex-direction: column;
+  }
+  .leftSquare{
+    width: 95%;
+  }
+  .rightSquare{
+    width: 95%;
+  }
+  .squareTitle{
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 390px){
+  .courseTitle h1{
+    font-size: 20px;
+  }
+  .leftMainInfo{
+    width: 100%;
+    align-items: center;
+  }
+  .courseDescription{
+    width: 100%;
+  }
+  .mainInfo{
+    flex-direction: column;
+  }
+  .courseDescription p{
+    font-size: 13px;
+  }
+  .targetPersons h1{
+    font-size: 16px;
+  }
+  .targetTitle{
+    font-size: 14px;
+  }
+  .targetDescr{
+    font-size: 12px;
+  }
+  .squareTitle{
+    font-size: 16px;
+  }
+  .imgGlobe{
+    display: none;
+    position: static;
+  }
+  .imgGirls{
+    display: block;
+    position: static;
+    width: 100%;
+  }
 }

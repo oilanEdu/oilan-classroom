@@ -138,7 +138,8 @@ export default function Header(props) {
               <a
                 className={styles.link}
                 style={{ color: "black" }}
-                onClick={() => window.scrollBy(0, 800)}
+                // onClick={() => window.scrollBy(0, 800)}
+                onClick={() => document.location='#about'}
               >
                 О нас
               </a>
@@ -147,7 +148,7 @@ export default function Header(props) {
               <a
                 className={styles.link}
                 style={{ color: "black" }}
-                onClick={() =>  window.scrollBy(0, 2350)}
+                onClick={() => document.location='#program'}
               >
                 Расписание
               </a>

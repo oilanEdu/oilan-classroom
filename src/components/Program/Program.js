@@ -8,7 +8,7 @@ const Program = () => {
   const [feedbackShow, setFeedbackShow] = useState(false);
   const [testShow, setTestShow] = useState(false);
 
-  return <div className={styles.container}>
+  return <div className={styles.container} id="program">
     <div className={styles.program_block_container}>
       <div className={styles.program_block}>
         <div className={styles.program_title}>

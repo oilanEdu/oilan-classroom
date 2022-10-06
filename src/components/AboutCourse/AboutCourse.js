@@ -69,7 +69,7 @@ export default function AboutCourse(props) {
           </div>
           <div className={styles.item}>
             <Image src={'https://realibi.kz/file/915691.png'} className={styles.imgDiploma}/>
-            <p className={styles.targetTitle}>Сдающим ЕНТ</p>
+            <p className={styles.targetTitle} id="about">Сдающим ЕНТ</p>
             <p className={styles.targetDescr}>Готовим ребенка к сдаче ЕНТ</p>
           </div>
         </div>

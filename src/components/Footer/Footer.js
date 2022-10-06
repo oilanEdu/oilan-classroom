@@ -132,7 +132,7 @@ export default function Footer(props) {
         </div>
       </div>
       <div className={classnames(styles.column, styles.copy_abaz)}>
-        <span>© 2022 ТОО «АбАз»</span>
+        <span>© 2022 ЧК «Oilan.io Ltd»</span>
       </div>
     </div>
   );

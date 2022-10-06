@@ -239,21 +239,39 @@
   color: #FFFFFF;
 }
 
-@media (max-width: 1280px){
+@media (max-width: 1440px){
   .imgGlobe{
     width: 27%;
     right: 3%;
-    top: 16vh;
+    top: 12vh;
   }
   .imgGirls{
-    width: 46.8%;
+    width: 41%;
     right: 7%;
     top: 7vh;
   }
   .imgArrow{
     width: 57%;
     right: 3%;
-    top: 30vh;
+    top: 15vh;
+  }
+}
+
+@media (max-width: 1281px){
+  .imgGlobe{
+    width: 32%;
+    right: 1%;
+    top: 12vh;
+  }
+  .imgGirls{
+    width: 52%;
+    right: 3%;
+    top: 7vh;
+  }
+  .imgArrow{
+    width: 57%;
+    right: 3%;
+    top: 22vh;
   }
 }
 
@@ -282,17 +300,21 @@
   .imgGlobe{
     width: 27%;
     right: 1%;
-    top: 16vh;
+    top: 10vh;
   }
   .imgGirls{
     width: 58%;
     right: 1%;
-    top: 7vh;
+    top: 5vh;
   }
   .imgArrow{
     width: 60%;
+    height: 40%;
     right: 3%;
-    top: 38vh;
+    top: 19vh;
+  }
+  .mainInfo{
+    margin-top: 4vh;
   }
 }
 
@@ -340,13 +362,13 @@
   }
   .imgGlobe{
     width: 40%;
-    right: -12%;
-    top: 12vh;
+    right: 3%;
+    top: 6vh;
   }
   .imgGirls{
-    width: 58%;
-    right: -15%;
-    top: 14vh;
+    width: 54%;
+    right: 0%;
+    top: 8vh;
   }
   .imgArrow{
     display: none;
@@ -393,6 +415,22 @@
   .squareTitle{
     font-size: 18px;
   }
+  .mainInfo{
+    flex-direction: column;
+  }
+  .imgGlobe{
+    display: none;
+    position: static;
+  }
+  .imgGirls{
+    display: block;
+    position: static;
+    width: 100%;
+  }
+  .leftMainInfo{
+    width: 100%;
+    align-items: center;
+  }
 }
 
 @media (max-width: 390px){
@@ -432,5 +470,22 @@
     display: block;
     position: static;
     width: 100%;
+  }
+}
+@media (min-width: 1445px){
+  .imgGlobe{
+    width: 27%;
+    right: 1%;
+    top: 16vh;
+  }
+  .imgGirls{
+    width: 41.2%;
+    right: 7%;
+    top: 7vh;
+  }
+  .imgArrow{
+    width: 55%;
+    right: 1%;
+    top: 18vh;
   }
 }

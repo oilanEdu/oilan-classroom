@@ -1,11 +1,6 @@
 import styles from "./AboutTeacher.module.css";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import globals from "../../globals";
-import { default as axios } from "axios";
+import { useState } from "react";
 import { Image } from "react-bootstrap";
-import classnames from 'classnames';
 import ApplicationModal from "../ApplicationModal/ApplicationModal";
 import SuccessfullyModal from "../SuccessfullyModal/SuccessfullyModal";
 
@@ -18,16 +13,30 @@ export default function AboutTeacher(props) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [allDiplomas, setAllDiplomas] = useState(false);
   
+
+  const [certificates, setCertificates] = useState([
+    'https://realibi.kz/file/939886.png', 
+    'https://realibi.kz/file/410531.png',
+    'https://realibi.kz/file/104843.png',
+    'https://realibi.kz/file/104843.png',
+    'https://realibi.kz/file/743376.png'
+  ]);
+  
   const handleShowSend = () => {
-    setShowSend(false)
-    setShowSuccess(true)
+    setShowSend(false);
+    setShowSuccess(true);
   };
+
+  const closeHandler = () => {
+    setShowSend(false);
+  };
+
   const handleShowSuccess = () => setShowSuccess(false);
 
   return (
     <div className={styles.container}>
       <SuccessfullyModal show={showSuccess} onClickNext={handleShowSuccess}/>
-      <ApplicationModal showSend={showSend} handleShowSend={handleShowSend} />
+      <ApplicationModal showSend={showSend} handleShowSend={handleShowSend} onClose={closeHandler} />
       <div className={styles.mainInfo}>
         <h1>ПРЕПОДАВАТЕЛЬ КУРСА</h1>
         <div className={styles.previewBlock}>
@@ -80,16 +89,17 @@ export default function AboutTeacher(props) {
         </div>
         <div className={showDiplomas?styles.showDetailInfoContain:styles.detailInfoContain}>
           <div className={!allDiplomas ? styles.diplomaBlock : styles.diplomaAll}>
-            <Image src={'https://realibi.kz/file/939886.png'} className={styles.imgArrow}/>
-            <Image src={'https://realibi.kz/file/410531.png'} className={styles.imgArrow}/>
-            <Image src={'https://realibi.kz/file/104843.png'} className={styles.imgArrow}/>
-            <Image src={'https://realibi.kz/file/683692.png'} className={styles.imgArrow}/>
-            <Image src={'https://realibi.kz/file/743376.png'} className={styles.imgArrow}/>
+            {certificates.map(certificate => {
+              // const extension = certificate.match(/[^.]+$/)[0]
+              return <>
+                <Image src={certificate} className={styles.imgArrow}/>
+              </>        
+            })}
             <span 
               onClick={() => setAllDiplomas(!allDiplomas)}
             >
               {!allDiplomas 
-                ? "Все 6"
+                ? "Все"
                 : "Скрыть"
               }
             </span>

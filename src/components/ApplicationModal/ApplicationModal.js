@@ -4,7 +4,7 @@ import globals from "../../globals";
 import axios from "axios";
 import Backdrop from "../Backdrop/Backdrop";
 
-const ApplicationModal = ({showSend, handleShowSend}) => {
+const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
   const [check, setCheck] = useState(false);
  
   const [fullname, setFullname] = useState("");
@@ -53,7 +53,7 @@ const ApplicationModal = ({showSend, handleShowSend}) => {
     }}
       className={styles.modal}
     >
-      <span className={styles.close_modal} onClick={handleShowSend}></span>
+      <span className={styles.close_modal} onClick={onClose}></span>
       <div className={styles.modal_info}>
         <h3>Оставь заявку для записи на курс “Математика простыми словами” </h3>
       </div>

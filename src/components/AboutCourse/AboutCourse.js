@@ -1,11 +1,6 @@
 import styles from "./AboutCourse.module.css";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import globals from "../../globals";
-import { default as axios } from "axios";
+import { useState } from "react";
 import { Image } from "react-bootstrap";
-import classnames from 'classnames';
 import ApplicationModal from "../ApplicationModal/ApplicationModal";
 import SuccessfullyModal from "../SuccessfullyModal/SuccessfullyModal";
 
@@ -15,16 +10,21 @@ export default function AboutCourse(props) {
   const [showSuccess, setShowSuccess] = useState(false);
   
   const handleShowSend = () => {
-    setShowSend(false)
-    setShowSuccess(true)
+    setShowSend(false);
+    setShowSuccess(true);
   };
+
+  const closeHandler = () => {
+    setShowSend(false);
+  };
+
   const handleShowSuccess = () => setShowSuccess(false);
 
 
   return (
     <div className={styles.container}>
       <SuccessfullyModal show={showSuccess} onClickNext={handleShowSuccess}/>
-      <ApplicationModal showSend={showSend} handleShowSend={handleShowSend} />
+      <ApplicationModal showSend={showSend} handleShowSend={handleShowSend} onClose={closeHandler} />
       <div className={styles.mainInfo}>
         <div className={styles.leftMainInfo}>
           <div className={styles.flud}>

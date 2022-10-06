@@ -10,14 +10,19 @@ const CoursePrice = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   
   const handleShowSend = () => {
-    setShowSend(false)
-    setShowSuccess(true)
+    setShowSend(false);
+    setShowSuccess(true);
   };
+  
   const handleShowSuccess = () => setShowSuccess(false);
+
+  const closeHandler = () => {
+    setShowSend(false);
+  };
 
   return <div className={styles.container}>
     <SuccessfullyModal show={showSuccess} onClickNext={handleShowSuccess}/>
-    <ApplicationModal showSend={showSend} handleShowSend={handleShowSend} />
+    <ApplicationModal showSend={showSend} handleShowSend={handleShowSend} onClose={closeHandler} />
     <h2>Стоимость обучения на курсе</h2>
 
     <div className={styles.price_content}>

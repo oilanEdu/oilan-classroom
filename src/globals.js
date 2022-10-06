@@ -1,8 +1,8 @@
 export default {
-  // productionServerDomain: "https://realibi.kz",
-  // productionSiteDomain: "https://oilan-classroom.com",
-  productionServerDomain: "http://localhost:3030",
-  productionSiteDomain: "http://localhost:3000",
+  productionServerDomain: "https://realibi.kz",
+  productionSiteDomain: "https://oilan-classroom.com",
+  // productionServerDomain: "http://localhost:3030",
+  // productionSiteDomain: "http://localhost:3000",
   devSiteDomain: "http://localhost:3000",
   ftpDomain: "https://realibi.kz",
   localStorageKeys: {

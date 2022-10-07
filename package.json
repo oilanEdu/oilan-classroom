@@ -25,7 +25,8 @@
     "react-dom": "^18.2.0",
     "react-gtm-module": "^2.0.11",
     "react-phone-number-input": "^3.2.11",
-    "react-yandex-metrika": "^2.6.0"
+    "react-yandex-metrika": "^2.6.0",
+    "recaptcha-v3-react-function-async": "0.0.3"
   },
   "devDependencies": {
     "country-flag-icons": "^1.5.5",

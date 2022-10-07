@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./ApplicationModal.module.css";
 import globals from "../../globals";
 import axios from "axios";
 import Backdrop from "../Backdrop/Backdrop";
+import { Image } from "react-bootstrap";
 
 const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
   const [check, setCheck] = useState(false);
- 
   const [fullname, setFullname] = useState("");
   const [phone, setPhone] = useState("");
   const [connection, setConnection] = useState("");
+  const [captchaText, setCaptchaText] = useState("");
+  const [captchaCheck, setCaptchaCheck] = useState(false);
+  const [insertCaptchaText, setInsertCaptchaText] = useState('Введите текст с картинки')
+  const [showCaptcha, setShowCaptcha] = useState(false)
+
+  useEffect(()=> {
+    loadCaptcha()
+  })
 
   const firstStepValidation = () =>  {
     if (fullname.length < 3) {
@@ -23,26 +31,40 @@ const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
     }
   };
 
-  const sendApplication = () => {
-    const ticketData = {
-      fullname: fullname,
-      phone: phone,
-      course_id: 1,
-      connection: connection === 0 ? "Звонок" : "Whatsapp"
-    }
+  const loadCaptcha = async () => {
+    let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
+    // console.log('CAPTCHA', captcha)
+    const captchaFin = captcha['data'][0]
+    // console.log('CAPTCHA2', captchaFin)
+  }
+  const sendApplication = async() => {
+    let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
+    const captchaFin = captcha['data'][0]
+    loadCaptcha()
+    console.log('CAPTCHI',captchaFin.text,captchaText)
+    if (captchaFin.text == captchaText) {
+      console.log('CAPTCHI',captchaFin.text,captchaText)
+      const ticketData = {
+        fullname: fullname,
+        phone: phone,
+        course_id: 1,
+        connection: connection === 0 ? "Звонок" : "Whatsapp"
+      }
 
-    axios({
-      method: "post",
-      url: `${globals.productionServerDomain}/createTicket`,
-      data: ticketData,
-      headers: {
-        Authorization: `Bearer ${globals.localStorageKeys.authToken}`,
-      },
-    }).then((res) => {
-    })
-    .catch(() => {
-      alert("Что-то пошло не так!");
-    }); 
+      axios({
+        method: "post",
+        url: `${globals.productionServerDomain}/createTicket`,
+        data: ticketData,
+        headers: {
+          Authorization: `Bearer ${globals.localStorageKeys.authToken}`,
+        },
+      }).then((res) => {
+      })
+      .catch(() => {
+        alert("Что-то пошло не так!");
+      }); 
+      handleShowSend()
+    } else {setInsertCaptchaText('Неверный ввод текста с картинки!')}
   };
 
   return <>
@@ -88,6 +110,27 @@ const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
           <option value="0">Звонок</option>
           <option value="1">Whatsapp</option>
         </select>
+        <div style={showCaptcha?{display:'block'}:{display:'none'}}>
+          <div>{insertCaptchaText}</div>
+          <Image 
+            src={'https://realibi.kz/file/205955.png'}
+            style={{width:'100%'}}
+          />
+          <input
+            onChange={(e) => setCaptchaText(e.target.value)}
+          />
+          <button
+            onClick={(e) => {
+              sendApplication();
+              setFullname("");
+              setConnection("");
+              setPhone("");
+              setCheck(false)
+            }}
+          >
+            Отправить
+          </button>
+        </div>
         <button 
           className={styles.button}
           onClick={(e) => {
@@ -98,12 +141,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
               );
             } else {
               if (firstStepValidation ()) {
-                sendApplication();
-                handleShowSend()
-                setFullname("");
-                setConnection("");
-                setPhone("");
-                setCheck(false)
+                setShowCaptcha(true)
               } else {
                 alert("Заполните пожалуйста все поля.")
               }

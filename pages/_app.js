@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { CookiesProvider } from 'react-cookie'
 import TagManager from "react-gtm-module";
 import { YMInitializer } from 'react-yandex-metrika';

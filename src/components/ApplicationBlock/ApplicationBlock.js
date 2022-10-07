@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./ApplicationBlock.module.css";
 import globals from "../../globals";
 import axios from "axios";
 import Backdrop from "../Backdrop/Backdrop";
 import SuccessfullyModal from "../SuccessfullyModal/SuccessfullyModal";
+import { Image } from "react-bootstrap";
 
 const ApplicationBlock = () => {
+  const [showCaptcha, setShowCaptcha] = useState(false)
+  const [insertCaptchaText, setInsertCaptchaText] = useState('Введите текст с картинки')
+  const [captchaText, setCaptchaText] = useState("");
+
   const [check, setCheck] = useState(false);
  
   const [fullname, setFullname] = useState("");
@@ -13,7 +18,7 @@ const ApplicationBlock = () => {
   const [phone, setPhone] = useState("");
   const [showSend, setShowSend] = useState(false);
 
-  const handleShowSend = () => setShowSend(false);
+  const handleShowSend = () => setShowSend(true);
 
   const firstStepValidation = () =>  {
     if (fullname.length < 3) {
@@ -23,31 +28,67 @@ const ApplicationBlock = () => {
       alert("Заполните все поля!");
       return false;
     } else {
-      setShowSend(true);
+      // setShowSend(true);
       return true;
     }
   };
 
-  const sendApplication = () => {
-    const ticketData = {
-      fullname: fullname,
-      email: email,
-      phone: phone,
-      course_id: 1
-    };
+  // const sendApplication = () => {
+  //   const ticketData = {
+  //     fullname: fullname,
+  //     email: email,
+  //     phone: phone,
+  //     course_id: 1
+  //   };
 
-    axios({
-      method: "post",
-      url: `${globals.productionServerDomain}/createTicket`,
-      data: ticketData,
-      headers: {
-        Authorization: `Bearer ${globals.localStorageKeys.authToken}`,
-      },
-    }).then((res) => {
-    })
-    .catch(() => {
-      alert("Что-то пошло не так!");
-    }); 
+  //   axios({
+  //     method: "post",
+  //     url: `${globals.productionServerDomain}/createTicket`,
+  //     data: ticketData,
+  //     headers: {
+  //       Authorization: `Bearer ${globals.localStorageKeys.authToken}`,
+  //     },
+  //   }).then((res) => {
+  //   })
+  //   .catch(() => {
+  //     alert("Что-то пошло не так!");
+  //   }); 
+  // };
+
+  const loadCaptcha = async () => {
+    let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
+    // console.log('CAPTCHA', captcha)
+    const captchaFin = captcha['data'][0]
+    // console.log('CAPTCHA2', captchaFin)
+  }
+  const sendApplication = async() => {
+    let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
+    const captchaFin = captcha['data'][0]
+    loadCaptcha()
+    console.log('CAPTCHI',captchaFin.text,captchaText)
+    if (captchaFin.text == captchaText) {
+      console.log('CAPTCHI',captchaFin.text,captchaText)
+      const ticketData = {
+        fullname: fullname,
+        phone: phone,
+        course_id: 1,
+        connection: "Звонок"
+      }
+
+      axios({
+        method: "post",
+        url: `${globals.productionServerDomain}/createTicket`,
+        data: ticketData,
+        headers: {
+          Authorization: `Bearer ${globals.localStorageKeys.authToken}`,
+        },
+      }).then((res) => {
+      })
+      .catch(() => {
+        alert("Что-то пошло не так!");
+      }); 
+      handleShowSend()
+    } else {setInsertCaptchaText('Неверный ввод текста с картинки!')}
   };
 
   const onClickNext = () => {
@@ -100,6 +141,30 @@ const ApplicationBlock = () => {
           }}
         />
       </label>
+      <div style={showCaptcha?{display:'block'}:{display:'none'}}>
+          <div>{insertCaptchaText}</div>
+          <Image 
+            src={'https://realibi.kz/file/205955.png'}
+            style={{width:'100%'}}
+          />
+          <input
+            onChange={(e) => setCaptchaText(e.target.value)}
+          />
+          <button
+            onClick={(e) => {
+              e.preventDefault()
+              sendApplication();
+              e.preventDefault()
+              setFullname("");
+              // setConnection("");
+              setPhone("");
+              setCheck(false)
+              e.preventDefault()
+            }}
+          >
+            Отправить
+          </button>
+        </div>
       <button 
         className={styles.button_animate}
         onClick={(e) => {
@@ -109,8 +174,9 @@ const ApplicationBlock = () => {
               "Прочтите публичную оферту и дайте свое согласие!"
             );
           } else {
-            if (firstStepValidation ()) {
-              sendApplication();
+            if (firstStepValidation()) {
+              // sendApplication();
+              setShowCaptcha(true)
             } else {
               alert("Заполните пожалуйста все поля.")
             }

@@ -144,6 +144,22 @@
   border-radius: 32px;
   width: 33.3%;
   align-items: center;
+
+  position: relative;
+  xborder-bottom: 2px solid #f51c40;
+}
+.item:before {
+  content: "";
+  position: absolute;
+  right: 0;
+  z-index: 100;
+  top: 10%;
+  width: 1px;
+  height: 80%;
+  background: rgba(30, 36, 50, 0.15);
+}
+.item:last-child::before {
+  width: 0px;
 }
 .imgEvaluation{
   width: 100px;
@@ -413,6 +429,7 @@
   }
   .rightSquare{
     width: 95%;
+    place-self: end;
   }
   .squareTitle{
     font-size: 18px;

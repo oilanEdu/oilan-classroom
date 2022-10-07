@@ -74,6 +74,28 @@
   color: #fff;
   margin: 32px 0 20px;
 }
+.button_animate {
+  background: linear-gradient(114deg, rgba(12,106,203,1) 18%, #007AFF 22%);
+  color: #ffffff;
+  background-size: 600% 200%;
+  animation: gradient_animation 3s ease-in-out infinite;
+  animation-direction:reverse;
+
+  border-radius: 8px;
+  border: none;
+  padding: 13px;
+  font-family: "Noto Sans Bold";
+  font-size: 16px;
+  color: #fff;
+  margin: 32px 0 20px;
+}
+@keyframes gradient_animation {
+0% {
+  background-position: 0% 0%; }
+
+100% {
+  background-position: 100% 100%; }
+}
 
 .check_off {
   font-family: "Noto Sans Regular";

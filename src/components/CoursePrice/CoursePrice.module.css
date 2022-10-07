@@ -211,6 +211,7 @@
   .price_info {
     grid-template-areas: "start finish" "full full" "part part";
     margin-top: 10px;
+    column-gap: 16px;
   }
   .price_info_item {
     margin: 8px 0 10px;

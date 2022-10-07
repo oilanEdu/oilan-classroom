@@ -73,7 +73,7 @@ export default function AboutTeacher(props) {
         </div>
         <div className={showMainSpecificate?styles.showDetailInfoContain:styles.detailInfoContain}>
           <p>
-            высшая математика, квантовая теория поля, линейная алгебра, квантовая физика, теория поля, общая физика
+            Высшая математика, квантовая теория поля, линейная алгебра, квантовая физика, теория поля, общая физика
           </p>
         </div>
       </div>
@@ -119,7 +119,7 @@ export default function AboutTeacher(props) {
         <div className={showSkill?styles.showDetailInfoContain:styles.detailInfoContain}>
           <p>
             Работал в научной исследовательской части (НИЧ -90 и НИЧ-310), а также в научно-исследовательской лаборатории моделирования и обработки информации.<br/>
-            Занимался аналитикой и разработкой научно-исследовательского оборудывания в том числе участвовал в разработке одного из модулей по исследованию клеток спинного мозга входящиго в состав спутника БИОН-М. В обязанности входило:<br/>
+            Занимался аналитикой и разработкой научно-исследовательского оборудования в том числе участвовал в разработке одного из модулей по исследованию клеток спинного мозга входящиго в состав спутника БИОН-М. В обязанности входило:<br/>
             1. Выполнение лабораторных анализов, испытаний, измерений и других видов работ.<br/>
             2. Принятие участия в сборе и обработке материалов в процессе исследований<br/>
             3. Слежение за исправным состоянием лабораторного оборудования его наладка<br/>
@@ -149,7 +149,7 @@ export default function AboutTeacher(props) {
             <div className={styles.item}>
               <Image src={'https://realibi.kz/file/423807.png'} className={styles.imgArrow}/>
               <p>
-                Уметь Применять формулы на практике
+                Уметь применять формулы на практике
               </p>
             </div>
             <div className={styles.item}>
@@ -161,7 +161,7 @@ export default function AboutTeacher(props) {
             <div className={styles.item}>
               <Image src={'https://realibi.kz/file/685686.png'} className={styles.imgArrow}/>
               <p>
-                Относится с интересом к математике
+                Относиться с интересом к математике
               </p>
             </div>
             <div className={styles.item}>
@@ -179,7 +179,7 @@ export default function AboutTeacher(props) {
             <div className={styles.item}>
               <Image src={'https://realibi.kz/file/596856.png'} className={styles.imgArrow}/>
               <p>
-                По другому относится к миру цифр и формул
+                По другому относиться к миру цифр и формул
               </p>
             </div>
             <div className={styles.item}>

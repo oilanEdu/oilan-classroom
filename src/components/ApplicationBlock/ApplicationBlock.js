@@ -101,7 +101,7 @@ const ApplicationBlock = () => {
         />
       </label>
       <button 
-        className={styles.button}
+        className={styles.button_animate}
         onClick={(e) => {
           e.preventDefault();
           if (check === false) {

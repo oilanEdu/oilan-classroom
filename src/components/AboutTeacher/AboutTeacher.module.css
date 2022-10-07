@@ -39,6 +39,7 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+  padding-top: 27px;
 }
 .logoBlock{
   display: flex;

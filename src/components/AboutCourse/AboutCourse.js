@@ -51,7 +51,7 @@ export default function AboutCourse(props) {
         <div className={styles.rightMainInfo}>
           <Image src={'https://realibi.kz/file/596699.png'} className={styles.imgArrow}/>
           <Image src={'https://realibi.kz/file/978476.png'} className={styles.imgGlobe}/>
-          <Image src={'https://realibi.kz/file/548803.png'} className={styles.imgGirls}/>
+          <Image src={'https://realibi.kz/file/274985.png'} className={styles.imgGirls}/>
         </div>
       </div>
       <div className={styles.targetPersons}>
@@ -95,7 +95,7 @@ export default function AboutCourse(props) {
           </div>
           <div className={styles.leftSquare}>
             <p className={styles.squareTitle}>
-              40 000 тенге 👌  
+              64 000 тенге 👌  
             </p>
             <p className={styles.squareText}>
               В стоимость входит 4 недели индивидуальной работы с учеником по 2 занятия в неделю 

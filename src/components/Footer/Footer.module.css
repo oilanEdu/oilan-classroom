@@ -195,6 +195,16 @@
         'privacy email';
         grid-template-columns: 1fr 1fr;
     }
+    .columnTitle {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 16px;
+    }
+    .logo {
+        display: block;
+        grid-area: logo;
+        width: 100px;
+    }
 }
 
 @media screen and (max-width: 415px){

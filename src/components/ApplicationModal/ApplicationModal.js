@@ -121,11 +121,14 @@ const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
           />
           <button
             onClick={(e) => {
+              e.preventDefault()
               sendApplication();
+              e.preventDefault()
               setFullname("");
               setConnection("");
               setPhone("");
               setCheck(false)
+              e.preventDefault()
             }}
           >
             Отправить

@@ -12,7 +12,7 @@ const SuccessfullyModal = ({show, onClickNext}) => {
       <span className={styles.close_modal} onClick={onClickNext}></span>
       <div className={styles.modal_info}>
         <h3>Ваша заявка успешно отправлена! </h3>
-        <p>Мы Свяжимся с вами в течении 24 часов.</p>
+        <p>Мы Свяжемся с вами в течении 24 часов.</p>
       </div>
       <button 
         className={styles.modal_button} 

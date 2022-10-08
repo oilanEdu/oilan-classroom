@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
 
     return (
         <>
-            <YMInitializer accounts={[78186067]} options={{webvisor: true, defer: true}} version="2" />
+            <YMInitializer accounts={[90703823]} options={{webvisor: true, defer: true}} version="2" />
               <CookiesProvider>
                 <Component {...pageProps} />
               </CookiesProvider>

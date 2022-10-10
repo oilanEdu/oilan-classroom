@@ -40,10 +40,7 @@ const Main = (props) => {
 
   return (
     <div>
-      <Head>
-        <title>OilanClassroom</title>
-        <div dangerouslySetInnerHTML={{__html: ym()}}/>
-      </Head>
+      <div dangerouslySetInnerHTML={{__html: ym()}}/>
       <div className={styles.main}>
         <Header white={true}/>
         <AboutCourse/>

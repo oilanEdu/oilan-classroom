@@ -42,7 +42,7 @@ const Main = (props) => {
     <div>
       <div className={styles.main}>
         <Head>
-          <div dangerouslySetInnerHTML={{__html: ym()}}/>
+          </*<div dangerouslySetInnerHTML={{__html: ym()}}/>*/}
         </Head>
         <Header white={true}/>
         <AboutCourse/>

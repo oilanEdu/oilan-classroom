@@ -42,7 +42,6 @@ const Main = (props) => {
     <div className={styles.main}>
       <Head>
         <title>OilanClassroom</title>
-        <link rel="icon" href="/atom-icon.png" />
         <div dangerouslySetInnerHTML={{__html: ym()}}/>
       </Head>
       <Header white={true}/>

@@ -18,7 +18,7 @@ import dynamic from 'next/dynamic'
 const Main = (props) => {
 
   const ym = () => {
-    return {__html:
+    return (
       "<!-- Yandex.Metrika counter -->\n" +
       "<script type=\"text/javascript\" >\n" +
       "   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};\n" +
@@ -35,7 +35,7 @@ const Main = (props) => {
       "</script>\n" +
       "<noscript><div><img src=\"https://mc.yandex.ru/watch/90703823\" style=\"position:absolute; left:-9999px;\" alt=\"\" /></div></noscript>\n" +
       "<!-- /Yandex.Metrika counter -->"
-    }
+    );
   };
 
   return (

@@ -5,11 +5,13 @@ import axios from "axios";
 import Backdrop from "../Backdrop/Backdrop";
 import SuccessfullyModal from "../SuccessfullyModal/SuccessfullyModal";
 import { Image } from "react-bootstrap";
+import CaptchaComponent from "../Captcha/Captcha";
 
 const ApplicationBlock = () => {
   const [showCaptcha, setShowCaptcha] = useState(false)
   const [insertCaptchaText, setInsertCaptchaText] = useState('Введите текст с картинки')
   const [captchaText, setCaptchaText] = useState("");
+  const [connection, setConnection] = useState("");
 
   const [check, setCheck] = useState(false);
  
@@ -17,6 +19,23 @@ const ApplicationBlock = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [showSend, setShowSend] = useState(false);
+
+  const [randomizedCaptchaId, setRandomizedCaptchaId] = useState()
+  const [randomizedCaptchaData, setRandomizedCaptchaData] = useState()
+
+  useEffect(()=> {
+    loadCaptcha()
+  }, [])
+  useEffect(() => {
+    loadCaptchaWithId()
+  }, [randomizedCaptchaId])
+
+  const loadCaptchaWithId = async () => {
+    let data = randomizedCaptchaId
+    let captcha2 = await axios.post(`${globals.productionServerDomain}/getCaptchaWithId/` + data)
+    console.log("captcha2", captcha2['data'])
+    setRandomizedCaptchaData(captcha2['data'])
+  }
 
   const handleShowSend = () => setShowSend(true);
 
@@ -32,6 +51,57 @@ const ApplicationBlock = () => {
       return true;
     }
   };
+
+  const loadCaptcha = async () => {
+    let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
+    let getAllCaptchaId = await axios.get(`${globals.productionServerDomain}/getAllCaptchaId`)
+    console.log("getAllCaptchaId", getAllCaptchaId['data'])
+    let getAllCaptchaIdRandom = Math.floor(Math.random() * getAllCaptchaId['data'].length)
+    console.log("getAllCaptchaIdRandom", getAllCaptchaIdRandom)
+    
+    setRandomizedCaptchaId(getAllCaptchaIdRandom)
+    // console.log('CAPTCHA', captcha)
+    const captchaFin = captcha['data'][0]
+    // console.log('CAPTCHA2', captchaFin)
+  }
+
+  const anotherImage = async () => {
+    let getAllCaptchaId = await axios.get(`${globals.productionServerDomain}/getAllCaptchaId`)
+    console.log("getAllCaptchaId", getAllCaptchaId['data'])
+    let getAllCaptchaIdRandom = Math.floor(Math.random() * getAllCaptchaId['data'].length)
+    setRandomizedCaptchaId(getAllCaptchaIdRandom)
+  }
+
+  const sendApplication = async() => {
+    let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
+    const captchaFin = captcha['data'][0]
+    loadCaptcha()
+    console.log('CAPTCHI',captchaFin.text,captchaText)
+    if (randomizedCaptchaData[0]?.text == captchaText) {
+      console.log('CAPTCHI',randomizedCaptchaData.text,captchaText)
+      const ticketData = {
+        fullname: fullname,
+        phone: phone,
+        course_id: 1,
+        connection: "Звонок"
+      }
+
+      axios({
+        method: "post",
+        url: `${globals.productionServerDomain}/createTicket`,
+        data: ticketData,
+        headers: {
+          Authorization: `Bearer ${globals.localStorageKeys.authToken}`,
+        },
+      }).then((res) => {
+      })
+      .catch(() => {
+        alert("Что-то пошло не так!");
+      }); 
+      handleShowSend()
+    } else {setInsertCaptchaText('Неверный ввод текста с картинки!')}
+  };
+
 
   // const sendApplication = () => {
   //   const ticketData = {
@@ -55,41 +125,41 @@ const ApplicationBlock = () => {
   //   }); 
   // };
 
-  const loadCaptcha = async () => {
-    let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
-    // console.log('CAPTCHA', captcha)
-    const captchaFin = captcha['data'][0]
-    // console.log('CAPTCHA2', captchaFin)
-  }
-  const sendApplication = async() => {
-    let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
-    const captchaFin = captcha['data'][0]
-    loadCaptcha()
-    console.log('CAPTCHI',captchaFin.text,captchaText)
-    if (captchaFin.text == captchaText) {
-      console.log('CAPTCHI',captchaFin.text,captchaText)
-      const ticketData = {
-        fullname: fullname,
-        phone: phone,
-        course_id: 1,
-        connection: "Звонок"
-      }
+  // const loadCaptcha = async () => {
+  //   let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
+  //   // console.log('CAPTCHA', captcha)
+  //   const captchaFin = captcha['data'][0]
+  //   // console.log('CAPTCHA2', captchaFin)
+  // }
+  // const sendApplication = async() => {
+  //   let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
+  //   const captchaFin = captcha['data'][0]
+  //   loadCaptcha()
+  //   console.log('CAPTCHI',captchaFin.text,captchaText)
+  //   if (captchaFin.text == captchaText) {
+  //     console.log('CAPTCHI',captchaFin.text,captchaText)
+  //     const ticketData = {
+  //       fullname: fullname,
+  //       phone: phone,
+  //       course_id: 1,
+  //       connection: "Звонок"
+  //     }
 
-      axios({
-        method: "post",
-        url: `${globals.productionServerDomain}/createTicket`,
-        data: ticketData,
-        headers: {
-          Authorization: `Bearer ${globals.localStorageKeys.authToken}`,
-        },
-      }).then((res) => {
-      })
-      .catch(() => {
-        alert("Что-то пошло не так!");
-      }); 
-      handleShowSend()
-    } else {setInsertCaptchaText('Неверный ввод текста с картинки!')}
-  };
+  //     axios({
+  //       method: "post",
+  //       url: `${globals.productionServerDomain}/createTicket`,
+  //       data: ticketData,
+  //       headers: {
+  //         Authorization: `Bearer ${globals.localStorageKeys.authToken}`,
+  //       },
+  //     }).then((res) => {
+  //     })
+  //     .catch(() => {
+  //       alert("Что-то пошло не так!");
+  //     }); 
+  //     handleShowSend()
+  //   } else {setInsertCaptchaText('Неверный ввод текста с картинки!')}
+  // };
 
   const onClickNext = () => {
     setShowSend(false);
@@ -141,30 +211,18 @@ const ApplicationBlock = () => {
           }}
         />
       </label>
-      <div style={showCaptcha?{display:'block'}:{display:'none'}}>
-          <div>{insertCaptchaText}</div>
-          <Image 
-            src={'https://realibi.kz/file/205955.png'}
-            style={{width:'100%'}}
-          />
-          <input
-            onChange={(e) => setCaptchaText(e.target.value)}
-          />
-          <button
-            onClick={(e) => {
-              e.preventDefault()
-              sendApplication();
-              e.preventDefault()
-              setFullname("");
-              // setConnection("");
-              setPhone("");
-              setCheck(false)
-              e.preventDefault()
-            }}
-          >
-            Отправить
-          </button>
-        </div>
+      <CaptchaComponent
+        insertCaptchaText={insertCaptchaText}
+        setCaptchaText={setCaptchaText}
+        sendApplication={sendApplication}
+        setFullname={setFullname}
+        setConnection={setConnection}
+        setPhone={setPhone}
+        setCheck={setCheck}
+        showCaptcha={showCaptcha}
+        captchaImage={randomizedCaptchaData?.[0]?.link}
+        anotherImage={anotherImage}
+        />
       <button 
         className={styles.button_animate}
         onClick={(e) => {

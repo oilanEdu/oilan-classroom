@@ -53,12 +53,12 @@
   border: 1px solid #A2A7B2;
   font-family: "Noto Sans Regular";
   font-size: 16px;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .button {
   background: #007AFF;
-  border-radius: 8px;
+  border-radius: 4px;
   border: none;
   padding: 13px;
   font-family: "Noto Sans Bold";

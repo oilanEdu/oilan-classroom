@@ -1,0 +1,67 @@
+/* captchaSection */
+.captchaText {
+    text-align: start;
+    margin-bottom: 10px;
+    margin: -bottom;
+    margin-top: 20px;
+  }
+  .captchaImage {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+  .captchaInputsSection {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .captchaInput {
+    padding: 16px;
+    gap: 10px;
+    width: 248px;
+    height: 48px;
+    background: #FFFFFF;
+    border: 1px solid #9D99AC;
+    border-radius: 4px;
+  }
+  .captchaButton {
+    background: #007AFF;
+    border-radius: 8px;
+    border: none;
+    padding: 13px;
+    font-family: "Noto Sans Bold";
+    font-size: 16px;
+    color: #fff;
+    width: 146px;
+    height: 48px;
+  }
+  .captchaImageSection {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  .anotherImageButton {
+    background: url(https://realibi.kz/file/297593.png);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+  }
+  @media screen and (max-width: 410px) {
+    .captchaInputsSection {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .captchaImageSection {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 12px;
+    }
+    .captchaImage {
+      width: 100%;
+      margin-bottom: 0px;
+    }
+  }

@@ -4,6 +4,7 @@ import globals from "../../globals";
 import axios from "axios";
 import Backdrop from "../Backdrop/Backdrop";
 import { Image } from "react-bootstrap";
+import CaptchaComponent from "../Captcha/Captcha";
 
 const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
   const [check, setCheck] = useState(false);
@@ -13,11 +14,24 @@ const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
   const [captchaText, setCaptchaText] = useState("");
   const [captchaCheck, setCaptchaCheck] = useState(false);
   const [insertCaptchaText, setInsertCaptchaText] = useState('Введите текст с картинки')
-  const [showCaptcha, setShowCaptcha] = useState(false)
+  const [showCaptcha, setShowCaptcha] = useState(true)
+
+  const [randomizedCaptchaId, setRandomizedCaptchaId] = useState()
+  const [randomizedCaptchaData, setRandomizedCaptchaData] = useState()
 
   useEffect(()=> {
     loadCaptcha()
-  })
+  }, [])
+  useEffect(() => {
+    loadCaptchaWithId()
+  }, [randomizedCaptchaId])
+  
+  const loadCaptchaWithId = async () => {
+    let data = randomizedCaptchaId
+    let captcha2 = await axios.post(`${globals.productionServerDomain}/getCaptchaWithId/` + data)
+    console.log("captcha2", captcha2['data'])
+    setRandomizedCaptchaData(captcha2['data'])
+  }
 
   const firstStepValidation = () =>  {
     if (fullname.length < 3) {
@@ -33,17 +47,31 @@ const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
 
   const loadCaptcha = async () => {
     let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
+    let getAllCaptchaId = await axios.get(`${globals.productionServerDomain}/getAllCaptchaId`)
+    console.log("getAllCaptchaId", getAllCaptchaId['data'])
+    let getAllCaptchaIdRandom = Math.floor(Math.random() * getAllCaptchaId['data'].length)
+    console.log("getAllCaptchaIdRandom", getAllCaptchaIdRandom)
+    
+    setRandomizedCaptchaId(getAllCaptchaIdRandom)
     // console.log('CAPTCHA', captcha)
     const captchaFin = captcha['data'][0]
     // console.log('CAPTCHA2', captchaFin)
   }
+
+  const anotherImage = async () => {
+    let getAllCaptchaId = await axios.get(`${globals.productionServerDomain}/getAllCaptchaId`)
+    console.log("getAllCaptchaId", getAllCaptchaId['data'])
+    let getAllCaptchaIdRandom = Math.floor(Math.random() * getAllCaptchaId['data'].length)
+    setRandomizedCaptchaId(getAllCaptchaIdRandom)
+  }
+
   const sendApplication = async() => {
     let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
     const captchaFin = captcha['data'][0]
     loadCaptcha()
     console.log('CAPTCHI',captchaFin.text,captchaText)
-    if (captchaFin.text == captchaText) {
-      console.log('CAPTCHI',captchaFin.text,captchaText)
+    if (randomizedCaptchaData[0]?.text == captchaText) {
+      console.log('CAPTCHI',randomizedCaptchaData.text,captchaText)
       const ticketData = {
         fullname: fullname,
         phone: phone,
@@ -110,30 +138,18 @@ const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
           <option value="0">Звонок</option>
           <option value="1">Whatsapp</option>
         </select>
-        <div style={showCaptcha?{display:'block'}:{display:'none'}}>
-          <div>{insertCaptchaText}</div>
-          <Image 
-            src={'https://realibi.kz/file/205955.png'}
-            style={{width:'100%'}}
-          />
-          <input
-            onChange={(e) => setCaptchaText(e.target.value)}
-          />
-          <button
-            onClick={(e) => {
-              e.preventDefault()
-              sendApplication();
-              e.preventDefault()
-              setFullname("");
-              setConnection("");
-              setPhone("");
-              setCheck(false)
-              e.preventDefault()
-            }}
-          >
-            Отправить
-          </button>
-        </div>
+        <CaptchaComponent
+        insertCaptchaText={insertCaptchaText}
+        setCaptchaText={setCaptchaText}
+        sendApplication={sendApplication}
+        setFullname={setFullname}
+        setConnection={setConnection}
+        setPhone={setPhone}
+        setCheck={setCheck}
+        showCaptcha={showCaptcha}
+        captchaImage={randomizedCaptchaData?.[0]?.link}
+        anotherImage={anotherImage}
+        />
         <button 
           className={styles.button}
           onClick={(e) => {

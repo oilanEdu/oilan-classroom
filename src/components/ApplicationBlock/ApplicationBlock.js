@@ -23,6 +23,9 @@ const ApplicationBlock = () => {
   const [randomizedCaptchaId, setRandomizedCaptchaId] = useState()
   const [randomizedCaptchaData, setRandomizedCaptchaData] = useState()
 
+  const [proccessOfCaptcha, setProccessOfCaptcha] = useState(0)
+  const [proccessOfCaptchaUrl, setProccessOfCaptchaUrl] = useState('https://realibi.kz/file/633881.png')
+
   useEffect(()=> {
     loadCaptcha()
   }, [])
@@ -78,6 +81,8 @@ const ApplicationBlock = () => {
     loadCaptcha()
     console.log('CAPTCHI',captchaFin.text,captchaText)
     if (randomizedCaptchaData[0]?.text == captchaText) {
+      handlerOfProccessOfCaptcha(3)
+      setProccessOfCaptcha(3)
       setFullname("");
       setConnection("");
       setPhone("");
@@ -103,7 +108,9 @@ const ApplicationBlock = () => {
         alert("Что-то пошло не так!");
       }); 
       handleShowSend()
-    } else {setInsertCaptchaText('Неверный ввод текста с картинки!')}
+    } else {setInsertCaptchaText('Неверный ввод текста с картинки!')
+            setProccessOfCaptcha(1)
+            handlerOfProccessOfCaptcha(1)}
   };
 
 
@@ -173,6 +180,17 @@ const ApplicationBlock = () => {
     setCheck(false);
   };
 
+    //желтый красный зеленый
+    const handlerOfProccessOfCaptcha = (value) => {
+      if (value === 0) {
+        setProccessOfCaptchaUrl('https://realibi.kz/file/633881.png');
+      } else
+      if (value === 1) {
+        setProccessOfCaptchaUrl('https://realibi.kz/file/499291.png');
+      } else{
+      setProccessOfCaptchaUrl('https://realibi.kz/file/98680.png');}
+    }
+
   return <div className={styles.container}>
     <SuccessfullyModal show={showSend} onClickNext={onClickNext} handleShow={handleShowSend} />
     <Backdrop show={showSend} />
@@ -226,6 +244,8 @@ const ApplicationBlock = () => {
         showCaptcha={showCaptcha}
         captchaImage={randomizedCaptchaData?.[0]?.link}
         anotherImage={anotherImage}
+        proccessOfCaptchaUrl={proccessOfCaptchaUrl}
+        proccessOfCaptcha={proccessOfCaptcha}
         />
       <button 
         className={styles.button_animate}

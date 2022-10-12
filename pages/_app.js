@@ -16,10 +16,19 @@ function MyApp({ Component, pageProps }) {
 
     return (
         <>
-            <YMInitializer accounts={[90703823]} options={{webvisor: true, defer: true}} version="2" />
-              <CookiesProvider>
+            <YMInitializer 
+            accounts={[90703823]} 
+            options={{
+                clickmap: true,
+                trackLinks: true,
+                accurateTrackBounce: true,
+                webvisor: true,
+                trackHash: true,
+            }} 
+            version="2" />
+            <CookiesProvider>
                 <Component {...pageProps} />
-              </CookiesProvider>
+            </CookiesProvider>
         </>
     )
 }

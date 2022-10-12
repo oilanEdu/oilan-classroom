@@ -19,6 +19,15 @@ const CaptchaComponent = (props) => {
             <div className={styles.anotherImageButton} onClick={(e) => {e.preventDefault()
             props.anotherImage()}}></div>
           </div>
+          <div className={styles.proccessOfCaptchaWrapper}>
+            <div className={styles.proccessOfCaptcha} style={{backgroundImage: `url(${props.proccessOfCaptchaUrl})`}}>
+                
+            </div>
+            <p>{props.proccessOfCaptcha === 0 ? 'Подтвержение' : ''}
+               {props.proccessOfCaptcha === 1 ? 'Повторите попытку' : ''}
+               {props.proccessOfCaptcha === 3 ? 'Успешно' : ''}</p>
+          </div>
+
           <div className={styles.captchaInputsSection}>
             <input
               placeholder="Текст"
@@ -30,11 +39,6 @@ const CaptchaComponent = (props) => {
               onClick={(e) => {
                 e.preventDefault()
                 props.sendApplication();
-                e.preventDefault()
-                props.setFullname("");
-                props.setConnection("");
-                props.setPhone("");
-                props.setCheck(false)
                 e.preventDefault()
               }}
             >

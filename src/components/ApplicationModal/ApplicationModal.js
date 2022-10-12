@@ -14,7 +14,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
   const [captchaText, setCaptchaText] = useState("");
   const [captchaCheck, setCaptchaCheck] = useState(false);
   const [insertCaptchaText, setInsertCaptchaText] = useState('Введите текст с картинки')
-  const [showCaptcha, setShowCaptcha] = useState(true)
+  const [showCaptcha, setShowCaptcha] = useState(false)
 
   const [randomizedCaptchaId, setRandomizedCaptchaId] = useState()
   const [randomizedCaptchaData, setRandomizedCaptchaData] = useState()
@@ -78,6 +78,10 @@ const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
         course_id: 1,
         connection: connection === 0 ? "Звонок" : "Whatsapp"
       }
+      setFullname("");
+      setConnection("");
+      setPhone("");
+      setCheck(false)
 
       axios({
         method: "post",

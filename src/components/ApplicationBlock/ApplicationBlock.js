@@ -78,6 +78,10 @@ const ApplicationBlock = () => {
     loadCaptcha()
     console.log('CAPTCHI',captchaFin.text,captchaText)
     if (randomizedCaptchaData[0]?.text == captchaText) {
+      setFullname("");
+      setConnection("");
+      setPhone("");
+      setCheck(false)
       console.log('CAPTCHI',randomizedCaptchaData.text,captchaText)
       const ticketData = {
         fullname: fullname,

@@ -95,7 +95,7 @@ export default function AboutCourse(props) {
           </div>
           <div className={styles.leftSquare}>
             <p className={styles.squareTitle}>
-              64 000 тенге 👌  
+              50 000 тенге 👌  
             </p>
             <p className={styles.squareText}>
               В стоимость входит 4 недели индивидуальной работы с учеником по 2 занятия в неделю 

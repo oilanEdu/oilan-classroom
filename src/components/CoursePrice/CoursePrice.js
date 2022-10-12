@@ -33,7 +33,7 @@ const CoursePrice = () => {
       <span className={styles.possibility}>* Мы предоставляем возможность оплаты курса еженедельно</span>
       <div className={styles.price_info}>
         <div className={classnames(styles.price_info_item, styles.full)}>
-          <span>64 000 ₸</span>
+          <span>50 000 ₸</span>
           <p>За полный курс</p>
         </div>
         <div className={classnames(styles.price_info_item, styles.start)}>
@@ -41,7 +41,7 @@ const CoursePrice = () => {
           <p>24.10.2022</p>
         </div>
         <div className={classnames(styles.price_info_item, styles.part)}>
-          <span>16 000 ₸</span>
+          <span>13 000 ₸</span>
           <p>*При оплате частями.</p> 
           <p>Оплата совершается раз в неделю</p> 
         </div>

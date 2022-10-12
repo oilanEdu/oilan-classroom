@@ -22,7 +22,7 @@ const Main = (props) => {
       "<!-- Yandex.Metrika counter -->\n" +
       "<script type=\"text/javascript\" >\n" +
       "   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};\n" +
-      "   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})\n" +
+      "   m[i].l=1*new Date();k=e.createElement('t'),a=e.getElementsByTagName('t')[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})\n" +
       "   (window, document, \"script\", \"https://mc.yandex.ru/metrika/tag.js\", \"ym\");\n" +
       "\n" +
       "   ym(90703823, \"init\", {\n" +
@@ -42,7 +42,7 @@ const Main = (props) => {
     <div>
       <div className={styles.main}>
         <Head>
-          {/* <div dangerouslySetInnerHTML={{__html: ym()}}/> */}
+          <div dangerouslySetInnerHTML={{__html: ym()}}/>
         </Head>
         <Header white={true}/>
         <AboutCourse/>

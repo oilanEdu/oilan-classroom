@@ -10,6 +10,7 @@ const tagManagerArgs = {
 
 function MyApp({ Component, pageProps }) {
     useEffect(() => {
+        document.documentElement.style.backgroundColor = '#F1FAFF';
         TagManager.initialize(tagManagerArgs);
     }, []);
 

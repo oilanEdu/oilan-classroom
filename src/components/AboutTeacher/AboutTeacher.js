@@ -41,14 +41,13 @@ export default function AboutTeacher(props) {
         <h1>ПРЕПОДАВАТЕЛЬ КУРСА</h1>
         <div className={styles.previewBlock}>
           <div className={styles.logoBlock}>
-            <Image src={'https://realibi.kz/file/436573.png'} className={styles.imgTeacher}/>
+            <Image src={props.teacherByCourse?.avatar} className={styles.imgTeacher}/>
           </div>
           <div className={styles.infoBlock}>
             <h2>Преподаватель курса</h2>
-            <h3>Дарья Шишкина</h3>
+            <h3>{props.teacherByCourse?.name} {props.teacherByCourse?.surname}</h3>
             <p>
-              Выпускник Самарского национального университета имени академика С.П. Королева (диплом специалиста по направлению физика, диплом аспиранта по профилю физика и астрономия). Занимаюсь исследованиями в направлении фотовольтаики, наномедицины.<br/> 
-              Основные навыки: высшая математика, линейная алгебра,  общая физика, школьная физика и математика 5-11 классы.
+              {props.teacherByCourse?.description}
             </p>
             <button 
               className={styles.courseButton}
@@ -74,7 +73,7 @@ export default function AboutTeacher(props) {
         </div>
         <div className={showMainSpecificate?styles.showDetailInfoContain:styles.detailInfoContain}>
           <p>
-            Высшая математика, квантовая теория поля, линейная алгебра, квантовая физика, теория поля, общая физика
+          {props.teacherByCourse?.skills}
           </p>
         </div>
       </div>
@@ -119,16 +118,7 @@ export default function AboutTeacher(props) {
         </div>
         <div className={showSkill?styles.showDetailInfoContain:styles.detailInfoContain}>
           <p>
-            Доцент кафедры наноинженерии Самарского университета, преподаю дисциплины, связанные с моделированием микроструктур, специальными дисциплинами (физика конденсированного состояния, физика поверхности, дополнительные главы физики, теоретические основы интегральной оптики, технологии дифракционной микрооптики), также работаю в научном образовательном центре нанотехнологии (НОЦ НТ - 94).<br/> 
-            Ранее принимала участие в работах гранта РФФИ  НОМЕР ПРОЕКТА 16-48-630688 НАЗВАНИЕ ПРОЕКТА Исследование физических процессов в многослойных фоточувствительных кремниевых структурах с наноразмерными элементами Начало 2016г., окончание 2017г. (исполнитель)<br/>
-
-            1. Изготовление фоточувствительных структур с пористым кремнием (изготовление наноструктур, профедение диффузии, нанесение контактов, оптических покрытий)<br/>
-            2. Выполнение лабораторных  испытаний, измерений и других видов работ при проведении исследований солнечных элементов.<br/>
-            3. Принятие участия в сборе и обработке материалов в процессе исследований в соответствии с утвержденной программой работы.<br/>
-            4. Проведение выборки данных из литературных источников, реферативных и информационных изданий, нормативно-технической документации в соответствии с установленным заданием.<br/>
-            5. Выполнение различных вычислительных и графических работ, связанные с проводимыми исследованиями и экспериментами.<br/>
-            6. Принятие участия в составлении и оформлении технической документации по выполненным научным подразделением работам.<br/>
-            7. Выполнение отдельных служебных поручений своего непосредственного руководителя
+          {props.teacherByCourse?.experience}
           </p>
         </div>
       </div>
@@ -144,7 +134,15 @@ export default function AboutTeacher(props) {
         </div>
         <div className={showYourInteres?styles.showDetailInfoContain:styles.detailInfoContain}>
           <div className={styles.items}>
+            {props.courseSkills?.map(el => <>
             <div className={styles.item}>
+              <Image src={el.img} className={styles.imgArrow}/>
+              <p>
+                {el.text}
+              </p>
+            </div>
+            </>)}
+            {/* <div className={styles.item}>
               <Image src={'https://realibi.kz/file/316032.png'} className={styles.imgArrow}/>
               <p>
                 Знать основные математические формулы
@@ -191,7 +189,7 @@ export default function AboutTeacher(props) {
               <p>
                 Не отвлекать родителей на решение домашних работ
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

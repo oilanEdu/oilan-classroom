@@ -2,11 +2,12 @@ import { useState } from "react";
 import styles from "./Program.module.css";
 import classnames from 'classnames';
 
-const Program = () => {
+const Program = (props) => {
   const [startShow, setStartShow] = useState(true);
   const [educationShow, setEducationShow] = useState(false);
   const [feedbackShow, setFeedbackShow] = useState(false);
   const [testShow, setTestShow] = useState(false);
+  const [educationShowOrder, setEducationShowOrder] = useState("0")
 
   return <div className={styles.container} id="program">
     <div className={styles.program_block_container}>
@@ -16,14 +17,31 @@ const Program = () => {
           <h2>Программа курса</h2>
           <img src="https://realibi.kz/file/730116.png"/>
         </div>
-        <span>Программа разрабатывается индивидуально для вас по результатам пробного занятия. На связи с вами будет преподаватель для проверки задания и передачи обратной связи</span>
+        <span>{props?.program}</span>
       </div>
     </div>
    
     <div className={styles.stage_block_container}>
       <h2>Этапы обучения на курсе</h2>
       <div className={styles.stages}>
-        <div className={classnames(styles.stage, styles.start_block)}>
+        {props.courseStages?.map(el => <>
+          <div className={styles.stage}>
+            <span
+              onMouseEnter={() => setEducationShowOrder(el.stage_order)} 
+              onMouseLeave={() => setEducationShowOrder('0')}
+            >
+              {el.stage_order}
+            </span>
+            <div 
+              style={{display: educationShowOrder == el.stage_order ? "flex" : "none"}} 
+              className={classnames(styles.stage_info, styles.education)}
+            >
+              <h3>{el.title}</h3>
+              <p>{el.text}</p>
+            </div>
+          </div>
+        </>)}
+        {/* <div className={classnames(styles.stage, styles.start_block)}>
           <span 
             onMouseEnter={() => setStartShow(true)} 
             onMouseLeave={() => setStartShow(false)}
@@ -82,7 +100,7 @@ const Program = () => {
             <h3>Тестирование и оценка</h3>
             <p>По результатам месяца проводится итоговый тест на основе которого замеряется прогресс обучающегося во время всего курса.</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   </div>

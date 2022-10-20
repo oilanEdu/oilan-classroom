@@ -59,6 +59,7 @@ export default function AdminBlocks(props) {
   const [skillText, setSkillText] = useState("");
   const [skillCourseId, setSkillCourseId] = useState(0);
 
+  const [stageTitle, setStageTitle] = useState("")
   const [stageText, setStageText] = useState("");
   const [stageOrder, setStageOrder] = useState(0);
   const [stageCourseId, setStageCourseId] = useState(0);
@@ -293,6 +294,7 @@ export default function AdminBlocks(props) {
 
   const createCourseStage = async () => {
     const data = {
+      stageTitle,
       stageText,
       stageOrder,
       stageCourseId,
@@ -544,14 +546,14 @@ export default function AdminBlocks(props) {
               /><br/>
               Дата начала: <input 
                 type="date"
-                value="2022-10-20"
+                // value="2022-10-20"
                 min="2022-01-01" 
                 max="2025-12-31"
                 onChange={(e) => setStartDate(e.target.value)}
               /><br/>
               Дата окончания: <input 
                 type="date"
-                value="2022-10-20"
+                // value="2022-10-20"
                 min="2022-01-01" 
                 max="2025-12-31"
                 onChange={(e) => setEndDate(e.target.value)}
@@ -723,6 +725,11 @@ export default function AdminBlocks(props) {
         <div className={showCreateCourseStage?styles.showDetailInfoContain:styles.detailInfoContain}>
           <div className={styles.dataBlock}>
             <div className={styles.formBlock}>
+              Заголовок этапа: <input
+                    type="text"
+                    value={stageTitle}
+                    onChange={(e) => setStageTitle(e.target.value)}
+                  /><br/>
               Содержание этапа: <textarea
                     type="text"
                     value={stageText}

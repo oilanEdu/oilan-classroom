@@ -20,6 +20,11 @@ export default function AboutCourse(props) {
 
   const handleShowSuccess = () => setShowSuccess(false);
 
+  const isIt = (value) => {
+    let is = value % 2
+    return is
+  }
+
 
   return (
     <div className={styles.container}>
@@ -28,15 +33,15 @@ export default function AboutCourse(props) {
       <div className={styles.mainInfo}>
         <div className={styles.leftMainInfo}>
           <div className={styles.flud}>
-            <p>Oilan.classroom</p>
+            <p>Oilan-classroom</p>
             <div className={styles.imgBoom}></div>
           </div>
           <div className={styles.courseTitle}>
-            <h1>Математика простыми словами</h1>
+            <h1>{props.course?.title}</h1>
           </div>
           <div className={styles.courseDescription}>
             <p>
-              Курс предназначен для учащихся школ. На нем проходятся основные темы из общего курса математики в школе. Благодаря ему вы значительно повысите свои знания по предмету и сможете легко и быстро решать задачи из тестов для поступления в НИШ и сдачи ЕНТ.
+            {props.course?.description}
             </p>
           </div>
           <div className={styles.buttonBlock}>
@@ -57,12 +62,15 @@ export default function AboutCourse(props) {
       <div className={styles.targetPersons}>
         <h1>КОМУ ПОДОЙДЕТ КУРС</h1>
         <div className={styles.items}>
+          {props.courseTargets?.map(el => <>
           <div className={styles.item}>
-            <Image src={'https://realibi.kz/file/243934.png'} className={styles.imgEvaluation}/>
-            <p className={styles.targetTitle}>Школьникам с низкой успеваемостью</p>
-            <p className={styles.targetDescr}>За 2 месяца занятий гарантируем заметный рост в успеваемости по предмету</p>
+            <Image src={el.img} className={styles.imgEvaluation}/>
+            <p className={styles.targetTitle}>{el.title}</p>
+            <p className={styles.targetDescr}>{el.text}</p>
           </div>
-          <div className={styles.item}>
+          </>)}
+          
+          {/* <div className={styles.item}>
             <Image src={'https://realibi.kz/file/410726.png'} className={styles.imgMedal}/>
             <p className={styles.targetTitle}>Поступающим в НИШ</p>
             <p className={styles.targetDescr}>Готовим ребенка к поступлению в НИШ</p>
@@ -71,13 +79,23 @@ export default function AboutCourse(props) {
             <Image src={'https://realibi.kz/file/915691.png'} className={styles.imgDiploma}/>
             <p className={styles.targetTitle} id="about">Сдающим ЕНТ</p>
             <p className={styles.targetDescr}>Готовим ребенка к сдаче ЕНТ</p>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className={styles.courseSquares}>
         <h1>О КУРСЕ</h1>
         <div className={styles.squares}>
-          <div className={styles.leftSquare}>
+          {props.courseInfoBlocks?.map(el => <>
+            <div className={isIt(el.block_order) ? styles.leftSquare : styles.rightSquare}>
+              <p className={styles.squareTitle}>
+                {el.title}
+              </p>
+              <p className={styles.squareText}>
+                {el.text} 
+              </p>
+            </div>
+          </>)}
+          {/* <div className={styles.leftSquare}>
             <p className={styles.squareTitle}>
               Онлайн Обучение 😎
             </p>
@@ -111,7 +129,7 @@ export default function AboutCourse(props) {
                 от 60 до 80 баллов - грант 7%<br/>
                 от 40 до 60 баллов - грант 5%  
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

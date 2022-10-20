@@ -11,24 +11,16 @@ const tagManagerArgs = {
 function MyApp({ Component, pageProps }) {
     useEffect(() => {
         document.documentElement.style.backgroundColor = '#F1FAFF';
+        document.body.style.overflowX = "hidden";
         TagManager.initialize(tagManagerArgs);
     }, []);
 
     return (
         <>
-            <YMInitializer 
-            accounts={[90703823]} 
-            options={{
-                clickmap: true,
-                trackLinks: true,
-                accurateTrackBounce: true,
-                webvisor: true,
-                trackHash: true,
-            }} 
-            version="2" />
-            <CookiesProvider>
+            <YMInitializer accounts={[90703823]} options={{webvisor: true, defer: true}} version="2" />
+              <CookiesProvider>
                 <Component {...pageProps} />
-            </CookiesProvider>
+              </CookiesProvider>
         </>
     )
 }

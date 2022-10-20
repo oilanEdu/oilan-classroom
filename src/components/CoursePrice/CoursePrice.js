@@ -4,10 +4,11 @@ import ApplicationModal from "../ApplicationModal/ApplicationModal";
 import { useState } from "react";
 import SuccessfullyModal from "../SuccessfullyModal/SuccessfullyModal";
 
-const CoursePrice = () => {
+const CoursePrice = (props) => {
 
   const [showSend, setShowSend] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const datetime1 = new Date()
   
   const handleShowSend = () => {
     setShowSend(false);
@@ -33,21 +34,21 @@ const CoursePrice = () => {
       <span className={styles.possibility}>* Мы предоставляем возможность оплаты курса еженедельно</span>
       <div className={styles.price_info}>
         <div className={classnames(styles.price_info_item, styles.full)}>
-          <span>50 000 ₸</span>
+          <span>{props?.course?.full_price} ₸</span>
           <p>За полный курс</p>
         </div>
         <div className={classnames(styles.price_info_item, styles.start)}>
           <span>дата начала</span>
-          <p>24.10.2022</p>
+          <p>{new Date(props?.course?.start_date).toLocaleDateString()}</p>
         </div>
         <div className={classnames(styles.price_info_item, styles.part)}>
-          <span>13 000 ₸</span>
+          <span>{props?.course?.monthly_price} ₸</span>
           <p>*При оплате частями.</p> 
           <p>Оплата совершается раз в неделю</p> 
         </div>
         <div className={classnames(styles.price_info_item, styles.finish)}>
           <span>Дата окончания</span>
-          <p>24.11.2022</p>
+          <p>{new Date(props?.course?.end_date).toLocaleDateString()}</p>
         </div>
       </div>
     </div>

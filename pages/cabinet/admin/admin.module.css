@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "Muller Regular";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Medium";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Bold";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+}
+
+.container{
+  background-color: #f1faff;
+  width: 100%;
+  padding-left: 5%;
+}
+

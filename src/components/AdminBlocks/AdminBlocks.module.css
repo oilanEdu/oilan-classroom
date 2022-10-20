@@ -1,0 +1,118 @@
+@font-face {
+    font-family: "Noto Sans";
+    src: url("../../../public/fonts/noto/NotoSans-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Regular";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Medium";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Bold";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+}
+.container{
+  background-color: #f1faff;
+  width: 100%;
+  padding-top: 40px;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 40px;
+}
+
+.detailInfo{
+  background: #FFFFFF;
+  border-radius: 16px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.detailInfoHeader{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 32px;
+}
+.detailInfoHeader p{
+  font-family: 'Muller Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  /*line-height: 150%;*/
+  display: flex;
+  /*align-items: center;*/
+  text-transform: uppercase;
+  color: #1E2432;
+  margin: 0px;
+}
+.detailInfoContain{
+  display: none;
+}
+.showDetailInfoContain{
+  display: flex;
+  padding: 32px;
+  font-family: 'Noto Sans';
+}
+.showButton{
+  cursor: pointer;
+}
+
+.showButton img {
+  width: 23px;
+  height: 23px;
+  object-fit: contain;
+}
+
+.dataBlock{
+  border: 1px solid black;
+  width: 100%;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px;
+}
+
+.formBlock{
+  /*border: 1px solid black;*/
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: start;
+}
+
+@media screen and (max-width: 1280px) {
+  .container{
+    margin: 40px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .showDetailInfoContain {
+    padding: 20px;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+
+}
+
+@media screen and (max-width: 500px) {
+  .container{
+    margin: 20px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .detailInfoHeader p {
+    font-size: 14px;
+  }
+  .showDetailInfoContain {
+    padding: 15px;
+  }
+}

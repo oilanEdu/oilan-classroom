@@ -385,7 +385,7 @@ const Main = (props) => {
           </div>
         </div>
         <div className={styles2.container}>
-          <SuccessfullyModal
+          {/* <SuccessfullyModal
             show={showSuccess}
             onClickNext={handleShowSuccess}
           />
@@ -395,7 +395,7 @@ const Main = (props) => {
             onClose={closeHandler}
             course={course}
             teacherByCourse={teacherByCourse}
-          />
+          /> */}
           <div className={styles2.mainInfo}>
             <h1>ПРЕПОДАВАТЕЛЬ КУРСА</h1>
             <div className={styles2.previewBlock}>
@@ -750,7 +750,7 @@ const Main = (props) => {
           </div>
         </div>
         <div className={styles4.container}>
-          <SuccessfullyModal
+          {/* <SuccessfullyModal
             show={showSuccess}
             onClickNext={handleShowSuccess}
           />
@@ -760,7 +760,7 @@ const Main = (props) => {
             onClose={closeHandler}
             course={course}
             teacherByCourse={teacherByCourse}
-          />
+          /> */}
           <h2>Стоимость обучения на курсе</h2>
 
           <div className={styles4.price_content}>
@@ -795,12 +795,12 @@ const Main = (props) => {
           </div>
         </div>
         <div className={styles5.container}>
-          <SuccessfullyModal
+          {/* <SuccessfullyModal
             show={showSend}
             onClickNext={onClickNext}
             handleShow={handleShowSend}
           />
-          <Backdrop show={showSend} />
+          <Backdrop show={showSend} /> */}
           <h1>Запишитесь на курс сейчас</h1>
           <span className={styles5.subtitle}>
             И мы свяжемся с вами для записи на пробный урок

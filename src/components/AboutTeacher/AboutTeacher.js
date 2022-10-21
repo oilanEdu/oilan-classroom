@@ -87,12 +87,12 @@ export default function AboutTeacher(props) {
             {showDiplomas?<Image src={'https://realibi.kz/file/904733.png'} className={styles.imgArrow}/>:<Image src={'https://realibi.kz/file/148715.png'} className={styles.imgArrow}/>}
           </p>
         </div>
-        {/*<div className={showDiplomas?styles.showDetailInfoContain:styles.detailInfoContain}>
+        <div className={showDiplomas?styles.showDetailInfoContain:styles.detailInfoContain}>
           <div className={!allDiplomas ? styles.diplomaBlock : styles.diplomaAll}>
-            {certificates.map(certificate => {
+            {props?.sertificates?.map(el => {
               // const extension = certificate.match(/[^.]+$/)[0]
               return <>
-                <Image src={certificate} className={styles.imgArrow}/>
+                <Image src={el.img} className={styles.imgArrow}/>
               </>        
             })}
             <span 
@@ -104,7 +104,7 @@ export default function AboutTeacher(props) {
               }
             </span>
           </div>
-        </div>*/}
+        </div>
       </div>
       <div className={styles.detailInfo}>
         <div className={styles.detailInfoHeader}>

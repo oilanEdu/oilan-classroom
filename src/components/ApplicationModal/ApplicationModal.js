@@ -82,7 +82,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
       const ticketData = {
         fullname: fullname,
         phone: phone,
-        course_id: 1,
+        course_id: course?.id,
         connection: connection === 0 ? "Звонок" : "Whatsapp",
         courseName: course?.title,
         teacherName: teacherByCourse?.name + ' ' + teacherByCourse?.surname

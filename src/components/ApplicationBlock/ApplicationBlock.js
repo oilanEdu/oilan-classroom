@@ -91,7 +91,7 @@ const ApplicationBlock = (props) => {
       const ticketData = {
         fullname: fullname,
         phone: phone,
-        course_id: 1,
+        course_id: props?.course?.id,
         connection: "Звонок",
         courseName: props?.course?.title,
         teacherName: props?.teacherByCourse?.name + '' + props?.teacherByCourse?.surname

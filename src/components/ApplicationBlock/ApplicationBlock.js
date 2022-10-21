@@ -7,7 +7,7 @@ import SuccessfullyModal from "../SuccessfullyModal/SuccessfullyModal";
 import { Image } from "react-bootstrap";
 import CaptchaComponent from "../Captcha/Captcha";
 
-const ApplicationBlock = () => {
+const ApplicationBlock = (props) => {
   const [showCaptcha, setShowCaptcha] = useState(false)
   const [insertCaptchaText, setInsertCaptchaText] = useState('Введите текст с картинки')
   const [captchaText, setCaptchaText] = useState("");
@@ -92,7 +92,9 @@ const ApplicationBlock = () => {
         fullname: fullname,
         phone: phone,
         course_id: 1,
-        connection: "Звонок"
+        connection: "Звонок",
+        courseName: props?.course?.title,
+        teacherName: props?.teacherByCourse?.name + '' + props?.teacherByCourse?.surname
       }
 
       axios({

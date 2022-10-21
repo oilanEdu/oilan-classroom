@@ -56,11 +56,11 @@ function Title(props) {
         <>
             <div style={{backgroundColor: "#f1faff"}}>
               <Header white={true}/>
-              <AboutCourse courseInfoBlocks={courseInfoBlocks} course={course} courseTargets={courseTargets}/>
-              <AboutTeacher teacherByCourse={teacherByCourse} courseSkills={courseSkills}/>
+              <AboutCourse courseInfoBlocks={courseInfoBlocks} teacherByCourse={teacherByCourse} course={course} courseTargets={courseTargets}/>
+              <AboutTeacher teacherByCourse={teacherByCourse} courseSkills={courseSkills} course={course}/>
               <Program program={course?.program} courseStages={courseStages}/>
               <CoursePrice course={course}/>
-              <ApplicationBlock />
+              <ApplicationBlock course={course} teacherByCourse={teacherByCourse}/>
               <Footer />
             </div>
         </>

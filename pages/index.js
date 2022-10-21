@@ -137,7 +137,14 @@ const Main = (props) => {
     }
   };
 
+  const [course, setCourse] = useState()
+  const [teacherByCourse, setTeacherByCourse] = useState()
   const loadCaptcha = async () => {
+    let getCourseOC = await axios.post(`${globals.productionServerDomain}/getCourseOC/` + 1)
+    setCourse(getCourseOC['data'][0])
+    let getTeacherByCourse = await axios.post(`${globals.productionServerDomain}/getTeacherByCourse/` + 1)
+    setTeacherByCourse(getTeacherByCourse['data'][0])
+
     let captcha = await axios.get(
       `${globals.productionServerDomain}/getCaptcha/`
     );
@@ -187,6 +194,8 @@ const Main = (props) => {
         phone: phone,
         course_id: 1,
         connection: "Звонок",
+        courseName: "Математика простыми словами",
+        teacherName: "Дарья Шишкина"
       };
 
       axios({
@@ -246,11 +255,13 @@ const Main = (props) => {
             showSend={showSend}
             handleShowSend={handleShowSend}
             onClose={closeHandler}
+            course={course}
+            teacherByCourse={teacherByCourse}
           />
           <div className={styles1.mainInfo}>
             <div className={styles1.leftMainInfo}>
               <div className={styles1.flud}>
-                <p>Oilan.classroom</p>
+                <p>Oilan-classroom</p>
                 <div className={styles1.imgBoom}></div>
               </div>
               <div className={styles1.courseTitle}>
@@ -382,6 +393,8 @@ const Main = (props) => {
             showSend={showSend}
             handleShowSend={handleShowSend}
             onClose={closeHandler}
+            course={course}
+            teacherByCourse={teacherByCourse}
           />
           <div className={styles2.mainInfo}>
             <h1>ПРЕПОДАВАТЕЛЬ КУРСА</h1>
@@ -745,6 +758,8 @@ const Main = (props) => {
             showSend={showSend}
             handleShowSend={handleShowSend}
             onClose={closeHandler}
+            course={course}
+            teacherByCourse={teacherByCourse}
           />
           <h2>Стоимость обучения на курсе</h2>
 

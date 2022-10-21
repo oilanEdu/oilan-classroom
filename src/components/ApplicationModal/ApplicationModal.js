@@ -6,7 +6,7 @@ import Backdrop from "../Backdrop/Backdrop";
 import { Image } from "react-bootstrap";
 import CaptchaComponent from "../Captcha/Captcha";
 
-const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
+const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByCourse}) => {
   const [check, setCheck] = useState(false);
   const [fullname, setFullname] = useState("");
   const [phone, setPhone] = useState("");
@@ -83,7 +83,9 @@ const ApplicationModal = ({showSend, handleShowSend, onClose}) => {
         fullname: fullname,
         phone: phone,
         course_id: 1,
-        connection: connection === 0 ? "Звонок" : "Whatsapp"
+        connection: connection === 0 ? "Звонок" : "Whatsapp",
+        courseName: course?.title,
+        teacherName: teacherByCourse?.name + ' ' + teacherByCourse?.surname
       }
       setFullname("");
       setConnection("");

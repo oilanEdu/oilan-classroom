@@ -23,7 +23,7 @@ const CoursePrice = (props) => {
 
   return <div className={styles.container}>
     <SuccessfullyModal show={showSuccess} onClickNext={handleShowSuccess}/>
-    <ApplicationModal showSend={showSend} handleShowSend={handleShowSend} onClose={closeHandler} />
+    <ApplicationModal course={props?.course} showSend={showSend} handleShowSend={handleShowSend} onClose={closeHandler} />
     <h2>Стоимость обучения на курсе</h2>
 
     <div className={styles.price_content}>

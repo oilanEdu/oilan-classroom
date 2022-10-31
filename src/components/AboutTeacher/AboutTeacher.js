@@ -56,7 +56,7 @@ export default function AboutTeacher(props) {
                 setShowSend(true);
               }}
             >
-              Записаться на курс
+              Попробовать бесплатно
             </button>
           </div>
         </div>

@@ -49,7 +49,7 @@ export default function AboutCourse(props) {
               className={styles.courseButton}
               onClick={() => setShowSend(true)}
             >
-              Записаться на курс
+              Попробовать бесплатно
             </button>
           </div>
         </div>

@@ -64,7 +64,7 @@ export default function AboutCourse(props) {
         <div className={styles.items}>
           {props.courseTargets?.map(el => <>
           <div className={styles.item}>
-            <span style={{textAlign: 'center'}}>
+            <span style={{textAlign: 'center', minHeight: '160px'}}>
               <Image src={el.img} className={styles.imgEvaluation}/>
               <p className={styles.targetTitle}>{el.title}</p>
             </span>

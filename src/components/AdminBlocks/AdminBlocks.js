@@ -86,6 +86,7 @@ export default function AdminBlocks(props) {
   const [correctlyAnswer, setCorrectlyAnswer] = useState("");
   const [exerciseCourseId, setExerciseCourseId] = useState(0);
   const [exerciseProgramId, setExerciseProgramId] = useState(0);
+  const status = "not verified"
 
   const [categoryName, setCategoryName] = useState("");
   const [categoryUrl, setCategoryUrl] = useState("");
@@ -383,6 +384,7 @@ export default function AdminBlocks(props) {
       exerciseText,
       exerciseLessonId,
       correctlyAnswer,
+      status
     };
 
     await axios({

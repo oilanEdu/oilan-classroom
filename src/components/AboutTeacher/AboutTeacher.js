@@ -8,17 +8,17 @@ export default function AboutTeacher(props) {
   const [showMainSpecificate, setShowMainSpecificate] = useState(false)
   const [showDiplomas, setShowDiplomas] = useState(false)
   const [showSkill, setShowSkill] = useState(false)
-  const [showYourInteres, setShowYourInteres] = useState(false)
-  const [showSend, setShowSend] = useState(false);
+  const [showYourInteres, setShowYourInteres] = useState(true)
+  const [showSend, setShowSend] = useState(false); 
   const [showSuccess, setShowSuccess] = useState(false);
   const [allDiplomas, setAllDiplomas] = useState(false);
   
 
   const [certificates, setCertificates] = useState([
-    'https://realibi.kz/file/939886.png', 
+    'https://realibi.kz/file/939886.png',  
     'https://realibi.kz/file/410531.png',
     'https://realibi.kz/file/104843.png',
-    'https://realibi.kz/file/104843.png',
+    'https://realibi.kz/file/104843.png', 
     'https://realibi.kz/file/743376.png'
   ]);
   
@@ -136,7 +136,7 @@ export default function AboutTeacher(props) {
           <div className={styles.items}>
             {props.courseSkills?.map(el => <>
             <div className={styles.item}>
-              <Image src={el.img} className={styles.imgArrow}/>
+              <Image src={el.img} className={styles.imgArrow}/> 
               <p>
                 {el.text}
               </p>

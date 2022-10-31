@@ -144,7 +144,7 @@
   border-radius: 32px;
   width: 33.3%;
   align-items: center;
-
+  justify-content: space-between;
   position: relative;
   xborder-bottom: 2px solid #f51c40;
 }

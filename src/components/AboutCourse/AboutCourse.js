@@ -64,8 +64,10 @@ export default function AboutCourse(props) {
         <div className={styles.items}>
           {props.courseTargets?.map(el => <>
           <div className={styles.item}>
-            <Image src={el.img} className={styles.imgEvaluation}/>
-            <p className={styles.targetTitle}>{el.title}</p>
+            <span style={{textAlign: 'center'}}>
+              <Image src={el.img} className={styles.imgEvaluation}/>
+              <p className={styles.targetTitle}>{el.title}</p>
+            </span>
             <p className={styles.targetDescr}>{el.text}</p>
           </div>
           </>)}

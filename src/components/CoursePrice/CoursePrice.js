@@ -34,8 +34,8 @@ const CoursePrice = (props) => {
       <span className={styles.possibility}>* Мы предоставляем возможность оплаты курса еженедельно</span>
       <div className={styles.price_info}>
         <div className={classnames(styles.price_info_item, styles.full)}>
-          <span>{props?.course?.full_price} ₸</span>
-          <p>За полный курс</p>
+          <span><psevdospan style={{fontSize: '20px'}}>от</psevdospan> {props?.course?.full_price} ₸</span>
+          <p>Пробное занятие бесплатно</p>
         </div>
         <div className={classnames(styles.price_info_item, styles.start)}>
           <span>дата начала</span>

@@ -208,19 +208,6 @@ function Homeworks(props) {
               	<div className={styles.cantainer}>
               		<div className={styles.selectBlock}>
               		    <h1>Домашние задания</h1>
-                        <div>
-                            <div>
-                                {selectedStudentId}
-                            </div> 
-                            <div>
-                                {students.map(student => (
-                                    <option value={student.student_id}>
-                                        {student.surname} {student.name} {student.patronymic}
-                                    </option>
-                                ))}
-                            </div>
-                        </div>
-
                         <select
                             value={selectedStudentId} 
                             onChange={(e) => {

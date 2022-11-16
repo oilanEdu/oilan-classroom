@@ -28,6 +28,7 @@ export default function AdminBlocks(props) {
   const [experience, setExperience] = useState("");
   const [url, setUrl] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [teacherDescription, setTeacherDescription] = useState("");
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -86,6 +87,7 @@ export default function AdminBlocks(props) {
   const [correctlyAnswer, setCorrectlyAnswer] = useState("");
   const [exerciseCourseId, setExerciseCourseId] = useState(0);
   const [exerciseProgramId, setExerciseProgramId] = useState(0);
+  const status = "not verified"
 
   const [categoryName, setCategoryName] = useState("");
   const [categoryUrl, setCategoryUrl] = useState("");
@@ -167,6 +169,7 @@ export default function AdminBlocks(props) {
       experience,
       url,
       avatar,
+      teacherDescription
     };
 
     await axios({
@@ -383,6 +386,7 @@ export default function AdminBlocks(props) {
       exerciseText,
       exerciseLessonId,
       correctlyAnswer,
+      status
     };
 
     await axios({
@@ -505,6 +509,11 @@ export default function AdminBlocks(props) {
                 type="text"
                 value={avatar}
                 onChange={(e) => setAvatar(e.target.value)}
+              /><br/>
+              Описание: <input
+                type="text"
+                value={teacherDescription}
+                onChange={(e) => setTeacherDescription(e.target.value)}
               /><br/>
               <button onClick={() => {createTeacher()}}>Создать</button>
             </div>

@@ -45,7 +45,7 @@ function Title(props) {
         console.log("getCourseInfoBlocks['data']", getCourseInfoBlocks['data'])
         //hooks
         setCourse(getCourseOC['data'][0])
-        setCourseTargets(getCourseTargets['data'])
+        setCourseTargets(getCourseTargets['data']) 
         setCourseInfoBlocks(getCourseInfoBlocks['data'])
         setCourseSkills(getCourseSkills['data'])
         setCourseStages(getCourseStages['data'])

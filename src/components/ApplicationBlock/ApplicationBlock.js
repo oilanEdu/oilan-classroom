@@ -267,7 +267,7 @@ const ApplicationBlock = (props) => {
           }
         }}
       >
-        Записаться на курс
+        Попробовать бесплатно
       </button>
       <span 
         className={check ? styles.check_on : styles.check_off}

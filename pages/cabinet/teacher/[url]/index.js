@@ -17,8 +17,13 @@ function TeacherCabinet(props) {
     const [teacher, setTeacher] = useState([])
     const [programs, setPrograms] = useState([])
     const [students, setStudents] = useState([])
-    const [check, setCheck] = useState(0)
-    const [closerLesson, setCloserLesson] = useState([])
+    const [check, setCheck] = useState(0) 
+    const [closerLesson, setCloserLesson] = useState([]) 
+    const [days, setDays] = useState('');
+    const [hours, setHours] = useState(0);
+    const [minutes, setMinutes] = useState(0);
+    const [seconds, setSeconds] = useState(0);
+    const [dataLoaded, setDataLoaded] = useState(false)
     
     const [emptyProgramCourseId, setEmptyProgramCourseId] = useState(0)
     const [emptyProgramTeacherId, setEmptyProgramTeacherId] = useState(0)
@@ -29,22 +34,45 @@ function TeacherCabinet(props) {
 
     const [showSort, setShowSort] = useState(false);
     const [sortType, setSortType] = useState("");
+    
 
     const [currentPage, setCurrentPage] = useState(1);
     const [cardsPerPage] = useState(10);
-
     const indexOfLastPost = currentPage * cardsPerPage;
     const indexOfFirstPost = indexOfLastPost - cardsPerPage;
     const currentPosts = students?.slice(indexOfFirstPost, indexOfLastPost)
     const howManyPages = Math.ceil(students?.length/cardsPerPage)
     
+    const updateTimer = () => {
+        const future = Date.parse(closerLesson.fact_time);
+        const now = new Date();
+        const diff = future - now;
+        
+        const y = Math.floor( diff / (1000*60*60*24*365) );
+        const d  = Math.floor( diff / (1000*60*60*24) );
+        const h = Math.floor( diff / (1000*60*60) );
+        const m  = Math.floor( diff / (1000*60) );
+        const s  = Math.floor( diff / 1000 );
+
+
+        // const hour = (h - d  * 24) + (days * 24);
+        
+        setDays(d  - y * 365);
+        setHours(h - d  * 24);
+        setMinutes(m  - h * 60);
+        setSeconds(s  - m  * 60);
+      };
+
+      
      
     const router = useRouter() 
 
     useEffect(() => {
         console.log(router)
         console.log('PROPS', props)
+        console.log(lessons)
         loadTeacherData()
+        // setInterval(() => {updateTimer()}, 1000); 
     }, []) 
     
     const loadStudentLessons = async (studentId, programId) => {
@@ -73,16 +101,16 @@ function TeacherCabinet(props) {
         console.log('lessonsURL', lessons)
     }
     
-    
     const loadTeacherData = async () => {
         let data = props.url 
         let getTeacherByUrl = await axios.post(`${globals.productionServerDomain}/getTeacherByUrl/` + data)
         const teacherIdLocal = getTeacherByUrl['data'][0]?.id
         setEmptyProgramTeacherId(teacherIdLocal)
         let teacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + teacherIdLocal)
-        teacherCourses['data'].forEach(course => { 
+          teacherCourses['data'].forEach(course => { 
             setEmptyProgramCourseId(course.id)
-        }); 
+            }
+           ); 
         let teacherPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByTeacherId/` + teacherIdLocal)
         let count = 0
           teacherPrograms['data'].forEach(program => {  
@@ -98,41 +126,56 @@ function TeacherCabinet(props) {
         let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
         setTeacher(getTeacherByUrl['data'][0])
         setPrograms(teacherPrograms['data'])
-        teacherStudents['data'].forEach(student => {
+        teacherStudents['data'].forEach(async student => {
         console.log('checks', student.check)
+        let diff = 604800000*7
             loadStudentLessons(student.student_id, student.program_id) 
             let answersCount = 0 
             let studentCheck = 0
-            let studentLessons = axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + student.program_id).then(res => {
+            let studentLessons = await axios.post(`${globals.productionServerDomain}/getStudentLessonsByProgramId/`, {studentId: student.student_id, programId: student.program_id}).then(res => {
                 let lessons = res.data
-                lessons.forEach(lesson => {
+                res.data.forEach(async lesson => {
                     // student.check = 0 
                     let currentDate = new Date().toLocaleDateString()
-                    let lessonDate = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).toLocaleDateString()
-                    let dateStr = new Date(lesson.start_time);
-                    let closerDate
-                    let diff = 604800000
-                    if ((lessonDate > currentDate) && (Date.parse(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time)) - Date.parse(new Date()) < diff)){
-                        diff = Date.parse(new Date()) - Date.parse(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time))
+                    let lessonDate 
+                    if (lesson.personal_time){
+                        lesson.fact_time = lesson.personal_time
+                        lessonDate = new Date(lesson.fact_time).toLocaleDateString()
+                    }else{
+                        lesson.fact_time = lesson.start_time
+                        lessonDate = new Date(lesson.fact_time).toLocaleDateString()
+                    }
+                    let dateStr = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time);
+                    let closerDate 
+                    if ((Date.parse(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time)) > Date.parse(new Date())) && (Date.parse(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time)) - Date.parse(new Date()) < diff)){ 
                         closerDate = lessonDate
+                        if (closerLesson){
+                            if (closerDate < new Date(closerLesson.fact_time).toLocaleDateString()){
+                                setCloserLesson(lesson)
+                            }
+                        }else{
+                            setCloserLesson(lesson)
+                        }
                         let curr_hours = dateStr.getHours();
                         let curr_minutes = dateStr.getMinutes();
+                        student.lesson_date = lesson.fact_time
                         student.closer_date = closerDate 
                         student.curr_hours = curr_hours 
                         student.curr_minutes = curr_minutes 
-
+ 
                     }
-                    let lessonExercises = axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
+                    // console.log(lesson)
+                    let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
                         let exercises = res.data
                         if (exercises) {
-                            exercises.forEach(exercise => {
+                            exercises.forEach(async exercise => {
                                 let studentId = student.student_id 
                                 let exerciseId = exercise.id   
                                 const data = {
                                   studentId, 
                                   exerciseId 
                                 };
-                                let exerciseAnswers = axios({ 
+                                let exerciseAnswers = await axios({ 
                                   method: "post",
                                   url: `${globals.productionServerDomain}/getAnswersByStudExId`,
                                   data: data,
@@ -147,27 +190,31 @@ function TeacherCabinet(props) {
                                         console.log('studentCheck', studentCheck)
                                         setCheck(student.check)
                                         student.check = studentCheck  
-                                        student.progress = 100/student.lessons_count*student.check
+                                        student.progress = 100/student.lessons_count*student.check 
                                     }  
                                     else{ 
-                                        setCheck(0) 
-                                        studentCheck = 0
-                                        student.check = 0
-                                        student.progress = '0'
+                                        console.log('')
+                                        // setCheck(0)
+                                        // studentCheck = 0
+                                        // student.check = 0
+                                        // student.progress = 0
                                     }
                                 })
-                            })
+                            }) 
                         }
                     })
                 })   
             })
             }
            );  
+        console.log('closerLesson', closerLesson)
         console.log('try', teacherStudents['data'])
         setStudents(teacherStudents['data'])
+        setDataLoaded(true) 
         console.log('programs', programs)
         console.log('students', students) 
-    }
+                // setCheckIsLoaded(true)
+      }
 
     const createEmptyProgram = async () => { 
         const emptyProgramTitle = 'emptyProgram'
@@ -188,7 +235,7 @@ function TeacherCabinet(props) {
           .catch((err) => {
             alert("Произошла ошибка");
           });
-    };
+      };
 
     const updateStudentProgram = async (studentId, courseId, programId) => { 
         const data = {
@@ -208,12 +255,64 @@ function TeacherCabinet(props) {
           .catch((err) => {
             alert("Произошла ошибка");
           });
-    };
+      };
 
     const personalLink = async (studentId, prigramId) => {
         const redirectUrl = `${encodeURIComponent(props.url)}/homeworks?programId=${encodeURIComponent(prigramId)}&studentId=${encodeURIComponent(studentId)}`
         
         await router.push(redirectUrl)
+    }
+
+    const startLessonLink = async (translationLink) => {
+        loadTeacherData()
+        const redirectUrl = `${encodeURIComponent(props.url)}/lesson?room=${encodeURIComponent(translationLink)}`
+        
+        await router.push(redirectUrl)
+    }
+
+    const startNewLesson = async () => {
+        let alphabet = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789";
+        let roomKey = "";
+        while (roomKey.length < 12) {
+            roomKey += alphabet[Math.floor(Math.random() * alphabet.length)];
+        }
+        console.log(roomKey); 
+        if (closerLesson.personal_time){
+            let data = {
+                lessonId: closerLesson.id,
+                lessonKey: roomKey,
+                studentId: closerLesson.student_id
+            }
+            await axios({
+              method: "put",
+              url: `${globals.productionServerDomain}/createPersonalRoom`, 
+              data: data,
+            })
+              .then(function (res) {
+                 console.log('DATA', data)
+                 startLessonLink(roomKey) 
+              })
+              .catch((err) => {
+                alert("Произошла ошибка"); 
+              });
+        }else{
+            let data = {
+                lessonId: closerLesson.id,
+                lessonKey: roomKey
+            }
+            await axios({
+              method: "put",
+              url: `${globals.productionServerDomain}/createDefaultRoom`, 
+              data: data,
+            })
+              .then(function (res) {
+                 console.log('DATA', data)
+                 startLessonLink(roomKey)
+              })
+              .catch((err) => {
+                alert("Произошла ошибка");
+              });
+        }
     }
 
     const sortABC = async () => {
@@ -249,13 +348,28 @@ function TeacherCabinet(props) {
             <div style={{backgroundColor: "#f1faff"}}>
               <HeaderTeacher white={true} url={props.url} teacher={teacher} />
               <div className={styles.cantainer}>
-                
+                <div className={styles.next_lesson}>
+                  <img src="https://realibi.kz/file/498086.png"/>
+                  <div className={styles.next_lesson_content}>
+                    <div>
+                      <p>Следующие занятие через {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')} часов</p>
+                      <p>Занятие №{closerLesson.lesson_number} {closerLesson.title}</p>
+                    </div>
+                    <button>Перейти к занятию</button>
+                  </div>
+                </div>
                 <div className={styles.topBlock}>
                     <div className={styles.greetings}>
                         <span>Преподаватель</span>
                         <h1>{teacher.surname} {teacher.name} {teacher.patronymic}</h1>
                         <p>Смотрите запланированные занятия в календаре. Персонально отредактируйте программы студентов наблюдайте за их прогрессом по вашей программе. Удобно проводите занятие по запланированной программе и проверяйтя домашние задания студентов.</p>
-                        <button>Перейти к занятию</button>
+                        <button
+                            onClick={() => {
+                                (closerLesson.personal_lesson_link || closerLesson.default_lesson_link)?
+                                startLessonLink(closerLesson.personal_lesson_link?closerLesson.personal_lesson_link:closerLesson.default_lesson_link):
+                                startNewLesson()
+                            }}
+                        >Перейти к занятию</button>
                     </div>
                     <div className={styles.calendarBlock}>
                          <Calendar2 lessons={lessons}/> 

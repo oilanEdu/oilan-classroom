@@ -1,0 +1,29 @@
+.title {
+    font-weight: 400;
+font-size: 16px;
+line-height: 150%;
+margin: 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inputs {
+    width: 130px;
+height: 48px;
+
+background: #FFFFFF;
+border: 1px solid #A2A7B2;
+border-radius: 4px;
+padding: 10px;
+}
+
+.inputsWrapper {
+    display: flex;
+gap: 20px;
+flex-direction: row;
+}

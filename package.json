@@ -8,12 +8,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^6.5.3",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.1",
     "caniuse-lite": "^1.0.30001412",
+    "date-fns": "^2.29.3",
     "entities": "^4.4.0",
     "follow-redirects": "^1.15.2",
+    "freeice": "^2.2.2",
     "jquery": "^3.6.1",
     "jsdom": "^20.0.0",
     "next": "12.3.1",
@@ -21,12 +24,19 @@
     "postcss": "^8.4.16",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
+    "react-calendar-datetime-picker": "^1.6.3",
     "react-cookie": "^4.1.1",
+    "react-datetime-picker": "^4.0.1",
+    "react-datetime-pickers": "^1.1.2",
     "react-dom": "^18.2.0",
     "react-gtm-module": "^2.0.11",
+    "react-native": "^0.70.4",
     "react-phone-number-input": "^3.2.11",
     "react-yandex-metrika": "^2.6.0",
-    "recaptcha-v3-react-function-async": "0.0.3"
+    "recaptcha-v3-react-function-async": "0.0.3",
+    "recharts": "^2.1.16",
+    "socket.io": "^4.5.3",
+    "socket.io-client": "^4.5.3"
   },
   "devDependencies": {
     "country-flag-icons": "^1.5.5",

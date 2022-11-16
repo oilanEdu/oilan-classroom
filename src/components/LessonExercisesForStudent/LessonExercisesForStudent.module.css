@@ -1,0 +1,138 @@
+@font-face {
+  font-family: "Noto Sans Regular";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Medium";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Bold";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Regular";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Medium";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Bold";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+}
+
+.container {
+  /* background-color: rgb(241, 250, 255); */
+  padding: 40px 120px;
+}
+
+.exercises {
+  display: flex;
+}
+
+.exercises_title {
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+.correctExercise {
+  padding: 5px 35px;
+  background:  linear-gradient(0deg, rgba(54, 191, 118, 0.8), rgba(54, 191, 118, 0.8));
+  border-radius: 4px;
+  font-size: 16px;
+  color: #FFFFFF;
+  font-family: "Noto Sans Bold";
+  cursor: pointer;
+}
+
+.uncorrectExercise {
+  padding: 5px 35px;
+  background:  linear-gradient(0deg, #EA6756, #EA6756);
+  border-radius: 4px;
+  font-size: 16px;
+  color: #FFFFFF;
+  font-family: "Noto Sans Bold";
+  cursor: pointer;
+}
+
+.emptyExercise {
+  padding: 5px 35px;
+  background:  linear-gradient(0deg, #CAE3FF, #CAE3FF);
+  border-radius: 4px;
+  font-size: 16px;
+  color: #FFFFFF;
+  font-family: "Noto Sans Bold";
+  cursor: pointer;
+}
+
+.answer {
+  width: 390px;
+  padding: 12px 16px;
+  border: 1px solid #A2A7B2;
+  border-radius: 8px;
+}
+
+.answer_btn {
+  padding: 12px 54px;
+  background: #5BCB91;
+  border: none;
+  border-radius: 8px;
+  margin-left: 20px;
+  color: #fff;
+  font-size: 16px;
+  font-family: "Noto Sans Bold";
+}
+
+.answer_text {
+  font-family: "Noto Sans Regular";
+  font-size: 18px;
+  color: #1E2432;
+}
+
+.reTryBlock{
+  display: flex;
+  flex-direction: column;
+}
+
+.reanswer_btn{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 60px;
+  gap: 10px;
+  width: 298px;
+  height: 48px;
+  background: #007AFF;
+  border-radius: 8px;
+  font-family: 'Noto Sans Bold';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: #FFFFFF;
+  border: none;
+  margin-top: 10px;
+}
+
+.blueBrickBorder{
+  display: flex;
+  padding: 2px;
+  border: 3px solid #007AFF;
+  margin-left: 20px;
+  border-radius: 8px;
+}
+
+.whiteBrickBorder{
+  display: flex;
+  padding: 2px;
+  border: 3px solid white;
+  margin-left: 20px;
+  border-radius: 8px;
+}
+
+.editAnswerBlock{
+  margin-top: 15px;
+}

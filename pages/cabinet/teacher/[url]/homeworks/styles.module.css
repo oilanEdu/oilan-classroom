@@ -1,0 +1,455 @@
+@font-face {
+  font-family: "Noto Sans Regular";
+  src: url("../../../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Medium";
+  src: url("../../../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Bold";
+  src: url("../../../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Regular";
+  src: url("../../../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Medium";
+  src: url("../../../../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Bold";
+  src: url("../../../../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+}
+
+.cantainer{
+	width: 90%;
+	margin-left: 5%;
+	display: flex;
+	flex-direction: column;
+	margin-top: 80px;
+}
+
+.reloadButton{
+	margin-left: 20px;
+	width: 32px;
+	height: 32px;
+	background-color: #007AFF;
+	border-radius: 50%;
+	text-align: center;
+	align-items: center;
+	color: white;
+	font-family: 'Noto Sans Bold';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 26px;
+	line-height: 22px;
+	padding: 3px;
+	cursor: pointer;
+	border: none;
+}
+
+.selectBlock{
+	margin-bottom: 40px;
+	width: 1200px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.selectBlock h1{
+	margin-bottom: 30px;
+	font-family: 'Muller Bold';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 150%;
+	text-transform: uppercase;
+	color: #1E2432;
+	width: 100%;
+}
+
+.selectBlock select{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 12px 20px;
+	gap: 10px;
+	width: 320px;
+	height: 48px;
+	background: #FFFFFF;
+	border: 1px solid #A2A7B2;
+	border-radius: 4px;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+	color: #212121;
+	margin-right: 20px;
+}
+
+.lessons{
+	padding-top: 10px;
+}
+
+.lesson{
+	background-color: rgb(241, 250, 255);
+	margin-bottom: 10px;
+	width: 1200px;
+}
+
+.lessonTopRow{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.primeLessonInfo{
+	display: flex;
+	flex-direction: row;
+	background-color: white;
+	align-items: center;
+	padding: 0px 16px;
+	gap: 16px;
+	isolation: isolate;
+	width: 1120px;
+	height: 80px;
+	background: #FFFFFF;
+	border-radius: 16px 16px 0px 0px;
+}
+
+.primeLessonInfo span{
+	margin-left: 10px;
+}
+
+.lessonNumber{
+	font-family: 'Noto Sans Bold';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 150%;
+	color: #1E2432;
+	width: 2%;
+}
+
+.lessonTitle{
+	font-family: 'Noto Sans Bold';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 150%;
+	color: #1E2432;
+}
+
+.lessonDatetime{
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 150%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	text-decoration-line: underline;
+	color: #007AFF; 
+	width: 22%;
+}
+
+.plusButton{
+	display: flex;
+	cursor: pointer;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 8px;
+	gap: 10px;
+	width: 77px;
+	height: 77px;
+	border-radius: 600px;
+	font-family: 'Arial';
+	font-style: normal;
+	font-size: 56px;
+	line-height: 24px;
+	color: #212121;
+}
+
+.plus {
+	background: url(https://realibi.kz/file/802041.png) no-repeat #fff;
+	background-size: 23px; 
+	background-position: center
+}
+
+.minus {
+	background: url(https://realibi.kz/file/680498.png) no-repeat #fff;
+	background-size: 23px; 
+	background-position: center
+}
+
+.detailInfo{
+	flex-direction: column;
+	background: #FFFFFF;
+	border-radius: 0px 16px 16px 16px;
+	padding-left: 80px;
+	padding-top: 40px;
+}
+
+.bricksRow{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.studentOptions {
+	display: block;
+	background: url(https://realibi.kz/file/363425.png);
+}
+
+.bricksRow span{
+	margin-right: 10px;
+	font-family: 'Muller Bold';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 150%;
+	text-transform: uppercase;
+	color: #1E2432;
+	margin-right: 20px;
+}
+
+.exerBrickGreen{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 0px;
+	gap: 10px;
+	width: 80px;
+	height: 32px;
+	border-radius: 4px;
+	background-color: #5BCB91;
+	font-family: 'Noto Sans Bold';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 22px;
+	color: #FFFFFF;
+	cursor: pointer;
+}
+
+.exerBrickRed{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 0px;
+	gap: 10px;
+	width: 80px;
+	height: 32px;
+	border-radius: 4px;
+	background-color: #EB8478;
+	font-family: 'Noto Sans Bold';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 22px;
+	color: #FFFFFF;
+	cursor: pointer;
+}
+
+.exerBrickWhite{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 0px;
+	gap: 10px;
+	width: 80px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid #4A4A4A;
+	background-color: #FFFFFF;
+	font-family: 'Noto Sans Bold';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 22px;
+	color: #4A4A4A;;
+	cursor: pointer;
+}
+
+.answerBlock{
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
+}
+
+.exerciseText{
+	width: 545px;
+	height: 27px;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 150%;
+	color: #1E2432;
+	margin-bottom: 20px;
+}
+
+.studentsAnswer{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 16px;
+	gap: 10px;
+	width: 260px;
+	height: 48px;
+	background: #FFFFFF;
+	border: 1px solid #9FB7D7;
+	border-radius: 8px;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+	color: #000000;
+	margin-right: 20px;
+}
+
+.checkRow{
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 24px;
+}
+
+.checkRow span{
+	margin-right: 10px;
+}
+
+.correctButton{
+	width: 85px;
+	height: 48px;
+	background: #5BCB91;
+	border-radius: 8px;
+	border: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 26px;
+	line-height: 24px;
+	margin-right: 20px;
+	color: #FFFFFF;
+}
+
+.uncorrectButton{
+	width: 85px;
+	height: 48px;
+	background: #EB8478;
+	border-radius: 8px;
+	border: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 26px;
+	line-height: 24px;
+	margin-right: 20px;
+	color: #FFFFFF;
+}
+
+.disabledButton{
+	width: 85px;
+	height: 48px;
+	background: lightgrey;
+	border-radius: 8px;
+	border: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 26px;
+	line-height: 24px;
+	margin-right: 20px;
+	color: #FFFFFF;
+}
+
+.correctAnswer{
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 25px;
+	color: #1E2432;
+}
+
+.commentBlock{
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 60px;
+}
+
+.commentBlock span{
+	font-family: 'Noto Sans Bold';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 20px;
+	color: #000000;
+	margin-bottom: 10px;
+}
+
+.teacherComment{
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	padding: 10px 4px 4px 12px;
+	gap: 12px;
+	width: 467px;
+	height: 136px;
+	background: #FFFFFF;
+	border: 1px solid #A2A7B2;
+	border-radius: 8px;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 22px;
+	margin-bottom: 20px;
+}
+
+.sendButton{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 18px 0px;
+	gap: 10px;
+	width: 200px;
+	height: 48px;
+	background-color: #007AFF;
+	border-radius: 8px;
+	border: none;
+	font-family: 'Noto Sans Bold';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 22px;
+	color: #FFFFFF;
+}

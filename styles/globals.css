@@ -7,6 +7,10 @@ body {
   background-color: #FDFFFC;
 }
 
+body {
+    overflow-x: hidden
+}
+
 .container {
   padding-left: 15%;
   padding-right: 15%;
@@ -21,6 +25,55 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+/* calendar 2 */
+.col-start-2 {
+    grid-column-start: 1;
+}
+.col-start-3 {
+    grid-column-start: 2;
+}
+.col-start-4 {
+    grid-column-start: 3;
+}
+.col-start-5 {
+    grid-column-start: 4;
+}
+.col-start-6 {
+    grid-column-start: 5;
+}
+.col-start-7 {
+    grid-column-start: 6;
+}
+.py-1-5 {
+  /* width: 70px;
+  text-align: center;
+  height: 50px; */
+
+  width: 70px;
+    text-align: center;
+    height: 50px;
+    border: 1px;
+    border-color: #F6F6F6;
+    /* border-style: inset; */
+    border-style: ridge;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.today {
+  background-color: #87bbf4;
+}
+.selectedDay {
+  background-color: #007AFF;
+}
+.selectedDayNumber {
+  color: white;
+}
+.todayNumber {
+  color: white;
 }
 /* Slider */
 .slick-slider

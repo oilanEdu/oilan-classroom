@@ -1,0 +1,93 @@
+@font-face {
+  font-family: "Noto Sans Regular";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Medium";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Bold";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Regular";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Medium";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Bold";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+}
+
+.lesson {
+  display: grid;
+  grid-template-columns: 12fr 1fr;
+  align-items: flex-start;
+}
+
+.lesson_content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 6fr 2.5fr 1.5fr;
+  background: #fff;
+  padding: 10px;
+  margin: 10px 10px 0px 10px;
+  border-radius: 16px;
+  justify-items: start;
+  align-items: center;
+}
+
+.lesson_content p {
+  margin: 0;
+  font-size: 16px;
+  font-family: "Noto Sans Regular";
+}
+
+.lesson_tesis {
+  display: block;
+  background: rgb(255, 255, 255);
+  padding: 10px;
+  margin: 0px 10px 10px;
+  border-radius: 16px;
+}
+
+.lesson_content_title {
+  background: url(https://realibi.kz/file/393202.png) no-repeat;
+  background-size: 17px 23px;
+  background-position: 0 50%;
+  padding-left: 26px;
+}
+
+.open {
+  width: 80px;
+  height: 80px;
+  background: url(https://realibi.kz/file/915232.png) no-repeat #fff;
+  background-position: 50%;
+  background-size: 22px;
+  border-radius: 50%;
+  margin: 10px;
+}
+
+.block {
+  width: 80px;
+  height: 80px;
+  background: url(https://realibi.kz/file/815213.png) no-repeat #fff;
+  background-position: 50%;
+  background-size: 15px;
+  border-radius: 50%;
+  margin: 10px;
+}
+
+.lesson_grade {
+  background: #74C87D;
+  border-radius: 8px;
+  padding: 18px 22px;
+}
+
+.lesson_score {
+  border-radius: 8px;
+  padding: 18px 20px;
+}

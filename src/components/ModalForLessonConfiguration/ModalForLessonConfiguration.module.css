@@ -1,0 +1,139 @@
+.modalWrapper {
+    /* width: 900px;
+    height: auto;
+    margin: 75px 270px 0px 270px;;
+    position: fixed;
+    background-color: white;
+    z-index: 2;
+    border: 2px solid #007AFF;
+    border-radius: 32px;
+    overflow: auto;
+    min-height: 320px; */
+
+    width: 900px;
+    /* height: auto; */
+    margin: 75px 270px 0px 270px;
+    position: fixed;
+    background-color: white;
+    z-index: 8;
+    border: 2px solid #007AFF;
+    border-radius: 32px;
+    overflow: scroll;
+    min-height: 320px;
+    max-height: 90vh;
+}
+.modalWrapper::-webkit-scrollbar {
+    
+  }
+
+.blackBackground {
+    position: absolute;
+    /* width: 154vh; */
+    /* height: 286vh; */
+    background: #000000;
+    opacity: 0.35;
+    z-index: 7;
+    height: 100%;
+    width: 341vh;
+    margin: 0 calc(-39vw + 10%);
+}
+
+.close {
+    background-image: url(https://realibi.kz/file/431074.png);
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: 16px;
+    height: 16px;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.title {
+    padding: 40px 254px 0px 254px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 150%;
+    margin-bottom: 40px;
+}
+
+.innerWrapper {
+    padding: 0px 80px 0px 80px;
+}
+
+.studentImg {
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+}
+
+.student {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.studentName {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+}
+.studentName p {
+    margin: 0;
+}
+
+.select {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+
+    width: 320px;
+    height: 48px;
+    padding-left: 10px;
+
+    border: 1px solid #A2A7B2;
+    border-radius: 4px;
+}
+.save {
+    width: 260px;
+    height: 48px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    color: #FFFFFF;
+    background: #5BCB91;
+    border-radius: 8px;
+    border: none;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.buttonWrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.timetablesWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modalWrapper::-webkit-scrollbar {
+    width: 11px;
+    background-color: transparent;
+    background-clip: content-box;
+  }
+  .modalWrapper::-webkit-scrollbar-button {
+    background-color: transparent;
+  }
+  .modalWrapper::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+  .modalWrapper::-webkit-scrollbar-thumb {
+    border: solid transparent;
+    border-width: 1px 1px 1px 2px;
+    background-color: #c5c5c5;
+    background-clip: content-box;
+    border-radius: 32px;
+  }

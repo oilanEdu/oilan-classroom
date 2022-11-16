@@ -140,7 +140,7 @@ const Main = (props) => {
   const [course, setCourse] = useState()
   const [teacherByCourse, setTeacherByCourse] = useState()
   const loadCaptcha = async () => {
-    let getCourseOC = await axios.post(`${globals.productionServerDomain}/getCourseOC/` + 1)
+    let getCourseOC = await axios.post(`${globals.productionServerDomain}/getCourseOC/` + "MathBySimpleWords")
     setCourse(getCourseOC['data'][0])
     let getTeacherByCourse = await axios.post(`${globals.productionServerDomain}/getTeacherByCourse/` + 1)
     setTeacherByCourse(getTeacherByCourse['data'][0])
@@ -237,6 +237,9 @@ const Main = (props) => {
     }
   };
 
+  useEffect(() => {
+    console.log("course teacherByCourse", course, teacherByCourse)
+  }, [course, teacherByCourse])
   return (
     <div>
       <div className={styles.main}>

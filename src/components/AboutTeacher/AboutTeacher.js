@@ -136,7 +136,7 @@ export default function AboutTeacher(props) {
           <div className={styles.items}>
             {props.courseSkills?.map(el => <>
             <div className={styles.item}>
-              <Image src={el.img} className={styles.imgArrow}/> 
+              <Image src={el.img} className={styles.imgArrow}/>
               <p>
                 {el.text}
               </p>

@@ -117,15 +117,16 @@ const loadStudentLessons = async (studentId, programId) => {
         let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
         setTeacher(getTeacherByUrl['data'][0])
         setPrograms(teacherPrograms['data'])
-        teacherStudents['data'].forEach(student => {
+        teacherStudents['data'].forEach(async student => {
+        console.log("studentTTTTTT", student);
         console.log('checks', student.check)
         let diff = 604800000*7
             loadStudentLessons(student.student_id, student.program_id) 
             let answersCount = 0 
             let studentCheck = 0
-            let studentLessons = axios.post(`${globals.productionServerDomain}/getStudentLessonsByProgramId/`, {studentId: student.student_id, programId: student.program_id}).then(res => {
+            let studentLessons = await axios.post(`${globals.productionServerDomain}/getStudentLessonsByProgramId/`, {studentId: student.student_id, programId: student.program_id}).then(res => {
                 let lessons = res.data
-                res.data.forEach(lesson => {
+                res.data.forEach(async lesson => {
                     // student.check = 0 
                     let currentDate = new Date().toLocaleDateString()
                     let lessonDate 
@@ -152,42 +153,45 @@ const loadStudentLessons = async (studentId, programId) => {
                         student.lesson_date = lesson.fact_time
                         student.closer_date = closerDate 
                         student.curr_hours = curr_hours 
-                        student.curr_minutes = curr_minutes 
+                        student.curr_minutes = curr_minutes
  
                     }
-                    // console.log(lesson)
-                    let lessonExercises = axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
+                    let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson?.id).then(res => {
                         let exercises = res.data
                         if (exercises) {
-                            exercises.forEach(exercise => {
+                            exercises.forEach(async exercise => {
                                 let studentId = student.student_id 
                                 let exerciseId = exercise.id   
+                                console.log("exercise.id", exercise.id)
                                 const data = {
                                   studentId, 
                                   exerciseId 
                                 };
-                                let exerciseAnswers = axios({ 
+                                let exerciseAnswers = await axios({ 
                                   method: "post",
                                   url: `${globals.productionServerDomain}/getAnswersByStudExId`,
                                   data: data,
                                 }).then(res =>{
                                     let answers = res.data
+                                    console.log("answersRESLOG", answers)
                                     answers.forEach(answer => {
                                         answersCount += 1 
                                     })
                                     if ((exercises.length > 0) && (exercises.length == answersCount)){
                                         student.check += 1 
                                         studentCheck += 1
-                                        console.log('studentCheck', studentCheck)
+                                        console.log('studentCheck', studentCheck, exercises, answers)
                                         setCheck(student.check)
                                         student.check = studentCheck  
                                         student.progress = 100/student.lessons_count*student.check 
+                                        
                                     }  
                                     else{ 
-                                        setCheck(0)
-                                        studentCheck = 0
-                                        student.check = 0
-                                        student.progress = 0
+                                        console.log('')
+                                        // setCheck(0)
+                                        // studentCheck = 0
+                                        // student.check = 0
+                                        // student.progress = 0
                                     }
                                 })
                             }) 
@@ -199,10 +203,10 @@ const loadStudentLessons = async (studentId, programId) => {
            );  
         console.log('closerLesson', closerLesson)
         console.log('try', teacherStudents['data'])
-        setStudents(teacherStudents['data'])
-        setDataLoaded(true) 
+        setStudents(teacherStudents['data'])  
         console.log('programs', programs)
         console.log('students', students) 
+        // setCheckIsLoaded(true)
       }
 
     const createEmptyProgram = async () => { 

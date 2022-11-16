@@ -7,6 +7,10 @@ body {
   background-color: #FDFFFC;
 }
 
+body {
+    overflow-x: hidden
+}
+
 .container {
   padding-left: 15%;
   padding-right: 15%;

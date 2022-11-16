@@ -39,6 +39,7 @@
     margin: 0 calc(-50vw + 50%);
     /* align-content: center; */
     padding: 0 calc(50vw - 50%);
+    padding-top: 50px;
 }
 .logo{
     display: flex;

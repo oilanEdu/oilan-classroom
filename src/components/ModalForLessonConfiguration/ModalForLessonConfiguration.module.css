@@ -15,7 +15,7 @@
     margin: 75px 270px 0px 270px;
     position: fixed;
     background-color: white;
-    z-index: 2;
+    z-index: 8;
     border: 2px solid #007AFF;
     border-radius: 32px;
     overflow: scroll;
@@ -32,7 +32,7 @@
     /* height: 286vh; */
     background: #000000;
     opacity: 0.35;
-    z-index: 2;
+    z-index: 7;
     height: 100%;
     width: 341vh;
     margin: 0 calc(-39vw + 10%);
@@ -135,4 +135,5 @@
     border-width: 1px 1px 1px 2px;
     background-color: #c5c5c5;
     background-clip: content-box;
+    border-radius: 32px;
   }

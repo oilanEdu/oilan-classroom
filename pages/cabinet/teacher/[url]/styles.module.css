@@ -399,6 +399,40 @@
 	width: 20%;
 }
 
+.sConfigureWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+	width: 20%;
+}
+.sConfigureGear {
+	background-image: url(https://realibi.kz/file/867377.png);
+	width: 20px;
+    height: 20px;
+    background-size: cover;
+}
+
+.sConfigure {
+	cursor: pointer;
+}
+.sConfigure{
+	padding-left: 10px;
+	width: auto;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 150%;
+	align-items: center;
+	color: #007AFF !important;
+}
+.sConfigure {
+	text-decoration-line: none;
+}
+.sConfigure:hover{
+	text-decoration-line: underline;
+}
+
 .studentCage{
 	display: flex;
 	flex-direction: row;

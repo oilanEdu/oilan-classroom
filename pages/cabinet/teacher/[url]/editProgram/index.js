@@ -43,31 +43,22 @@ function EditProgram(props) {
 
     useEffect(() => {
         loadProgramData() 
-        // loadProgramData() 
         console.log(program)  
         console.log(courses)
         console.log(program.title) 
         console.log(lessons)
 
     }, []) 
-    const isProgramIdLoaded = () => {
-      if (programId !== undefined) {
-        loadProgramData()
-      }
-    }
-    useEffect(() => {
-      isProgramIdLoaded()
-    }, [programId])
 
     const loadProgramData = async () => {
     	let getProgramInfo = await axios.post(`${globals.productionServerDomain}/getCurrentProgram/` + programId) 
     	setProgram(getProgramInfo['data'][0]) 
         console.log(program)
-    	let getTeacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + getProgramInfo['data'][0].teacher_id).then(res => {
+    	let getTeacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + program.teacher_id).then(res => {
     		setCourses(res.data)
     	})
         let lessonsCount = 0
-    	let studentLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + programId).then(res => {
+    	let studentLessons = axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + programId).then(res => {
     		res.data.forEach(row => {
                 lessonsCount += 1
                 row.lesson_number = lessonsCount
@@ -79,11 +70,9 @@ function EditProgram(props) {
     	})
     }
 
-    const loadLessonExercises = async (value) => { 
-        console.log("cameHereee");
-        console.log("selectedLessonLOAD", selectedLesson)
+    const loadLessonExercises = async () => { 
         let count = 0
-        let getExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + value.id).then(res => {
+        let getExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + selectedLesson.id).then(res => {
             res.data.forEach(row => {
                 count += 1
                 row.exercise_order = count
@@ -309,11 +298,10 @@ function EditProgram(props) {
                                             }
               						onClick={() => {
               							setSelectedLesson(lesson)
-                                        setLessonTitle(lesson.title)
-                                        setLessonTesis(lesson.tesis)
-              							setLessonDate(lesson.start_time)
-                              loadLessonExercises(lesson)
-
+                                        setLessonTitle(selectedLesson.title)
+                                        setLessonTesis(selectedLesson.tesis)
+              							setLessonDate(selectedLesson.start_time)
+                                        loadLessonExercises()
               							// loadLesson()
               							console.log('hhh', formated_date)
               							console.log(selectedLesson) 
@@ -322,17 +310,17 @@ function EditProgram(props) {
               				))}
                             <div 
                                 className={styles.plusMinusButton}
-                                onClick={async() => {
-                                    await createEmptyLesson()
-                                    await loadProgramData() 
+                                onClick={() => {
+                                    createEmptyLesson()
+                                    loadProgramData() 
                                 }}
                             >+</div>
                             <div 
                                 style={{padding: '3px'}}
                                 className={styles.plusMinusButton}
-                                onClick={async() => {
-                                    await deleteLesson(selectedLesson.id)
-                                    await loadProgramData()
+                                onClick={() => {
+                                    deleteLesson(selectedLesson.id)
+                                    loadProgramData()
                                 }}
                             >-</div>
               			</div>
@@ -394,8 +382,8 @@ function EditProgram(props) {
                                             }
                                     onClick={() => {
                                         setSelectedExercise(exercise)
-                                        setExerciseText(exercise.text)
-                                        setExerciseAnswer(exercise.correct_answer)
+                                        setExerciseText(selectedExercise.text)
+                                        setExerciseAnswer(selectedExercise.correct_answer)
                                     }}
                                 >{exercise.exercise_order}</div>
                             ))}
@@ -454,7 +442,7 @@ function EditProgram(props) {
 }
 
 EditProgram.getInitialProps = async (ctx) => {
-	console.log('lol',ctx) 
+	console.log('lol',ctx)
     if(ctx.query.programId !== undefined) {
         return {
             url: ctx.query.programId,

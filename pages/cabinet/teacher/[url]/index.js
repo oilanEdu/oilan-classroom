@@ -11,18 +11,14 @@ import { Image } from "react-bootstrap";
 import ModalForLessonConfiguration from "../../../../src/components/ModalForLessonConfiguration/ModalForLessonConfiguration";
 // import CalendarComponent from "../../../../src/components/Calendar/CalendarComponent.js";
 import classnames from "classnames";
+import Pagination from "../../../../src/components/Pagination/Pagination";
 
 function TeacherCabinet(props) {
     const [teacher, setTeacher] = useState([])
     const [programs, setPrograms] = useState([])
     const [students, setStudents] = useState([])
-    const [check, setCheck] = useState(0) 
-    const [closerLesson, setCloserLesson] = useState([]) 
-    const [days, setDays] = useState('');
-    const [hours, setHours] = useState(0);
-    const [minutes, setMinutes] = useState(0);
-    const [seconds, setSeconds] = useState(0);
-    const [dataLoaded, setDataLoaded] = useState(false)
+    const [check, setCheck] = useState(0)
+    const [closerLesson, setCloserLesson] = useState([])
     
     const [emptyProgramCourseId, setEmptyProgramCourseId] = useState(0)
     const [emptyProgramTeacherId, setEmptyProgramTeacherId] = useState(0)
@@ -34,62 +30,48 @@ function TeacherCabinet(props) {
     const [showSort, setShowSort] = useState(false);
     const [sortType, setSortType] = useState("");
 
-    const updateTimer = () => {
-        const future = Date.parse(closerLesson.fact_time);
-        const now = new Date();
-        const diff = future - now;
-        
-        const y = Math.floor( diff / (1000*60*60*24*365) );
-        const d  = Math.floor( diff / (1000*60*60*24) );
-        const h = Math.floor( diff / (1000*60*60) );
-        const m  = Math.floor( diff / (1000*60) );
-        const s  = Math.floor( diff / 1000 );
+    const [currentPage, setCurrentPage] = useState(1);
+    const [cardsPerPage] = useState(10);
 
-        // const hour = (h - d  * 24) + (days * 24);
-        
-        setDays(d  - y * 365);
-        setHours(h - d  * 24);
-        setMinutes(m  - h * 60);
-        setSeconds(s  - m  * 60);
-      };
-
-      
+    const indexOfLastPost = currentPage * cardsPerPage;
+    const indexOfFirstPost = indexOfLastPost - cardsPerPage;
+    const currentPosts = students?.slice(indexOfFirstPost, indexOfLastPost)
+    const howManyPages = Math.ceil(students?.length/cardsPerPage)
+    
      
     const router = useRouter() 
 
     useEffect(() => {
         console.log(router)
         console.log('PROPS', props)
-        console.log(lessons)
         loadTeacherData()
-        // setInterval(() => {updateTimer()}, 1000); 
     }, []) 
     
-const loadStudentLessons = async (studentId, programId) => {
-  const data = {
-    studentId,
-    programId
-  };
-  console.log('studentId, programId', studentId, programId)
-  await axios({
-    method: "post",
-    url: `${globals.productionServerDomain}/getStudentLessonsByProgramId`,
-    data: data,
-  })
-    .then(function (res) { 
-      let lessons = res.data
-      let lesson_number = 0
-      res.data.forEach(lesson => {
-          lesson_number += 1
-          lesson.lesson_number = lesson_number
-      })
-      setLessons(lessons => [...lessons, ...res.data])
-    })
-    .catch((err) => {
-      alert("Произошла ошибка");
-    });
-  // console.log('lessonsURL', lessons) 
-}
+    const loadStudentLessons = async (studentId, programId) => {
+        const data = {
+            studentId,
+            programId
+        };
+        console.log('studentId, programId', studentId, programId)
+        await axios({
+            method: "post",
+            url: `${globals.productionServerDomain}/getStudentLessonsByProgramId`,
+            data: data,
+        })
+            .then(function (res) { 
+                let lessons = res.data
+                let lesson_number = 0
+                res.data.forEach(lesson => {
+                    lesson_number += 1
+                    lesson.lesson_number = lesson_number
+                })
+                setLessons(lessons => [...lessons, ...res.data])
+            })
+            .catch((err) => {
+                alert("Произошла ошибка");
+            });
+        console.log('lessonsURL', lessons)
+    }
     
     
     const loadTeacherData = async () => {
@@ -98,10 +80,9 @@ const loadStudentLessons = async (studentId, programId) => {
         const teacherIdLocal = getTeacherByUrl['data'][0]?.id
         setEmptyProgramTeacherId(teacherIdLocal)
         let teacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + teacherIdLocal)
-          teacherCourses['data'].forEach(course => { 
+        teacherCourses['data'].forEach(course => { 
             setEmptyProgramCourseId(course.id)
-            }
-           ); 
+        }); 
         let teacherPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByTeacherId/` + teacherIdLocal)
         let count = 0
           teacherPrograms['data'].forEach(program => {  
@@ -117,97 +98,76 @@ const loadStudentLessons = async (studentId, programId) => {
         let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
         setTeacher(getTeacherByUrl['data'][0])
         setPrograms(teacherPrograms['data'])
-        teacherStudents['data'].forEach(async student => {
-        console.log("studentTTTTTT", student);
+        teacherStudents['data'].forEach(student => {
         console.log('checks', student.check)
-        let diff = 604800000*7
             loadStudentLessons(student.student_id, student.program_id) 
             let answersCount = 0 
             let studentCheck = 0
-            let studentLessons = await axios.post(`${globals.productionServerDomain}/getStudentLessonsByProgramId/`, {studentId: student.student_id, programId: student.program_id}).then(res => {
+            let studentLessons = axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + student.program_id).then(res => {
                 let lessons = res.data
-                res.data.forEach(async lesson => {
+                lessons.forEach(lesson => {
                     // student.check = 0 
                     let currentDate = new Date().toLocaleDateString()
-                    let lessonDate 
-                    if (lesson.personal_time){
-                        lesson.fact_time = lesson.personal_time
-                        lessonDate = new Date(lesson.fact_time).toLocaleDateString()
-                    }else{
-                        lesson.fact_time = lesson.start_time
-                        lessonDate = new Date(lesson.fact_time).toLocaleDateString()
-                    }
-                    let dateStr = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time);
-                    let closerDate 
-                    if ((Date.parse(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time)) > Date.parse(new Date())) && (Date.parse(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time)) - Date.parse(new Date()) < diff)){ 
+                    let lessonDate = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).toLocaleDateString()
+                    let dateStr = new Date(lesson.start_time);
+                    let closerDate
+                    let diff = 604800000
+                    if ((lessonDate > currentDate) && (Date.parse(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time)) - Date.parse(new Date()) < diff)){
+                        diff = Date.parse(new Date()) - Date.parse(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time))
                         closerDate = lessonDate
-                        if (closerLesson){
-                            if (closerDate < new Date(closerLesson.fact_time).toLocaleDateString()){
-                                setCloserLesson(lesson)
-                            }
-                        }else{
-                            setCloserLesson(lesson)
-                        }
                         let curr_hours = dateStr.getHours();
                         let curr_minutes = dateStr.getMinutes();
-                        student.lesson_date = lesson.fact_time
                         student.closer_date = closerDate 
                         student.curr_hours = curr_hours 
-                        student.curr_minutes = curr_minutes
- 
+                        student.curr_minutes = curr_minutes 
+
                     }
-                    let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson?.id).then(res => {
+                    let lessonExercises = axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
                         let exercises = res.data
                         if (exercises) {
-                            exercises.forEach(async exercise => {
+                            exercises.forEach(exercise => {
                                 let studentId = student.student_id 
                                 let exerciseId = exercise.id   
-                                console.log("exercise.id", exercise.id)
                                 const data = {
                                   studentId, 
                                   exerciseId 
                                 };
-                                let exerciseAnswers = await axios({ 
+                                let exerciseAnswers = axios({ 
                                   method: "post",
                                   url: `${globals.productionServerDomain}/getAnswersByStudExId`,
                                   data: data,
                                 }).then(res =>{
                                     let answers = res.data
-                                    console.log("answersRESLOG", answers)
                                     answers.forEach(answer => {
                                         answersCount += 1 
                                     })
                                     if ((exercises.length > 0) && (exercises.length == answersCount)){
                                         student.check += 1 
                                         studentCheck += 1
-                                        console.log('studentCheck', studentCheck, exercises, answers)
+                                        console.log('studentCheck', studentCheck)
                                         setCheck(student.check)
                                         student.check = studentCheck  
-                                        student.progress = 100/student.lessons_count*student.check 
-                                        
+                                        student.progress = 100/student.lessons_count*student.check
                                     }  
                                     else{ 
-                                        console.log('')
-                                        // setCheck(0)
-                                        // studentCheck = 0
-                                        // student.check = 0
-                                        // student.progress = 0
+                                        setCheck(0) 
+                                        studentCheck = 0
+                                        student.check = 0
+                                        student.progress = '0'
                                     }
                                 })
-                            }) 
+                            })
                         }
                     })
                 })   
             })
             }
            );  
-        console.log('closerLesson', closerLesson)
         console.log('try', teacherStudents['data'])
-        setStudents(teacherStudents['data'])  
+        setStudents(teacherStudents['data'])
         console.log('programs', programs)
         console.log('students', students) 
-        // setCheckIsLoaded(true)
-      }
+    }
 
     const createEmptyProgram = async () => { 
         const emptyProgramTitle = 'emptyProgram'
@@ -228,7 +188,7 @@ const loadStudentLessons = async (studentId, programId) => {
           .catch((err) => {
             alert("Произошла ошибка");
           });
-      };
+    };
 
     const updateStudentProgram = async (studentId, courseId, programId) => { 
         const data = {
@@ -248,64 +208,12 @@ const loadStudentLessons = async (studentId, programId) => {
           .catch((err) => {
             alert("Произошла ошибка");
           });
-      };
+    };
 
     const personalLink = async (studentId, prigramId) => {
         const redirectUrl = `${encodeURIComponent(props.url)}/homeworks?programId=${encodeURIComponent(prigramId)}&studentId=${encodeURIComponent(studentId)}`
         
         await router.push(redirectUrl)
-    }
-
-    const startLessonLink = async (translationLink) => {
-        loadTeacherData()
-        const redirectUrl = `${encodeURIComponent(props.url)}/lesson?room=${encodeURIComponent(translationLink)}`
-        
-        await router.push(redirectUrl)
-    }
-
-    const startNewLesson = async () => {
-        let alphabet = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789";
-        let roomKey = "";
-        while (roomKey.length < 12) {
-            roomKey += alphabet[Math.floor(Math.random() * alphabet.length)];
-        }
-        console.log(roomKey); 
-        if (closerLesson.personal_time){
-            let data = {
-                lessonId: closerLesson.id,
-                lessonKey: roomKey,
-                studentId: closerLesson.student_id
-            }
-            await axios({
-              method: "put",
-              url: `${globals.productionServerDomain}/createPersonalRoom`, 
-              data: data,
-            })
-              .then(function (res) {
-                 console.log('DATA', data)
-                 startLessonLink(roomKey) 
-              })
-              .catch((err) => {
-                alert("Произошла ошибка"); 
-              });
-        }else{
-            let data = {
-                lessonId: closerLesson.id,
-                lessonKey: roomKey
-            }
-            await axios({
-              method: "put",
-              url: `${globals.productionServerDomain}/createDefaultRoom`, 
-              data: data,
-            })
-              .then(function (res) {
-                 console.log('DATA', data)
-                 startLessonLink(roomKey)
-              })
-              .catch((err) => {
-                alert("Произошла ошибка");
-              });
-        }
     }
 
     const sortABC = async () => {
@@ -341,28 +249,13 @@ const loadStudentLessons = async (studentId, programId) => {
             <div style={{backgroundColor: "#f1faff"}}>
               <HeaderTeacher white={true} url={props.url} teacher={teacher} />
               <div className={styles.cantainer}>
-                <div className={styles.next_lesson}>
-                  <img src="https://realibi.kz/file/498086.png"/>
-                  <div className={styles.next_lesson_content}>
-                    <div>
-                      <p>Следующие занятие через {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')} часов</p>
-                      <p>Занятие №{closerLesson.lesson_number} {closerLesson.title}</p>
-                    </div>
-                    <button>Перейти к занятию</button>
-                  </div>
-                </div>
+                
                 <div className={styles.topBlock}>
                     <div className={styles.greetings}>
                         <span>Преподаватель</span>
                         <h1>{teacher.surname} {teacher.name} {teacher.patronymic}</h1>
                         <p>Смотрите запланированные занятия в календаре. Персонально отредактируйте программы студентов наблюдайте за их прогрессом по вашей программе. Удобно проводите занятие по запланированной программе и проверяйтя домашние задания студентов.</p>
-                        <button
-                            onClick={() => {
-                                (closerLesson.personal_lesson_link || closerLesson.default_lesson_link)?
-                                startLessonLink(closerLesson.personal_lesson_link?closerLesson.personal_lesson_link:closerLesson.default_lesson_link):
-                                startNewLesson()
-                            }}
-                        >Перейти к занятию</button>
+                        <button>Перейти к занятию</button>
                     </div>
                     <div className={styles.calendarBlock}>
                          <Calendar2 lessons={lessons}/> 
@@ -372,9 +265,9 @@ const loadStudentLessons = async (studentId, programId) => {
                 <div className={styles.programsBlock}>
                     <h1>ПРОГРАММЫ ДЛЯ СТУДЕНТОВ</h1>
                     <div className={styles.programsHeader}>
-                        <span className={styles.pNumber}>№</span>
-                        <span className={styles.pCourse}>Курсы</span>
-                        <span className={styles.pProgram}>
+                        <span className={classnames(styles.pNumber, styles.pNumberHead)}>№</span>
+                        <span className={classnames(styles.pCourse, styles.pCourseHead)}>Курсы</span>
+                        <span className={classnames(styles.pProgram, styles.pProgramHead)}>
                             <Image 
                                 src='https://realibi.kz/file/846025.png'
                                 style={{marginRight: '8px'}}
@@ -452,20 +345,20 @@ const loadStudentLessons = async (studentId, programId) => {
                             </div>
                         </div>
                     </div>
-                        <div className={styles.studentsHeader}>
-                            <span className={classnames(styles.sCourse, styles.sCourseHead)}>Индивидуальная программа</span>
-                            <span className={classnames(styles.sFullname, styles.sFullnameHead)}>
-                                <Image 
-                                    src='https://realibi.kz/file/51803.png'
-                                    style={{marginRight: '8px'}}
-                                />
-                                Студенты
-                            </span>
-                            <span className={classnames(styles.sComplietedLessons, styles.sComplietedLessonsHead)}>Пройдено занятий</span>
-                            <span className={classnames(styles.sNextLesson, styles.sNextLessonHead)}>Следующее занятие</span>
-                            <span className={styles.sProgram}>Программа</span>
-                        </div>
-                        {students.map(student => ( 
+                    <div className={styles.studentsHeader}>
+                        <span className={classnames(styles.sCourse, styles.sCourseHead)}>Индивидуальная программа</span>
+                        <span className={classnames(styles.sFullname, styles.sFullnameHead)}>
+                            <Image 
+                                src='https://realibi.kz/file/51803.png'
+                                style={{marginRight: '8px'}}
+                            />
+                            Студенты
+                        </span>
+                        <span className={classnames(styles.sComplietedLessons, styles.sComplietedLessonsHead)}>Пройдено занятий</span>
+                        <span className={classnames(styles.sNextLesson, styles.sNextLessonHead)}>Следующее занятие</span>
+                        <span className={styles.sProgram}>Программа</span>
+                    </div>
+                    {currentPosts.map(student => ( 
                         <div className={styles.student}>
                             <span className={styles.sCourse}>{student.course_title} ({student.program_title})</span>
                             <span 
@@ -477,8 +370,8 @@ const loadStudentLessons = async (studentId, programId) => {
                                 <div className={styles.studentCage}>
                                     <span>
                                         <Image 
-                                            src='https://realibi.kz/file/318865.png'
-                                            style={{marginRight: '8px'}}
+                                            src='https://realibi.kz/file/142617.png'
+                                            style={{marginRight: '8px', width: "40px"}}
                                         /> 
                                     </span>
                                     <div className={styles.idAndName}>
@@ -497,7 +390,7 @@ const loadStudentLessons = async (studentId, programId) => {
                                 {student.check} из {student.lessons_count} 
                             </span>
                             <span className={styles.sNextLesson}>
-                                <span>{student.closer_date}</span> 
+                                <span>{student.closer_date}</span>
                                 <span>{student.curr_hours}:{student.curr_minutes}-{(student.curr_hours == 23)?'00':student.curr_hours + 1}:{student.curr_minutes}</span>
                             </span>
                             <div className={styles.sConfigureWrapper}>
@@ -525,8 +418,9 @@ const loadStudentLessons = async (studentId, programId) => {
                             </div>
                             </div>
                         </div>
-                        ))} 
-                    </div>
+                    ))} 
+                    <Pagination pages = {howManyPages} setCurrentPage={setCurrentPage}/>
+                </div>
               </div>
               <Footer />
             </div>

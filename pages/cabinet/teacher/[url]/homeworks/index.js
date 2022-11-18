@@ -34,16 +34,33 @@ function Homeworks(props) {
     console.log('programId',programId)
 
     useEffect(() => {
+      console.log(lessons, "lessonsHomeworks");
+    }, [lessons])
+    useEffect(() => {
+     console.log(selectedStudentId, "selectedStudentIdDDDDD"); 
+     setLessons('')
+     reloadButton()
+    }, [selectedStudentId])
+    useEffect(() => {
         loadBaseData()
         loadPrograms(selectedStudentId)
         loadStudentLessons(selectedStudentId, selectedProgramId)
     }, []) 
 
     const loadBaseData = async () => {
+      console.log("came here1");
     	let data = props.url 
         let getTeacherByUrl = await axios.post(`${globals.productionServerDomain}/getTeacherByUrl/` + data)
+        console.log("came here2");
         const teacherIdLocal = getTeacherByUrl['data'][0]?.id
-        let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/` + teacherIdLocal)
+        console.log("came here3");
+        const dataStudents = {
+          id: teacherIdLocal,
+          sort: "oc_students.surname"
+      }
+        let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`,  dataStudents)
+        console.log("teacherStudents", teacherStudents);
+        console.log("came here4");
         setTeacher(getTeacherByUrl['data'][0])
         setStudents(teacherStudents['data'])
         console.log('teacher', teacher)
@@ -54,20 +71,27 @@ function Homeworks(props) {
         const studentPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + studentId)
         setPrograms(studentPrograms['data'])
         if (studentPrograms['data'].length == 1){
-            programs.forEach(program => {
+            studentPrograms['data'].forEach(program => {
                 setSelectedProgramId(program.id)
             })
-            loadStudentLessons(selectedStudentId, selectedProgramId)
+            console.log(selectedStudentId, studentPrograms['data'][0].id, "selectedStudentId, selectedProgramId");
+            console.log(studentPrograms['data'][0], "studentPrograms['data'][0]")
+            loadStudentLessons(studentId, studentPrograms['data'][0].id)
         }
         console.log('programs', programs)
     }
-
+    const reloadButton = async() => {
+      // await loadBaseData()
+      await loadPrograms(selectedStudentId)
+      // await loadStudentLessons(selectedStudentId, selectedProgramId)
+    }
     const loadStudentLessons = async (studentId, programId) => {
         const data = {
           studentId,
           programId
         };
         console.log('studentId, programId', studentId, programId)
+        console.log(data, "dataData");
         await axios({
           method: "post",
           url: `${globals.productionServerDomain}/getStudentLessonsByProgramId`,
@@ -202,9 +226,10 @@ function Homeworks(props) {
               		    <h1>Домашние задания</h1>
                         <select
                             value={selectedStudentId} 
-                            onChange={(e) => {
+                            onChange={async (e) => {
                                 setSelectedStudentId(e.target.value)
-                                loadPrograms(selectedStudentId)
+                                await loadPrograms(e.target.value)
+                                // reloadButton()
                                 console.log('selectedStudentId', selectedStudentId)
                                 }
                             }
@@ -222,8 +247,8 @@ function Homeworks(props) {
                             value={selectedProgramId}
                             onChange={(e) => {
                                 setSelectedProgramId(e.target.value)
-                                value={programId}
-                                loadStudentLessons(selectedStudentId, selectedProgramId)
+                                // value={programId}
+                                loadStudentLessons(selectedStudentId, e.target.value)
                                 console.log('selectedProgramId', selectedProgramId)
                                 }
                             }
@@ -237,22 +262,21 @@ function Homeworks(props) {
                                 </option>
                                 ))}
                         </select>
-                        <button 
+                        {/* <button 
                             className={styles.reloadButton}
                                 onClick={() => {
-                                loadBaseData()
-                                loadPrograms(selectedStudentId)
-                                loadStudentLessons(selectedStudentId, selectedProgramId)
+                                reloadButton()
                         }}>
                             &#128472;
-                        </button>
+                        </button> */}
               		</div>
 
                     <div className={styles.lessons}>
-                        {lessons.map(lesson => (
+                      {lessons.length > 0 ? <>{lessons.map(lesson => (
                                 <TeacherHomeworksLessons lesson={lesson} showCheck={showCheck} selectedExerciseId={selectedExerciseId} answer={answer} teacherComment={teacherComment} setShowCheck={setShowCheck} setSelectedExerciseId={setSelectedExerciseId} setAnswer={setAnswer} setTeacherComment={setTeacherComment} setSelectedExerciseNumber={setSelectedExerciseNumber} setSelectedExerciseText={setSelectedExerciseText} setSelectedExerciseCorrectAnswer={setSelectedExerciseCorrectAnswer} getAnswer={getAnswer} selectedStudentId={selectedStudentId} selectedExerciseNumber={selectedExerciseNumber} selectedExerciseText={selectedExerciseText} selectedExerciseCorrectAnswer={selectedExerciseCorrectAnswer} updateAnswerStatus={updateAnswerStatus} updateAnswerComment={updateAnswerComment}/>
                             )
-                        )}
+                        )}</> : ''}
+
                     </div>
               	</div>
               	

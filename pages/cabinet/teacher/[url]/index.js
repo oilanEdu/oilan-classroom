@@ -70,7 +70,7 @@ function TeacherCabinet(props) {
     useEffect(() => {
         console.log(router)
         console.log('PROPS', props)
-        console.log(lessons)
+        console.log(lessons) 
         loadTeacherData()
         // setInterval(() => {updateTimer()}, 1000); 
     }, []) 
@@ -501,7 +501,7 @@ function TeacherCabinet(props) {
                                     >
                                     </div>
                                 </div>
-                                {student.check} из {student.lessons_count} 
+                                {student.check ? student.check : '0'} из {student.lessons_count ? student.lessons_count : ''} 
                             </span>
                             <span className={styles.sNextLesson}>
                                 <span>{student.closer_date}</span>

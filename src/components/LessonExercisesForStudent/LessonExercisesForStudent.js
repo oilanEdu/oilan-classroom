@@ -102,6 +102,7 @@ const LessonExercisesForStudent = ({exercises, student, bg}) => {
           <div className={styles.reTryBlock}>
             <span>Задание: {exercises[active].text}</span>
             <span>Ваш ответ: {exercises[active].answer_text}</span>
+            <div className={styles.advice}>{exercises[active].answer_status == 'correct'?<><div className={styles.correctAdvice}></div>Сдано на отлично</>:exercises[active].answer_status == 'uncorrect'?<><><div className={styles.uncorrectAdvice}></div>Есть ошибки попробуйте снова</></>:''}</div>
             <button 
               className={styles.reanswer_btn}
               onClick={() => {

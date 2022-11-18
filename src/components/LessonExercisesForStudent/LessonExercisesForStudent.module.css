@@ -136,3 +136,24 @@
 .editAnswerBlock{
   margin-top: 15px;
 }
+
+.advice {
+  display: flex;
+  gap: 8px;
+}
+.correctAdvice {
+  background-image: url("https://realibi.kz/file/98680.png");
+  width: 25px;
+  height: 25px;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.uncorrectAdvice {
+  background-image: url("https://realibi.kz/file/633881.png");
+  width: 25px;
+  height: 25px;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+}

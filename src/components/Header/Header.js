@@ -102,18 +102,18 @@ export default function Header(props) {
         <div className={styles.logo}>
           <Link href={"/"}>
             <a
-              onClick={async (ctx) => {
-                if (props.reload) {
-                  props.close(false);
-                  props.setStep(1);
-                } else {
-                  if (window.location.pathname === "/") {
-                    router.reload();
-                  } else {
-                    await router.push("/");
-                  }
-                }
-              }}
+              // onClick={async (ctx) => {
+              //   if (props.reload) {
+              //     props.close(false);
+              //     props.setStep(1);
+              //   } else {
+              //     if (window.location.pathname === "/") {
+              //       router.reload();
+              //     } else {
+              //       await router.push("/");
+              //     }
+              //   }
+              // }}
               style={{
                 color: "black",
                 alignContent: "center",

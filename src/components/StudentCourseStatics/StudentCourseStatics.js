@@ -67,7 +67,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
                 }
     })
     console.log('TOTAL', baseMark, total)
-    console.log('CloserLesson', closerLesson)  
+    console.log('CloserLesson', closerLesson)
   };
 
   const totalLesson = () => {
@@ -161,7 +161,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
             paddingAngle={1}
             dataKey="course_id"
           >
-            {doneLessons.map((score, index, id) => (
+            {doneLessons.reverse().map((score, index, id) => (
               <Cell 
                 onClick={() => {
                   console.log('UROK', id)
@@ -172,6 +172,9 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
                 }
                 key={`cell-${index}`} 
                 fill={COLORS[index % COLORS.length]} 
+                style={{border: "1px solid"}}
+                stroke={selectedLesson === score ? '#4299FF' : ""}
+                type='monotone'
               />
             ))}
           </Pie>

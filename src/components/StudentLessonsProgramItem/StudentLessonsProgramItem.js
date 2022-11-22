@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import styles from "./StudentLessonsProgramItem.module.css";
 import axios from "axios";
 import globals from "../../../src/globals";
+import { useRouter } from "next/router";
 
-const StudentLessonsProgramItem = ({lesson}) => {
+const StudentLessonsProgramItem = ({lesson, courseId, nickname}) => {
   const [showTesis, setShowTesis] = useState(false);
   const [exercises, setExercises] = useState([])
   const [answers, setAnswers] = useState([])
+  const router = useRouter();
   let isActive = (new Date(lesson.start_time).getTime()) <= (new Date().getTime());
 
   const getLessonExercises = async (selectedLesson) => {
@@ -92,7 +94,12 @@ const StudentLessonsProgramItem = ({lesson}) => {
             </> 
           })
         }</span>
-        <button className={styles.resendButton}>Пересдать тему</button>
+        <button 
+          onClick={() => {
+            router.push(`/cabinet/student/${nickname}/course/${courseId}/homeworks`);
+          }} 
+          className={styles.resendButton}
+        >Пересдать тему</button>
       </div>
     </div>
     {isActive

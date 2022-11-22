@@ -106,10 +106,10 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
       }); 
       handleShowSend()
     } else {setInsertCaptchaText('Неверный ввод текста с картинки!')
-            setProccessOfCaptcha(1)
-            handlerOfProccessOfCaptcha(1)
-            console.log("proccessOfCaptchaUrl", proccessOfCaptchaUrl);
-            }
+      setProccessOfCaptcha(1)
+      handlerOfProccessOfCaptcha(1)
+      console.log("proccessOfCaptchaUrl", proccessOfCaptchaUrl);
+    }
   };
 
 
@@ -144,7 +144,12 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           placeholder="Ваше Имя"
           name="fullname"
           value={fullname}
-          onChange={(e) => setFullname(e.target.value)}
+          onChange={(e) => {
+            if (phone.length > 10 && fullname.length > 3 && connection !== "") {
+              setShowCaptcha(true)
+            }
+            setFullname(e.target.value)
+          }}
         />
         <input 
           className={styles.input}
@@ -157,13 +162,21 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
             }
           }}
           onChange={(e) => {
+            if (phone.length > 10 && fullname.length > 3 && connection !== "") {
+              setShowCaptcha(true)
+            }
             globals.checkPhoneMask(e.target.value, setPhone)
           }}
         />
         <select 
           className={styles.selectBlock} 
           value={connection} 
-          onChange={e => setConnection(e.target.value)}
+          onChange={e => {
+            if (phone.length > 10 && fullname.length > 3) {
+              setShowCaptcha(true)
+            }
+            setConnection(e.target.value)
+          }}
         >
           <option value="3">Способ связи</option>
           <option value="0">Звонок</option>
@@ -193,7 +206,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
               );
             } else {
               if (firstStepValidation ()) {
-                setShowCaptcha(true)
+                // setShowCaptcha(true)
               } else {
                 alert("Заполните пожалуйста все поля.")
               }
@@ -203,10 +216,10 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           Оставить заявку
         </button>
         <span 
-          className={check ? styles.check_on : styles.check_off}
-          onClick={() => setCheck(!check)}
+          // className={check ? styles.check_on : styles.check_off}
+          // onClick={() => setCheck(!check)}
         >
-          Я принимаю условия публичной оферты
+          Нажимая на кнопку "Оставить заявку", Вы принимаете условия публичной оферты
         </span>
       </form>
     </div>

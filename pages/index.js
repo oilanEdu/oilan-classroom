@@ -140,7 +140,7 @@ const Main = (props) => {
   const [course, setCourse] = useState()
   const [teacherByCourse, setTeacherByCourse] = useState()
   const loadCaptcha = async () => {
-    let getCourseOC = await axios.post(`${globals.productionServerDomain}/getCourseOC/` + 1)
+    let getCourseOC = await axios.post(`${globals.productionServerDomain}/getCourseOC/` + "MathBySimpleWords")
     setCourse(getCourseOC['data'][0])
     let getTeacherByCourse = await axios.post(`${globals.productionServerDomain}/getTeacherByCourse/` + 1)
     setTeacherByCourse(getTeacherByCourse['data'][0])
@@ -237,6 +237,9 @@ const Main = (props) => {
     }
   };
 
+  useEffect(() => {
+    console.log("course teacherByCourse", course, teacherByCourse)
+  }, [course, teacherByCourse])
   return (
     <div>
       <div className={styles.main}>
@@ -812,7 +815,12 @@ const Main = (props) => {
                 placeholder="Ваше Имя"
                 name="fullname"
                 value={fullname}
-                onChange={(e) => setFullname(e.target.value)}
+                onChange={(e) => {
+                  if (phone.length > 10 && fullname.length > 3 && email.length > 6) {
+                    setShowCaptcha(true)
+                  }
+                  setFullname(e.target.value)
+                }}
               />
             </label>
             <label className={styles5.input_container}>
@@ -821,7 +829,12 @@ const Main = (props) => {
                 placeholder="Ваш E-mail"
                 name="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  if (phone.length > 10 && fullname.length > 3 && email.length > 6) {
+                    setShowCaptcha(true)
+                  }
+                  setEmail(e.target.value)
+                }}
               />
             </label>
             <label className={styles5.input_container}>
@@ -836,6 +849,9 @@ const Main = (props) => {
                   }
                 }}
                 onChange={(e) => {
+                  if (phone.length > 10 && fullname.length > 3  && email.length > 6) {
+                    setShowCaptcha(true)
+                  }
                   globals.checkPhoneMask(e.target.value, setPhone);
                 }}
               />
@@ -863,7 +879,7 @@ const Main = (props) => {
                 } else {
                   if (firstStepValidation()) {
                     // sendApplication();
-                    setShowCaptcha(true);
+                    // setShowCaptcha(true);
                   } else {
                     alert("Заполните пожалуйста все поля.");
                   }
@@ -873,10 +889,12 @@ const Main = (props) => {
               Записаться на курс
             </button>
             <span
-              className={check ? styles5.check_on : styles5.check_off}
-              onClick={() => setCheck(!check)}
+              className={styles5.check}
+              style={{maxWidth: "375px"}}
+              // className={check ? styles5.check_on : styles5.check_off}
+              // onClick={() => setCheck(!check)}
             >
-              Я принимаю условия публичной оферты
+              Нажимая на кнопку "Записаться на курс", Вы принимаете условия публичной оферты
             </span>
           </form>
         </div>

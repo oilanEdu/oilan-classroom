@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./StudentCourseStatics.module.css";
 import { PieChart, Pie, Sector, Cell } from "recharts";
 
-const StudentCourseStatic = ({student, lesson, lessons, scores, turnLessons}) => {
+const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
   // console.log('stat data', student, lesson, lessons, scores)
   const [days, setDays] = useState('');
   const [hours, setHours] = useState(0);
@@ -87,7 +87,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, turnLessons}) =>
 
   const doneLessonsHandler = () => {
     setDoneLessons([]);
-    turnLessons.forEach(lesson => {
+    lessons.forEach(lesson => {
       if (+lesson.score > 0) {
         setDoneLessons(prevState => {
           return [
@@ -190,7 +190,11 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, turnLessons}) =>
             style={{
               width: `${selectedLesson !== lesson?selectedLesson.score:lesson.score}%`,
               height: "20px",
-              background: selectedLesson.score > 90 ? "#74C87D" : selectedLesson.score < 90 && selectedLesson.score > 75 ? "#F8D576" : "#EA6756",
+              background: selectedLesson.score > 90
+                ? "#74C87D"
+                : selectedLesson.score < 90 && selectedLesson.score > 75
+                ? "#F8D576"
+                : "#EA6756",
               borderRadius: "4px 0 0 4px"
             }}
           >

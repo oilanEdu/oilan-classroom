@@ -57,8 +57,8 @@ const StudentCourse = (props) => {
           (<></>):
           (
             <>
-              <StudentCourseStatics student={student} lesson={lesson} lessons={lessons} scores={scores} />
-              <StudentLessonsProgram lessons={lessons} />
+              <StudentCourseStatics student={student} lesson={lesson} lessons={lessons} turnLessons={lessons.reverse()} scores={scores} />
+              <StudentLessonsProgram courseId={courseId} nickname={nickname} lessons={lessons} />
             </>
           )
       }

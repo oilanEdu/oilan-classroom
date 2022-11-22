@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./StudentCourseStatics.module.css";
 import { PieChart, Pie, Sector, Cell } from "recharts";
 
-const COLORS = ["#74C87D"];
-
-const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
+const StudentCourseStatic = ({student, lesson, lessons, scores, turnLessons}) => {
   // console.log('stat data', student, lesson, lessons, scores)
   const [days, setDays] = useState('');
   const [hours, setHours] = useState(0);
@@ -84,12 +82,12 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
         return ttl + 0;
       };
     }, 0);
-    setTotalLesson(total);
+    setTotalLesson(total );
   };
 
   const doneLessonsHandler = () => {
     setDoneLessons([]);
-    lessons.forEach(lesson => {
+    turnLessons.forEach(lesson => {
       if (+lesson.score > 0) {
         setDoneLessons(prevState => {
           return [
@@ -161,17 +159,18 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
             paddingAngle={1}
             dataKey="course_id"
           >
-            {doneLessons.reverse().map((score, index, id) => (
+            {doneLessons.map((score, index, id) => (
               <Cell 
                 onClick={() => {
                   console.log('UROK', id)
                   console.log('what', score, index, id)
+                  console.log("score", score);
                   setSelectedLesson(score)
                   console.log('selectedLesson', selectedLesson)
                   }
                 }
                 key={`cell-${index}`} 
-                fill={COLORS[index % COLORS.length]} 
+                fill={score.score > 90 ? "#74C87D" : score.score < 90 && score.score > 75 ? "#F8D576" : "#EA6756"} 
                 style={{border: "1px solid"}}
                 stroke={selectedLesson === score ? '#4299FF' : ""}
                 type='monotone'
@@ -191,7 +190,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
             style={{
               width: `${selectedLesson !== lesson?selectedLesson.score:lesson.score}%`,
               height: "20px",
-              background: "#74C87D",
+              background: selectedLesson.score > 90 ? "#74C87D" : selectedLesson.score < 90 && selectedLesson.score > 75 ? "#F8D576" : "#EA6756",
               borderRadius: "4px 0 0 4px"
             }}
           >

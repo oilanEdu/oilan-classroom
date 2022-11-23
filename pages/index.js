@@ -894,7 +894,7 @@ const Main = (props) => {
               // className={check ? styles5.check_on : styles5.check_off}
               // onClick={() => setCheck(!check)}
             >
-              Нажимая на кнопку "Записаться на курс", Вы принимаете условия публичной оферты
+              Нажимая на кнопку "Записаться на курс", Вы принимаете <Link href="/offer"><a>условия публичной оферты</a></Link>
             </span>
           </form>
         </div>

@@ -123,12 +123,11 @@ export default function Footer(props) {
           >
             Политика конфидециальности
           </a>
-          <a 
-            href="/offer" 
-            className={classnames(styles.link, styles.public_offer)}
-          >
-            Публичная оферта
-          </a>
+          <Link href="/offer">
+            <a className={classnames(styles.link, styles.public_offer)}>
+              Публичная оферта
+            </a>
+          </Link>
         </div>
       </div>
       <div className={classnames(styles.column, styles.copy_abaz)}>

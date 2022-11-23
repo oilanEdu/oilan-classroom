@@ -100,20 +100,20 @@ export default function HeaderStudent(props) {
 
       <div className={styles.desktopHeader}>
         <div className={styles.logo}>
-          <Link href={"/"}>
+          {/* <Link href={""}> */}
             <a
-              onClick={async (ctx) => {
-                if (props.reload) {
-                  props.close(false);
-                  props.setStep(1);
-                } else {
-                  if (window.location.pathname === "/") {
-                    router.reload();
-                  } else {
-                    await router.push("/");
-                  }
-                }
-              }}
+              // onClick={async (ctx) => {
+              //   if (props.reload) {
+              //     props.close(false);
+              //     props.setStep(1);
+              //   } else {
+              //     if (window.location.pathname === "/") {
+              //       router.reload();
+              //     } else {
+              //       await router.push("/");
+              //     }
+              //   }
+              // }}
               style={{
                 color: "black",
                 alignContent: "center",
@@ -130,7 +130,7 @@ export default function HeaderStudent(props) {
                 <path d="M15.0753 5.95043C14.2238 5.95043 13.5096 5.66514 12.9328 5.09455C12.356 4.52396 12.0676 3.81751 12.0676 2.97522C12.0676 2.13292 12.356 1.42647 12.9328 0.855884C13.5096 0.285295 14.2238 0 15.0753 0C15.8993 0 16.5997 0.285295 17.1766 0.855884C17.7534 1.42647 18.0418 2.13292 18.0418 2.97522C18.0418 3.81751 17.7534 4.52396 17.1766 5.09455C16.5997 5.66514 15.8993 5.95043 15.0753 5.95043ZM17.3826 8.92564V31.3824H12.6856V8.92564H17.3826Z" fill="#007AFF"/>
               </svg>
             </a>
-          </Link>
+          {/* </Link> */}
         </div>
         <div className={styles.menu}>
           <ul className={styles.menu_ul}>

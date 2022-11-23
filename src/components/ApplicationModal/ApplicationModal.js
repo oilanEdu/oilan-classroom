@@ -5,6 +5,7 @@ import axios from "axios";
 import Backdrop from "../Backdrop/Backdrop";
 import { Image } from "react-bootstrap";
 import CaptchaComponent from "../Captcha/Captcha";
+import Link from "next/link";
 
 const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByCourse}) => {
   const [check, setCheck] = useState(false);
@@ -219,7 +220,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           // className={check ? styles.check_on : styles.check_off}
           // onClick={() => setCheck(!check)}
         >
-          Нажимая на кнопку "Оставить заявку", Вы принимаете условия публичной оферты
+          Нажимая на кнопку "Оставить заявку", Вы принимаете <Link href="/offer"><a>условия публичной оферты</a></Link>
         </span>
       </form>
     </div>

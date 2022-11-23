@@ -6,6 +6,7 @@ import Backdrop from "../Backdrop/Backdrop";
 import SuccessfullyModal from "../SuccessfullyModal/SuccessfullyModal";
 import { Image } from "react-bootstrap";
 import CaptchaComponent from "../Captcha/Captcha";
+import Link from "next/link";
 
 const ApplicationBlock = (props) => {
   const [showCaptcha, setShowCaptcha] = useState(false)
@@ -207,7 +208,12 @@ const ApplicationBlock = (props) => {
           placeholder="Ваше Имя"
           name="fullname"
           value={fullname}
-          onChange={(e) => setFullname(e.target.value)}
+          onChange={(e) => {
+            if (phone.length > 10 && fullname.length > 3 && email.length > 6) {
+              setShowCaptcha(true)
+            }
+            setFullname(e.target.value)
+          }}
         />
       </label>
       <label className={styles.input_container}>
@@ -216,7 +222,12 @@ const ApplicationBlock = (props) => {
           placeholder="Ваш E-mail" 
           name="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            if (phone.length > 10 && fullname.length > 3 && email.length > 6) {
+              setShowCaptcha(true)
+            }
+            setEmail(e.target.value)
+          }}
         />
       </label>
       <label className={styles.input_container}>
@@ -231,7 +242,10 @@ const ApplicationBlock = (props) => {
             }
           }}
           onChange={(e) => {
-            globals.checkPhoneMask(e.target.value, setPhone)
+            if (phone.length > 10 && fullname.length > 3  && email.length > 6) {
+              setShowCaptcha(true)
+            }
+            globals.checkPhoneMask(e.target.value, setPhone);
           }}
         />
       </label>
@@ -260,7 +274,7 @@ const ApplicationBlock = (props) => {
           } else {
             if (firstStepValidation()) {
               // sendApplication();
-              setShowCaptcha(true)
+              // setShowCaptcha(true)
             } else {
               alert("Заполните пожалуйста все поля.")
             }
@@ -270,10 +284,11 @@ const ApplicationBlock = (props) => {
         Попробовать бесплатно
       </button>
       <span 
-        className={check ? styles.check_on : styles.check_off}
-        onClick={() => setCheck(!check)}
+        // className={check ? styles.check_on : styles.check_off}
+        // onClick={() => setCheck(!check)}
+        style={{maxWidth: "375px"}}
       >
-        Я принимаю условия публичной оферты
+        Нажимая на кнопку "Попробовать бесплатно", Вы принимаете <Link href="/offer"><a>условия публичной оферты</a></Link>
       </span>
     </form>
   </div>

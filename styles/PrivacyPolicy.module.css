@@ -1,0 +1,46 @@
+/* @font-face {
+    font-family: "Rubik Regular";
+    src: url("../../../public/fonts/Rubik/Rubik-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Rubik Medium";
+    src: url("../../../public/fonts/Rubik/Rubik-Medium.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Rubik Bold";
+    src: url("../../../public/fonts/Rubik/Rubik-Bold.ttf") format("truetype");
+} */
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+    box-sizing: border-box;
+    border-radius: 30px;
+    height: auto;
+    padding: 20px;
+}
+
+.title{
+    color: #011627;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.text{
+    color: #011627;
+    line-height: 1.5;
+}
+
+.textTitle{
+    font-weight: 500;
+    font-size: 20px;
+}
+.image{
+    width: 80%;
+}
+@media screen and (max-width: 761px) {
+.title{
+    font-size: 26px;
+}
+}

@@ -1,5 +1,4 @@
 import {io} from 'socket.io-client';
-import globals from "../../src/globals";
 
 const options = {
 	"force new connection": true,
@@ -8,6 +7,6 @@ const options = {
 	transports: ["websocket"]
 }
 
-const socket = io(globals.productionSiteDomain, options);
+const socket = io('http://localhost:3031', options);
 
 export default socket;

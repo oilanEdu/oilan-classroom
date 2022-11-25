@@ -1,0 +1,49 @@
+@font-face {
+  font-family: "Noto Sans Regular";
+  src: url("../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Medium";
+  src: url("../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Bold";
+  src: url("../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Regular";
+  src: url("../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Medium";
+  src: url("../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Bold";
+  src: url("../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+}
+
+.cantainer{
+	width: 90%;
+	margin-left: 5%;
+	display: flex;
+	flex-direction: column;
+	margin-top: 80px;
+}
+
+.translationBlock{
+  width: 100%;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  border-radius: 50px;
+}
+
+.personVideo{
+  display: flex;
+  border-radius: 50px;
+}
+
+.video{
+  border-radius: 50px;
+}

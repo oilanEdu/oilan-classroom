@@ -265,7 +265,8 @@ function TeacherCabinet(props) {
 
     const startLessonLink = async (translationLink) => {
         loadTeacherData()
-        const redirectUrl = `${encodeURIComponent(props.url)}/lesson?room=${encodeURIComponent(translationLink)}`
+        const role = 'teacher'
+        const redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}`
         
         await router.push(redirectUrl)
     }
@@ -367,7 +368,7 @@ function TeacherCabinet(props) {
                             onClick={() => {
                                 (closerLesson.personal_lesson_link || closerLesson.default_lesson_link)?
                                 startLessonLink(closerLesson.personal_lesson_link?closerLesson.personal_lesson_link:closerLesson.default_lesson_link):
-                                startNewLesson()
+                                startNewLesson() 
                             }}
                         >Перейти к занятию</button>
                     </div>

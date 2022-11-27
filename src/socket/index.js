@@ -8,6 +8,6 @@ const options = {
 	transports: ["websocket"]
 }
 
-const socket = io('91.201.215.148:3000', options);
+const socket = io(globals.ftpDomain, options);
 
-export default socket;
+export default socket; 

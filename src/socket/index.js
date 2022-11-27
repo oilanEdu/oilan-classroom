@@ -8,6 +8,6 @@ const options = {
 	transports: ["websocket"]
 }
 
-const socket = io("http://91.201.215.148:3031", options);
+const socket = io("wss://realibi.kz:3031", options);
 
 export default socket; 

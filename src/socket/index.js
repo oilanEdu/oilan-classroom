@@ -8,6 +8,6 @@ const options = {
 	transports: ["websocket"]
 }
 
-const socket = io(globals.productionServerDomain, options);
+const socket = io('91.201.215.148:3000', options);
 
 export default socket;

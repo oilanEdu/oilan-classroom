@@ -9,7 +9,7 @@ const options = {
 	transports: ["websocket"]
 }
 
-const socket = io(options);
+const socket = io("wss://realibi.kz:3031", options);
 // const socket = io(ENDPOINT, {  
 //         cors: {
 //         origin: "wss://realibi.kz:3031",

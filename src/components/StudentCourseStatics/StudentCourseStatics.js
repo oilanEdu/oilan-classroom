@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import styles from "./StudentCourseStatics.module.css";
 import { PieChart, Pie, Sector, Cell } from "recharts";
 
@@ -72,6 +73,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
     })
     console.log('TOTAL', baseMark, total)
     console.log('CloserLesson', closerLesson)
+    console.log('lessons', lessons)
   };
 
   const totalLesson = () => {
@@ -119,6 +121,59 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
     console.log('DL', doneLessons)
   }, []);
   
+  const startLessonLink = async (translationLink) => {
+    console.log('proverkha1')
+    const role = 'student'
+    const redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}`
+        
+    await router.push(redirectUrl)
+  }
+
+  const startNewLesson = async () => {
+        console.log('proverkha2')
+        let alphabet = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789";
+        let roomKey = "";
+        while (roomKey.length < 12) {
+            roomKey += alphabet[Math.floor(Math.random() * alphabet.length)];
+        }
+        console.log(roomKey); 
+        if (closerLesson.personal_time){
+            let data = {
+                lessonId: closerLesson.id,
+                lessonKey: roomKey,
+                studentId: closerLesson.student_id
+            }
+            await axios({
+              method: "put",
+              url: `${globals.productionServerDomain}/createPersonalRoom`, 
+              data: data,
+            })
+              .then(function (res) {
+                 console.log('DATA', data)
+                 startLessonLink(roomKey) 
+              })
+              .catch((err) => {
+                alert("Произошла ошибка"); 
+              });
+        }else{
+            let data = {
+                lessonId: closerLesson.id,
+                lessonKey: roomKey
+            }
+            await axios({
+              method: "put",
+              url: `${globals.productionServerDomain}/createDefaultRoom`, 
+              data: data,
+            })
+              .then(function (res) {
+                 console.log('DATA', data)
+                 startLessonLink(roomKey)
+              })
+              .catch((err) => {
+                alert("Произошла ошибка");
+              });
+        }
+    }
   
   return <div className={styles.container}>     
     <div className={styles.next_lesson}>
@@ -128,7 +183,13 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
           <p>Следующие занятие через {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')} часов</p>
           <p>Занятие №{closerLesson.number} {closerLesson.title}</p>
         </div>
-        <button>Перейти к занятию</button>
+        <button
+          onClick={() => {
+            (closerLesson.personal_lesson_link || closerLesson.default_lesson_link)?
+              startLessonLink(closerLesson.personal_lesson_link?closerLesson.personal_lesson_link:closerLesson.default_lesson_link):
+              startNewLesson() 
+          }}
+        >Перейти к занятию</button>
       </div>
     </div>
     <div className={styles.course_container}>
@@ -140,9 +201,15 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
         <h2>Преподаватель курса</h2>
         
         <p>{student[0]?.teach_surname} {student[0]?.teach_name}</p>
-        <p>Занятие №{closerLesson.lesson_order} {closerLesson.title}</p>
+        <p>Занятие №{closerLesson.number} {closerLesson.title}</p>
         <div>
-          <button>Перейти к занятию</button>
+          <button
+          onClick={() => {
+            (closerLesson.personal_lesson_link || closerLesson.default_lesson_link)?
+              startLessonLink(closerLesson.personal_lesson_link?closerLesson.personal_lesson_link:closerLesson.default_lesson_link):
+              startNewLesson() 
+          }}
+          >Перейти к занятию</button>
         </div>
       </div>
       <div>

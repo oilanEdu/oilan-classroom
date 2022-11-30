@@ -71,6 +71,16 @@
   margin: 10px;
 }
 
+.close {
+  width: 80px;
+  height: 80px;
+  background: url(https://realibi.kz/file/535752.png) no-repeat #fff;
+  background-position: 50%;
+  background-size: 22px;
+  border-radius: 50%;
+  margin: 10px;
+}
+
 .block {
   width: 80px;
   height: 80px;

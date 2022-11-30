@@ -15,7 +15,8 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
   const [selectedLesson, setSelectedLesson] = useState(lesson)
   const [loadedData, setLoadedData] = useState(false)
   const [closerLesson, setCloserLesson] = useState(lesson)
-  let baseMark = 0   
+  let baseMark = 0;
+  let count = 0;
 
   const updateTimer = () => {
     const future = Date.parse(closerLesson.start_time);
@@ -40,8 +41,13 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
 
   const overalScores = () => {
     lessons.forEach(lesson => {
-      baseMark += lesson.score 
-      setTotal(baseMark);
+      // baseMark += lesson.score
+      if (+lesson.all_exer !== 0 && +lesson.all_exer === +lesson.done_exer) {
+        baseMark += lesson.score
+        count += 1
+      };
+      console.log(baseMark);
+      setTotal(Math.ceil(baseMark / count));
       setLoadedData(true) 
       let currentDate = new Date().toLocaleDateString()
               let lessonFactDate
@@ -82,13 +88,14 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
         return ttl + 0;
       };
     }, 0);
-    setTotalLesson(total );
+    setTotalLesson(total);
   };
 
   const doneLessonsHandler = () => {
     setDoneLessons([]);
     lessons.forEach(lesson => {
-      if (+lesson.score > 0) {
+      console.log(lesson);
+      if (+lesson.all_exer !== 0 && +lesson.all_exer === +lesson.done_exer) {
         setDoneLessons(prevState => {
           return [
             ...prevState,
@@ -170,7 +177,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
                   }
                 }
                 key={`cell-${index}`} 
-                fill={score.score > 90 ? "#74C87D" : score.score < 90 && score.score > 75 ? "#F8D576" : "#EA6756"} 
+                fill={+score.score === 0 ? "#CAE3FF" : +score.score < 50 ? "#EA6756" : +score.score < 80 ? "#F8D576" : "#74C87D"} 
                 style={{border: "1px solid"}}
                 stroke={selectedLesson === score ? '#4299FF' : ""}
                 type='monotone'
@@ -190,11 +197,12 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
             style={{
               width: `${selectedLesson !== lesson?selectedLesson.score:lesson.score}%`,
               height: "20px",
-              background: selectedLesson.score > 90
-                ? "#74C87D"
-                : selectedLesson.score < 90 && selectedLesson.score > 75
-                ? "#F8D576"
-                : "#EA6756",
+              background: +selectedLesson.score === 0 
+                ? "#CAE3FF" 
+                : +selectedLesson.score < 50 
+                ? "#EA6756" 
+                : +selectedLesson.score < 80 
+                ? "#F8D576" : "#74C87D",
               borderRadius: "4px 0 0 4px"
             }}
           >

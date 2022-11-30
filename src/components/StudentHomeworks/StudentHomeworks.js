@@ -58,7 +58,7 @@ const StudentHomeworks = ({lesson, student}) => {
     </div>
     {isActive
       ? <span 
-        className={styles.open} 
+        className={showTesis ? styles.close : styles.open} 
         onClick={() => setShowTesis(!showTesis)}
       ></span>
       : <span

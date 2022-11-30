@@ -137,6 +137,14 @@ const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer,
                     />
                     {lesson.title}
                 </span>
+                <p 
+                    style={{
+                        background: +lesson.score === 0 ? "#CAE3FF" : +lesson.score < 50 ? "#EA6756" : +lesson.score < 80 ? "#F8D576" : "#74C87D"
+                    }}
+                    className={styles.lesson_grade}
+                    >
+                    Оценка - {lesson.score} ({lesson.done_exer}/{lesson.all_exer})
+                </p>
             </div>
             <div 
                 className={classnames(styles.plusButton, (showCheck === lesson.id) ? styles.minus : styles.plus)}

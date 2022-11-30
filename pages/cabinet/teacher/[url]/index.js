@@ -443,7 +443,7 @@ function TeacherCabinet(props) {
                 <div className={styles.studentsBlock} id={"students"}>
                     <div className={styles.titleContainer}>
                         <h1>СПИСОК СТУДЕНТОВ</h1>
-                        <div>
+                        <div className={styles.sortContainer}>
                             <div 
                                 onClick={() => setShowSort(!showSort)}
                                 className={styles.sortTitle}

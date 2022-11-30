@@ -490,6 +490,13 @@
 .sortOptions {
 	flex-direction: column;
 	margin-bottom: 30px;
+	position: absolute;
+	width: 100%;
+	z-index: 9;
+}
+
+.sortContainer {
+	position: relative;
 }
 
 .sortTitle {

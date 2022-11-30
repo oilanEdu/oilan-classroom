@@ -10,7 +10,7 @@ const Program = (props) => {
   const [educationShowOrder, setEducationShowOrder] = useState("0")
 
   return <div className={styles.container} id="program">
-    <div className={styles.program_block_container}>
+    {/* <div className={styles.program_block_container}>
       <div className={styles.program_block}>
         <div className={styles.program_title}>
           <img src="https://realibi.kz/file/453815.png"/>
@@ -19,7 +19,7 @@ const Program = (props) => {
         </div>
         <span>{props?.program}</span>
       </div>
-    </div>
+    </div> */}
    
     <div className={styles.stage_block_container}>
       <h2>Этапы обучения на курсе</h2>

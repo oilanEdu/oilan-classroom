@@ -22,8 +22,6 @@ function Title(props) {
     const router = useRouter()
 
     useEffect(() => {
-        console.log(router)
-        console.log('PROPS', props)
         loadQueries()
     }, [])
     
@@ -32,18 +30,15 @@ function Title(props) {
         let getCourseOC = await axios.post(`${globals.productionServerDomain}/getCourseOC/` + data)
         const courseIdLocal = getCourseOC['data'][0]?.id
         const teacherIdLocal = getCourseOC['data'][0]?.teacher_id
-        console.log("getCourseOC", getCourseOC['data'])
-        console.log("getCourseOC ID", getCourseOC['data'][0]?.id)
+
         let getCourseTargets = await axios.post(`${globals.productionServerDomain}/getCourseTargets/` + courseIdLocal)
-        // let captcha2 = await axios.post(`${globals.productionServerDomain}/getCaptchaWithId/` + data)
+
         let getCourseInfoBlocks = await axios.post(`${globals.productionServerDomain}/getCourseInfoBlocks/` + courseIdLocal)
         let getCourseSkills = await axios.post(`${globals.productionServerDomain}/getCourseSkills/` + courseIdLocal)
         let getCourseStages = await axios.post(`${globals.productionServerDomain}/getCourseStages/` + courseIdLocal)
         let getPrograms = await axios.post(`${globals.productionServerDomain}/getPrograms/` + courseIdLocal)
         let getTeacherByCourse = await axios.post(`${globals.productionServerDomain}/getTeacherByCourse/` + teacherIdLocal)
         let getSertificateByTeacherId = await axios.post(`${globals.productionServerDomain}/getSertificateByTeacherId/` + teacherIdLocal)
-        console.log("getCourseInfoBlocks['data']", getCourseInfoBlocks['data'])
-        //hooks
         setCourse(getCourseOC['data'][0])
         setCourseTargets(getCourseTargets['data']) 
         setCourseInfoBlocks(getCourseInfoBlocks['data'])
@@ -57,13 +52,29 @@ function Title(props) {
     return (
         <>
             <div style={{backgroundColor: "#f1faff"}}>
-              <Header white={true}/>
-              <AboutCourse courseInfoBlocks={courseInfoBlocks} teacherByCourse={teacherByCourse} course={course} courseTargets={courseTargets}/>
-              <AboutTeacher teacherByCourse={teacherByCourse} courseSkills={courseSkills} course={course} sertificates={sertificates}/>
-              <Program program={course?.program} courseStages={courseStages}/>
-              <CoursePrice course={course}/>
-              <ApplicationBlock course={course} teacherByCourse={teacherByCourse}/>
-              <Footer />
+                <Header white={true}/>
+                <AboutCourse 
+                    courseInfoBlocks={courseInfoBlocks} 
+                    teacherByCourse={teacherByCourse} 
+                    course={course} 
+                    courseTargets={courseTargets}
+                />
+                <AboutTeacher 
+                    teacherByCourse={teacherByCourse} 
+                    courseSkills={courseSkills} 
+                    course={course} 
+                    sertificates={sertificates}
+                />
+                <Program 
+                    program={course?.program} 
+                    courseStages={courseStages}
+                />
+                <CoursePrice course={course}/>
+                <ApplicationBlock 
+                    course={course} 
+                    teacherByCourse={teacherByCourse}
+                />
+                <Footer />
             </div>
         </>
     )

@@ -34,7 +34,7 @@ export default function AboutCourse(props) {
         <div className={styles.leftMainInfo}>
           <div className={styles.flud}>
             <p>Oilan-classroom</p>
-            <div className={styles.imgBoom}></div>
+            {/* <div className={styles.imgBoom}></div> */}
           </div>
           <div className={styles.courseTitle}>
             <h1>{props.course?.title}</h1>
@@ -55,7 +55,7 @@ export default function AboutCourse(props) {
         </div>
         <div className={styles.rightMainInfo}>
           <Image src={'https://realibi.kz/file/596699.png'} className={styles.imgArrow}/>
-          <Image src={'https://realibi.kz/file/978476.png'} className={styles.imgGlobe}/>
+          {/* <Image src={'https://realibi.kz/file/978476.png'} className={styles.imgGlobe}/> */}
           <Image src={'https://realibi.kz/file/274985.png'} className={styles.imgGirls}/>
         </div>
       </div>
@@ -88,7 +88,7 @@ export default function AboutCourse(props) {
         <h1>О КУРСЕ</h1>
         <div className={styles.squares}>
           {props.courseInfoBlocks?.map(el => <>
-            <div className={isIt(el.block_order) ? styles.leftSquare : styles.rightSquare}>
+            <div className={el.style === "format" ? styles.el_format : el.style === "type" ? styles.el_type : styles.el_bonus}>
               <p className={styles.squareTitle}>
                 {el.title}
               </p>

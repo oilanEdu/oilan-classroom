@@ -212,29 +212,42 @@
   color: #1E2432;
 }
 .squares{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-areas: "bonus format" "bonus type";
 }
-.leftSquare{
+.el_format {
   display: flex;
   flex-direction: column;
-  width: 38%;
+  grid-area: format;
   background: #3A66D7;
-  border-radius: 32px 32px 32px 0px;
+  border-radius: 32px 32px 32px 32px;
   margin-bottom: 20px;
   padding: 40px;
+  margin: 10px;
 }
-.rightSquare{
+
+.el_type {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  grid-area: type;
   background: #3A66D7;
-  border-radius: 32px 32px 0px 32px;
+  border-radius: 32px 32px 32px 32px;
   margin-bottom: 20px;
   padding: 40px;
+  margin: 10px;
 }
+
+.el_bonus {
+  display: flex;
+  flex-direction: column;
+  grid-area: bonus;
+  background: #3A66D7;
+  border-radius: 32px 32px 32px 32px;
+  margin-bottom: 20px;
+  padding: 40px;
+  margin: 10px;
+}
+
 .squareTitle{
   font-family: 'Muller Medium';
   font-style: normal;
@@ -422,7 +435,7 @@
     font-size: 18px;
   }
   .squares{
-    flex-direction: column;
+    grid-template-areas: "bonus" "format" "type";
   }
   .leftSquare{
     width: 95%;

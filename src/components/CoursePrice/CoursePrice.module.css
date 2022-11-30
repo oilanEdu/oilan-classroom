@@ -108,6 +108,67 @@
   grid-area: finish;
 }
 
+.price_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  overflow-x: scroll;
+}
+
+.price {
+  width: 400px;
+  height: 340px;
+  background: #FFFFFF;
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.price_base, .price_standart, .price_intensive {
+  display: block;
+  border-radius: 50px;
+  color: #FFFFFF;
+  font-size: 20px;
+  margin-bottom: 40px;
+}
+
+.price_base {
+  background: url(https://realibi.kz/file/411656.png) #5BCB91;
+  background-repeat: no-repeat;
+  background-size: 22px 27px;
+  background-position: 18%;
+  padding: 12px 32px 12px 67px;
+}
+
+.price_standart {
+  background: url(https://realibi.kz/file/231086.png) #0066FF;
+  background-repeat: no-repeat;
+  background-size: 19px 27px;
+  background-position: 18%;
+  padding: 12px 32px 12px 67px;
+}
+
+.price_intensive {
+  background: url(https://realibi.kz/file/43148.png) #FE6105;
+  background-repeat: no-repeat;
+  background-size: 29px 27px;
+  background-position: 18%;
+  padding: 12px 32px 12px 67px;
+}
+
+.price_month, .price_lessons {
+  font-size: 24px;
+}
+
+.price_smb {
+  font-size: 27px;
+}
+
+.price_lesson {
+  font-size: 20px;
+}
+
 @media screen and (max-width: 1280px) {
   .price_content { 
     background: url(https://realibi.kz/file/653097.png) no-repeat;
@@ -126,6 +187,9 @@
   }
   .container {
     margin: 80px 40px 0;
+  }
+  .price {
+    margin-right: 20px;
   }
 }
 
@@ -236,6 +300,12 @@
   }
 }
 
+@media screen and (max-width: 450px) {
+  .price {
+    width: 370px;
+  }
+}
+
 @media screen and (max-width: 390px) {
   .container {
     margin: 80px 10px 0;
@@ -269,5 +339,8 @@
   }
   .possibility {
     padding: 27px 0;
+  }
+  .price {
+    width: 320px;
   }
 }

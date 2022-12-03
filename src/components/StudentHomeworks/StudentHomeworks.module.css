@@ -95,6 +95,8 @@
   background: #74C87D;
   border-radius: 8px;
   padding: 18px 22px;
+  width: 185px;
+  text-align: center;
 }
 
 .lesson_score {

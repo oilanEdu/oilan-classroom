@@ -8,6 +8,7 @@ import Footer from "../../../../../src/components/Footer/Footer";
 import HeaderTeacher from "../../../../../src/components/HeaderTeacher/HeaderTeacher";
 import classnames from 'classnames';
 import TeacherHomeworksLessons from "../../../../../src/components/TeacherHomeworksLessons/TeacherHomeworksLessons";
+import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 
 function Homeworks(props) {
 	
@@ -177,21 +178,23 @@ function Homeworks(props) {
       })
       .catch((err) => {
         alert("Произошла ошибка"); 
-      });
-  }
+          });
+    }
 
-  const updateAnswerComment = async (id, comment) => {
-    const data = {
-      id,
-      comment
-    }; 
+    const updateAnswerComment = async (studentId, exerciseId, text, date) => {
+        const data = {
+          studentId, 
+          exerciseId, 
+          text,
+          date
+        }; 
 
-    await axios({
-      method: "put",
-      url: `${globals.productionServerDomain}/updateAnswerComment`,
-      data: data,
-    })
-      .then(function (res) {
+        await axios({
+          method: "post",
+          url: `${globals.productionServerDomain}/createTeacherComment`,
+          data: data,
+        })
+          .then(function (res) {
         alert("Комментарий отправлен"); 
       })
       .catch((err) => {
@@ -204,6 +207,7 @@ function Homeworks(props) {
       <div style={{backgroundColor: "#f1faff", width: '120%'}}>
         <HeaderTeacher white={true} teacher={teacher}/>
         <div className={styles.cantainer}>
+                <GoToLessonWithTimerComponent isTeacher={true} url={props.url}/>
       		<div className={styles.selectBlock}>
             <h1>Домашние задания</h1>
             <div className={styles.select_student_container}>

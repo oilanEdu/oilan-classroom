@@ -29,7 +29,7 @@ function ModalForLessonConfiguration(props) {
       course_id,
       student_id 
     };  
-    // console.log("dataForGetSchedule", dataForGetSchedule)
+    console.log("dataForGetSchedule", dataForGetSchedule)
     let schedule = await axios({
       method: "post",
       url: `${globals.productionServerDomain}/getScheduleByLessonIdAndCourseIdAndStudentId`,
@@ -143,7 +143,7 @@ function ModalForLessonConfiguration(props) {
             <div className={styles.studentImg} style={{backgroundImage: "url(https://realibi.kz/file/318865.png)"}}></div>
             <div className={styles.studentName}>
              <p>{props.student.name} {props.student.surname}</p>
-             <p>id: {props.student.student_id}</p> 
+             <p>id: {"0".repeat(7 - String(props.student.student_id).length) + props.student.student_id}</p> 
             </div>
           </div> 
           <select

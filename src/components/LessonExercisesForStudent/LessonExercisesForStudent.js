@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./LessonExercisesForStudent.module.css";
 import axios from "axios";
 import globals from "../../globals";
@@ -7,10 +7,40 @@ const LessonExercisesForStudent = ({exercises, student, bg}) => {
   const [ active, setActive ] = useState(null);
   const [ answer, setAnswer ] = useState('')
   const [ editMode, setEditMode ] = useState(false)
+  const [ teacherComments, setTeacherComments ] = useState([])
 
   console.log(exercises)
   console.log(student)
   const openExer = e => setActive(+e.target.dataset.index);
+  useEffect(() => {
+    if (active != null) {
+      let studentId = student
+      let exerciseId = exercises[active].id
+      let data = {
+        studentId,
+        exerciseId
+      };
+      let exerciseAnswer = axios({
+        method: "post",
+        url: `${globals.productionServerDomain}/getTeacherCommentsByStudExId`,
+        data: data,
+      })
+        .then(function (res) {
+          if (res.data[0]){
+              setTeacherComments(res.data)
+              // console.log('EXE', res.data[0].status)
+              // exercise.answer_status = res.data[0].status
+              // exercise.teacher_comment = res.data[0].comment 
+          }else{
+              console.log('ответов нет')
+              setTeacherComments([])
+          }
+        })
+        .catch((err) => {
+          alert("Произошла ошибка");   
+        });
+    }
+  }, [active])
   
   const sendAnswer = async (answerText, lessonId, exerciseId, studentId, status) => {
     const data = {
@@ -137,6 +167,15 @@ const LessonExercisesForStudent = ({exercises, student, bg}) => {
                 </div>
               </>):(<></>)
             }
+            <div>
+              <div className={styles.teacherComment}><img src="https://realibi.kz/file/108886.png" className={styles.mailLogo}/><span>Комментарий преподователя:</span></div>
+              {teacherComments.map(comment => {
+              return <div className={styles.comment}>
+              <span>{comment.text}</span>
+              <span className={styles.commentDate}>{comment.date?.toLocaleString().substring(0, 10)} {comment.date?.toLocaleString('ru', { hour12: false }).substring(11, 16)}</span>  
+            </div> 
+          })}
+            </div>
           </div>
       </>)
     }

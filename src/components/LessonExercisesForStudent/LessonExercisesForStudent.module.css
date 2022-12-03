@@ -157,3 +157,19 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+.comment {
+  display: flex;
+  gap: 10px;
+}
+.commentDate {
+  color: gray !important;
+}
+.teacherComment {
+  margin-top: 20px;
+  display: flex;
+  align-items: center
+}
+.mailLogo {
+  margin-right: 10px
+  
+}

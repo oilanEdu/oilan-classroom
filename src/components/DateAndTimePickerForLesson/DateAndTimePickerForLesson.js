@@ -5,7 +5,7 @@ import styles from './DateAndTimePickerForLesson.module.css'
 
 function DateAndTimePickerForLesson(props) {
 
-  let dateStr = new Date(props.lesson.start_time)
+  let dateStr = new Date(props.lesson.personal_time ? props.lesson.personal_time : props.lesson.start_time)
   let dateStrTime = new Date(props.lesson.personal_time ? props.lesson.personal_time : props.lesson.start_time).toLocaleTimeString();
 
   let curr_date = dateStr.getDate();
@@ -30,6 +30,7 @@ function DateAndTimePickerForLesson(props) {
 
   const [dateState, setDateState] = useState(formated_date);
   const [timeState, setTimeState] = useState(dateStrTime)
+
  
   
   let dateAndTimeMerger = dateState+" "+timeState
@@ -47,7 +48,7 @@ function DateAndTimePickerForLesson(props) {
   useEffect(() => { 
     saveLessonDateAndTimeHandler()
   }, [props.saveIsClicked]) 
-       
+  
 
   return (
     <div className={styles.wrapper}> 

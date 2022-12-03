@@ -17,14 +17,30 @@ export default function HeaderStudent(props) {
   const [cabinetRoute, setCabinetRoute] = useState("/login");
   const router = useRouter();
 
+  const [courseId, setCourseId] = useState(router.query.courseId)
+  const  [nickname, setNickname] = useState(router.query.nickname)
+
   const [student, setStudent] = useState({});
   const [center, setCenter] = useState({});
+  const [ lessons, setLessons ] = useState([]);
+  const [balance, setBalance] = useState()
 
   const [exitingOut, setExitingOut] = useState(false);
 
   const [loadingData, setLoadingData] = useState(true);
 
   const loadUserInfo = async () => {
+    await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${router.query.nickname}&couse_id=${router.query.courseId}`).then(async (res) => {
+      setStudent(res.data[0]);
+      await axios.get(`${globals.productionServerDomain}/getLessonInfo?couse_id=${router.query.courseId}&program_id=${res.data[0].program_id}&student_id=${res.data[0].id}`).then(async (res2) => {
+        // setLesson(res2.data[0]);
+        setLessons(res2.data);
+
+        // await axios.get(`${globals.productionServerDomain}/getLessonExercises?lesson_id=${res2.data[0].id}&student_id=${res.data[0].id}`).then(res3 => {
+        //   setExercises(res3.data);
+        // });
+      });
+    });
     if (
       localStorage.getItem(globals.localStorageKeys.currentStudent) !== null
     ) {
@@ -87,6 +103,16 @@ export default function HeaderStudent(props) {
     setLoadingData(false);
     console.log("pathname = " + window.location.pathname);
   }, []);
+  useEffect(() => {
+    if (lessons[0] != undefined) {
+      let balance1 = 0
+      lessons.forEach(item => {
+        balance1 = item.score + balance1
+      })
+      balance1
+      setBalance(balance1)
+    }
+  }, [lessons])
 
   return (
     <div id={"header"} className={styles.whiteHeader}>
@@ -100,7 +126,7 @@ export default function HeaderStudent(props) {
 
       <div className={styles.desktopHeader}>
         <div className={styles.logo}>
-          {/* <Link href={""}> */}
+          {/* <Link href={"/"}> */}
             <a
               // onClick={async (ctx) => {
               //   if (props.reload) {
@@ -135,33 +161,52 @@ export default function HeaderStudent(props) {
         <div className={styles.menu}>
           <ul className={styles.menu_ul}>
             <li>
-              <a
-                className={styles.link}
-                style={{ color: "black" }}
+            <Link
+                href={`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseId}`}
+                target="_blank"
+                
               >
-                Главная
-              </a>
+                <a className={styles.link}
+                style={{ color: "black" }}>
+                Главная  
+                </a>
+              </Link>
             </li>
             <li>
-              <a
-                className={styles.link}
-                style={{ color: "black" }}
+            <Link
+                href={`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseId}`}
+                target="_blank"
+                
               >
-                Программа
-              </a>
+                <a className={styles.link}
+                onClick={() =>
+                  setTimeout(() => {
+                    router.push("#programs");
+                  }, props.isInMainPage ? 0 : 1000)
+                }
+                style={{ color: "black" }}>
+                Программа  
+                </a>
+              </Link>
             </li>
-            <li onClick={handleShow}>
-              <a
-                className={styles.link}
-                style={{ color: "black" }}
+            <li>
+              {/* /cabinet/student/test/course/1/homeworks */}
+            <Link
+                href={`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseId}/homeworks`}
+                target="_blank"
+                
               >
-                Домашние задания
-              </a>
+                <a className={styles.link}
+                style={{ color: "black" }}>
+                Домашние задания  
+                </a>
+              </Link>
             </li>
           </ul>
         </div>
         <div className={styles.contact}>
           <p>{props.name} {props.surname}</p>
+          <span>Баланс - {balance * 10}</span>
         </div>
         <div
           onClick={() => {
@@ -241,4 +286,15 @@ export default function HeaderStudent(props) {
       ) : null}
     </div>
   );
+}
+
+HeaderStudent.getInitialProps = async (ctx) => {
+  if(ctx.query.courseId !== undefined && ctx.query.nickname !== undefined) {
+      return {
+          courseId: ctx.query.courseId,
+          nickname: ctx.query.nickname
+      }
+  }else{
+      return {};
+  }
 }

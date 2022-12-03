@@ -44,7 +44,7 @@
   object-fit: cover;
   width: 100%;
   height: 100%;
-  opacity: 0.1;
+  opacity: 0.04;
 }
 
 .next_lesson_content {
@@ -171,7 +171,7 @@
 }
 
 .programsHeader span{
-	font-family: 'Noto Sans Bold';
+    font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 16px;
@@ -195,7 +195,7 @@
 }
 
 .program span{
-	font-family: 'Noto Sans Bold';
+    font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 16px;

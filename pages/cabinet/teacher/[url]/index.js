@@ -12,6 +12,7 @@ import ModalForLessonConfiguration from "../../../../src/components/ModalForLess
 // import CalendarComponent from "../../../../src/components/Calendar/CalendarComponent.js";
 import classnames from "classnames";
 import Pagination from "../../../../src/components/Pagination/Pagination";
+import GoToLessonWithTimerComponent from "../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 
 function TeacherCabinet(props) {
     const [teacher, setTeacher] = useState([])
@@ -42,12 +43,14 @@ function TeacherCabinet(props) {
     const indexOfFirstPost = indexOfLastPost - cardsPerPage;
     const currentPosts = students?.slice(indexOfFirstPost, indexOfLastPost)
     const howManyPages = Math.ceil(students?.length/cardsPerPage)
+
+    const isInMainPage = true
     
     const updateTimer = () => {
         const future = Date.parse(closerLesson.fact_time);
         const now = new Date();
         const diff = future - now;
-        
+          
         const y = Math.floor( diff / (1000*60*60*24*365) );
         const d  = Math.floor( diff / (1000*60*60*24) );
         const h = Math.floor( diff / (1000*60*60) );
@@ -58,7 +61,7 @@ function TeacherCabinet(props) {
         // const hour = (h - d  * 24) + (days * 24);
         
         setDays(d  - y * 365);
-        setHours(h - d  * 24);
+        setHours(h + d  * 24);
         setMinutes(m  - h * 60);
         setSeconds(s  - m  * 60);
       };
@@ -72,9 +75,10 @@ function TeacherCabinet(props) {
         console.log('PROPS', props)
         console.log(lessons) 
         loadTeacherData()
-        // setInterval(() => {updateTimer()}, 1000); 
     }, []) 
     
+    setInterval(() => {updateTimer()}, 1000);  
+
     const loadStudentLessons = async (studentId, programId) => {
         const data = {
             studentId,
@@ -265,8 +269,7 @@ function TeacherCabinet(props) {
 
     const startLessonLink = async (translationLink) => {
         loadTeacherData()
-        const role = 'teacher'
-        const redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}`
+        const redirectUrl = `${encodeURIComponent(props.url)}/lesson?room=${encodeURIComponent(translationLink)}`
         
         await router.push(redirectUrl)
     }
@@ -343,22 +346,13 @@ function TeacherCabinet(props) {
                                          updateStudentProgram={updateStudentProgram} 
                                          loadTeacherData={loadTeacherData}
                                          programs={programs}
-            /> 
+            />  
         </> : ''}
             
             <div style={{backgroundColor: "#f1faff"}}>
-              <HeaderTeacher white={true} url={props.url} teacher={teacher} />
+              <HeaderTeacher white={true} url={props.url} teacher={teacher} isInMainPage={isInMainPage}/>
               <div className={styles.cantainer}>
-                <div className={styles.next_lesson}>
-                  <img src="https://realibi.kz/file/498086.png"/>
-                  <div className={styles.next_lesson_content}>
-                    <div>
-                      <p>Следующие занятие через {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')} часов</p>
-                      <p>Занятие №{closerLesson.lesson_number} {closerLesson.title}</p>
-                    </div>
-                    <button>Перейти к занятию</button>
-                  </div>
-                </div>
+                <GoToLessonWithTimerComponent isTeacher={true} url={props.url}/>
                 <div className={styles.topBlock}>
                     <div className={styles.greetings}>
                         <span>Преподаватель</span>
@@ -368,7 +362,7 @@ function TeacherCabinet(props) {
                             onClick={() => {
                                 (closerLesson.personal_lesson_link || closerLesson.default_lesson_link)?
                                 startLessonLink(closerLesson.personal_lesson_link?closerLesson.personal_lesson_link:closerLesson.default_lesson_link):
-                                startNewLesson() 
+                                startNewLesson()
                             }}
                         >Перейти к занятию</button>
                     </div>
@@ -444,7 +438,7 @@ function TeacherCabinet(props) {
                 <div className={styles.studentsBlock} id={"students"}>
                     <div className={styles.titleContainer}>
                         <h1>СПИСОК СТУДЕНТОВ</h1>
-                        <div className={styles.sortContainer}>
+                        <div>
                             <div 
                                 onClick={() => setShowSort(!showSort)}
                                 className={styles.sortTitle}
@@ -506,26 +500,12 @@ function TeacherCabinet(props) {
                             </span>
                             <span className={styles.sNextLesson}>
                                 <span>{student.closer_date}</span>
-                                <span>{student.curr_hours}:{student.curr_minutes}-{(student.curr_hours == 23)?'00':student.curr_hours + 1}:{student.curr_minutes}</span>
+                                <span>{student.curr_hours ? <>{student.curr_hours}:{student.curr_minutes}-{(student.curr_hours == 23)?'00':student.curr_hours + 1}:{student.curr_minutes}</> : 'Следующее занятие не запланировано'}</span>
                             </span>
                             <div className={styles.sConfigureWrapper}>
                             <span className={styles.sConfigure}
                                   onClick={() => {setShowModalLesson(!showModalLesson)
                                                   setStudentForModal(student)}}>
-                              {/* вот это должно быть в модалке */}
-                                {/* <select
-                                onChange={(e) => {
-                                    updateStudentProgram(student.student_id, student.course_id, e.target.value)
-                                    loadTeacherData()
-                                 }
-                                }
-                                value="0">
-                                  <option value="0" disabled>Выбрать</option>
-                                  {programs.map(program => program.course_id == student.course_id?(
-                                    <option value={program.id}>{program.title}</option>
-                                      ):(<></>)
-                                    )}
-                                </select> */}
                                 Настроить
                             </span>
                             <div className={styles.sConfigureGear}>

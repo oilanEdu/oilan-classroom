@@ -43,7 +43,7 @@
 .lesson_content p {
   margin: 0;
   font-size: 16px;
-  font-family: "Noto Sans Regular";
+  font-family: "Noto Sans Medium";
 }
 
 .lesson_tesis {
@@ -100,6 +100,8 @@
   background: #74C87D;
   border-radius: 8px;
   padding: 18px 22px;
+  width: 185px;
+  text-align: center;
 }
 
 .lesson_score {
@@ -126,4 +128,16 @@
   color: #FFFFFF;
   border: none;
   margin-top: 30px;
+}
+
+.comment {
+  display: flex;
+  gap: 10px;
+}
+.comment span {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.commentDate {
+  color: gray !important;
 }

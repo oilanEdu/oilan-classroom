@@ -5,12 +5,15 @@ import classnames from 'classnames';
 import axios from "axios";
 import globals from "../../globals";
 
-const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer, teacherComment, setShowCheck, setSelectedExerciseId, setAnswer, setTeacherComment, setSelectedExerciseNumber, setSelectedExerciseText, setSelectedExerciseCorrectAnswer, getAnswer, selectedStudentId, selectedExerciseNumber, selectedExerciseText, selectedExerciseCorrectAnswer, updateAnswerStatus, updateAnswerComment}) => {
+const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer, teacherComment, setShowCheck, setSelectedExerciseId, setAnswer, setTeacherComment, setSelectedExerciseNumber, setSelectedExerciseText, setSelectedExerciseCorrectAnswer, getAnswer, selectedStudentId, selectedExerciseNumber, selectedExerciseText, selectedExerciseCorrectAnswer, updateAnswerStatus, updateAnswerComment, setIsDateAndTimeChanged}) => {
     const [exercises, setExercises] = useState([])
     const [exercises2, setExercises2] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
     const [isLoaded2, setIsLoaded2] = useState(false)
     const [numberOfEx, setNumberOfEx] = useState(0)
+    useEffect(() => {
+        console.log(lesson, "lessonPROPS");
+    }, [])
     useEffect(() => {
         setExercises2(exercises)
         console.log("isLoaded", isLoaded);
@@ -44,7 +47,7 @@ const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer,
                 })
                   .then(function (res) {
                     if (res.data[0]){
-                        console.log('EXE', res.data[0].status)
+                        console.log('EXEXEXEXE', res.data[0].status)
                         exercise.answer_status = res.data[0].status
                     }else{
                         console.log('ответов нет')
@@ -115,21 +118,126 @@ const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer,
     const getLessonExercises5 = async (selectedLesson) => {
         await getLessonExercises(selectedLesson)
     }
-    
+
+
+    //Date And TIme Picker
+    let dateStr = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time)
+    let dateStrTime = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).toLocaleTimeString();
+    let curr_date = dateStr.getDate();
+    let curr_month = dateStr.getMonth() + 1;
+    let curr_year = dateStr.getFullYear();
+    let formated_date = curr_year + "-";
+    if (curr_month > 9) { 
+      formated_date += curr_month + "-";
+    } else {
+      formated_date += "0" + curr_month + "-";
+    }
+    if (curr_date > 9) {
+      formated_date += curr_date; 
+    } else {
+      formated_date += "0" + curr_date; 
+    }
+    const [dateState, setDateState] = useState(formated_date);
+    const [timeState, setTimeState] = useState(dateStrTime)
+    let dateAndTimeMerger = dateState+" "+timeState
+    const saveLessonDateAndTime = async (dateAndTimeMerger, lesson_id, course_id, student_id) => {
+        const dataForGetSchedule = {
+          lesson_id, 
+          course_id,
+          student_id 
+        };  
+        debugger
+        console.log("dataForGetSchedule", dataForGetSchedule)
+        let schedule = await axios({
+          method: "post",
+          url: `${globals.productionServerDomain}/getScheduleByLessonIdAndCourseIdAndStudentId`,
+          data: dataForGetSchedule,
+        }).then(function (res) {
+            let scheduleRes = res.data
+            console.log("scheduleRes", scheduleRes);
+            if (scheduleRes.length > 0) {
+              return scheduleRes
+            }
+          })
+          .catch((err) => {
+            alert("Произошла ошибка");
+          });
+        console.log(schedule, "schedule1") 
+        if (schedule != undefined) {
+          if (schedule.some(el => el.lesson_id == lesson_id) && schedule.some(el => el.course_id == course_id) && schedule.some(el => el.student_id == student_id)) {
+            console.log("isscheduleRIGHT is RIGHT")
+            const dataForUpdateSchedule = {
+              dateAndTimeMerger,
+              lesson_id, 
+              course_id,
+              student_id 
+            }; 
+            // console.log("dataForGetSchedule", dataForGetSchedule)
+            let schedule = await axios({
+              method: "put",
+              url: `${globals.productionServerDomain}/updateSchedule`,
+              data: dataForUpdateSchedule,
+            })  
+          }    
+        } 
+         else {
+          console.log("isscheduleRIGHT is NOT RIGHT");
+          const dataForCreateSchedule = {
+            dateAndTimeMerger,
+            lesson_id, 
+            course_id,
+            student_id 
+          }; 
+          // console.log("dataForGetSchedule", dataForGetSchedule)
+          let schedule = await axios({
+            method: "post",
+            url: `${globals.productionServerDomain}/createSchedule`,
+            data: dataForCreateSchedule,
+          })
+        } 
+      } 
+      useEffect(() => {
+        setTimeState(dateStrTime)
+      }, []);
+      const [showInputsOfDate, setShowInputsOfDate] = useState(false)
+
     return <> <div className={styles.lesson}>
         <div className={styles.lessonTopRow}>
             <div className={styles.primeLessonInfo}>
                 <span className={styles.lessonNumber}>№{lesson.lesson_number}</span>
-                <span className={styles.lessonDatetime}>
-                    <span>{lesson.out_date}</span>
-                    <span>
+                {showInputsOfDate ? '' : <span className={styles.lessonDatetime}>
+                    <span onClick={() => {setShowInputsOfDate(true)}}>{lesson.out_date}</span>
+                    <span onClick={() => {setShowInputsOfDate(true)}}>
                         {lesson.out_hours>9?lesson.out_hours:'0'+lesson.out_hours}:{lesson.out_minutes>9?lesson.out_minutes:'0'+lesson.out_minutes}-{(lesson.out_hours == 23)?'00':lesson.out_hours>9?lesson.out_hours + 1:'0'+(lesson.out_hours+1)}:{lesson.out_minutes>9?lesson.out_minutes:'0'+lesson.out_minutes}
                         <Image 
                             src='https://realibi.kz/file/109637.png'
                             style={{marginLeft: '8px'}}
                         />
                     </span>
-                </span>
+                    </span>
+                }
+                {showInputsOfDate ? <div className={styles.inputsWrapper}>
+                        <input
+                            className={styles.inputs}
+                            id="date"
+                            type="date"
+                            value={dateState}
+                            onChange={(e) => setDateState(e.target.value)}
+                        ></input>
+                        <input
+                            className={styles.inputs}
+                            type="time"
+                            value={timeState} 
+                            onChange={(e) => setTimeState(e.target.value)}>
+                        </input>
+
+                        <button className={styles.correctButton} 
+                        onClick={async() => {
+                          await saveLessonDateAndTime(dateAndTimeMerger, lesson.id, lesson.course_id, lesson.student_id)  
+                        //   setIsDateAndTimeChanged(lesson.id)
+                          //просто рандомное что то отправляю
+                        }}>✓</button>
+                    </div> : ''}
                 <span className={styles.lessonTitle}>
                     <Image 
                         src='https://realibi.kz/file/846025.png'
@@ -242,7 +350,7 @@ const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer,
                 <button
                     className={styles.sendButton}
                     onClick={() => {
-                        updateAnswerComment(answer.id, teacherComment)
+                        updateAnswerComment(selectedStudentId, selectedExerciseId, teacherComment, new Date())
                     }}
                     disabled={teacherComment == '' ? true : false}
                 >

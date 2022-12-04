@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import styles from "./StudentLessonsProgramItem.module.css";
 import axios from "axios";
 import globals from "../../../src/globals";
@@ -9,6 +10,7 @@ const StudentLessonsProgramItem = ({lesson, courseId, nickname}) => {
   const [answers, setAnswers] = useState([])
   const [teacherComments, setTeacherComments] = useState([])
   let isActive = (new Date(lesson.start_time).getTime()) <= (new Date().getTime());
+  const router = useRouter() 
 
   const getLessonExercises = async (selectedLesson) => {
         let exer_number = 0

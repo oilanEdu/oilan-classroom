@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import styles from "./StudentCourseStatics.module.css";
+import axios from "axios";
+import globals from "../../globals";
 import { PieChart, Pie, Sector, Cell } from "recharts";
 import GoToLessonWithTimer from "../GoToLessonWithTimer/GoToLessonWithTimer";
 import GoToLessonWithTimerComponent from "../GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 
-const COLORS = ["#74C87D"];
-
 const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, courseId}) => {
   // console.log('stat data', student, lesson, lessons, scores)
+  const [days, setDays] = useState('');
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
   const [total, setTotal] = useState(0);
   const [lotalLesson, setTotalLesson] = useState(0);
   const [lessonScores, setLessonScores] = useState([]);
@@ -15,15 +20,43 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
   const [selectedLesson, setSelectedLesson] = useState(lesson)
   const [loadedData, setLoadedData] = useState(false)
   const [closerLesson, setCloserLesson] = useState(lesson)
-  let baseMark = 0   
+  const router = useRouter() 
+  let baseMark = 0;
+  let count = 0;
   useEffect(() => {
     console.log(closerLesson, "closerLesson");
   }, [closerLesson])
 
+  const updateTimer = () => {
+    const future = Date.parse(closerLesson.start_time);
+    const now = new Date();
+    const diff = future - now;
+    
+    const y = Math.floor( diff / (1000*60*60*24*365) );
+    const d  = Math.floor( diff / (1000*60*60*24) );
+    const h = Math.floor( diff / (1000*60*60) );
+    const m  = Math.floor( diff / (1000*60) );
+    const s  = Math.floor( diff / 1000 );
+
+    // const hour = (h - d  * 24) + (days * 24);
+    
+    setDays(d  - y * 365);
+    setHours(h - d  * 24);
+    setMinutes(m  - h * 60);
+    setSeconds(s  - m  * 60);
+  };
+
+  setInterval(() => {updateTimer()}, 1000);
+
   const overalScores = () => {
     lessons.forEach(lesson => {
-      baseMark += lesson.score 
-      setTotal(baseMark);
+      // baseMark += lesson.score
+      if (+lesson.all_exer !== 0 && +lesson.all_exer === +lesson.done_exer) {
+        baseMark += lesson.score
+        count += 1
+      };
+      console.log(baseMark);
+      setTotal(Math.ceil(baseMark / count));
       setLoadedData(true) 
       let currentDate = new Date().toLocaleDateString()
               let lessonFactDate
@@ -47,7 +80,8 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
                 }
     })
     console.log('TOTAL', baseMark, total)
-    console.log('CloserLesson', closerLesson)  
+    console.log('CloserLesson', closerLesson)
+    console.log('lessons', lessons)
   };
 
   const totalLesson = () => {
@@ -70,7 +104,8 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
   const doneLessonsHandler = () => {
     setDoneLessons([]);
     lessons.forEach(lesson => {
-      if (+lesson.score > 0) {
+      console.log(lesson);
+      if (+lesson.all_exer !== 0 && +lesson.all_exer === +lesson.done_exer) {
         setDoneLessons(prevState => {
           return [
             ...prevState,
@@ -94,6 +129,59 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
     console.log('DL', doneLessons)
   }, []);
   
+  const startLessonLink = async (translationLink) => {
+    console.log('proverkha1')
+    const role = 'student'
+    const redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}`
+        
+    await router.push(redirectUrl)
+  }
+
+  const startNewLesson = async () => {
+        console.log('proverkha2')
+        let alphabet = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789";
+        let roomKey = "";
+        while (roomKey.length < 12) {
+            roomKey += alphabet[Math.floor(Math.random() * alphabet.length)];
+        }
+        console.log(roomKey); 
+        if (closerLesson.personal_time){
+            let data = {
+                lessonId: closerLesson.id,
+                lessonKey: roomKey,
+                studentId: closerLesson.student_id
+            }
+            await axios({
+              method: "put",
+              url: `${globals.productionServerDomain}/createPersonalRoom`, 
+              data: data,
+            })
+              .then(function (res) {
+                 console.log('DATA', data)
+                 startLessonLink(roomKey) 
+              })
+              .catch((err) => {
+                alert("Произошла ошибка"); 
+              });
+        }else{
+            let data = {
+                lessonId: closerLesson.id,
+                lessonKey: roomKey
+            }
+            await axios({
+              method: "put",
+              url: `${globals.productionServerDomain}/createDefaultRoom`, 
+              data: data,
+            })
+              .then(function (res) {
+                 console.log('DATA', data)
+                 startLessonLink(roomKey)
+              })
+              .catch((err) => {
+                alert("Произошла ошибка");
+              });
+        }
+    }
   
   return <div className={styles.container}>     
     <GoToLessonWithTimerComponent isTeacher={false} url={student.nickname} student={student} lesson={lesson} lessons={lessons} scores={scores} nickname={nickname} courseId={courseId}/>
@@ -106,9 +194,15 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
         <h2>Преподаватель курса</h2>
         
         <p>{student[0]?.teach_surname} {student[0]?.teach_name}</p>
-        <p>Занятие №{closerLesson.lesson_order} {closerLesson.title}</p>
+        <p>Занятие №{closerLesson.number} {closerLesson.title}</p>
         <div>
-          <button>Перейти к занятию</button>
+          <button
+          onClick={() => {
+            (closerLesson.personal_lesson_link || closerLesson.default_lesson_link)?
+              startLessonLink(closerLesson.personal_lesson_link?closerLesson.personal_lesson_link:closerLesson.default_lesson_link):
+              startNewLesson() 
+          }}
+          >Перейти к занятию</button>
         </div>
       </div>
       <div>
@@ -142,7 +236,10 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
                   }
                 }
                 key={`cell-${index}`} 
-                fill={COLORS[index % COLORS.length]} 
+                fill={+score.score === 0 ? "#CAE3FF" : +score.score < 50 ? "#EA6756" : +score.score < 80 ? "#F8D576" : "#74C87D"} 
+                style={{border: "1px solid"}}
+                stroke={selectedLesson === score ? '#4299FF' : ""}
+                type='monotone'
               />
             ))}
           </Pie>

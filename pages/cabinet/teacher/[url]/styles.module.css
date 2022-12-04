@@ -497,6 +497,7 @@
 
 .sortContainer {
 	position: relative;
+	cursor: pointer;
 }
 
 .sortTitle {
@@ -527,6 +528,11 @@
 	padding: 15px;
 	background: #fff;
 	border-bottom: 1px solid #8E8E93;
+	cursor: pointer;
+}
+
+.sortOptions span:hover {
+	background: #f1faff;
 	cursor: pointer;
 }
   .sConfigureWrapper {

@@ -9,10 +9,10 @@ import HeaderTeacher from "../../../../src/components/HeaderTeacher/HeaderTeache
 import Calendar2 from "../../../../src/components/Calendar_2/CalendarComponent_2";
 import { Image } from "react-bootstrap";
 import ModalForLessonConfiguration from "../../../../src/components/ModalForLessonConfiguration/ModalForLessonConfiguration";
-// import CalendarComponent from "../../../../src/components/Calendar/CalendarComponent.js";
 import classnames from "classnames";
 import Pagination from "../../../../src/components/Pagination/Pagination";
 import GoToLessonWithTimerComponent from "../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
+import ClickAwayListener from '@mui/base/ClickAwayListener';
 
 function TeacherCabinet(props) {
     const [teacher, setTeacher] = useState([])
@@ -25,6 +25,8 @@ function TeacherCabinet(props) {
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
     const [dataLoaded, setDataLoaded] = useState(false)
+    const [lessonsLoaded, setLessonsLoaded] = useState(false)
+    const [studentsLoaded, setStudentsLoaded] = useState(false)
     
     const [emptyProgramCourseId, setEmptyProgramCourseId] = useState(0)
     const [emptyProgramTeacherId, setEmptyProgramTeacherId] = useState(0)
@@ -35,6 +37,7 @@ function TeacherCabinet(props) {
 
     const [showSort, setShowSort] = useState(false);
     const [sortType, setSortType] = useState("");
+    const [sortMode, setSortMode] = useState(false)
     
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -42,6 +45,9 @@ function TeacherCabinet(props) {
     const indexOfLastPost = currentPage * cardsPerPage;
     const indexOfFirstPost = indexOfLastPost - cardsPerPage;
     const currentPosts = students?.slice(indexOfFirstPost, indexOfLastPost)
+
+    const [studentsList, setStudentsList] = useState(currentPosts)
+
     const howManyPages = Math.ceil(students?.length/cardsPerPage)
 
     const isInMainPage = true
@@ -50,12 +56,12 @@ function TeacherCabinet(props) {
         const future = Date.parse(closerLesson.fact_time);
         const now = new Date();
         const diff = future - now;
-          
+        
         const y = Math.floor( diff / (1000*60*60*24*365) );
-        const d  = Math.floor( diff / (1000*60*60*24) );
+        const d = Math.floor( diff / (1000*60*60*24) );
         const h = Math.floor( diff / (1000*60*60) );
-        const m  = Math.floor( diff / (1000*60) );
-        const s  = Math.floor( diff / 1000 );
+        const m = Math.floor( diff / (1000*60) );
+        const s = Math.floor( diff / 1000 );
 
 
         // const hour = (h - d  * 24) + (days * 24);
@@ -71,20 +77,17 @@ function TeacherCabinet(props) {
     const router = useRouter() 
 
     useEffect(() => {
-        console.log(router)
-        console.log('PROPS', props)
-        console.log(lessons) 
         loadTeacherData()
     }, []) 
     
     setInterval(() => {updateTimer()}, 1000);  
 
     const loadStudentLessons = async (studentId, programId) => {
+        setLessonsLoaded(true)
         const data = {
             studentId,
             programId
         };
-        console.log('studentId, programId', studentId, programId)
         await axios({
             method: "post",
             url: `${globals.productionServerDomain}/getStudentLessonsByProgramId`,
@@ -102,10 +105,10 @@ function TeacherCabinet(props) {
             .catch((err) => {
                 alert("Произошла ошибка");
             });
-        console.log('lessonsURL', lessons)
     }
     
     const loadTeacherData = async () => {
+        setStudentsList(currentPosts) 
         let data = props.url 
         let getTeacherByUrl = await axios.post(`${globals.productionServerDomain}/getTeacherByUrl/` + data)
         const teacherIdLocal = getTeacherByUrl['data'][0]?.id
@@ -127,19 +130,23 @@ function TeacherCabinet(props) {
             id: teacherIdLocal,
             sort: sortType
         }
-        let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
         setTeacher(getTeacherByUrl['data'][0])
         setPrograms(teacherPrograms['data'])
+        let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
         teacherStudents['data'].forEach(async student => {
-        console.log('checks', student.check)
-        let diff = 604800000*7
-            loadStudentLessons(student.student_id, student.program_id) 
+            student.check = 0
+            let diff = 604800000*7
+            if (!lessonsLoaded) {loadStudentLessons(student.student_id, student.program_id)}
             let answersCount = 0 
             let studentCheck = 0
-            let studentLessons = await axios.post(`${globals.productionServerDomain}/getStudentLessonsByProgramId/`, {studentId: student.student_id, programId: student.program_id}).then(res => {
+            let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo?couse_id=${student.course_id}&program_id=${student.program_id}&student_id=${student.student_id}`).then(res => {
                 let lessons = res.data
                 res.data.forEach(async lesson => {
-                    // student.check = 0 
+                    if (+lesson.all_exer !== 0 && +lesson.all_exer === +lesson.done_exer) {
+                        studentCheck += 1
+                        student.check = studentCheck 
+                        student.progress = 100/student.lessons_count*student.check
+                      };
                     let currentDate = new Date().toLocaleDateString()
                     let lessonDate 
                     if (lesson.personal_time){
@@ -168,7 +175,7 @@ function TeacherCabinet(props) {
                         student.curr_minutes = curr_minutes 
  
                     }
-                    // console.log(lesson)
+
                     let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
                         let exercises = res.data
                         if (exercises) {
@@ -184,25 +191,23 @@ function TeacherCabinet(props) {
                                   url: `${globals.productionServerDomain}/getAnswersByStudExId`,
                                   data: data,
                                 }).then(res =>{
-                                    let answers = res.data
-                                    answers.forEach(answer => {
-                                        answersCount += 1 
-                                    })
-                                    if ((exercises.length > 0) && (exercises.length == answersCount)){
-                                        student.check += 1 
-                                        studentCheck += 1
-                                        console.log('studentCheck', studentCheck)
-                                        setCheck(student.check)
-                                        student.check = studentCheck  
-                                        student.progress = 100/student.lessons_count*student.check 
-                                    }  
-                                    else{ 
-                                        console.log('')
-                                        // setCheck(0)
-                                        // studentCheck = 0
-                                        // student.check = 0
-                                        // student.progress = 0
-                                    }
+                                    // let answers = res.data
+                                    // answersCount = answers.length
+                                    // if ((exercises.length > 0) && (exercises.length == answersCount)){
+                                    //     student.check += 1 
+                                    //     studentCheck += 1
+                                    //     console.log('studentCheck', studentCheck)
+                                    //     setCheck(student.check)
+                                    //     student.check = studentCheck 
+                                    //     student.progress = 100/student.lessons_count*student.check
+                                    // }  
+                                    // else{ 
+                                    //     console.log('')
+                                    //     setCheck(0)
+                                    //     studentCheck = 0
+                                    //     student.check = 0
+                                    //     student.progress = 0
+                                    // }
                                 })
                             }) 
                         }
@@ -210,13 +215,14 @@ function TeacherCabinet(props) {
                 })   
             })
             }
-           );  
-        console.log('closerLesson', closerLesson)
-        console.log('try', teacherStudents['data'])
-        setStudents(teacherStudents['data'])
+           );
+        if (!studentsLoaded) {
+            setStudents(teacherStudents['data'])
+            setStudentsLoaded(true)
+        }
         setDataLoaded(true) 
         console.log('programs', programs)
-        console.log('students', students) 
+        console.log('students', students)
                 // setCheckIsLoaded(true)
       }
 
@@ -269,7 +275,8 @@ function TeacherCabinet(props) {
 
     const startLessonLink = async (translationLink) => {
         loadTeacherData()
-        const redirectUrl = `${encodeURIComponent(props.url)}/lesson?room=${encodeURIComponent(translationLink)}`
+        const role = 'teacher'
+        const redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}`
         
         await router.push(redirectUrl)
     }
@@ -280,7 +287,6 @@ function TeacherCabinet(props) {
         while (roomKey.length < 12) {
             roomKey += alphabet[Math.floor(Math.random() * alphabet.length)];
         }
-        console.log(roomKey); 
         if (closerLesson.personal_time){
             let data = {
                 lessonId: closerLesson.id,
@@ -293,7 +299,6 @@ function TeacherCabinet(props) {
               data: data,
             })
               .then(function (res) {
-                 console.log('DATA', data)
                  startLessonLink(roomKey) 
               })
               .catch((err) => {
@@ -310,7 +315,6 @@ function TeacherCabinet(props) {
               data: data,
             })
               .then(function (res) {
-                 console.log('DATA', data)
                  startLessonLink(roomKey)
               })
               .catch((err) => {
@@ -319,23 +323,15 @@ function TeacherCabinet(props) {
         }
     }
 
-    const sortABC = async () => {
-        const dataStudents = {
-            id: emptyProgramTeacherId,
-            sort: "oc_students.surname"
-        }
-        let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`,  dataStudents)
-        setStudents(teacherStudents['data'])
+    const ultimateSort = async (field) => {
+        setSortMode(true)
+        currentPosts.sort(byField(field)); 
+        loadTeacherData()
     }
 
-    const sortCourse = async () => {
-        const dataStudents = {
-            id: emptyProgramTeacherId,
-            sort: "oc_programs.title"
-        }
-        let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`,  dataStudents)
-        setStudents(teacherStudents['data'])
-    };
+    function byField(field) {
+      return (a, b) => a[field] > b[field] ? 1 : -1;
+    }
 
     return ( 
         <>
@@ -438,21 +434,24 @@ function TeacherCabinet(props) {
                 <div className={styles.studentsBlock} id={"students"}>
                     <div className={styles.titleContainer}>
                         <h1>СПИСОК СТУДЕНТОВ</h1>
-                        <div>
-                            <div 
-                                onClick={() => setShowSort(!showSort)}
-                                className={styles.sortTitle}
-                            >
-                                <span className={showSort ? styles.sortShow : styles.sortHide}>
-                                   Сортировать 
-                                </span>
+                        <ClickAwayListener onClickAway={() => setShowSort(false)}>
+                            <div className={styles.sortContainer}>
+                                <div 
+                                    onClick={() => setShowSort(!showSort)}
+                                    className={styles.sortTitle}
+                                >
+                                    <span className={showSort ? styles.sortShow : styles.sortHide}>
+                                       Сортировать 
+                                    </span>
+                                </div>
+                                <div className={styles.sortOptions} style={{display: showSort ? "flex" : "none"}}>    
+                                    <span onClick={() => ultimateSort('lesson_date')}>Следующие занятие</span>
+                                    <span onClick={() => ultimateSort('surname')}>По алфавиту</span>
+                                    <span onClick={() => ultimateSort('course_title')}>По курсам</span>
+                                    <span onClick={() => ultimateSort('program_title')}>По программам</span>
+                                </div>
                             </div>
-                            <div className={styles.sortOptions} style={{display: showSort ? "flex" : "none"}}>    
-                                <span>Следующие занятие</span>
-                                <span onClick={() => sortABC()}>По алфавиту</span>
-                                <span onClick={() => sortCourse()}>По курсам</span>
-                            </div>
-                        </div>
+                        </ClickAwayListener>
                     </div>
                     <div className={styles.studentsHeader}>
                         <span className={classnames(styles.sCourse, styles.sCourseHead)}>Индивидуальная программа</span>
@@ -467,7 +466,7 @@ function TeacherCabinet(props) {
                         <span className={classnames(styles.sNextLesson, styles.sNextLessonHead)}>Следующее занятие</span>
                         <span className={styles.sProgram}>Программа</span>
                     </div>
-                    {currentPosts.map(student => ( 
+                    {(sortMode?studentsList:currentPosts).map(student => (
                         <div className={styles.student}>
                             <span className={styles.sCourse}>{student.course_title} ({student.program_title})</span>
                             <span 
@@ -492,7 +491,7 @@ function TeacherCabinet(props) {
                             <span className={styles.sComplietedLessons}>
                                 <div className={styles.progressLine}>
                                     <div className={styles.studentProgress} 
-                                        style={{width: student.progress + '%'}}  
+                                        style={{width: student.progress?student.progress+'%':'0' + '%'}}  
                                     >
                                     </div>
                                 </div>

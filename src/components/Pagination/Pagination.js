@@ -45,7 +45,7 @@ function Pagination({ pages = 10, setCurrentPage }) {
     setCurrentPage(currentButton);
   }, [currentButton]);
 
-  console.log(numberOfPages, currentButton);
+  // console.log(numberOfPages, currentButton);
 
   return (
     <div className={styles.pagination_container}>

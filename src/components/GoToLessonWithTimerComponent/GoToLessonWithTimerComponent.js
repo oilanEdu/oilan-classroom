@@ -349,7 +349,8 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseId }) {
 
     const startLessonLink = async (translationLink) => {
         loadTeacherData()
-        const redirectUrl = `${encodeURIComponent(url)}/lesson?room=${encodeURIComponent(translationLink)}`
+        const role = 'student'
+        const redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}`
         
         await router.push(redirectUrl)
     }

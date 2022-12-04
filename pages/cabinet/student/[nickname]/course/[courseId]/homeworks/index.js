@@ -53,7 +53,7 @@ const Homeworks = (props) => {
   return <>
     <HeaderStudent white={true} name={student?.name} surname={student[0]?.surname} />
     <div style={{padding: "82px 120px", backgroundColor: "#F1FAFF"}}>
-    <GoToLessonWithTimerComponent isTeacher={false} url={student.nickname} nickname={nickname} courseId={courseId}/>
+    {/*<GoToLessonWithTimerComponent isTeacher={false} url={student.nickname} nickname={nickname} courseId={courseId}/>*/}
       {lessons.map((lesson) => {
         return <StudentHomeworks lesson={lesson} student={student.id}/>
       })}

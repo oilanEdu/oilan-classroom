@@ -251,7 +251,7 @@ const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer,
                     }}
                     className={styles.lesson_grade}
                     >
-                    Оценка - {lesson.score} ({lesson.done_exer}/{lesson.all_exer})
+                    Оценка - {lesson.score?lesson.score:'0'} ({lesson.done_exer}/{lesson.all_exer})
                 </p>
             </div>
             <div 

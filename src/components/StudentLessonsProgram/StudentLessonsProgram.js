@@ -29,7 +29,7 @@ const StudentLessonsProgram = ({lessons, courseId, nickname}) => {
   }, [doneLessons]);
 
   return <div className={styles.container}>
-    <h2>Пройдено {done} % курса</h2>
+    <h2>Пройдено {+done.toFixed(2)} % курса</h2>
     <div className={styles.course_lessons}>
       {lessons.map(lesson => {
         return <>

@@ -25,13 +25,12 @@
 
 .cantainer{
 	width: 90%;
-	margin-left: 5%;
 	display: flex;
 	flex-direction: column;
 	background: #FFFFFF;
 	border: 2px solid #007AFF;
 	border-radius: 32px;
-	margin-top: 80px;
+	margin: 80px;
 }
 
 .mainTitle{

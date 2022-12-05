@@ -332,6 +332,6 @@ a {
         max-width: 1440px;
         position: absolute;
         top: 0%;
-        left: calc(50% - 720px);
+        /* left: calc(50% - 720px); */
     }
 }

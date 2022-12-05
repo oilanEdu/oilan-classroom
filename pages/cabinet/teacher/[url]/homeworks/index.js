@@ -260,9 +260,9 @@ function Homeworks(props) {
                 {programs.map(program => (
                   <div 
                     onClick={async (e) => {
-                      setSelectedProgramId(e.target.value)
+                      setSelectedProgramId(program.id)
                       setSelectedProgram(`${program.course_title} (${program.title})`)
-                      loadStudentLessons(selectedStudentId, e.target.value)
+                      loadStudentLessons(selectedStudentId, program.id)
                       setProgramSelectShow(!programSelectShow)
                     }}
                     className={styles.select_student_option}

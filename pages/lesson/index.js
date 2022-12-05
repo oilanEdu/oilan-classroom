@@ -7,9 +7,10 @@ import { Image } from "react-bootstrap";
 import Footer from "../../src/components/Footer/Footer";
 import HeaderTeacher from "../../src/components/HeaderTeacher/HeaderTeacher";
 import classnames from 'classnames';
-import socket from "../../src/socket";
-import ACTIONS from "../../src/socket/actions";
-import useWebRTC, {LOCAL_VIDEO} from '../../src/hooks/useWebRTC';
+import TeacherSide from "../../src/components/TeacherSide/TeacherSide";
+// import socket from "../../src/socket";
+// import ACTIONS from "../../src/socket/actions";
+// import useWebRTC, {LOCAL_VIDEO} from '../../src/hooks/useWebRTC';
 
 function Lesson(props) {
   
@@ -21,31 +22,39 @@ function Lesson(props) {
     const [student, setStudent] = useState([])
     const [lesson, setLesson] = useState([])
     const [rooms, updateRooms] = useState([])
+    const [showCheck, setShowCheck] = useState(0)
     const [exercises, setExercises] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
     const [numberOfEx, setNumberOfEx] = useState(0)
-    const {clients, provideMediaRef} = useWebRTC(room)
-    const rootNode = useRef();
+    const [selectedStudentId, setSelectedStudentId] = useState(0)
+    const [selectedExerciseId, setSelectedExerciseId] = useState(0)
+    const [selectedExerciseNumber, setSelectedExerciseNumber] = useState(0)
+    const [selectedExerciseText, setSelectedExerciseText] = useState('')
+    const [selectedExerciseCorrectAnswer, setSelectedExerciseCorrectAnswer] = useState('')
+    const [answer, setAnswer] = useState([]) 
+    const [teacherComment, setTeacherComment] = useState('')
+    // const {clients, provideMediaRef} = useWebRTC(room)
+    // const rootNode = useRef();
     
-    console.log('teacherUrl',teacherUrl)
-    console.log('room',room)
-    console.log('clients',clients)
+    // console.log('teacherUrl',teacherUrl)
+    // console.log('room',room)
+    // console.log('clients',clients)
 
-    useWebRTC(room)
+    // useWebRTC(room)
 
     useEffect(() => {
-        loadBaseData()
+        loadBaseData() 
         if (role == 'teacher'){
           loadTeacherData()
         }
         if (role == 'student'){
           loadStudentData()
         }
-        socket.on(ACTIONS.SHARE_ROOMS, ({rooms = []} = {}) => {
-            if (rootNode.current){
-                updateRooms(rooms);
-            }
-        }) 
+        // socket.on(ACTIONS.SHARE_ROOMS, ({rooms = []} = {}) => {
+        //     if (rootNode.current){
+        //         updateRooms(rooms);
+        //     }
+        // }) 
     }, []) 
 
     const loadBaseData = async () => {
@@ -53,14 +62,15 @@ function Lesson(props) {
         let getLessonByRoomKey = await axios.post(`${globals.productionServerDomain}/getLessonByRoomKey/` + data)
         setLesson(getLessonByRoomKey['data'][0])
         console.log('LESSON',lesson)
-        getLessonExercises()
+        getLessonExercises() 
     }
 
     const loadTeacherData = async () => {
       let data = room
       let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data)
         setStudent(getStudentByLessonKey['data'][0])
-        console.log('student',student)
+        setSelectedStudentId(student.student_id)
+        console.log('student',student)  
     }
 
     const loadStudentData = async () => {
@@ -74,7 +84,7 @@ function Lesson(props) {
         let exer_number = 0
         let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.lesson_id).then(res => {
             res.data.forEach(async exercise => {
-                let studentId = student.id
+                let studentId = student.student_id
                 let exerciseId = exercise.id
                 let data = {
                   studentId,
@@ -102,21 +112,80 @@ function Lesson(props) {
                 setNumberOfEx(exer_number)
                 setIsLoaded(true)
             })
-            setExercises(res.data)
+            setExercises(res.data) 
             console.log('exercises', exercises)
         }
-        )
-        setIsLoaded(true) 
+        ) 
     }
+
+    const getAnswer = async (studentId, exerciseId) => {
+        const data = {
+          studentId,
+          exerciseId
+        };
+        await axios({
+          method: "post",
+          url: `${globals.productionServerDomain}/getAnswersByStudExId`,
+          data: data,
+        })
+          .then(function (res) {
+            setAnswer(res.data[0])
+          })
+          .catch((err) => {
+            alert("Произошла ошибка");
+          });
+        console.log('answer', answer)
+    }
+
+    const updateAnswerStatus = async (id, status) => {
+    const data = {
+      id,
+      status
+    }; 
+    await axios({
+      method: "put",
+      url: `${globals.productionServerDomain}/updateAnswerStatus`,
+      data: data,
+    })
+      .then(function (res) {
+        alert("Отметка о выполнении изменена"); 
+      })
+      .catch((err) => {
+        alert("Произошла ошибка"); 
+          });
+    }
+
+    const updateAnswerComment = async (studentId, exerciseId, text, date) => {
+        const data = {
+          studentId, 
+          exerciseId, 
+          text,
+          date
+        }; 
+
+        await axios({
+          method: "post",
+          url: `${globals.productionServerDomain}/createTeacherComment`,
+          data: data,
+        })
+          .then(function (res) {
+        alert("Комментарий отправлен"); 
+      })
+      .catch((err) => {
+        alert("Произошла ошибка"); 
+      });
+  }
 
   return ( 
         <>
-            <div style={{backgroundColor: "#f1faff", width: '120%'}} ref={rootNode}>
+            <div style={{backgroundColor: "#f1faff", width: '120%'}} 
+              // ref={rootNode}
+            >
                 <HeaderTeacher white={true} teacher={teacher}/>
 
                 <div className={styles.cantainer}>
                   Room: {room} / Role: {role}
-                    <div className={styles.translationBlock}>
+                    {/*<div className={styles.translationBlock}>
                         {clients.map((clientID) => {
                             return (
                                 <div key={clientID} className={styles.personVideo}>
@@ -132,7 +201,7 @@ function Lesson(props) {
                                 </div>
                                 )
                         })}
-                    </div>
+                    </div>*/}
                     <div>
                       {(role == 'teacher')?
                         (<>
@@ -146,6 +215,27 @@ function Lesson(props) {
                             <h1>О занятии</h1>
                             <p>{lesson.tesis}</p>
                           </div>
+                          <TeacherSide 
+                            lesson={lesson} 
+                            showCheck={showCheck} 
+                            selectedExerciseId={selectedExerciseId} 
+                            answer={answer} 
+                            teacherComment={teacherComment} 
+                            setShowCheck={setShowCheck} 
+                            setSelectedExerciseId={setSelectedExerciseId} 
+                            setAnswer={setAnswer} 
+                            setTeacherComment={setTeacherComment} 
+                            setSelectedExerciseNumber={setSelectedExerciseNumber} 
+                            setSelectedExerciseText={setSelectedExerciseText} 
+                            setSelectedExerciseCorrectAnswer={setSelectedExerciseCorrectAnswer} 
+                            getAnswer={getAnswer} 
+                            selectedStudentId={selectedStudentId} 
+                            selectedExerciseNumber={selectedExerciseNumber} 
+                            selectedExerciseText={selectedExerciseText} 
+                            selectedExerciseCorrectAnswer={selectedExerciseCorrectAnswer} 
+                            updateAnswerStatus={updateAnswerStatus} 
+                            updateAnswerComment={updateAnswerComment}
+                          />
                         </>):
                         (role == 'student')?
                           (<>

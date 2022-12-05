@@ -5,6 +5,7 @@ import axios from "axios";
 import HeaderStudent from "../../../../../../../src/components/HeaderStudent/HeaderStudent";
 import Footer from "../../../../../../../src/components/Footer/Footer";
 import StudentHomeworks from "../../../../../../../src/components/StudentHomeworks/StudentHomeworks";
+import GoToLessonWithTimerComponent from "../../../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 
 const Homeworks = (props) => { 
   const router = useRouter();
@@ -16,6 +17,7 @@ const Homeworks = (props) => {
   const [ lessons, setLessons ] = useState([]);
   const [ scores, setScores ] = useState([]);
   const [ exercises, setExercises ] = useState([]);
+  
 
   const fetchData = async () => {
     console.log('hi', router.query.courseId) 
@@ -51,6 +53,7 @@ const Homeworks = (props) => {
   return <>
     <HeaderStudent white={true} name={student?.name} surname={student[0]?.surname} />
     <div style={{padding: "82px 120px", backgroundColor: "#F1FAFF"}}>
+    {/*<GoToLessonWithTimerComponent isTeacher={false} url={student.nickname} nickname={nickname} courseId={courseId}/>*/}
       {lessons.map((lesson) => {
         return <StudentHomeworks lesson={lesson} student={student.id}/>
       })}

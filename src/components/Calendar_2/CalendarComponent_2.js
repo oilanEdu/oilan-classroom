@@ -13,6 +13,7 @@ import {
   startOfToday,
 } from "date-fns";
 import { Fragment, useEffect, useState } from "react";
+import { ru } from 'date-fns/locale';
 import styles from "./styles.module.css";
 
 
@@ -78,7 +79,7 @@ export default function Calendar2(props) {
             {/* <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" /> */}
           </button>
           <h2 className={styles.wrapper3}>
-            {format(firstDayCurrentMonth, "MMMM yyyy")}
+            {format(firstDayCurrentMonth, "LLLL yyyy", { locale: ru })}
           </h2>
 
           <button

@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import axios from "axios";
 import globals from "../../globals";
 
-const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer, teacherComment, setShowCheck, setSelectedExerciseId, setAnswer, setTeacherComment, setSelectedExerciseNumber, setSelectedExerciseText, setSelectedExerciseCorrectAnswer, getAnswer, selectedStudentId, selectedExerciseNumber, selectedExerciseText, selectedExerciseCorrectAnswer, updateAnswerStatus, updateAnswerComment, setIsDateAndTimeChanged}) => {
+const TeacherSide = ({lesson, showCheck, selectedExerciseId, answer, teacherComment, setShowCheck, setSelectedExerciseId, setAnswer, setTeacherComment, setSelectedExerciseNumber, setSelectedExerciseText, setSelectedExerciseCorrectAnswer, getAnswer, selectedStudentId, selectedExerciseNumber, selectedExerciseText, selectedExerciseCorrectAnswer, updateAnswerStatus, updateAnswerComment, setIsDateAndTimeChanged}) => {
     const [exercises, setExercises] = useState([])
     const [exercises2, setExercises2] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
@@ -202,75 +202,9 @@ const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer,
       const [showInputsOfDate, setShowInputsOfDate] = useState(false)
 
     return <> <div className={styles.lesson}>
-        <div className={styles.lessonTopRow}>
-            <div className={styles.primeLessonInfo}>
-                <span className={styles.lessonNumber}>№{lesson.lesson_number}</span>
-                {showInputsOfDate ? '' : <span className={styles.lessonDatetime}>
-                    <span onClick={() => {setShowInputsOfDate(true)}}>{lesson.out_date}</span>
-                    <span onClick={() => {setShowInputsOfDate(true)}}>
-                        {lesson.out_hours>9?lesson.out_hours:'0'+lesson.out_hours}:{lesson.out_minutes>9?lesson.out_minutes:'0'+lesson.out_minutes}-{(lesson.out_hours == 23)?'00':lesson.out_hours>9?lesson.out_hours + 1:'0'+(lesson.out_hours+1)}:{lesson.out_minutes>9?lesson.out_minutes:'0'+lesson.out_minutes}
-                        <Image 
-                            src='https://realibi.kz/file/109637.png'
-                            style={{marginLeft: '8px'}}
-                        />
-                    </span>
-                    </span>
-                }
-                {showInputsOfDate ? <div className={styles.inputsWrapper}>
-                        <input
-                            className={styles.inputs}
-                            id="date"
-                            type="date"
-                            value={dateState}
-                            onChange={(e) => setDateState(e.target.value)}
-                        ></input>
-                        <input
-                            className={styles.inputs}
-                            type="time"
-                            value={timeState} 
-                            onChange={(e) => setTimeState(e.target.value)}>
-                        </input>
-
-                        <button className={styles.correctButton} 
-                        onClick={async() => {
-                          await saveLessonDateAndTime(dateAndTimeMerger, lesson.id, lesson.course_id, lesson.student_id)  
-                        //   setIsDateAndTimeChanged(lesson.id)
-                          //просто рандомное что то отправляю
-                        }}>✓</button>
-                    </div> : ''}
-                <span className={styles.lessonTitle}>
-                    <Image 
-                        src='https://realibi.kz/file/846025.png'
-                        style={{marginRight: '8px'}}
-                    />
-                    {lesson.title}
-                </span>
-                <p 
-                    style={{
-                        background: +lesson.score === 0 ? "#CAE3FF" : +lesson.score < 50 ? "#EA6756" : +lesson.score < 80 ? "#F8D576" : "#74C87D"
-                    }}
-                    className={styles.lesson_grade}
-                    >
-                    Оценка - {lesson.score?lesson.score:'0'} ({lesson.done_exer}/{lesson.all_exer})
-                </p>
-            </div>
-            <div 
-                className={classnames(styles.plusButton, (showCheck === lesson.id) ? styles.minus : styles.plus)}
-                onClick={async() => {
-                    await getLessonExercises2(lesson.id)
-                    // await getLessonExercises3(lesson.id)
-                    await getLessonExercises4(lesson.id)
-                    await getLessonExercises(lesson.id)
-                    setShowCheck(lesson.id)
-                    setSelectedExerciseId(0)
-                    setAnswer(null)
-                    setTeacherComment(null)
-                }}
-            ></div>
-        </div>
         <div 
             className={styles.detailInfo}
-            style={(showCheck == lesson.id)?{display: 'flex'}:{display: 'none'}}
+            style={{display: 'flex'}}
         >
             <div className={styles.bricksRow}>
                 <span> {exercises2.length > 0 ? "Задание" : ""}</span>
@@ -362,4 +296,4 @@ const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer,
     </>
 }
 
-export default TeacherHomeworksLessons
+export default TeacherSide

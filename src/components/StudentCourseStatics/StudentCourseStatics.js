@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "./StudentCourseStatics.module.css";
+import axios from "axios";
+import globals from "../../globals";
 import { PieChart, Pie, Sector, Cell } from "recharts";
+import GoToLessonWithTimer from "../GoToLessonWithTimer/GoToLessonWithTimer";
+import GoToLessonWithTimerComponent from "../GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 
-const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
+const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, courseId}) => {
   // console.log('stat data', student, lesson, lessons, scores)
   const router = useRouter();
   const [days, setDays] = useState('');
@@ -17,8 +21,12 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
   const [selectedLesson, setSelectedLesson] = useState(lesson)
   const [loadedData, setLoadedData] = useState(false)
   const [closerLesson, setCloserLesson] = useState(lesson)
+  const router = useRouter() 
   let baseMark = 0;
   let count = 0;
+  useEffect(() => {
+    console.log(closerLesson, "closerLesson");
+  }, [closerLesson])
 
   const updateTimer = () => {
     const future = Date.parse(closerLesson.start_time);
@@ -177,22 +185,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
     }
   
   return <div className={styles.container}>     
-    <div className={styles.next_lesson}>
-      <img src="https://realibi.kz/file/498086.png"/>
-      <div className={styles.next_lesson_content}>
-        <div>
-          <p>Следующие занятие через {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')} часов</p>
-          <p>Занятие №{closerLesson.number} {closerLesson.title}</p>
-        </div>
-        <button
-          onClick={() => {
-            (closerLesson.personal_lesson_link || closerLesson.default_lesson_link)?
-              startLessonLink(closerLesson.personal_lesson_link?closerLesson.personal_lesson_link:closerLesson.default_lesson_link):
-              startNewLesson() 
-          }}
-        >Перейти к занятию</button>
-      </div>
-    </div>
+    <GoToLessonWithTimerComponent isTeacher={false} url={student.nickname} student={student} lesson={lesson} lessons={lessons} scores={scores} nickname={nickname} courseId={courseId}/>
     <div className={styles.course_container}>
       <div>
         <p>Онлайн-курс</p>
@@ -239,7 +232,6 @@ const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
                 onClick={() => {
                   console.log('UROK', id)
                   console.log('what', score, index, id)
-                  console.log("score", score);
                   setSelectedLesson(score)
                   console.log('selectedLesson', selectedLesson)
                   }

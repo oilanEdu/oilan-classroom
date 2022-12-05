@@ -18,11 +18,13 @@ const StudentCourse = (props) => {
   const [ lessons, setLessons ] = useState([]);
   const [ scores, setScores ] = useState([]);
 
+  const isInMainPage = true
+
   const fetchData = async () => {
     const response = await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${nickname}&couse_id=${courseId}`).then(async (res) => {
       setStudent(res.data);
       await axios.get(`${globals.productionServerDomain}/getLessonInfo?couse_id=${courseId}&program_id=${res.data[0].program_id}&student_id=${res.data[0].id}`).then(res => {
-        setLesson(res.data[0]); 
+        setLesson(res.data[0]);
         setLessons(res.data);
         setDataLoaded(true)
       });

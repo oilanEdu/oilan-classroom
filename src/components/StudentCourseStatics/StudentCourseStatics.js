@@ -5,6 +5,7 @@ import { PieChart, Pie, Sector, Cell } from "recharts";
 
 const StudentCourseStatic = ({student, lesson, lessons, scores}) => {
   // console.log('stat data', student, lesson, lessons, scores)
+  const router = useRouter();
   const [days, setDays] = useState('');
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);

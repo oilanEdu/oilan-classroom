@@ -20,7 +20,7 @@ function EditProgram(props) {
     const [selectedExercise, setSelectedExercise] = useState([])
     const [lessonTitle, setLessonTitle] = useState('')
     const [lessonTesis, setLessonTesis] = useState('')
-    const [lessonDate, setLessonDate] = useState('') 
+    const [lessonDate, setLessonDate] = useState(new Date()) 
     const [exerciseText, setExerciseText] = useState('')
     const [exerciseAnswer, setExerciseAnswer] = useState('')
     const [lastLessonOrder, setLastLessonOrder] = useState(0)
@@ -28,8 +28,8 @@ function EditProgram(props) {
     
   let dateStr = new Date(lessonDate);
   let curr_date = dateStr.getDate();
-    let curr_month = dateStr.getMonth() + 1;
-    let curr_year = dateStr.getFullYear(); 
+  let curr_month = dateStr.getMonth() + 1;
+  let curr_year = dateStr.getFullYear(); 
   let formated_date = curr_year + "-"
   if (curr_month > 9){
     formated_date += curr_month + "-"
@@ -320,7 +320,7 @@ function EditProgram(props) {
                                         setLessonTitle(lesson.title)
                                         setLessonTesis(lesson.tesis)
                                         setLessonDate(lesson.start_time)
-                              loadLessonExercises(lesson)
+                                        loadLessonExercises(lesson)
                                         // loadLesson()
                                         console.log('hhh', formated_date)
                                         console.log(selectedLesson) 

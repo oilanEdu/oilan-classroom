@@ -408,9 +408,9 @@ function EditProgram(props) {
                                     <div 
                                         className={
                                             (selectedExercise.id == exercise.id)
-                                                ?(exercise.text && exercise.text !== 'Текст' && exercise.correct_answer && exercise.correct_answer !== 'Ответ')
+                                                ?(exercise.text && exercise.text !== 'Текст')
                                                     ?styles.fillSelectedExercise:styles.emptySelectedExercise:
-                                                        (exercise.text && exercise.text !== 'Текст' && exercise.correct_answer && exercise.correct_answer !== 'Ответ')?
+                                                        (exercise.text && exercise.text !== 'Текст')?
                                                         styles.fillExercise:styles.emptyExercise
                                                 }
                                         onClick={() => {

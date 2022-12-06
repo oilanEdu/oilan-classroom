@@ -377,7 +377,7 @@ function TeacherCabinet(props) {
                                 src='https://realibi.kz/file/846025.png'
                                 style={{marginRight: '8px'}}
                             />
-                            Индивидуальная программа
+                            Учебная программа
                         </span>
                         <span className={classnames(styles.pLessCount, styles.pLessCountHead)}>Кол-во занятий</span>
                         <span className={classnames(styles.pDates, styles.pDatesHead)}>Даты начала и конца</span>
@@ -454,7 +454,7 @@ function TeacherCabinet(props) {
                         </ClickAwayListener>
                     </div>
                     <div className={styles.studentsHeader}>
-                        <span className={classnames(styles.sCourse, styles.sCourseHead)}>Индивидуальная программа</span>
+                        <span className={classnames(styles.sCourse, styles.sCourseHead)}>Учебная программа</span>
                         <span className={classnames(styles.sFullname, styles.sFullnameHead)}>
                             <Image 
                                 src='https://realibi.kz/file/51803.png'

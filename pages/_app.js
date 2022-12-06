@@ -17,10 +17,9 @@ function MyApp({ Component, pageProps }) {
 
   return <>
     <Head>
-                <title>Oilan-classroom</title>
-                <link rel="icon" href="https://realibi.kz/file/963267.png" />
-                {/* <div dangerouslySetInnerHTML={{__html: ym()}}/> */}
-            </Head>
+      <title>Oilan-classroom</title>
+      <link rel="icon" href="https://realibi.kz/file/963267.png" />
+    </Head>
     <YMInitializer 
       accounts={[90703823]} 
       options={{

@@ -8,24 +8,25 @@ import HeaderTeacher from "../../../../../src/components/HeaderTeacher/HeaderTea
 
 function EditProgram(props) {
     
-    const router = useRouter()
-    const programId = router.query.programId
-    const [program, setProgram] = useState([])
-    const [courses, setCourses] = useState([])
-    const [lessons, setLessons] = useState([])
-    const [exercises, setExercises] = useState([])
-    const [selectedCourseId, setSelectedCourseId] = useState(0)
-    const [programTitle, setProgramTitle] = useState(program.title)
-    const [selectedLesson, setSelectedLesson] = useState([])
-    const [selectedExercise, setSelectedExercise] = useState([])
-    const [lessonTitle, setLessonTitle] = useState('')
-    const [lessonTesis, setLessonTesis] = useState('')
-    const [lessonDate, setLessonDate] = useState(new Date()) 
-    const [exerciseText, setExerciseText] = useState('')
-    const [exerciseAnswer, setExerciseAnswer] = useState('')
-    const [lastLessonOrder, setLastLessonOrder] = useState(0)
-    const [teacher, setTeacher] = useState()
-    
+  const router = useRouter()
+  const programId = router.query.programId
+  const [program, setProgram] = useState([])
+  const [courses, setCourses] = useState([])
+  const [lessons, setLessons] = useState([])
+  const [exercises, setExercises] = useState([])
+  const [selectedCourseId, setSelectedCourseId] = useState(0)
+  const [programTitle, setProgramTitle] = useState(program.title)
+  const [selectedLesson, setSelectedLesson] = useState([])
+  const [selectedExercise, setSelectedExercise] = useState([])
+  const [lessonTitle, setLessonTitle] = useState('')
+  const [lessonTesis, setLessonTesis] = useState('')
+  const [lessonDate, setLessonDate] = useState(new Date()) 
+  const [exerciseText, setExerciseText] = useState('')
+  const [exerciseAnswer, setExerciseAnswer] = useState('')
+  const [lastLessonOrder, setLastLessonOrder] = useState(0)
+  const [teacher, setTeacher] = useState()
+  const [primeInfoEdited, setPrimeInfoEdited] = useState(false)
+
   let dateStr = new Date(lessonDate);
   let curr_date = dateStr.getDate();
   let curr_month = dateStr.getMonth() + 1;
@@ -71,6 +72,8 @@ function EditProgram(props) {
         let getProgramInfo = await axios.post(`${globals.productionServerDomain}/getCurrentProgram/` + programId) 
         setProgram(getProgramInfo['data'][0]) 
         console.log(program)
+        setSelectedCourseId(program.course_id)
+        setProgramTitle(getProgramInfo['data'][0].title)
         let getTeacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + getProgramInfo['data'][0].teacher_id).then(res => {
             setCourses(res.data)
         })
@@ -272,9 +275,10 @@ function EditProgram(props) {
                                 className={styles.courseSelect}
                                 onChange={(e) => {
                                     setSelectedCourseId(e.target.value)
+                                    setPrimeInfoEdited(true)
                                  } 
                                 }
-                                value={selectedCourseId}>
+                                value={selectedCourseId?selectedCourseId:program.course_id}>
                                 <option value="0" disabled>Курс</option>
                                   {courses.map(course => (
                                     <option value={course.id}>{course.title}</option> 
@@ -293,13 +297,18 @@ function EditProgram(props) {
                             className={styles.programTitle}
                             value={programTitle}
                             placeholder={program.title?program.title:'Текст'}
-                            onChange={(e) => setProgramTitle(e.target.value)}
+                            onChange={(e) => {
+                                setProgramTitle(e.target.value)
+                                setPrimeInfoEdited(true)
+                            }}
                           />
                         <button
+                            style={primeInfoEdited?{display: 'flex'}:{display: 'none'}}
                             className={styles.saveButton}
                             onClick={() =>{
                                 updateProgram(programId, programTitle, selectedCourseId)
                                 loadProgramData()
+                                setPrimeInfoEdited(false)
                             }}>Сохранить</button> 
                     </div>
 
@@ -318,6 +327,7 @@ function EditProgram(props) {
                                                 }
                                         onClick={() => {
                                             setSelectedLesson(lesson)
+                                            setSelectedExercise('')
                                             setLessonTitle(lesson.title)
                                             setLessonTesis(lesson.tesis)
                                             setLessonDate(lesson.start_time)

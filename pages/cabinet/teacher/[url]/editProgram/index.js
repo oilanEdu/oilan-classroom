@@ -307,25 +307,27 @@ function EditProgram(props) {
                         <h1>Занятия программы</h1>
                         <div className={styles.lessonSelectBlock}>
                             {lessons.map(lesson => (
-                                <div 
-                                    className={
-                                        (selectedLesson.id == lesson.id)
-                                            ?(lesson.title && lesson.title !== 'Текст' && lesson.tesis && lesson.tesis !== 'Текст')
-                                                ?styles.fillSelectedLesson:styles.emptySelectedLesson:
-                                                    (lesson.title && lesson.title !== 'Текст' && lesson.tesis && lesson.tesis !== 'Текст')?
-                                                    styles.fillLesson:styles.emptyLesson
-                                            }
-                                    onClick={() => {
-                                        setSelectedLesson(lesson)
-                                        setLessonTitle(lesson.title)
-                                        setLessonTesis(lesson.tesis)
-                                        setLessonDate(lesson.start_time)
-                                        loadLessonExercises(lesson)
-                                        // loadLesson()
-                                        console.log('hhh', formated_date)
-                                        console.log(selectedLesson) 
-                                    }}
-                                >{lesson.lesson_number}</div> 
+                                <div style={lesson.id == selectedLesson.id?{display:'flex', padding: '2px', border: '3px solid #007AFF', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}:{display:'flex', padding: '2px', border: '3px solid white', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}}>
+                                    <div 
+                                        className={
+                                            (selectedLesson.id == lesson.id)
+                                                ?(lesson.title && lesson.title !== 'Текст' && lesson.tesis && lesson.tesis !== 'Текст')
+                                                    ?styles.fillSelectedLesson:styles.emptySelectedLesson:
+                                                        (lesson.title && lesson.title !== 'Текст' && lesson.tesis && lesson.tesis !== 'Текст')?
+                                                        styles.fillLesson:styles.emptyLesson
+                                                }
+                                        onClick={() => {
+                                            setSelectedLesson(lesson)
+                                            setLessonTitle(lesson.title)
+                                            setLessonTesis(lesson.tesis)
+                                            setLessonDate(lesson.start_time)
+                                            loadLessonExercises(lesson)
+                                            // loadLesson()
+                                            console.log('hhh', formated_date)
+                                            console.log(selectedLesson) 
+                                        }}
+                                    >{lesson.lesson_number}</div>
+                                </div> 
                             ))}
                             <div 
                                 className={styles.plusMinusButton}
@@ -392,20 +394,22 @@ function EditProgram(props) {
                         <h1>Задания к уроку</h1>
                         <div className={styles.exerciseSelectBlock}>
                             {exercises.map(exercise => (
-                                <div 
-                                    className={
-                                        (selectedExercise.id == exercise.id)
-                                            ?(exercise.text && exercise.text !== 'Текст' && exercise.correct_answer && exercise.correct_answer !== 'Ответ')
-                                                ?styles.fillSelectedExercise:styles.emptySelectedExercise:
-                                                    (exercise.text && exercise.text !== 'Текст' && exercise.correct_answer && exercise.correct_answer !== 'Ответ')?
-                                                    styles.fillExercise:styles.emptyExercise
-                                            }
-                                    onClick={() => {
-                                        setSelectedExercise(exercise)
-                                        setExerciseText(exercise.text)
-                                        setExerciseAnswer(exercise.correct_answer)
-                                    }}
-                                >{exercise.exercise_order}</div>
+                                <div style={exercise.id == selectedExercise.id?{display:'flex', padding: '2px', border: '3px solid #007AFF', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}:{display:'flex', padding: '2px', border: '3px solid white', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}}>
+                                    <div 
+                                        className={
+                                            (selectedExercise.id == exercise.id)
+                                                ?(exercise.text && exercise.text !== 'Текст' && exercise.correct_answer && exercise.correct_answer !== 'Ответ')
+                                                    ?styles.fillSelectedExercise:styles.emptySelectedExercise:
+                                                        (exercise.text && exercise.text !== 'Текст' && exercise.correct_answer && exercise.correct_answer !== 'Ответ')?
+                                                        styles.fillExercise:styles.emptyExercise
+                                                }
+                                        onClick={() => {
+                                            setSelectedExercise(exercise)
+                                            setExerciseText(exercise.text)
+                                            setExerciseAnswer(exercise.correct_answer)
+                                        }}
+                                    >{exercise.exercise_order}</div>
+                                </div>
                             ))}
                             <div 
                                 className={styles.plusMinusButton}

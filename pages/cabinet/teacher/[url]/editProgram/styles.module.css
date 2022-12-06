@@ -158,6 +158,7 @@
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	align-items: center;
 }
 
 .lessonInfoFirstRow{
@@ -257,16 +258,16 @@
 
 .fillSelectedLesson{
 	display: flex;
-	flex-direction: column;
-	padding: 2px;
-	gap: 10px;
+	flex-direction: row;
+	justify-content: center;
 	align-items: center;
+	padding: 10px 0px;
+	gap: 10px;
 	width: 80px;
 	height: 32px;
 	background-color: #3C9AFF;
-	border: 3px solid #007AFF;
-	border-radius: 8px;
-	margin-right: 20px;
+	border-radius: 4px;
+	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
 	font-family: 'Noto Sans Bold';
@@ -275,22 +276,22 @@
 	font-size: 16px;
 	line-height: 22px;
 	color: #FFFFFF;
-	margin-bottom: 5px;
+	/*margin-bottom: 5px;*/
 }
 
 .emptySelectedLesson{
 	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	padding: 2px;
-	gap: 10px;
+	flex-direction: row;
+	justify-content: center;
 	align-items: center;
+	padding: 10px 0px;
+	gap: 10px;
 	width: 80px;
 	height: 32px;
-	background: #F1FAFF;
-	border: 3px solid #007AFF;
-	border-radius: 8px;
-	margin-right: 20px;
+	background: linear-gradient(0deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8));
+	border: 1px solid #4A4A4A;
+	border-radius: 4px;
+	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
 	font-family: 'Noto Sans Bold';
@@ -299,7 +300,7 @@
 	font-size: 16px;
 	line-height: 22px;
 	color: black;
-	margin-bottom: 5px;
+	/*margin-bottom: 5px;*/
 }
 
 .fillLesson{
@@ -313,7 +314,7 @@
 	height: 32px;
 	background-color: #3C9AFF;
 	border-radius: 4px;
-	margin-right: 20px;
+	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
 	font-family: 'Noto Sans Bold';
@@ -322,7 +323,7 @@
 	font-size: 16px;
 	line-height: 22px;
 	color: #FFFFFF;
-	margin-bottom: 5px;
+	/*margin-bottom: 5px;*/
 }
 
 .emptyLesson{
@@ -337,7 +338,7 @@
 	background: linear-gradient(0deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8));
 	border: 1px solid #4A4A4A;
 	border-radius: 4px;
-	margin-right: 20px;
+	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
 	font-family: 'Noto Sans Bold';
@@ -346,7 +347,7 @@
 	font-size: 16px;
 	line-height: 22px;
 	color: black;
-	margin-bottom: 5px;
+	/*margin-bottom: 5px;*/
 }
 
 .plusMinusButton{
@@ -396,20 +397,21 @@
 	flex-direction: row;
 	margin-bottom: 10px;
 	flex-wrap: wrap;
+	align-items: center;
 }
 
 .fillSelectedExercise{
 	display: flex;
-	flex-direction: column;
-	padding: 2px;
-	gap: 10px;
+	flex-direction: row;
+	justify-content: center;
 	align-items: center;
+	padding: 10px 0px;
+	gap: 10px;
 	width: 80px;
 	height: 32px;
 	background-color: #3C9AFF;
-	border: 3px solid #007AFF;
-	border-radius: 8px;
-	margin-right: 20px;
+	border-radius: 4px;
+	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
 	font-family: 'Noto Sans Bold';
@@ -418,22 +420,22 @@
 	font-size: 16px;
 	line-height: 22px;
 	color: #FFFFFF;
-	margin-bottom: 5px;
+	/*margin-bottom: 5px;*/
 }
 
 .emptySelectedExercise{
 	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	padding: 2px;
-	gap: 10px;
+	flex-direction: row;
+	justify-content: center;
 	align-items: center;
+	padding: 10px 0px;
+	gap: 10px;
 	width: 80px;
 	height: 32px;
-	background: #F1FAFF;
-	border: 3px solid #007AFF;
-	border-radius: 8px;
-	margin-right: 20px;
+	background: linear-gradient(0deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8));
+	border: 1px solid #4A4A4A;
+	border-radius: 4px;
+	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
 	font-family: 'Noto Sans Bold';
@@ -442,7 +444,7 @@
 	font-size: 16px;
 	line-height: 22px;
 	color: black;
-	margin-bottom: 5px;
+	/*margin-bottom: 5px;*/
 }
 
 .fillExercise{
@@ -456,7 +458,7 @@
 	height: 32px;
 	background-color: #3C9AFF;
 	border-radius: 4px;
-	margin-right: 20px;
+	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
 	font-family: 'Noto Sans Bold';
@@ -465,7 +467,7 @@
 	font-size: 16px;
 	line-height: 22px;
 	color: #FFFFFF;
-	margin-bottom: 5px;
+	/*margin-bottom: 5px;*/
 }
 
 .emptyExercise{
@@ -480,7 +482,7 @@
 	background: linear-gradient(0deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8));
 	border: 1px solid #4A4A4A;
 	border-radius: 4px;
-	margin-right: 20px;
+	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
 	font-family: 'Noto Sans Bold';
@@ -489,7 +491,7 @@
 	font-size: 16px;
 	line-height: 22px;
 	color: black;
-	margin-bottom: 5px;
+	/*margin-bottom: 5px;*/
 }
 
 .exerciseInfoFirstRow{

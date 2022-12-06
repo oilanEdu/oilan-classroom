@@ -87,7 +87,14 @@ const ApplicationBlock = (props) => {
       setFullname("");
       setConnection("");
       setPhone("");
-      setCheck(false)
+      setCheck(false);
+      setShowCaptcha(false);
+      setCaptchaText("");
+      setCheck(false);
+      loadCaptcha();
+      setProccessOfCaptcha(0);
+      setProccessOfCaptchaUrl("https://realibi.kz/file/633881.png");
+      
       console.log('CAPTCHI',randomizedCaptchaData.text,captchaText)
       const ticketData = {
         fullname: fullname,

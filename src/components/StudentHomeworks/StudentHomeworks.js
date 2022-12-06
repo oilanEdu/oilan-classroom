@@ -42,14 +42,14 @@ const StudentHomeworks = ({lesson, student}) => {
         >
           Оценка - {lesson.score?lesson.score:'0'} ({lesson.done_exer}/{lesson.all_exer})
         </p>
-        <p 
+        {/* <p 
           style={{
             background: +lesson.score === 0 ? "#CAE3FF" : +lesson.score < 50 ? "#EA6756" : +lesson.score < 80 ? "#F8D576" : "#74C87D"
           }}
           className={styles.lesson_score}
         >
           + {lesson.score * 10} ₸
-        </p>
+        </p> */}
       </div>
       <p className={styles.lesson_tesis} style={{display: showTesis ? "block" : "none"}}>
         <LessonExercisesForStudent exercises={exercises} student={student}/>

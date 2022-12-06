@@ -206,7 +206,8 @@ export default function HeaderStudent(props) {
         </div>
         <div className={styles.contact}>
           <p>{props.name} {props.surname}</p>
-          <span>Баланс - {balance * 10}</span>
+          <span>Студент</span>
+          {/* <span>Баланс - {balance * 10}</span> */}
         </div>
         <div
           onClick={() => {

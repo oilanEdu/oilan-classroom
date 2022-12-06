@@ -31,7 +31,8 @@
 
 .lesson_content {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 6fr 2.5fr 1.5fr;
+  /* grid-template-columns: 1fr 1fr 1fr 6fr 2.5fr 1.5fr; */
+  grid-template-columns: 1fr 1fr 1fr 6fr 2.5fr;
   background: #fff;
   padding: 10px;
   margin: 10px 10px 0px 10px;

@@ -91,7 +91,12 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
       setFullname("");
       setConnection("");
       setPhone("");
-      setCheck(false)
+      setShowCaptcha(false);
+      setCaptchaText("");
+      setCheck(false);
+      loadCaptcha();
+      setProccessOfCaptcha(0);
+      setProccessOfCaptchaUrl("https://realibi.kz/file/633881.png");
 
       axios({
         method: "post",
@@ -106,7 +111,8 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
         alert("Что-то пошло не так!");
       }); 
       handleShowSend()
-    } else {setInsertCaptchaText('Неверный ввод текста с картинки!')
+    } else {
+      setInsertCaptchaText('Неверный ввод текста с картинки!')
       setProccessOfCaptcha(1)
       handlerOfProccessOfCaptcha(1)
       console.log("proccessOfCaptchaUrl", proccessOfCaptchaUrl);
@@ -184,18 +190,18 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           <option value="1">Whatsapp</option>
         </select>
         <CaptchaComponent
-        insertCaptchaText={insertCaptchaText}
-        setCaptchaText={setCaptchaText}
-        sendApplication={sendApplication}
-        setFullname={setFullname}
-        setConnection={setConnection}
-        setPhone={setPhone}
-        setCheck={setCheck}
-        showCaptcha={showCaptcha}
-        captchaImage={randomizedCaptchaData?.[0]?.link}
-        anotherImage={anotherImage}
-        proccessOfCaptchaUrl={proccessOfCaptchaUrl}
-        proccessOfCaptcha={proccessOfCaptcha}
+          insertCaptchaText={insertCaptchaText}
+          setCaptchaText={setCaptchaText}
+          sendApplication={sendApplication}
+          setFullname={setFullname}
+          setConnection={setConnection}
+          setPhone={setPhone}
+          setCheck={setCheck}
+          showCaptcha={showCaptcha}
+          captchaImage={randomizedCaptchaData?.[0]?.link}
+          anotherImage={anotherImage}
+          proccessOfCaptchaUrl={proccessOfCaptchaUrl}
+          proccessOfCaptcha={proccessOfCaptcha}
         />
         <button 
           className={styles.button}

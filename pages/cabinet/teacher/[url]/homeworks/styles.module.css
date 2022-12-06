@@ -301,7 +301,7 @@
 
 .exerciseText{
 	width: 545px;
-	height: 27px;
+	/*height: 27px;*/
 	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 400;
@@ -309,6 +309,7 @@
 	line-height: 150%;
 	color: #1E2432;
 	margin-bottom: 20px;
+	display: flex;
 }
 
 .studentsAnswer{

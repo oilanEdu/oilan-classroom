@@ -379,6 +379,7 @@ function EditProgram(props) {
                         </div>
                         <div className={styles.lessonSaveButton}>
                             <button 
+                                style={selectedLesson == ''?{display: 'none'}:{display: 'flex'}}
                                 className={styles.saveButton}
                                 onClick={() => {
                                     updateLesson(selectedLesson.id, lessonTitle, lessonDate, lessonTesis)
@@ -444,6 +445,7 @@ function EditProgram(props) {
                             </div>
                             <div className={styles.inputBlock}> 
                                 <button 
+                                style={selectedExercise == ''?{display: 'none'}:{display: 'flex'}}
                                 className={styles.saveButton}
                                     onClick={() => {
                                         updateExercise(selectedExercise.id, exerciseText, exerciseAnswer)

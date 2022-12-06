@@ -7,49 +7,54 @@ import Footer from "../../../../../src/components/Footer/Footer";
 import HeaderTeacher from "../../../../../src/components/HeaderTeacher/HeaderTeacher";
 
 function EditProgram(props) {
-	
-	const router = useRouter()
-	const programId = router.query.programId
-	const [program, setProgram] = useState([])
-	const [courses, setCourses] = useState([])
-	const [lessons, setLessons] = useState([])
+    
+    const router = useRouter()
+    const programId = router.query.programId
+    const [program, setProgram] = useState([])
+    const [courses, setCourses] = useState([])
+    const [lessons, setLessons] = useState([])
     const [exercises, setExercises] = useState([])
     const [selectedCourseId, setSelectedCourseId] = useState(0)
-	const [programTitle, setProgramTitle] = useState(program.title)
-	const [selectedLesson, setSelectedLesson] = useState([])
+    const [programTitle, setProgramTitle] = useState(program.title)
+    const [selectedLesson, setSelectedLesson] = useState([])
     const [selectedExercise, setSelectedExercise] = useState([])
-	const [lessonTitle, setLessonTitle] = useState('')
+    const [lessonTitle, setLessonTitle] = useState('')
     const [lessonTesis, setLessonTesis] = useState('')
-	const [lessonDate, setLessonDate] = useState('') 
+    const [lessonDate, setLessonDate] = useState('') 
     const [exerciseText, setExerciseText] = useState('')
     const [exerciseAnswer, setExerciseAnswer] = useState('')
     const [lastLessonOrder, setLastLessonOrder] = useState(0)
+    const [teacher, setTeacher] = useState()
     
-    let dateStr = new Date(lessonDate);
-    let curr_date = dateStr.getDate();
-	let curr_month = dateStr.getMonth() + 1;
-	let curr_year = dateStr.getFullYear(); 
-    let formated_date = curr_year + "-"
-    if (curr_month > 9){
-    	formated_date += curr_month + "-"
-    }else{
-    	formated_date += "0" + curr_month + "-"
-    }
-    if (curr_date > 9){
-    	formated_date += curr_date
-    }else{
-    	formated_date += "0" + curr_date 
-    }
+  let dateStr = new Date(lessonDate);
+  let curr_date = dateStr.getDate();
+    let curr_month = dateStr.getMonth() + 1;
+    let curr_year = dateStr.getFullYear(); 
+  let formated_date = curr_year + "-"
+  if (curr_month > 9){
+    formated_date += curr_month + "-"
+  } else {
+    formated_date += "0" + curr_month + "-"
+  }
+  if (curr_date > 9){
+    formated_date += curr_date
+  } else {
+    formated_date += "0" + curr_date 
+  }
 
-    useEffect(() => {
-        // loadProgramData() 
-        console.log(program)  
-        console.log(courses)
-        console.log(program.title) 
-        console.log(lessons)
+  const loadTeacherData = async () => {
+    let data = router.query.url 
+    let getTeacherByUrl = await axios.post(`${globals.productionServerDomain}/getTeacherByUrl/` + data)
 
-    }, []) 
-        const isProgramIdLoaded = () => {
+    setTeacher(getTeacherByUrl['data'][0])
+  }
+
+
+
+
+
+    const isProgramIdLoaded = () => {
+
       if (programId !== undefined) {
         loadProgramData()
       }
@@ -58,17 +63,21 @@ function EditProgram(props) {
       isProgramIdLoaded()
     }, [programId])
 
+    useEffect(() => {
+      loadTeacherData()
+    }, []);
+
     const loadProgramData = async () => {
-    	let getProgramInfo = await axios.post(`${globals.productionServerDomain}/getCurrentProgram/` + programId) 
-    	setProgram(getProgramInfo['data'][0]) 
+        let getProgramInfo = await axios.post(`${globals.productionServerDomain}/getCurrentProgram/` + programId) 
+        setProgram(getProgramInfo['data'][0]) 
         console.log(program)
-    	let getTeacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + getProgramInfo['data'][0].teacher_id).then(res => {
-    		setCourses(res.data)
-    	})
-        console.log('courses', courses)
+        let getTeacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + getProgramInfo['data'][0].teacher_id).then(res => {
+            setCourses(res.data)
+        })
+
         let lessonsCount = 0
-    	let studentLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + programId).then(res => {
-    		res.data.forEach(row => {
+        let studentLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + programId).then(res => {
+            res.data.forEach(row => {
                 lessonsCount += 1
                 row.lesson_number = lessonsCount
                 if (row.lesson_order > lastLessonOrder){
@@ -76,7 +85,7 @@ function EditProgram(props) {
                 }
             })
             setLessons(res.data)
-    	})
+        })
     }
 
     const loadLessonExercises = async (value) => { 
@@ -246,18 +255,19 @@ function EditProgram(props) {
           });
     }
 
-	return ( 
+    console.log(teacher);
+    return ( 
         <>
-            <div style={{backgroundColor: "#f1faff", width: "135%", padding: "20px"}}>
-            	<HeaderTeacher white={true}/>
+            <div style={{backgroundColor: "#f1faff", width: "    100vw", padding: "20px 20px 0 20px"}}>
+                <HeaderTeacher white={true} teacher={teacher} />
 
-              	<div className={styles.cantainer}>
+                <div className={styles.cantainer}>
                     <div className={styles.mainTitle}>
                         <span>Программа Для Студентов</span>
                     </div>
-              		<div className={styles.programBlock}>
-              			<h1>Выберите направление</h1>
-              			<span>
+                    <div className={styles.programBlock}>
+                        <h1>Выберите направление</h1>
+                        <span>
                             <select
                                 className={styles.courseSelect}
                                 onChange={(e) => {
@@ -278,45 +288,45 @@ function EditProgram(props) {
                             }}>&#128472;</button>
                         </span>
                         <h2>Название программы</h2> 
-			            <input
-			                type="text"
+                        <input
+                            type="text"
                             className={styles.programTitle}
-			                value={programTitle}
-			                placeholder={program.title?program.title:'Текст'}
-			                onChange={(e) => setProgramTitle(e.target.value)}
-			              />
+                            value={programTitle}
+                            placeholder={program.title?program.title:'Текст'}
+                            onChange={(e) => setProgramTitle(e.target.value)}
+                          />
                         <button
                             className={styles.saveButton}
                             onClick={() =>{
                                 updateProgram(programId, programTitle, selectedCourseId)
                                 loadProgramData()
                             }}>Сохранить</button> 
-              		</div>
+                    </div>
 
-              		<div className={styles.lessonsBlock}>
-              			<h1>Занятия программы</h1>
-              			<div className={styles.lessonSelectBlock}>
-              				{lessons.map(lesson => (
-              					<div 
-              						className={
+                    <div className={styles.lessonsBlock}>
+                        <h1>Занятия программы</h1>
+                        <div className={styles.lessonSelectBlock}>
+                            {lessons.map(lesson => (
+                                <div 
+                                    className={
                                         (selectedLesson.id == lesson.id)
                                             ?(lesson.title && lesson.title !== 'Текст' && lesson.tesis && lesson.tesis !== 'Текст')
                                                 ?styles.fillSelectedLesson:styles.emptySelectedLesson:
                                                     (lesson.title && lesson.title !== 'Текст' && lesson.tesis && lesson.tesis !== 'Текст')?
                                                     styles.fillLesson:styles.emptyLesson
                                             }
-              						onClick={() => {
-              							setSelectedLesson(lesson)
+                                    onClick={() => {
+                                        setSelectedLesson(lesson)
                                         setLessonTitle(lesson.title)
                                         setLessonTesis(lesson.tesis)
-              							setLessonDate(lesson.start_time)
+                                        setLessonDate(lesson.start_time)
                               loadLessonExercises(lesson)
-              							// loadLesson()
-              							console.log('hhh', formated_date)
-              							console.log(selectedLesson) 
-              						}}
-              					>{lesson.lesson_number}</div> 
-              				))}
+                                        // loadLesson()
+                                        console.log('hhh', formated_date)
+                                        console.log(selectedLesson) 
+                                    }}
+                                >{lesson.lesson_number}</div> 
+                            ))}
                             <div 
                                 className={styles.plusMinusButton}
                                 onClick={async() => {
@@ -332,32 +342,32 @@ function EditProgram(props) {
                                     await loadProgramData()
                                 }}
                             >-</div>
-              			</div>
-              			<div className={styles.lessonInfoFirstRow}> 
-              				<div className={styles.inputBlock}>
-              					<span>Название занятия</span>
-              					<input
+                        </div>
+                        <div className={styles.lessonInfoFirstRow}> 
+                            <div className={styles.inputBlock}>
+                                <span>Название занятия</span>
+                                <input
                                     className={styles.lessonTitle}
-					                type="text" 
+                                    type="text" 
                                     value={lessonTitle}
-					                placeholder="Текст"
-					                onChange={(e) => setLessonTitle(e.target.value)}
-					            />    
-              				</div>
-              				<div className={styles.inputBlock}>
-              					<span>Дата занятия</span>   
-              					<input
+                                    placeholder="Текст"
+                                    onChange={(e) => setLessonTitle(e.target.value)}
+                                />    
+                            </div>
+                            <div className={styles.inputBlock}>
+                                <span>Дата занятия</span>   
+                                <input
                                     className={styles.lessonDate}
-					                type="date"
-					                value={formated_date} 
-					                onChange={(e) => {
-					                	setLessonDate(e.target.value)
-					                	}
-					                }
-					            />
-              				</div>
-              			</div>
-              			<div className={styles.lessonInfoSecondRow}> 
+                                    type="date"
+                                    value={formated_date} 
+                                    onChange={(e) => {
+                                        setLessonDate(e.target.value)
+                                        }
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.lessonInfoSecondRow}> 
                             <span>Содержание урока</span>
                             <textarea
                                 className={styles.lessonContent}
@@ -366,7 +376,7 @@ function EditProgram(props) {
                                 placeholder="Текст"
                                 onChange={(e) => setLessonTesis(e.target.value)}>
                             </textarea>
-              			</div>
+                        </div>
                         <div className={styles.lessonSaveButton}>
                             <button 
                                 className={styles.saveButton}
@@ -375,9 +385,9 @@ function EditProgram(props) {
                                 }}
                             >Сохранить</button>
                         </div>
-              		</div>
+                    </div>
 
-              		<div className={styles.exercisesBlock}>
+                    <div className={styles.exercisesBlock}>
                         <h1>Задания к уроку</h1>
                         <div className={styles.exerciseSelectBlock}>
                             {exercises.map(exercise => (
@@ -441,17 +451,17 @@ function EditProgram(props) {
                                 >Сохранить</button> 
                             </div>
                         </div>
-              		</div>
-              	</div>
-              	
-              	<Footer />
+                    </div>
+                </div>
+                
+                <Footer />
             </div>
         </>
        )
 }
 
 EditProgram.getInitialProps = async (ctx) => {
-	console.log('lol',ctx)
+    console.log('lol',ctx)
     if(ctx.query.programId !== undefined) {
         return {
             url: ctx.query.programId,

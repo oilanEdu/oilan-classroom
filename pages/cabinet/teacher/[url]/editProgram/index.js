@@ -13,43 +13,43 @@ function EditProgram(props) {
 	const [program, setProgram] = useState([])
 	const [courses, setCourses] = useState([])
 	const [lessons, setLessons] = useState([])
-  const [exercises, setExercises] = useState([])
-  const [selectedCourseId, setSelectedCourseId] = useState(0)
+    const [exercises, setExercises] = useState([])
+    const [selectedCourseId, setSelectedCourseId] = useState(0)
 	const [programTitle, setProgramTitle] = useState(program.title)
 	const [selectedLesson, setSelectedLesson] = useState([])
-  const [selectedExercise, setSelectedExercise] = useState([])
+    const [selectedExercise, setSelectedExercise] = useState([])
 	const [lessonTitle, setLessonTitle] = useState('')
-  const [lessonTesis, setLessonTesis] = useState('')
+    const [lessonTesis, setLessonTesis] = useState('')
 	const [lessonDate, setLessonDate] = useState('') 
-  const [exerciseText, setExerciseText] = useState('')
-  const [exerciseAnswer, setExerciseAnswer] = useState('')
-  const [lastLessonOrder, setLastLessonOrder] = useState(0)
-  const [teacher, setTeacher] = useState()
+    const [exerciseText, setExerciseText] = useState('')
+    const [exerciseAnswer, setExerciseAnswer] = useState('')
+    const [lastLessonOrder, setLastLessonOrder] = useState(0)
     
-  let dateStr = new Date(lessonDate);
-  let curr_date = dateStr.getDate();
+    let dateStr = new Date(lessonDate);
+    let curr_date = dateStr.getDate();
 	let curr_month = dateStr.getMonth() + 1;
 	let curr_year = dateStr.getFullYear(); 
-  let formated_date = curr_year + "-"
-  if (curr_month > 9){
-  	formated_date += curr_month + "-"
-  } else {
-    formated_date += "0" + curr_month + "-"
-  }
-  if (curr_date > 9){
-    formated_date += curr_date
-  } else {
-    formated_date += "0" + curr_date 
-  }
+    let formated_date = curr_year + "-"
+    if (curr_month > 9){
+    	formated_date += curr_month + "-"
+    }else{
+    	formated_date += "0" + curr_month + "-"
+    }
+    if (curr_date > 9){
+    	formated_date += curr_date
+    }else{
+    	formated_date += "0" + curr_date 
+    }
 
-  const loadTeacherData = async () => {
-    let data = router.query.url 
-    let getTeacherByUrl = await axios.post(`${globals.productionServerDomain}/getTeacherByUrl/` + data)
+    useEffect(() => {
+        // loadProgramData() 
+        console.log(program)  
+        console.log(courses)
+        console.log(program.title) 
+        console.log(lessons)
 
-    setTeacher(getTeacherByUrl['data'][0])
-  }
-
-    const isProgramIdLoaded = () => {
+    }, []) 
+        const isProgramIdLoaded = () => {
       if (programId !== undefined) {
         loadProgramData()
       }
@@ -58,10 +58,6 @@ function EditProgram(props) {
       isProgramIdLoaded()
     }, [programId])
 
-    useEffect(() => {
-      loadTeacherData()
-    }, []);
-
     const loadProgramData = async () => {
     	let getProgramInfo = await axios.post(`${globals.productionServerDomain}/getCurrentProgram/` + programId) 
     	setProgram(getProgramInfo['data'][0]) 
@@ -69,6 +65,7 @@ function EditProgram(props) {
     	let getTeacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + getProgramInfo['data'][0].teacher_id).then(res => {
     		setCourses(res.data)
     	})
+        console.log('courses', courses)
         let lessonsCount = 0
     	let studentLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + programId).then(res => {
     		res.data.forEach(row => {
@@ -249,11 +246,10 @@ function EditProgram(props) {
           });
     }
 
-    console.log(teacher);
 	return ( 
         <>
-            <div style={{backgroundColor: "#f1faff", width: "    100vw", padding: "20px 20px 0 20px"}}>
-            	<HeaderTeacher white={true} teacher={teacher} />
+            <div style={{backgroundColor: "#f1faff", width: "135%", padding: "20px"}}>
+            	<HeaderTeacher white={true}/>
 
               	<div className={styles.cantainer}>
                     <div className={styles.mainTitle}>
@@ -268,7 +264,7 @@ function EditProgram(props) {
                                     setSelectedCourseId(e.target.value)
                                  } 
                                 }
-                                value={setSelectedCourseId}>
+                                value={selectedCourseId}>
                                 <option value="0" disabled>Курс</option>
                                   {courses.map(course => (
                                     <option value={course.id}>{course.title}</option> 

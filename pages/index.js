@@ -243,11 +243,6 @@ const Main = (props) => {
   return (
     <div>
       <div className={styles.main}>
-        <Head>
-          <title>Oilan-classroom</title>
-          <link rel="icon" href="https://realibi.kz/file/905007.svg" />
-          {/* <div dangerouslySetInnerHTML={{__html: ym()}}/> */}
-        </Head>
         <Header white={true} />
         <div className={styles1.container}>
           <SuccessfullyModal

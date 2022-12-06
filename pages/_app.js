@@ -3,6 +3,7 @@ import {useEffect} from "react";
 import { CookiesProvider } from 'react-cookie'
 import TagManager from "react-gtm-module";
 import { YMInitializer } from 'react-yandex-metrika';
+import Head from 'next/head';
 
 const tagManagerArgs = {
   gtmId: 'GTM-MFV3BJ3'
@@ -15,6 +16,11 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return <>
+    <Head>
+                <title>Oilan-classroom</title>
+                <link rel="icon" href="https://realibi.kz/file/963267.png" />
+                {/* <div dangerouslySetInnerHTML={{__html: ym()}}/> */}
+            </Head>
     <YMInitializer 
       accounts={[90703823]} 
       options={{

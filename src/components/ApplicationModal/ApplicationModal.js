@@ -137,7 +137,6 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
     >
       <span className={styles.close_modal} onClick={onClose}></span>
       <div className={styles.modal_info}>
-        <h3>Оставь заявку для записи на курс “Математика простыми словами” </h3>
         <h3>Оставь заявку для записи на курс “{course?.title}” </h3>
       </div>
       <form className={styles.form_container}>

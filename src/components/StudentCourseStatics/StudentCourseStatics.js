@@ -208,7 +208,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
       <div>
         <PieChart width={400} height={400}>
           <text className={styles.pie_text_score} x={208} y={170} textAnchor="middle" dominantBaseline="middle">
-            {total}
+            {isNaN(total) ? 0 : total}
           </text>
           <text className={styles.pie_text} x={208} y={220} textAnchor="middle" dominantBaseline="middle">
             Общая оценка

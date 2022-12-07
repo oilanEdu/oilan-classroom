@@ -116,6 +116,7 @@
 	padding: 0px 16px;
 	gap: 16px;
 	isolation: isolate;
+	position: relative;
 	width: 1120px;
 	height: 80px;
 	background: #FFFFFF;

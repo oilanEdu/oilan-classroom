@@ -63,8 +63,6 @@ const StudentLessonsProgramItem = ({lesson, courseId, nickname}) => {
     getLessonExercises(lesson.id)
   }, []);
   
-  console.log('lesson!',lesson);
-  console.log(exercises)
   return <div key={lesson.id} className={styles.lesson}> 
     <div>
       <div className={styles.lesson_content}>
@@ -111,7 +109,7 @@ const StudentLessonsProgramItem = ({lesson, courseId, nickname}) => {
             router.push(`/cabinet/student/${nickname}/course/${courseId}/homeworks`);
           }} 
           className={styles.resendButton}
-        >Пересдать тему</button>
+        >{+lesson.done_exer === 0 || lesson.done_exer === "0"? "Сдать тему" : "Пересдать тему"}</button>
       </div>
     </div>
     {isActive

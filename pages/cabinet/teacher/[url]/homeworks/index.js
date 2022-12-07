@@ -205,7 +205,7 @@ function Homeworks(props) {
 
 	return ( 
     <>
-      <div style={{backgroundColor: "#f1faff", width: '120%'}}>
+      <div style={{backgroundColor: "#f1faff", width: "    100vw"}}>
         <HeaderTeacher white={true} teacher={teacher}/>
         <div className={styles.cantainer}>
                 <GoToLessonWithTimerComponent isTeacher={true} url={props.url}/>

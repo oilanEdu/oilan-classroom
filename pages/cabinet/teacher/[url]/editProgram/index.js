@@ -163,17 +163,21 @@ function EditProgram(props) {
           lessonTesis
         }; 
 
-        await axios({
-          method: "put",
-          url: `${globals.productionServerDomain}/updateLesson`,
-          data: data,
-        })
-          .then(function (res) {
-            alert("Урок успешно изменен"); 
-          })
-          .catch((err) => {
-            alert("Произошла ошибка"); 
-          });
+        if (!lessonId){
+            alert("НЕ ВЫБРАН УРОК!")
+        }else{
+            await axios({
+              method: "put",
+              url: `${globals.productionServerDomain}/updateLesson`,
+              data: data,
+            })
+              .then(function (res) {
+                alert("Урок успешно изменен"); 
+              })
+              .catch((err) => {
+                alert("Произошла ошибка"); 
+              });
+        }
     }
 
     const deleteLesson = async (id) => {
@@ -207,17 +211,21 @@ function EditProgram(props) {
           status
         };
         console.log(data)
-        await axios({
-          method: "post",
-          url: `${globals.productionServerDomain}/createExercise`,
-          data: data,
-        })
-          .then(function (res) {
-            alert("Задание успешно создано"); 
-          })
-          .catch((err) => {
-            alert("Произошла ошибка");
-          });
+        if (!exerciseLessonId){
+            alert("НЕ ВЫБРАН УРОК!")
+        }else{
+            await axios({
+              method: "post",
+              url: `${globals.productionServerDomain}/createExercise`,
+              data: data,
+            })
+              .then(function (res) {
+                alert("Задание успешно создано"); 
+              })
+              .catch((err) => {
+                alert("Произошла ошибка");
+              });
+        }
     }
 
     const updateExercise = async (exerciseId, exerciseText, exerciseAnswer) => {

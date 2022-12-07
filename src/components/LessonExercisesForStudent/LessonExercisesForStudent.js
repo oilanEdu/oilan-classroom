@@ -107,16 +107,15 @@ const LessonExercisesForStudent = ({exercises, student, bg}) => {
           <p className={styles.answer_text}>
             {exercises[active].exer_number}) {exercises[active].text} 
           </p>
-          <div>
-            <input 
-              type="text" 
+          <div className={styles.answer_row}>
+            <textarea  
               className={styles.answer} 
               placeholder="Ответ"
               onChange={e => {
                 setAnswer(e.target.value)
                 console.log(answer)
               }}
-            />
+            ></textarea>
             <button 
               className={styles.answer_btn}
               onClick={() => {

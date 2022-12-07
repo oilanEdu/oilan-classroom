@@ -109,7 +109,7 @@ const StudentLessonsProgramItem = ({lesson, courseId, nickname}) => {
             router.push(`/cabinet/student/${nickname}/course/${courseId}/homeworks`);
           }} 
           className={styles.resendButton}
-        >{+lesson.done_exer === 0 ? "Сдать тему" : "Пересдать тему"}</button>
+        >{+lesson.done_exer === 0 || lesson.done_exer === "0"? "Сдать тему" : "Пересдать тему"}</button>
       </div>
     </div>
     {isActive

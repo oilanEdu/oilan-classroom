@@ -9,6 +9,7 @@ import HeaderTeacher from "../../../../../src/components/HeaderTeacher/HeaderTea
 import classnames from 'classnames';
 import TeacherHomeworksLessons from "../../../../../src/components/TeacherHomeworksLessons/TeacherHomeworksLessons";
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
+import ClickAwayListener from '@mui/base/ClickAwayListener';
 
 function Homeworks(props) {
 	
@@ -210,68 +211,72 @@ function Homeworks(props) {
                 <GoToLessonWithTimerComponent isTeacher={true} url={props.url}/>
       		<div className={styles.selectBlock}>
             <h1>Домашние задания</h1>
-            <div className={styles.select_student_container}>
-              <div 
-                className={!studentSelectShow ? styles.select_student_show : styles.select_student_hide}
-                onClick={() => {
-                  setStudentSelectShow(!studentSelectShow)
-                }}
-              >
-                <span className={styles.select_student_name}>{selectedStudentName}</span>
+            <ClickAwayListener onClickAway={() => setStudentSelectShow(false)}>
+              <div className={styles.select_student_container}>
+                <div 
+                  className={!studentSelectShow ? styles.select_student_show : styles.select_student_hide}
+                  onClick={() => {
+                    setStudentSelectShow(!studentSelectShow)
+                  }}
+                >
+                  <span className={styles.select_student_name}>{selectedStudentName}</span>
+                </div>
+                <div 
+                  className={styles.select_student_options}
+                  style={{display: studentSelectShow ? "block" : "none"}}
+                >
+                  {students.map(student => (
+                    <div 
+                      onClick={async (e) => {
+                        setSelectedStudentId(student.student_id)
+                        if (student.surname && student.name && student.patronymic) {
+                          setSelectedStudentName(`${student?.surname} ${student?.name} ${student?.patronymic}`)
+                        } else if (student.surname && student.name) {
+                          setSelectedStudentName(`${student?.surname} ${student?.name}`)
+                        } else {
+                          setSelectedStudentName(`${student?.name}`)
+                        }
+                        await loadPrograms(student.student_id)
+                        setStudentSelectShow(!studentSelectShow)
+                      }}
+                      className={styles.select_student_option}
+                    >
+                      {student.surname} {student.name} {student.patronymic}
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div 
-                className={styles.select_student_options}
-                style={{display: studentSelectShow ? "block" : "none"}}
-              >
-                {students.map(student => (
-                  <div 
-                    onClick={async (e) => {
-                      setSelectedStudentId(student.student_id)
-                      if (student.surname && student.name && student.patronymic) {
-                        setSelectedStudentName(`${student?.surname} ${student?.name} ${student?.patronymic}`)
-                      } else if (student.surname && student.name) {
-                        setSelectedStudentName(`${student?.surname} ${student?.name}`)
-                      } else {
-                        setSelectedStudentName(`${student?.name}`)
-                      }
-                      await loadPrograms(student.student_id)
-                      setStudentSelectShow(!studentSelectShow)
-                    }}
-                    className={styles.select_student_option}
-                  >
-                    {student.surname} {student.name} {student.patronymic}
-                  </div>
-                ))}
+            </ClickAwayListener>
+            <ClickAwayListener onClickAway={() => setProgramSelectShow(false)}>
+              <div className={styles.select_program_container}>
+                <div 
+                  className={!programSelectShow ? styles.select_program_show : styles.select_program_hide}
+                  onClick={() => {
+                    setProgramSelectShow(!programSelectShow)
+                  }}
+                >
+                  <span className={styles.select_program_name}>{selectedProgram}</span>
+                </div>
+                <div  
+                  className={styles.select_program_options}
+                  style={{display: programSelectShow ? "block" : "none"}}
+                >
+                  {programs.map(program => (
+                    <div 
+                      onClick={async (e) => {
+                        setSelectedProgramId(program.id)
+                        setSelectedProgram(`${program.course_title} (${program.title})`)
+                        loadStudentLessons(selectedStudentId, program.id)
+                        setProgramSelectShow(!programSelectShow)
+                      }}
+                      className={styles.select_student_option}
+                    >
+                      {program.course_title} ({program.title})
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className={styles.select_program_container}>
-              <div 
-                className={!programSelectShow ? styles.select_program_show : styles.select_program_hide}
-                onClick={() => {
-                  setProgramSelectShow(!programSelectShow)
-                }}
-              >
-                <span className={styles.select_program_name}>{selectedProgram}</span>
-              </div>
-              <div  
-                className={styles.select_program_options}
-                style={{display: programSelectShow ? "block" : "none"}}
-              >
-                {programs.map(program => (
-                  <div 
-                    onClick={async (e) => {
-                      setSelectedProgramId(program.id)
-                      setSelectedProgram(`${program.course_title} (${program.title})`)
-                      loadStudentLessons(selectedStudentId, program.id)
-                      setProgramSelectShow(!programSelectShow)
-                    }}
-                    className={styles.select_student_option}
-                  >
-                    {program.course_title} ({program.title})
-                  </div>
-                ))}
-              </div>
-            </div>
+            </ClickAwayListener>
           </div>
           <div className={styles.lessons}>
             {lessons.length > 0 

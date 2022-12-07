@@ -72,7 +72,7 @@ function EditProgram(props) {
         let getProgramInfo = await axios.post(`${globals.productionServerDomain}/getCurrentProgram/` + programId) 
         setProgram(getProgramInfo['data'][0]) 
         console.log(program)
-        setSelectedCourseId(program.course_id)
+        setSelectedCourseId(getProgramInfo['data'][0].course_id)
         setProgramTitle(getProgramInfo['data'][0].title)
         let getTeacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + getProgramInfo['data'][0].teacher_id).then(res => {
             setCourses(res.data)

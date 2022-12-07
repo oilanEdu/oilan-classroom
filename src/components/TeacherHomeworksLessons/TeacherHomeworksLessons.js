@@ -146,7 +146,6 @@ const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer,
           course_id,
           student_id 
         };  
-        debugger
         console.log("dataForGetSchedule", dataForGetSchedule)
         let schedule = await axios({
           method: "post",
@@ -233,7 +232,8 @@ const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer,
 
                         <button className={styles.correctButton} 
                         onClick={async() => {
-                          await saveLessonDateAndTime(dateAndTimeMerger, lesson.id, lesson.course_id, lesson.student_id)  
+                          await saveLessonDateAndTime(dateAndTimeMerger, lesson.id, lesson.course_id, lesson.student_id)
+                          setShowInputsOfDate(false)  
                         //   setIsDateAndTimeChanged(lesson.id)
                           //просто рандомное что то отправляю
                         }}>✓</button>

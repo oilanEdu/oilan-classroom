@@ -32,7 +32,7 @@ export default function HeaderStudent(props) {
   const loadUserInfo = async () => {
     await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${router.query.nickname}&couse_id=${router.query.courseId}`).then(async (res) => {
       setStudent(res.data[0]);
-      await axios.get(`${globals.productionServerDomain}/getLessonInfo?couse_id=${router.query.courseId}&program_id=${res.data[0].program_id}&student_id=${res.data[0].id}`).then(async (res2) => {
+      await axios.get(`${globals.productionServerDomain}/getLessonInfo?couse_id=${router.query.courseId}&program_id=${res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(async (res2) => {
         // setLesson(res2.data[0]);
         setLessons(res2.data);
 

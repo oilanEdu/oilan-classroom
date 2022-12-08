@@ -513,7 +513,7 @@ function TeacherCabinet(props) {
                             </div>
                         </div>
                     ))} 
-                    <Pagination pages = {howManyPages} setCurrentPage={setCurrentPage}/>
+                    {students.length <= 0 ? <></> : <Pagination pages = {howManyPages} setCurrentPage={setCurrentPage}/>}
                 </div>
               </div>
               <Footer />

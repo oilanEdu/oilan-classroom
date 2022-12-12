@@ -139,7 +139,7 @@ function TeacherCabinet(props) {
             if (!lessonsLoaded) {loadStudentLessons(student.student_id, student.program_id)}
             let answersCount = 0 
             let studentCheck = 0
-            let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo?couse_id=${student.course_id}&program_id=${student.program_id}&student_id=${student.student_id}`).then(res => {
+            let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${student.course_url}&program_id=${student.program_id}&student_id=${student.student_id}`).then(res => {
                 let lessons = res.data
                 res.data.forEach(async lesson => {
                     if (+lesson.all_exer !== 0 && +lesson.all_exer === +lesson.done_exer) {
@@ -499,8 +499,7 @@ function TeacherCabinet(props) {
                             </span>
                             <span className={styles.sNextLesson}>
                                 <span>{student.closer_date}</span>
-                                <span>{student.curr_hours ? <>{student.curr_hours}:{student.curr_minutes}-{(student.curr_hours == 23)?'00':student.curr_hours + 1}:{student.curr_minutes}</> : 'Следующее занятие не запланировано'}</span>
-                            </span>
+                                <span>{student.curr_hours ? <>{student.curr_hours < 10 ? '0' + student.curr_hours : student.curr_hours}:{student.curr_minutes < 10 ? '0' + student.curr_minutes : student.curr_minutes}-{(student.curr_hours == 23)?'00':student.curr_hours + 1 < 10 ? '0' + student.curr_hours + 1 : student.curr_hours + 1}:{student.curr_minutes < 10 ? '0' + student.curr_minutes : student.curr_minutes}</> : 'Следующее занятие не запланировано'}</span>                            </span>
                             <div className={styles.sConfigureWrapper}>
                             <span className={styles.sConfigure}
                                   onClick={() => {setShowModalLesson(!showModalLesson)

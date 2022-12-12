@@ -10,7 +10,7 @@ import GoToLessonWithTimerComponent from "../../../../../../../src/components/Go
 const Homeworks = (props) => { 
   const router = useRouter();
 
-  const [ courseId, setCourseId ] = useState(router.query.courseId);
+  const [ courseUrl, setCourseUrl ] = useState(router.query.courseUrl);
   const [ nickname, setNickname ] = useState(router.query.nickname);
   const [ student, setStudent ] = useState([]);
   const [ lesson, setLesson ] = useState('');
@@ -20,10 +20,10 @@ const Homeworks = (props) => {
   
 
   const fetchData = async () => {
-    console.log('hi', router.query.courseId) 
-    const response = await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${router.query.nickname}&couse_id=${router.query.courseId}`).then(async (res) => {
+    console.log('hi', router.query.courseUrl) 
+    const response = await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${router.query.nickname}&course_url=${router.query.courseUrl}`).then(async (res) => {
       setStudent(res.data[0]);
-      await axios.get(`${globals.productionServerDomain}/getLessonInfo?couse_id=${router.query.courseId}&program_id=${res.data[0].program_id}&student_id=${res.data[0].id}`).then(async (res2) => {
+      await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${router.query.courseUrl}&program_id=${res.data[0].program_id}&student_id=${res.data[0].id}`).then(async (res2) => {
         setLesson(res2.data[0]);
         setLessons(res2.data);
 
@@ -33,14 +33,14 @@ const Homeworks = (props) => {
       });
     });
 
-    const scoresForAnswers = await axios.get(`${globals.productionServerDomain}/getStudentScores?student_nick=${router.query.nickname}&couse_id=${router.query.courseId}`);
+    const scoresForAnswers = await axios.get(`${globals.productionServerDomain}/getStudentScores?student_nick=${router.query.nickname}&course_url=${router.query.courseUrl}`);
 
     await setScores(scoresForAnswers.data);
   };
 
   useEffect(() => {
     console.log(router);
-    console.log('hi', courseId, nickname) 
+    console.log('hi', courseUrl, nickname) 
     fetchData();
   }, []);
 
@@ -63,9 +63,9 @@ const Homeworks = (props) => {
 };
 
 Homeworks.getInitialProps = async (ctx) => {
-    if(ctx.query.courseId !== undefined && ctx.query.nickname !== undefined) {
+    if(ctx.query.courseUrl !== undefined && ctx.query.nickname !== undefined) {
         return {
-            courseId: ctx.query.courseId,
+            courseUrl: ctx.query.courseUrl,
             nickname: ctx.query.nickname
         }
     }else{

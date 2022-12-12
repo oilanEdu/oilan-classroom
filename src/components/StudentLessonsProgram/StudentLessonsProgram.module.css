@@ -37,7 +37,8 @@
 }
 
 .course_lessons {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   justify-content: space-between;
   text-align: center;
   align-items: center;
@@ -51,9 +52,13 @@
 }
 
 .order_line {
-  width: 64px;
+  width: 79px;
   border: 1px solid #000;
   margin-bottom: 40px;
+}
+
+.order_line:nth-child(16n) {
+  display: none;
 }
 
 .order_line:last-of-type {

@@ -286,11 +286,11 @@ function Homeworks(props) {
                   showCheck={showCheck} 
                   selectedExerciseId={selectedExerciseId} 
                   answer={answer} 
-                  teacherComment={teacherComment} 
+                  // teacherComment={teacherComment} 
                   setShowCheck={setShowCheck} 
                   setSelectedExerciseId={setSelectedExerciseId} 
                   setAnswer={setAnswer} 
-                  setTeacherComment={setTeacherComment} 
+                  // setTeacherComment={setTeacherComment} 
                   setSelectedExerciseNumber={setSelectedExerciseNumber} 
                   setSelectedExerciseText={setSelectedExerciseText} 
                   setSelectedExerciseCorrectAnswer={setSelectedExerciseCorrectAnswer} 

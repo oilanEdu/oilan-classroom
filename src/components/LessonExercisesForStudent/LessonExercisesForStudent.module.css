@@ -179,3 +179,9 @@
   margin-right: 10px
   
 }
+
+.answer_input {
+  display: flex;
+  flex-direction: column;
+  color: #807d7d;
+}

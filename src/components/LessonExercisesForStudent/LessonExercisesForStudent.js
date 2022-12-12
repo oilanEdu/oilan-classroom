@@ -8,6 +8,7 @@ const LessonExercisesForStudent = ({exercises, student, bg}) => {
   const [ answer, setAnswer ] = useState('')
   const [ editMode, setEditMode ] = useState(false)
   const [ teacherComments, setTeacherComments ] = useState([])
+  const [ symbols, setSymbols ] = useState(250)
 
   console.log(exercises)
   console.log(student)
@@ -85,6 +86,20 @@ const LessonExercisesForStudent = ({exercises, student, bg}) => {
           });
   }
 
+  const onKeyDownHandler = (e) => {
+    if (e.keyCode === 8) {
+      if (symbols === 250) {
+
+      } else if (answer.length >= 0 || answer !== "") {
+        setSymbols(symbols + 1)
+      }
+    } else {
+      if (answer.length < 250 && symbols !== 0) {
+        setSymbols(symbols - 1)
+      }
+    }
+  }
+
   return <div styles={{ backgroundColor: bg}} className={styles.container}>
     <div className={styles.exercises}>
       <h3 className={styles.exercises_title}>Домашние задания</h3>
@@ -108,14 +123,24 @@ const LessonExercisesForStudent = ({exercises, student, bg}) => {
             {exercises[active].exer_number}) {exercises[active].text} 
           </p>
           <div className={styles.answer_row}>
-            <textarea  
-              className={styles.answer} 
-              placeholder="Ответ"
-              onChange={e => {
-                setAnswer(e.target.value)
-                console.log(answer)
-              }}
-            ></textarea>
+            <div className={styles.answer_input}>
+              <textarea  
+                className={styles.answer} 
+                placeholder="Ответ"
+                value={answer}
+                onChange={e => {
+                  if (symbols !== 0 && answer.length <= 250) {
+                    setAnswer(e.target.value)
+                    console.log(answer)
+                  }
+                }}
+                onKeyDown={(e) => onKeyDownHandler(e)}
+              ></textarea>
+              <label>
+                Осталось символов <span>{symbols}</span>
+              </label>
+            </div>
+            
             <button 
               className={styles.answer_btn}
               onClick={() => {
@@ -145,15 +170,24 @@ const LessonExercisesForStudent = ({exercises, student, bg}) => {
               <>
                 <div className={styles.editAnswerBlock}>
                   <div>
-                    <input 
-                      type="text" 
-                      className={styles.answer} 
-                      placeholder="Ответ"
-                      onChange={e => {
-                        setAnswer(e.target.value)
-                        console.log(answer)
-                      }}
-                    />
+                    <div className={styles.answer_input}>
+                      <textarea 
+                        type="text" 
+                        className={styles.answer} 
+                        placeholder="Ответ"
+                        value={answer}
+                        onChange={e => {
+                          if (symbols !== 0 && answer.length <= 250) {
+                            setAnswer(e.target.value)
+                            console.log(answer)
+                          }
+                        }}
+                        onKeyDown={(e) => onKeyDownHandler(e)}
+                      />
+                      <label>
+                        Осталось символов <span>{symbols}</span>
+                      </label>
+                    </div>
                     <button 
                       className={styles.answer_btn}
                       onClick={() => {

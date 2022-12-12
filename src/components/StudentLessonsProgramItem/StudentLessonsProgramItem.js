@@ -4,7 +4,7 @@ import styles from "./StudentLessonsProgramItem.module.css";
 import axios from "axios";
 import globals from "../../../src/globals";
 
-const StudentLessonsProgramItem = ({lesson, courseId, nickname}) => {
+const StudentLessonsProgramItem = ({lesson, courseUrl, nickname}) => {
   const [showTesis, setShowTesis] = useState(false);
   const [exercises, setExercises] = useState([])
   const [answers, setAnswers] = useState([])
@@ -106,7 +106,7 @@ const StudentLessonsProgramItem = ({lesson, courseId, nickname}) => {
         }
         <button 
           onClick={() => {
-            router.push(`/cabinet/student/${nickname}/course/${courseId}/homeworks`);
+            router.push(`/cabinet/student/${nickname}/course/${courseUrl}/homeworks`);
           }} 
           className={styles.resendButton}
         >{+lesson.done_exer === 0 || lesson.done_exer === "0"? "Сдать тему" : "Пересдать тему"}</button>

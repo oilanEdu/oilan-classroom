@@ -17,7 +17,7 @@ export default function HeaderStudent(props) {
   const [cabinetRoute, setCabinetRoute] = useState("/login");
   const router = useRouter();
 
-  const [courseId, setCourseId] = useState(router.query.courseId)
+  const [courseUrl, setCourseUrl] = useState(router.query.courseUrl)
   const  [nickname, setNickname] = useState(router.query.nickname)
 
   const [student, setStudent] = useState({});
@@ -30,9 +30,9 @@ export default function HeaderStudent(props) {
   const [loadingData, setLoadingData] = useState(true);
 
   const loadUserInfo = async () => {
-    await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${router.query.nickname}&couse_id=${router.query.courseId}`).then(async (res) => {
+    await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${router.query.nickname}&course_url=${courseUrl}`).then(async (res) => {
       setStudent(res.data[0]);
-      await axios.get(`${globals.productionServerDomain}/getLessonInfo?couse_id=${router.query.courseId}&program_id=${res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(async (res2) => {
+      await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${courseUrl}&program_id=${res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(async (res2) => {
         // setLesson(res2.data[0]);
         setLessons(res2.data);
 
@@ -162,7 +162,7 @@ export default function HeaderStudent(props) {
           <ul className={styles.menu_ul}>
             <li>
             <Link
-                href={`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseId}`}
+                href={`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseUrl}`}
                 target="_blank"
                 
               >
@@ -174,7 +174,7 @@ export default function HeaderStudent(props) {
             </li>
             <li>
             <Link
-                href={`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseId}`}
+                href={`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseUrl}`}
                 target="_blank"
                 
               >
@@ -192,7 +192,7 @@ export default function HeaderStudent(props) {
             <li>
               {/* /cabinet/student/test/course/1/homeworks */}
             <Link
-                href={`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseId}/homeworks`}
+                href={`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseUrl}/homeworks`}
                 target="_blank"
                 
               >
@@ -290,9 +290,9 @@ export default function HeaderStudent(props) {
 }
 
 HeaderStudent.getInitialProps = async (ctx) => {
-  if(ctx.query.courseId !== undefined && ctx.query.nickname !== undefined) {
+  if(ctx.query.courseUrl !== undefined && ctx.query.nickname !== undefined) {
       return {
-          courseId: ctx.query.courseId,
+          courseUrl: ctx.query.courseUrl,
           nickname: ctx.query.nickname
       }
   }else{

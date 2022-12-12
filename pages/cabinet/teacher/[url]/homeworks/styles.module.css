@@ -444,7 +444,6 @@
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 22px;
-	margin-bottom: 20px;
 }
 
 .sendButton{
@@ -586,4 +585,11 @@
 	position: relative;
 	margin-left: 20px;
 	cursor: pointer;
+}
+
+.answer_input {
+  display: flex;
+  flex-direction: column;
+  color: #807d7d;
+	margin-bottom: 20px;
 }

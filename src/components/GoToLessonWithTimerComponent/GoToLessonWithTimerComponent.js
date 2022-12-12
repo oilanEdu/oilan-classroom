@@ -4,7 +4,7 @@ import axios from "axios";
 import globals from "../../globals";
 import GoToLessonWithTimer from "../GoToLessonWithTimer/GoToLessonWithTimer";
 
-function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseId }) {
+function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     const [showTimer, setShowTimer] = useState(false)
     const [teacher, setTeacher] = useState([])
     const [programs, setPrograms] = useState([])
@@ -475,13 +475,13 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseId }) {
     //STUDENT
     const [data2Loaded, setData2Loaded] = useState(false)
     const fetchData = async () => {
-      const response = await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${nickname}&couse_id=${courseId}`).then(async (res) => {
-        await axios.get(`${globals.productionServerDomain}/getLessonInfo?couse_id=${courseId}&program_id=${res.data[0].program_id}&student_id=${res.data[0].id}`).then(res => {
-          setLessons(res.data);
-          debugger
-          setData2Loaded(true)
-        });
-      });
+      // const response = await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${nickname}&course_url=${courseUrl}`).then(async (res) => {
+      //   await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${courseUrl}&program_id=${res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(res => {
+      //     setLessons(res.data);
+      //     debugger
+      //     setData2Loaded(true)
+      //   });
+      // });
     };
     useEffect(() => {
       // fetchData()

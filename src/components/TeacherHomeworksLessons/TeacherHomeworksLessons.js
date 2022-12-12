@@ -5,12 +5,15 @@ import classnames from 'classnames';
 import axios from "axios";
 import globals from "../../globals";
 
-const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer, teacherComment, setShowCheck, setSelectedExerciseId, setAnswer, setTeacherComment, setSelectedExerciseNumber, setSelectedExerciseText, setSelectedExerciseCorrectAnswer, getAnswer, selectedStudentId, selectedExerciseNumber, selectedExerciseText, selectedExerciseCorrectAnswer, updateAnswerStatus, updateAnswerComment, setIsDateAndTimeChanged}) => {
+const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer, setShowCheck, setSelectedExerciseId, setAnswer, setSelectedExerciseNumber, setSelectedExerciseText, setSelectedExerciseCorrectAnswer, getAnswer, selectedStudentId, selectedExerciseNumber, selectedExerciseText, selectedExerciseCorrectAnswer, updateAnswerStatus, updateAnswerComment, setIsDateAndTimeChanged}) => {
     const [exercises, setExercises] = useState([])
+    const [teacherComment, setTeacherComment] = useState('')
     const [exercises2, setExercises2] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
     const [isLoaded2, setIsLoaded2] = useState(false)
     const [numberOfEx, setNumberOfEx] = useState(0)
+    const [ symbols, setSymbols ] = useState(250)
+
     useEffect(() => {
         console.log(lesson, "lessonPROPS");
     }, [])
@@ -28,6 +31,20 @@ const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer,
     useEffect(() => {
         console.log("numberOfEx", numberOfEx);
     }, [numberOfEx])
+
+    const onKeyDownHandler = (e) => {
+        if (e.keyCode === 8) {
+            if (symbols === 250) {
+
+            } else if (teacherComment?.length >= 0 || teacherComment !== "") {
+              setSymbols(symbols + 1)
+            }
+        } else {
+          if (teacherComment?.length < 250 && symbols !== 0) {
+            setSymbols(symbols - 1)
+          }
+        }
+      }
     
     const getLessonExercises = async (selectedLesson) => {
         let exer_number = 0
@@ -339,14 +356,28 @@ const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer,
             }
             <div style={answer?{display: 'flex'}:{display: 'none'}} className={styles.commentBlock}>
                 <span>Оставить комментарий</span>
-                <textarea 
-                    className={styles.teacherComment}
-                    placeholder="Оставьте краткое пояснение по домашнему заданию студента"
-                    onChange={e => {
-                        setTeacherComment(e.target.value)
-                    }}
-                >
-                </textarea>
+                <div className={styles.answer_input}>
+                    <textarea 
+                        className={styles.teacherComment}
+                        value={teacherComment}
+                        onChange={e => {
+                        if (symbols !== 0) {
+                            setTeacherComment(e.target.value)
+                            console.log(teacherComment)
+                        }
+                        }}
+                        placeholder="Оставьте краткое пояснение по домашнему заданию студента"
+                        onKeyDown={(e) => onKeyDownHandler(e)}
+                        // onChange={e => {
+                        //     setTeacherComment(e.target.value)
+                        // }}
+                    >
+                    </textarea>
+                    <label>
+                        Осталось символов {symbols}
+                    </label>
+                </div>
+                
                 <button
                     className={styles.sendButton}
                     onClick={() => {

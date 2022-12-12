@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import StudentLessonsProgramItem from "../StudentLessonsProgramItem/StudentLessonsProgramItem";
 import styles from "./StudentLessonsProgram.module.css";
 
-const StudentLessonsProgram = ({lessons, courseId, nickname}) => {
+const StudentLessonsProgram = ({lessons, courseUrl, nickname}) => {
 
   const [doneLessons, setDoneLessons] = useState([]);
   const [done, setDone] = useState(0);
@@ -45,7 +45,7 @@ const StudentLessonsProgram = ({lessons, courseId, nickname}) => {
     <h2>Программа курса</h2>
 
     {lessons.map(lesson => {
-      return <StudentLessonsProgramItem courseId={courseId} nickname={nickname} lesson={lesson}/>
+      return <StudentLessonsProgramItem courseUrl={courseUrl} nickname={nickname} lesson={lesson}/>
     })}
   </div>
 };

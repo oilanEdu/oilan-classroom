@@ -24,7 +24,7 @@ import ApplicationModal from "../src/components/ApplicationModal/ApplicationModa
 import classnames from 'classnames';
 import Backdrop from "../src/components/Backdrop/Backdrop";
 import CaptchaComponent from "../src/components/Captcha/Captcha";
-
+import { HMSRoomProvider } from '@100mslive/react-sdk';
 
 const Main = (props) => {
   const ym = () => {
@@ -241,7 +241,7 @@ const Main = (props) => {
     console.log("course teacherByCourse", course, teacherByCourse)
   }, [course, teacherByCourse])
   return (
-    <div>
+    <HMSRoomProvider>
       <div className={styles.main}>
         <Header white={true} />
         <div className={styles1.container}>
@@ -895,7 +895,7 @@ const Main = (props) => {
         </div>
         <Footer />
       </div>
-    </div>
+    </HMSRoomProvider>
   );
 };
 

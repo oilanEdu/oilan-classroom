@@ -24,28 +24,40 @@
 }
 
 .cantainer{
-	width: 90%;
-	margin-left: 5%;
-	display: flex;
-	flex-direction: column;
-	margin-top: 80px;
+  width: 90%;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 80px;
 }
 
 .translationBlock{
   width: 100%;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   display: flex;
   flex-direction: row;
-  border-radius: 50px;
+  /*border-radius: 50px;*/
 }
 
 .personVideo{
   display: flex;
-  border-radius: 50px;
+  /*border-radius: 50px;*/
+  width: 100%;
+  border: 1px solid black;
 }
 
 .video{
   border-radius: 50px;
+}
+
+.clientName{
+  font-family: 'Noto Sans Bold';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+  margin-bottom: 5px;
 }
 
 .reloadButton{

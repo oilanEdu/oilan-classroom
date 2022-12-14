@@ -7,28 +7,64 @@ import { Image } from "react-bootstrap";
 import Footer from "../../src/components/Footer/Footer";
 import HeaderTeacher from "../../src/components/HeaderTeacher/HeaderTeacher";
 import classnames from 'classnames';
+import TeacherSide from "../../src/components/TeacherSide/TeacherSide";
+import ControlBar from "../../src/components/ControlBar/ControlBar";
 // import socket from "../../src/socket";
 // import ACTIONS from "../../src/socket/actions";
 // import useWebRTC, {LOCAL_VIDEO} from '../../src/hooks/useWebRTC';
+// import JitsiMeet, { JitsiMeetView } from 'react-jitsi';
+import GetToken from '../../src/utils/getToken';
+import {selectIsConnectedToRoom, useHMSStore, useHMSActions} from '@100mslive/react-sdk'
+import JoinRoom from '../../src/components/joinRoom/joinRoom';
+// import VideoTile from '../../src/components/VideoTile/VideoTile';
+import Conference from '../../src/components/Conference/Conference';
+import { HMSRoomProvider } from '@100mslive/react-sdk';
+import {
+  selectLocalPeer,
+  selectPeers,
+  selectIsLocalAudioEnabled,
+  selectIsLocalVideoEnabled,
+  selectCameraStreamByPeerID
+} from "@100mslive/hms-video-react";
 
-function Lesson(props) {
+const endPoint =
+  "https://prod-in2.100ms.live/hmsapi/testdomain.app.100ms.live/";
+
+const getToken = async (user_id, role) => {
+  const response = await fetch(`${endPoint}api/token`, {
+    method: "POST",
+    body: JSON.stringify({
+      user_id,
+      role: role, //host, teacher, guest, student
+      type: "app",
+      room_id: "6397fa226d95375c45153bfa"
+    })
+  });
+  const { token } = await response.json();
+  return token;
+};
+
+const Lesson = (props) => {
   
   const router = useRouter()
   const teacherUrl = router.query.url
     const room = router.query.room
+    const jitsiServerUrl = 'https://meet.jit.si/'
     const role = router.query.role
     const [teacher, setTeacher] = useState([])
     const [student, setStudent] = useState([])
     const [lesson, setLesson] = useState([])
     const [rooms, updateRooms] = useState([])
+    const [showCheck, setShowCheck] = useState(0)
     const [exercises, setExercises] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
     const [numberOfEx, setNumberOfEx] = useState(0)
+    const [selectedStudentId, setSelectedStudentId] = useState(0)
     const [selectedExerciseId, setSelectedExerciseId] = useState(0)
     const [selectedExerciseNumber, setSelectedExerciseNumber] = useState(0)
     const [selectedExerciseText, setSelectedExerciseText] = useState('')
     const [selectedExerciseCorrectAnswer, setSelectedExerciseCorrectAnswer] = useState('')
-    const [answer, setAnswer] = useState('') 
+    const [answer, setAnswer] = useState([]) 
     const [teacherComment, setTeacherComment] = useState('')
     // const {clients, provideMediaRef} = useWebRTC(room)
     // const rootNode = useRef();
@@ -41,12 +77,13 @@ function Lesson(props) {
 
     useEffect(() => {
         loadBaseData() 
-        if (role == 'teacher'){
-          loadTeacherData()
-        }
-        if (role == 'student'){
-          loadStudentData()
-        }
+        // if (role == 'teacher'){
+        //   loadTeacherData()
+        // }
+        // if (role == 'student'){
+        //   loadStudentData()
+        // }
+        console.log('PEERS!', peers)
         // socket.on(ACTIONS.SHARE_ROOMS, ({rooms = []} = {}) => {
         //     if (rootNode.current){
         //         updateRooms(rooms);
@@ -54,96 +91,235 @@ function Lesson(props) {
         // }) 
     }, []) 
 
-    const loadBaseData = async () => {
+    const loadBaseData = async () => { 
         let data = room
         let getLessonByRoomKey = await axios.post(`${globals.productionServerDomain}/getLessonByRoomKey/` + data)
         setLesson(getLessonByRoomKey['data'][0])
-        console.log('LESSON',lesson)
-        getLessonExercises()
-    }
-
-    const loadTeacherData = async () => {
-      let data = room
-      let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data)
+        console.log('LESSON',getLessonByRoomKey['data'][0])
+        let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data)
         setStudent(getStudentByLessonKey['data'][0])
-        console.log('student',student)  
-    }
-
-    const loadStudentData = async () => {
-      let data = room
-      let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data)
+        setSelectedStudentId(student.student_id)
+        console.log('student',student) 
+        let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data)
         setTeacher(getTeacherByLessonKey['data'][0])
-        console.log('teacher',teacher)
+        console.log('teacher',teacher) 
     }
 
-    const getLessonExercises = async (selectedLesson) => {
-        let exer_number = 0
-        let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.lesson_id).then(res => {
-            res.data.forEach(async exercise => {
-                let studentId = student.student_id
-                let exerciseId = exercise.id
-                let data = {
-                  studentId,
-                  exerciseId
-                };
-                console.log('data',data)
-                let exerciseAnswer = axios({ 
-                  method: "post",
-                  url: `${globals.productionServerDomain}/getAnswersByStudExId`,
-                  data: data,
-                })
-                  .then(function (res) {
-                    if (res.data[0]){
-                        console.log('EXE', res.data[0].status)
-                        exercise.answer_status = res.data[0].status
-                    }else{ 
-                        console.log('ответов нет')
-                    }
-                  })
-                  .catch((err) => {
-                    alert("Произошла ошибка");
-                  });
-                exer_number += 1
-                exercise.exer_number = exer_number
-                setNumberOfEx(exer_number)
-                setIsLoaded(true)
-            })
-            setExercises(res.data) 
-            console.log('exercises', exercises)
+  //   const loadTeacherData = async () => {
+  //     let data = room
+  //     let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data)
+  //       setStudent(getStudentByLessonKey['data'][0])
+  //       setSelectedStudentId(student.student_id)
+  //       console.log('student',student)  
+  //   }
+
+  //   const loadStudentData = async () => {
+  //     let data = room
+  //     let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data)
+  //       setTeacher(getTeacherByLessonKey['data'][0])
+  //       console.log('teacher',teacher)
+  //   }
+
+  //   const getLessonExercises = async (selectedLesson) => {
+  //       let exer_number = 0
+  //       let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.lesson_id).then(res => {
+  //           res.data.forEach(async exercise => {
+  //               let studentId = student.student_id
+  //               let exerciseId = exercise.id
+  //               let data = {
+  //                 studentId,
+  //                 exerciseId
+  //               };
+  //               console.log('data',data)
+  //               let exerciseAnswer = axios({ 
+  //                 method: "post",
+  //                 url: `${globals.productionServerDomain}/getAnswersByStudExId`,
+  //                 data: data,
+  //               })
+  //                 .then(function (res) {
+  //                   if (res.data[0]){
+  //                       console.log('EXE', res.data[0].status)
+  //                       exercise.answer_status = res.data[0].status
+  //                   }else{ 
+  //                       console.log('ответов нет')
+  //                   }
+  //                 })
+  //                 .catch((err) => {
+  //                   alert("Произошла ошибка");
+  //                 });
+  //               exer_number += 1
+  //               exercise.exer_number = exer_number
+  //               setNumberOfEx(exer_number)
+  //               setIsLoaded(true)
+  //           })
+  //           setExercises(res.data) 
+  //           console.log('exercises', exercises)
+  //       }
+  //       ) 
+  //   }
+
+  //   const getAnswer = async (studentId, exerciseId) => {
+  //       const data = {
+  //         studentId,
+  //         exerciseId
+  //       };
+  //       await axios({
+  //         method: "post",
+  //         url: `${globals.productionServerDomain}/getAnswersByStudExId`,
+  //         data: data,
+  //       })
+  //         .then(function (res) {
+  //           setAnswer(res.data[0])
+  //         })
+  //         .catch((err) => {
+  //           alert("Произошла ошибка");
+  //         });
+  //       console.log('answer', answer)
+  //   }
+
+  //   const updateAnswerStatus = async (id, status) => {
+  //   const data = {
+  //     id,
+  //     status
+  //   }; 
+  //   await axios({
+  //     method: "put",
+  //     url: `${globals.productionServerDomain}/updateAnswerStatus`,
+  //     data: data,
+  //   })
+  //     .then(function (res) {
+  //       alert("Отметка о выполнении изменена"); 
+  //     })
+  //     .catch((err) => {
+  //       alert("Произошла ошибка"); 
+  //         });
+  //   }
+
+  //   const updateAnswerComment = async (studentId, exerciseId, text, date) => {
+  //       const data = {
+  //         studentId, 
+  //         exerciseId, 
+  //         text,
+  //         date
+  //       }; 
+
+  //       await axios({
+  //         method: "post",
+  //         url: `${globals.productionServerDomain}/createTeacherComment`,
+  //         data: data,
+  //       })
+  //         .then(function (res) {
+  //       alert("Комментарий отправлен"); 
+  //     })
+  //     .catch((err) => {
+  //       alert("Произошла ошибка"); 
+  //     });
+  // }
+  const localPeer = useHMSStore(selectLocalPeer);
+  const peers = useHMSStore(selectPeers);
+  const hmsActions = useHMSActions();
+  const isConnected = useHMSStore(selectIsConnectedToRoom);
+  const handleSubmit = async (userName) => {
+    const token = await getToken(userName, role);
+    hmsActions.join({ authToken: token, userName });
+  };
+  const isLocalAudioEnabled = useHMSStore(selectIsLocalAudioEnabled);
+  const isLocalVideoEnabled = useHMSStore(selectIsLocalVideoEnabled);
+  const toggleAudio = async () => {
+    await hmsActions.setLocalAudioEnabled(!isLocalAudioEnabled);
+  };
+  const toggleVideo = async () => {
+    await hmsActions.setLocalVideoEnabled(!isLocalVideoEnabled);
+  };
+
+  const VideoTile = ({ peer, isLocal }) => {
+    const hmsActions = useHMSActions();
+    const videoRef = React.useRef(null);
+    const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
+
+    React.useEffect(() => {
+      (async () => {
+        console.log(videoRef.current);
+        console.log(videoTrack); 
+        if (videoRef.current && videoTrack) {
+          if (videoTrack.enabled) {
+            await hmsActions.attachVideo(videoTrack.id, videoRef.current);
+          } else {
+            await hmsActions.detachVideo(videoTrack.id, videoRef.current);
+          }
         }
-        )
-        setIsLoaded(true) 
-    }
+      })();
+      //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [videoTrack]);
 
-    const getAnswer = async (studentId, exerciseId) => {
-        const data = {
-          studentId,
-          exerciseId
-        };
-        await axios({
-          method: "post",
-          url: `${globals.productionServerDomain}/getAnswersByStudExId`,
-          data: data,
-        })
-          .then(function (res) {
-            setAnswer(res.data[0])
-          })
-          .catch((err) => {
-            alert("Произошла ошибка");
-          });
-        console.log('answer', answer)
-    }
+    return (<div style={{display: 'flex', flexDirection: 'column', width: '50%'}}>
+          {isLocalVideoEnabled?
+          <video
+            className={styles.personVideo}
+            ref={videoRef}
+            autoPlay={true}
+            playsInline
+            muted={true}
+            // className={`${isLocal ? "mirror" : ""}`}
+          ></video>:isLocal?<div className={styles.personVideo}>waiting</div>:
+            <video
+              className={styles.personVideo}
+              ref={videoRef}
+              autoPlay={true}
+              playsInline
+              muted={true}
+              // className={`${isLocal ? "mirror" : ""}`}
+            ></video>
+          }
+          <div className="top-0 w-full absolute flex justify-center">
+            <div className={styles.clientName}>{`${peer.name}`}</div>
+          </div></div>
+    );
+  };
 
   return ( 
         <>
-            <div style={{backgroundColor: "#f1faff", width: '120%'}} 
-            // ref={rootNode}
+            <div style={{backgroundColor: "#f1faff", width: "    100vw"}} 
+              // ref={rootNode}
             >
                 <HeaderTeacher white={true} teacher={teacher}/>
 
                 <div className={styles.cantainer}>
                   Room: {room} / Role: {role}
-                    {/* <div className={styles.translationBlock}>
+                    <div className="App">
+                      {
+                        isConnected ? (
+                            <>
+                              <div className={styles.translationBlock}>
+                                {localPeer && <VideoTile peer={localPeer} isLocal={true} />}
+                                {peers &&
+                                  peers
+                                    .filter((peer) => !peer.isLocal)
+                                    .map((peer) => {
+                                      return (
+                                          <VideoTile isLocal={false} peer={peer} />
+                                      );
+                                    })}
+                              </div>
+                              <div className="fixed bottom-0 h-10 bg-gray-400 w-screen flex items-center justify-center">
+                                <button
+                                  className="text-xs uppercase tracking-wider bg-white py-1 px-2 rounded-lg shadow-lg text-indigo-500 mr-2"
+                                  onClick={toggleAudio}
+                                >
+                                  {isLocalAudioEnabled ? "Mute" : "Unmute"}
+                                </button>
+                                <button
+                                  className="text-xs uppercase tracking-wider bg-white py-1 px-2 rounded-lg shadow-lg text-indigo-500"
+                                  onClick={toggleVideo}
+                                >
+                                  {isLocalVideoEnabled ? "Hide" : "Unhide"}
+                                </button>
+                              </div>
+                            </>
+                          ) : <JoinRoom handleSubmit={handleSubmit} userName={(role == "teacher")?teacher.name:student.name}/>
+                      }
+                    </div>
+                    {/*<div className={styles.translationBlock}>
                         {clients.map((clientID) => {
                             return (
                                 <div key={clientID} className={styles.personVideo}>
@@ -158,9 +334,9 @@ function Lesson(props) {
                                     />
                                 </div>
                                 )
-                        })}   
-                    </div> */}
-                    <div>  
+                        })}
+                    </div>*/}
+                    {/*<div>
                       {(role == 'teacher')?
                         (<>
                           <div>
@@ -173,87 +349,27 @@ function Lesson(props) {
                             <h1>О занятии</h1>
                             <p>{lesson.tesis}</p>
                           </div>
-                          <div className={styles.bricksRow}>
-                            <span> {exercises.length > 0 ? "Домашние задания" : ""}</span>
-                            {numberOfEx == exercises.length ? <> {exercises.map(exercise => (
-                                <div style={exercise.id == selectedExerciseId?{display:'flex', padding: '2px', border: '3px solid #007AFF', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}:{display:'flex', padding: '2px', border: '3px solid #f1faff', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}}>
-                                    <div 
-                                        className={exercise.answer_status?exercise.answer_status == 'not verified'?styles.exerBrickWhite:exercise.answer_status == 'correct'?styles.exerBrickGreen:styles.exerBrickRed:styles.exerBrickWhite}
-                                        onClick={async () => {
-                                            await getAnswer(student.student_id, exercise.id)
-                                            setSelectedExerciseId(exercise.id)
-                                            setSelectedExerciseNumber(exercise.exer_number)
-                                            setSelectedExerciseText(exercise.text)
-                                            setSelectedExerciseCorrectAnswer(exercise.correct_answer)
-                                            
-                                        }}
-                                    >
-                                        {exercise.exer_number}
-                                    </div>
-                                </div>
-                            ))}</> : ''}
-                            {(selectedExerciseId > 0)&&
-                              <div className={styles.answerBlock}>
-                                  <span className={styles.exerciseText}>{selectedExerciseNumber}) {selectedExerciseText}</span>
-                                  <div className={styles.checkRow}>
-                                      <span className={styles.studentsAnswer}>
-                                          {answer?'Ответ студента: ' + answer.text:<i>(студент еще не дал ответа на текущее задание)</i>}
-                                      </span>    
-                                      <button 
-                                          style={answer?{display: 'flex'}:{display: 'none'}} 
-                                          className={answer?answer.status == 'correct'?styles.disabledButton:styles.correctButton:styles.correctButton}
-                                          onClick={async() => {
-                                              await updateAnswerStatus(answer.id, 'correct')
-                                              await getAnswer(student.student_id, selectedExerciseId)
-                                              await getLessonExercises(lesson.lesson_id)
-                                          }}
-                                          disabled={answer?answer.status == 'correct'?true:false:false}
-                                      >
-                                          &#10003;
-                                      </button> 
-                                      <button 
-                                          className={answer?answer.status == 'uncorrect'?styles.disabledButton:styles.uncorrectButton:styles.uncorrectButton}
-                                          style={answer?{display: 'flex'}:{display: 'none'}} 
-                                          onClick={async() => {
-                                              await updateAnswerStatus(answer.id, 'uncorrect')
-                                              await getAnswer(student.student_id, selectedExerciseId)
-                                              await getLessonExercises(lesson.lesson_id)
-                                          }}
-                                          disabled={answer?answer.status == 'uncorrect'?true:false:false}
-                                      >
-                                          &#10008;
-                                      </button>
-                                  </div>   
-                                  <span className={styles.correctAnswer}>
-                                      <Image
-                                          src='https://realibi.kz/file/108886.png'
-                                          style={{marginRight: '10px'}}
-                                      />
-                                      Правильный ответ - {selectedExerciseCorrectAnswer}
-                                  </span>  
-                              </div>
-                              }  
-                              <div style={answer?{display: 'flex'}:{display: 'none'}} className={styles.commentBlock}>
-                                  <span>Оставить комментарий</span>
-                                  <textarea 
-                                      className={styles.teacherComment}
-                                      placeholder="Оставьте краткое пояснение по домашнему заданию студента"
-                                      onChange={e => {
-                                          setTeacherComment(e.target.value)
-                                      }}
-                                  >
-                                  </textarea>
-                                  <button
-                                      className={styles.sendButton}
-                                      onClick={() => {
-                                          updateAnswerComment(answer.id, teacherComment)
-                                      }}
-                                      disabled={teacherComment == '' ? true : false}
-                                  >
-                                      Отправить
-                                  </button>
-                              </div>
-                        </div>
+                          <TeacherSide 
+                            lesson={lesson} 
+                            showCheck={showCheck} 
+                            selectedExerciseId={selectedExerciseId} 
+                            answer={answer} 
+                            teacherComment={teacherComment} 
+                            setShowCheck={setShowCheck} 
+                            setSelectedExerciseId={setSelectedExerciseId} 
+                            setAnswer={setAnswer} 
+                            setTeacherComment={setTeacherComment} 
+                            setSelectedExerciseNumber={setSelectedExerciseNumber} 
+                            setSelectedExerciseText={setSelectedExerciseText} 
+                            setSelectedExerciseCorrectAnswer={setSelectedExerciseCorrectAnswer} 
+                            getAnswer={getAnswer} 
+                            selectedStudentId={selectedStudentId} 
+                            selectedExerciseNumber={selectedExerciseNumber} 
+                            selectedExerciseText={selectedExerciseText} 
+                            selectedExerciseCorrectAnswer={selectedExerciseCorrectAnswer} 
+                            updateAnswerStatus={updateAnswerStatus} 
+                            updateAnswerComment={updateAnswerComment}
+                          />
                         </>):
                         (role == 'student')?
                           (<>
@@ -270,7 +386,7 @@ function Lesson(props) {
                           </>):
                           (<></>)
                       }
-                    </div>
+                    </div>*/}
                 </div>
                 
                 <Footer />

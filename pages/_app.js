@@ -4,6 +4,7 @@ import { CookiesProvider } from 'react-cookie'
 import TagManager from "react-gtm-module";
 import { YMInitializer } from 'react-yandex-metrika';
 import Head from 'next/head';
+import { HMSRoomProvider } from '@100mslive/react-sdk';
 
 const tagManagerArgs = {
   gtmId: 'GTM-MFV3BJ3'
@@ -30,10 +31,10 @@ function MyApp({ Component, pageProps }) {
         trackHash: true,
       }} 
       version="2" 
-    />
+    /><HMSRoomProvider>
     <CookiesProvider>
-      <Component {...pageProps} />
-    </CookiesProvider>
+      <Component {...pageProps}/>
+    </CookiesProvider></HMSRoomProvider>
   </>
 };
 

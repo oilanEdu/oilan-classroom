@@ -313,7 +313,7 @@ const Lesson = (props) => {
                                 </button>
                               </div>
                             </>
-                          ) : <JoinRoom handleSubmit={handleSubmit} userName={(role == "teacher")?teacher.name:student.name}/>
+                          ) : <JoinRoom handleSubmit={handleSubmit} userName={(role == "teacher")?"teacher":"student"}/>
                       }
                     </div>
                     {/*<div className={styles.translationBlock}>

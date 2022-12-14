@@ -42,7 +42,7 @@
 }
 
 .mainTitle span{
-	font-family: 'Muller Bold';
+	font-family: 'Muller Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 24px;
@@ -61,7 +61,7 @@
 }
 
 .programBlock h1{
-	font-family: 'Muller Bold';
+	font-family: 'Muller Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 20px;
@@ -89,7 +89,7 @@
 }
 
 .programBlock h2{
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 16px;
@@ -144,7 +144,7 @@
 }
 
 .lessonsBlock h1{
-	font-family: 'Muller Bold';
+	font-family: 'Muller Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 20px;
@@ -169,7 +169,7 @@
 }
 
 .lessonInfoFirstRow span{
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 16px;
@@ -221,7 +221,7 @@
 }
 
 .lessonInfoSecondRow span{
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 16px;
@@ -270,7 +270,7 @@
 	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 16px;
@@ -294,7 +294,7 @@
 	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 16px;
@@ -317,7 +317,7 @@
 	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 16px;
@@ -341,7 +341,7 @@
 	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 16px;
@@ -358,7 +358,7 @@
 	text-align: center;
 	align-items: center;
 	color: white;
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 26px;
@@ -382,7 +382,7 @@
 }
 
 .exercisesBlock h1{
-	font-family: 'Muller Bold';
+	font-family: 'Muller Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 20px;
@@ -414,7 +414,7 @@
 	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 16px;
@@ -438,7 +438,7 @@
 	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 16px;
@@ -461,7 +461,7 @@
 	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 16px;
@@ -485,7 +485,7 @@
 	/*margin-right: 20px;*/
 	text-align: center;
 	cursor: pointer;
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 16px;
@@ -500,7 +500,7 @@
 }
 
 .exerciseInfoFirstRow span{
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 16px;
@@ -562,7 +562,7 @@
 	text-align: center;
 	align-items: center;
 	color: white;
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 26px;

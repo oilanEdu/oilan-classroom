@@ -122,8 +122,8 @@ export default function HeaderTeacher(props) {
               }}
             >
               <svg
-                width="150"
-                height="48"
+                width="120"
+                height="38"
                 viewBox="0 0 150 48"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

@@ -47,7 +47,10 @@ function TeacherCabinet(props) {
     const currentPosts = students?.slice(indexOfFirstPost, indexOfLastPost)
 
     const [studentsList, setStudentsList] = useState(currentPosts)
-
+    useEffect(() => {
+        console.log(studentsList, "studentsList");
+    }, [studentsList])
+ 
     const howManyPages = Math.ceil(students?.length/cardsPerPage)
 
     const isInMainPage = true
@@ -134,6 +137,7 @@ function TeacherCabinet(props) {
         setPrograms(teacherPrograms['data'])
         let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
         teacherStudents['data'].forEach(async student => {
+            // debugger
             student.check = 0
             let diff = 604800000*7
             if (!lessonsLoaded) {loadStudentLessons(student.student_id, student.program_id)}
@@ -158,7 +162,8 @@ function TeacherCabinet(props) {
                     }
                     let dateStr = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time);
                     let closerDate 
-                    if ((Date.parse(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time)) > Date.parse(new Date())) && (Date.parse(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time)) - Date.parse(new Date()) < diff)){ 
+                    if ((Date.parse(dateStr) > Date.parse(new Date())) && (Date.parse(dateStr) - Date.parse(new Date()) < diff)){ 
+                      // debugger
                         closerDate = lessonDate
                         if (closerLesson){
                             if (closerDate < new Date(closerLesson.fact_time).toLocaleDateString()){
@@ -170,12 +175,11 @@ function TeacherCabinet(props) {
                         let curr_hours = dateStr.getHours();
                         let curr_minutes = dateStr.getMinutes();
                         student.lesson_date = lesson.fact_time
-                        student.closer_date = closerDate 
-                        student.curr_hours = curr_hours 
-                        student.curr_minutes = curr_minutes 
- 
+                        // student.closer_date = closerDate 
+                        // student.curr_hours = curr_hours 
+                        // student.curr_minutes = curr_minutes 
+                        // debugger
                     }
-
                     let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
                         let exercises = res.data
                         if (exercises) {
@@ -213,6 +217,16 @@ function TeacherCabinet(props) {
                         }
                     })
                 })   
+                var lessonsFuture = lessons.filter(el => (new Date() - new Date(el.fact_time).getTime() < 0))
+                var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.fact_time).getTime()));
+                var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
+                var idx = withoutNan.indexOf(Math.min(...withoutNan)); 
+                let curr_hours = new Date(lessonsFuture[idx].fact_time).getHours();
+                let curr_minutes = new Date(lessonsFuture[idx].fact_time).getMinutes();
+                student.closer_date = new Date(lessonsFuture[idx].fact_time).toLocaleDateString()
+                student.curr_hours = curr_hours 
+                student.curr_minutes = curr_minutes 
+                student.lesson_date = new Date(lessonsFuture[idx].fact_time).toLocaleDateString()
             })
             }
            );
@@ -333,192 +347,325 @@ function TeacherCabinet(props) {
       return (a, b) => a[field] > b[field] ? 1 : -1;
     }
 
-    return ( 
-        <>
-                {showModalLesson ? <>
-          <ModalForLessonConfiguration showModalLesson={showModalLesson} 
-                                       setShowModalLesson={setShowModalLesson}
-                                         student={studentForModal} 
-                                         updateStudentProgram={updateStudentProgram} 
-                                         loadTeacherData={loadTeacherData}
-                                         programs={programs}
-            />  
-        </> : ''}
-            
-            <div style={{backgroundColor: "#f1faff"}}>
-              <HeaderTeacher white={true} url={props.url} teacher={teacher} isInMainPage={isInMainPage}/>
-              <div className={styles.cantainer}>
-                <GoToLessonWithTimerComponent isTeacher={true} url={props.url}/>
-                <div className={styles.topBlock}>
-                    <div className={styles.greetings}>
-                        <span>Преподаватель</span>
-                        <h1>{teacher.surname} {teacher.name} {teacher.patronymic}</h1>
-                        <p>Смотрите запланированные занятия в календаре. Персонально отредактируйте программы студентов наблюдайте за их прогрессом по вашей программе. Удобно проводите занятие по запланированной программе и проверяйтя домашние задания студентов.</p>
-                        <button
-                            onClick={() => {
-                                (closerLesson.personal_lesson_link || closerLesson.default_lesson_link)?
-                                startLessonLink(closerLesson.personal_lesson_link?closerLesson.personal_lesson_link:closerLesson.default_lesson_link):
-                                startNewLesson()
-                            }}
-                        >Перейти к занятию</button>
-                    </div>
-                    <div className={styles.calendarBlock}>
-                         <Calendar2 lessons={lessons}/> 
-                    </div>
-                </div>
+    return (
+      <>
+        {showModalLesson ? (
+          <>
+            <ModalForLessonConfiguration
+              showModalLesson={showModalLesson}
+              setShowModalLesson={setShowModalLesson}
+              student={studentForModal}
+              updateStudentProgram={updateStudentProgram}
+              loadTeacherData={loadTeacherData}
+              programs={programs}
+            />
+          </>
+        ) : (
+          ""
+        )}
 
-                <div className={styles.programsBlock}>
-                    <h1>ПРОГРАММЫ ДЛЯ СТУДЕНТОВ</h1>
-                    <div className={styles.programsHeader}>
-                        <span className={classnames(styles.pNumber, styles.pNumberHead)}>№</span>
-                        <span className={classnames(styles.pCourse, styles.pCourseHead)}>Курсы</span>
-                        <span className={classnames(styles.pProgram, styles.pProgramHead)}>
-                            <Image 
-                                src='https://realibi.kz/file/846025.png'
-                                style={{marginRight: '8px'}}
-                            />
-                            Учебная программа
-                        </span>
-                        <span className={classnames(styles.pLessCount, styles.pLessCountHead)}>Кол-во занятий</span>
-                        <span className={classnames(styles.pDates, styles.pDatesHead)}>Даты начала и конца</span>
-                        <span className={styles.pEditTitle}>Программа</span>  
-                    </div>
-                    {programs.map(program => (
-                    <div className={styles.program}>
-                        <span className={styles.pNumber}>№{program.number}</span>
-                        <span className={styles.pCourse}>{program.course_title}</span>
-                        <span className={styles.pProgram}>
-                            <Image 
-                                src='https://realibi.kz/file/846025.png'
-                                style={{marginRight: '8px'}}
-                            />
-                            {program.title}
-                        </span>
-                        <span className={styles.pLessCount}>{program.lessons_count} занятий</span>
-                        <span className={styles.pDates}>
-                            <span>{new Date(program.start_date).toLocaleDateString()}</span> 
-                            <span>{new Date(program.end_date).toLocaleDateString()}</span>
-                        </span>
-                        <span className={styles.pEdit}>
-                            <Link
-                                href={`${encodeURIComponent(props.url)}/editProgram/?programId=${encodeURIComponent(program.id)}`}
-                                target="_blank"
-                            >
-                            Редактировать
-                            </Link>
-                            <Image 
-                                src='https://realibi.kz/file/109637.png'
-                                style={{marginLeft: '8px'}}
-                            />
-                        </span> 
-                    </div>
-                    ))} 
-                    <div className={styles.addProgramContainer}>  
-                        <button    
-                            onClick={() => {
-                                createEmptyProgram()
-                                loadTeacherData()
-                                }
-                            }
-                            className={styles.addProgram}
-                        >
-                            <Image 
-                                src='https://realibi.kz/file/316050.png'
-                                style={{marginRight: '8px'}}
-                            />
-                            Добавить программу
-                        </button>
-                    </div>
-                </div>
-
-                <div className={styles.studentsBlock} id={"students"}>
-                    <div className={styles.titleContainer}>
-                        <h1>СПИСОК СТУДЕНТОВ</h1>
-                        <ClickAwayListener onClickAway={() => setShowSort(false)}>
-                            <div className={styles.sortContainer}>
-                                <div 
-                                    onClick={() => setShowSort(!showSort)}
-                                    className={styles.sortTitle}
-                                >
-                                    <span className={showSort ? styles.sortShow : styles.sortHide}>
-                                       Сортировать 
-                                    </span>
-                                </div>
-                                <div className={styles.sortOptions} style={{display: showSort ? "flex" : "none"}}>    
-                                    <span onClick={() => ultimateSort('lesson_date')}>Следующие занятие</span>
-                                    <span onClick={() => ultimateSort('surname')}>По алфавиту</span>
-                                    <span onClick={() => ultimateSort('course_title')}>По курсам</span>
-                                    <span onClick={() => ultimateSort('program_title')}>По программам</span>
-                                </div>
-                            </div>
-                        </ClickAwayListener>
-                    </div>
-                    <div className={styles.studentsHeader}>
-                        <span className={classnames(styles.sCourse, styles.sCourseHead)}>Индивидуальная программа</span>
-                        <span className={classnames(styles.sFullname, styles.sFullnameHead)}>
-                            <Image 
-                                src='https://realibi.kz/file/51803.png'
-                                style={{marginRight: '8px'}}
-                            />
-                            Студенты
-                        </span>
-                        <span className={classnames(styles.sComplietedLessons, styles.sComplietedLessonsHead)}>Пройдено занятий</span>
-                        <span className={classnames(styles.sNextLesson, styles.sNextLessonHead)}>Следующее занятие</span>
-                        <span className={styles.sProgram}>Программа</span>
-                    </div>
-                    {(sortMode?studentsList:currentPosts).map(student => (
-                        <div className={styles.student}>
-                            <span className={styles.sCourse}>{student.course_title} ({student.program_title})</span>
-                            <span 
-                                className={styles.sFullname}
-                                onClick={() => {
-                                    personalLink(student.student_id, student.program_id)
-                                }}
-                            >
-                                <div className={styles.studentCage}>
-                                    <span>
-                                        <Image 
-                                            src='https://realibi.kz/file/142617.png'
-                                            style={{marginRight: '8px', width: "40px"}}
-                                        /> 
-                                    </span>
-                                    <div className={styles.idAndName}>
-                                        <span className={styles.name}>{student.surname} {student.name} {student.patronymic}</span>
-                                        <span className={styles.id}>id: {"0".repeat(7 - String(student.student_id).length) + student.student_id}</span>
-                                    </div>
-                                </div>
-                            </span>
-                            <span className={styles.sComplietedLessons}>
-                                <div className={styles.progressLine}>
-                                    <div className={styles.studentProgress} 
-                                        style={{width: student.progress?student.progress+'%':'0' + '%'}}  
-                                    >
-                                    </div>
-                                </div>
-                                {student.check ? student.check : '0'} из {student.lessons_count ? student.lessons_count : ''} 
-                            </span>
-                            <span className={styles.sNextLesson}>
-                                <span>{student.closer_date}</span>
-                                <span>{student.curr_hours ? <>{student.curr_hours < 10 ? '0' + student.curr_hours : student.curr_hours}:{student.curr_minutes < 10 ? '0' + student.curr_minutes : student.curr_minutes}-{(student.curr_hours == 23)?'00':student.curr_hours + 1 < 10 ? '0' + student.curr_hours + 1 : student.curr_hours + 1}:{student.curr_minutes < 10 ? '0' + student.curr_minutes : student.curr_minutes}</> : 'Следующее занятие не запланировано'}</span>                            </span>
-                            <div className={styles.sConfigureWrapper}>
-                            <span className={styles.sConfigure}
-                                  onClick={() => {setShowModalLesson(!showModalLesson)
-                                                  setStudentForModal(student)}}>
-                                Настроить
-                            </span>
-                            <div className={styles.sConfigureGear}>
-
-                            </div>
-                            </div>
-                        </div>
-                    ))} 
-                    {students.length <= 0 ? <></> : <Pagination pages = {howManyPages} setCurrentPage={setCurrentPage}/>}
-                </div>
+        <div style={{ backgroundColor: "#f1faff" }}>
+          <HeaderTeacher
+            white={true}
+            url={props.url}
+            teacher={teacher}
+            isInMainPage={isInMainPage}
+          />
+          <div className={styles.cantainer}>
+            <GoToLessonWithTimerComponent isTeacher={true} url={props.url} />
+            <div className={styles.topBlock}>
+              <div className={styles.greetings}>
+                <span>Преподаватель</span>
+                <h1>
+                  {teacher.surname} {teacher.name} {teacher.patronymic}
+                </h1>
+                <p>
+                  Смотрите запланированные занятия в календаре. Персонально
+                  отредактируйте программы студентов наблюдайте за их прогрессом
+                  по вашей программе. Удобно проводите занятие по
+                  запланированной программе и проверяйтя домашние задания
+                  студентов.
+                </p>
+                <button
+                  onClick={() => {
+                    closerLesson.personal_lesson_link ||
+                    closerLesson.default_lesson_link
+                      ? startLessonLink(
+                          closerLesson.personal_lesson_link
+                            ? closerLesson.personal_lesson_link
+                            : closerLesson.default_lesson_link
+                        )
+                      : startNewLesson();
+                  }}
+                >
+                  Перейти к занятию
+                </button>
               </div>
-              <Footer />
+              <div className={styles.calendarBlock}>
+                <Calendar2 lessons={lessons} />
+              </div>
             </div>
-        </>
-    )
+
+            <div className={styles.programsBlock}>
+              <h1>ПРОГРАММЫ ДЛЯ СТУДЕНТОВ</h1>
+              <div className={styles.programsHeader}>
+                <span
+                  className={classnames(styles.pNumber, styles.pNumberHead)}
+                >
+                  №
+                </span>
+                <span
+                  className={classnames(styles.pCourse, styles.pCourseHead)}
+                >
+                  Курсы
+                </span>
+                <span
+                  className={classnames(styles.pProgram, styles.pProgramHead)}
+                >
+                  <Image
+                    src="https://realibi.kz/file/846025.png"
+                    style={{ marginRight: "8px" }}
+                  />
+                  Учебная программа
+                </span>
+                <span
+                  className={classnames(
+                    styles.pLessCount,
+                    styles.pLessCountHead
+                  )}
+                >
+                  Кол-во занятий
+                </span>
+                <span className={classnames(styles.pDates, styles.pDatesHead)}>
+                  Даты начала и конца
+                </span>
+                <span className={styles.pEditTitle}>Программа</span>
+              </div>
+              {programs.map((program) => (
+                <div className={styles.program}>
+                  <span className={styles.pNumber}>№{program.number}</span>
+                  <span className={styles.pCourse}>{program.course_title}</span>
+                  <span className={styles.pProgram}>
+                    <Image
+                      src="https://realibi.kz/file/846025.png"
+                      style={{ marginRight: "8px" }}
+                    />
+                    {program.title}
+                  </span>
+                  <span className={styles.pLessCount}>
+                    {program.lessons_count} занятий
+                  </span>
+                  <span className={styles.pDates}>
+                    <span>
+                      {new Date(program.start_date).toLocaleDateString()}
+                    </span>
+                    <span>
+                      {new Date(program.end_date).toLocaleDateString()}
+                    </span>
+                  </span>
+                  <span className={styles.pEdit}>
+                    <Link
+                      href={`${encodeURIComponent(
+                        props.url
+                      )}/editProgram/?programId=${encodeURIComponent(
+                        program.id
+                      )}`}
+                      target="_blank"
+                    >
+                      Редактировать
+                    </Link>
+                    <Image
+                      src="https://realibi.kz/file/109637.png"
+                      style={{ marginLeft: "8px" }}
+                    />
+                  </span>
+                </div>
+              ))}
+              <div className={styles.addProgramContainer}>
+                <button
+                  onClick={() => {
+                    createEmptyProgram();
+                    loadTeacherData();
+                  }}
+                  className={styles.addProgram}
+                >
+                  <Image
+                    src="https://realibi.kz/file/316050.png"
+                    style={{ marginRight: "8px" }}
+                  />
+                  Добавить программу
+                </button>
+              </div>
+            </div>
+
+            <div className={styles.studentsBlock} id={"students"}>
+              <div className={styles.titleContainer}>
+                <h1>СПИСОК СТУДЕНТОВ</h1>
+                <ClickAwayListener onClickAway={() => setShowSort(false)}>
+                  <div className={styles.sortContainer}>
+                    <div
+                      onClick={() => setShowSort(!showSort)}
+                      className={styles.sortTitle}
+                    >
+                      <span
+                        className={showSort ? styles.sortShow : styles.sortHide}
+                      >
+                        Сортировать
+                      </span>
+                    </div>
+                    <div
+                      className={styles.sortOptions}
+                      style={{ display: showSort ? "flex" : "none" }}
+                    >
+                      <span onClick={() => ultimateSort("lesson_date")}>
+                        Следующие занятие
+                      </span>
+                      <span onClick={() => ultimateSort("surname")}>
+                        По алфавиту
+                      </span>
+                      <span onClick={() => ultimateSort("course_title")}>
+                        По курсам
+                      </span>
+                      <span onClick={() => ultimateSort("program_title")}>
+                        По программам
+                      </span>
+                    </div>
+                  </div>
+                </ClickAwayListener>
+              </div>
+              <div className={styles.studentsHeader}>
+                <span
+                  className={classnames(styles.sCourse, styles.sCourseHead)}
+                >
+                  Индивидуальная программа
+                </span>
+                <span
+                  className={classnames(styles.sFullname, styles.sFullnameHead)}
+                >
+                  <Image
+                    src="https://realibi.kz/file/51803.png"
+                    style={{ marginRight: "8px" }}
+                  />
+                  Студенты
+                </span>
+                <span
+                  className={classnames(
+                    styles.sComplietedLessons,
+                    styles.sComplietedLessonsHead
+                  )}
+                >
+                  Пройдено занятий
+                </span>
+                <span
+                  className={classnames(
+                    styles.sNextLesson,
+                    styles.sNextLessonHead
+                  )}
+                >
+                  Следующее занятие
+                </span>
+                <span className={styles.sProgram}>Программа</span>
+              </div>
+              {(sortMode ? studentsList : currentPosts).map((student) => (
+                <div className={styles.student}>
+                  <span className={styles.sCourse}>
+                    {student.course_title} ({student.program_title})
+                  </span>
+                  <span
+                    className={styles.sFullname}
+                    onClick={() => {
+                      personalLink(student.student_id, student.program_id);
+                    }}
+                  >
+                    <div className={styles.studentCage}>
+                      <span>
+                        <Image
+                          src="https://realibi.kz/file/142617.png"
+                          style={{ marginRight: "8px", width: "40px" }}
+                        />
+                      </span>
+                      <div className={styles.idAndName}>
+                        <span className={styles.name}>
+                          {student.surname} {student.name} {student.patronymic}
+                        </span>
+                        <span className={styles.id}>
+                          id:{" "}
+                          {"0".repeat(7 - String(student.student_id).length) +
+                            student.student_id}
+                        </span>
+                      </div>
+                    </div>
+                  </span>
+                  <span className={styles.sComplietedLessons}>
+                    <div className={styles.progressLine}>
+                      <div
+                        className={styles.studentProgress}
+                        style={{
+                          width: student.progress
+                            ? student.progress + "%"
+                            : "0" + "%",
+                        }}
+                      ></div>
+                    </div>
+                    {student.check ? student.check : "0"} из{" "}
+                    {student.lessons_count ? student.lessons_count : ""}
+                  </span>
+                  <span className={styles.sNextLesson}>
+                    <span>{student.closer_date}</span>
+                    <span>
+                      {student.curr_hours != undefined ? (
+                        <>
+                          {student.curr_hours < 10
+                            ? "0" + student.curr_hours
+                            : student.curr_hours}
+                          :
+                          {student.curr_minutes < 10
+                            ? "0" + student.curr_minutes
+                            : student.curr_minutes}
+                          -
+                          {student.curr_hours == 23
+                            ? "00"
+                            : student.curr_hours + 1 < 10
+                            ? student.curr_hours === 0 ? "01" : "0" + student.curr_hours + 1
+                            : student.curr_hours + 1}
+                          :
+                          {student.curr_minutes < 10
+                            ? "0" + student.curr_minutes
+                            : student.curr_minutes}
+                        </>
+                      ) : (
+                        "Следующее занятие не запланировано"
+                      )}
+                    </span>
+                  </span>
+                  <div className={styles.sConfigureWrapper}>
+                    <span
+                      className={styles.sConfigure}
+                      onClick={() => {
+                        setShowModalLesson(!showModalLesson);
+                        setStudentForModal(student);
+                      }}
+                    >
+                      Настроить
+                    </span>
+                    <div className={styles.sConfigureGear}></div>
+                  </div>
+                </div>
+              ))}
+              {students.length <= 0 ? (
+                <></>
+              ) : (
+                <Pagination
+                  pages={howManyPages}
+                  setCurrentPage={setCurrentPage}
+                />
+              )}
+            </div>
+          </div>
+          <Footer />
+        </div>
+      </>
+    );
 }
 
 TeacherCabinet.getInitialProps = async (ctx) => { 

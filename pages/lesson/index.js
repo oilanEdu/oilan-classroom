@@ -7,7 +7,6 @@ import { Image } from "react-bootstrap";
 import Footer from "../../src/components/Footer/Footer";
 import HeaderTeacher from "../../src/components/HeaderTeacher/HeaderTeacher";
 import classnames from 'classnames';
-import TeacherSide from "../../src/components/TeacherSide/TeacherSide";
 // import socket from "../../src/socket";
 // import ACTIONS from "../../src/socket/actions";
 // import useWebRTC, {LOCAL_VIDEO} from '../../src/hooks/useWebRTC';
@@ -22,16 +21,14 @@ function Lesson(props) {
     const [student, setStudent] = useState([])
     const [lesson, setLesson] = useState([])
     const [rooms, updateRooms] = useState([])
-    const [showCheck, setShowCheck] = useState(0)
     const [exercises, setExercises] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
     const [numberOfEx, setNumberOfEx] = useState(0)
-    const [selectedStudentId, setSelectedStudentId] = useState(0)
     const [selectedExerciseId, setSelectedExerciseId] = useState(0)
     const [selectedExerciseNumber, setSelectedExerciseNumber] = useState(0)
     const [selectedExerciseText, setSelectedExerciseText] = useState('')
     const [selectedExerciseCorrectAnswer, setSelectedExerciseCorrectAnswer] = useState('')
-    const [answer, setAnswer] = useState([]) 
+    const [answer, setAnswer] = useState('') 
     const [teacherComment, setTeacherComment] = useState('')
     // const {clients, provideMediaRef} = useWebRTC(room)
     // const rootNode = useRef();
@@ -62,14 +59,13 @@ function Lesson(props) {
         let getLessonByRoomKey = await axios.post(`${globals.productionServerDomain}/getLessonByRoomKey/` + data)
         setLesson(getLessonByRoomKey['data'][0])
         console.log('LESSON',lesson)
-        getLessonExercises() 
+        getLessonExercises()
     }
 
     const loadTeacherData = async () => {
       let data = room
       let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data)
         setStudent(getStudentByLessonKey['data'][0])
-        setSelectedStudentId(student.student_id)
         console.log('student',student)  
     }
 
@@ -115,7 +111,8 @@ function Lesson(props) {
             setExercises(res.data) 
             console.log('exercises', exercises)
         }
-        ) 
+        )
+        setIsLoaded(true) 
     }
 
     const getAnswer = async (studentId, exerciseId) => {
@@ -137,55 +134,16 @@ function Lesson(props) {
         console.log('answer', answer)
     }
 
-    const updateAnswerStatus = async (id, status) => {
-    const data = {
-      id,
-      status
-    }; 
-    await axios({
-      method: "put",
-      url: `${globals.productionServerDomain}/updateAnswerStatus`,
-      data: data,
-    })
-      .then(function (res) {
-        alert("Отметка о выполнении изменена"); 
-      })
-      .catch((err) => {
-        alert("Произошла ошибка"); 
-          });
-    }
-
-    const updateAnswerComment = async (studentId, exerciseId, text, date) => {
-        const data = {
-          studentId, 
-          exerciseId, 
-          text,
-          date
-        }; 
-
-        await axios({
-          method: "post",
-          url: `${globals.productionServerDomain}/createTeacherComment`,
-          data: data,
-        })
-          .then(function (res) {
-        alert("Комментарий отправлен"); 
-      })
-      .catch((err) => {
-        alert("Произошла ошибка"); 
-      });
-  }
-
   return ( 
         <>
-            <div style={{backgroundColor: "#f1faff", width: "    100vw"}} 
-              // ref={rootNode}
+            <div style={{backgroundColor: "#f1faff", width: '120%'}} 
+            // ref={rootNode}
             >
                 <HeaderTeacher white={true} teacher={teacher}/>
 
                 <div className={styles.cantainer}>
                   Room: {room} / Role: {role}
-                    {/*<div className={styles.translationBlock}>
+                    {/* <div className={styles.translationBlock}>
                         {clients.map((clientID) => {
                             return (
                                 <div key={clientID} className={styles.personVideo}>
@@ -200,9 +158,9 @@ function Lesson(props) {
                                     />
                                 </div>
                                 )
-                        })}
-                    </div>*/}
-                    <div>
+                        })}   
+                    </div> */}
+                    <div>  
                       {(role == 'teacher')?
                         (<>
                           <div>
@@ -215,27 +173,87 @@ function Lesson(props) {
                             <h1>О занятии</h1>
                             <p>{lesson.tesis}</p>
                           </div>
-                          <TeacherSide 
-                            lesson={lesson} 
-                            showCheck={showCheck} 
-                            selectedExerciseId={selectedExerciseId} 
-                            answer={answer} 
-                            teacherComment={teacherComment} 
-                            setShowCheck={setShowCheck} 
-                            setSelectedExerciseId={setSelectedExerciseId} 
-                            setAnswer={setAnswer} 
-                            setTeacherComment={setTeacherComment} 
-                            setSelectedExerciseNumber={setSelectedExerciseNumber} 
-                            setSelectedExerciseText={setSelectedExerciseText} 
-                            setSelectedExerciseCorrectAnswer={setSelectedExerciseCorrectAnswer} 
-                            getAnswer={getAnswer} 
-                            selectedStudentId={selectedStudentId} 
-                            selectedExerciseNumber={selectedExerciseNumber} 
-                            selectedExerciseText={selectedExerciseText} 
-                            selectedExerciseCorrectAnswer={selectedExerciseCorrectAnswer} 
-                            updateAnswerStatus={updateAnswerStatus} 
-                            updateAnswerComment={updateAnswerComment}
-                          />
+                          <div className={styles.bricksRow}>
+                            <span> {exercises.length > 0 ? "Домашние задания" : ""}</span>
+                            {numberOfEx == exercises.length ? <> {exercises.map(exercise => (
+                                <div style={exercise.id == selectedExerciseId?{display:'flex', padding: '2px', border: '3px solid #007AFF', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}:{display:'flex', padding: '2px', border: '3px solid #f1faff', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}}>
+                                    <div 
+                                        className={exercise.answer_status?exercise.answer_status == 'not verified'?styles.exerBrickWhite:exercise.answer_status == 'correct'?styles.exerBrickGreen:styles.exerBrickRed:styles.exerBrickWhite}
+                                        onClick={async () => {
+                                            await getAnswer(student.student_id, exercise.id)
+                                            setSelectedExerciseId(exercise.id)
+                                            setSelectedExerciseNumber(exercise.exer_number)
+                                            setSelectedExerciseText(exercise.text)
+                                            setSelectedExerciseCorrectAnswer(exercise.correct_answer)
+                                            
+                                        }}
+                                    >
+                                        {exercise.exer_number}
+                                    </div>
+                                </div>
+                            ))}</> : ''}
+                            {(selectedExerciseId > 0)&&
+                              <div className={styles.answerBlock}>
+                                  <span className={styles.exerciseText}>{selectedExerciseNumber}) {selectedExerciseText}</span>
+                                  <div className={styles.checkRow}>
+                                      <span className={styles.studentsAnswer}>
+                                          {answer?'Ответ студента: ' + answer.text:<i>(студент еще не дал ответа на текущее задание)</i>}
+                                      </span>    
+                                      <button 
+                                          style={answer?{display: 'flex'}:{display: 'none'}} 
+                                          className={answer?answer.status == 'correct'?styles.disabledButton:styles.correctButton:styles.correctButton}
+                                          onClick={async() => {
+                                              await updateAnswerStatus(answer.id, 'correct')
+                                              await getAnswer(student.student_id, selectedExerciseId)
+                                              await getLessonExercises(lesson.lesson_id)
+                                          }}
+                                          disabled={answer?answer.status == 'correct'?true:false:false}
+                                      >
+                                          &#10003;
+                                      </button> 
+                                      <button 
+                                          className={answer?answer.status == 'uncorrect'?styles.disabledButton:styles.uncorrectButton:styles.uncorrectButton}
+                                          style={answer?{display: 'flex'}:{display: 'none'}} 
+                                          onClick={async() => {
+                                              await updateAnswerStatus(answer.id, 'uncorrect')
+                                              await getAnswer(student.student_id, selectedExerciseId)
+                                              await getLessonExercises(lesson.lesson_id)
+                                          }}
+                                          disabled={answer?answer.status == 'uncorrect'?true:false:false}
+                                      >
+                                          &#10008;
+                                      </button>
+                                  </div>   
+                                  <span className={styles.correctAnswer}>
+                                      <Image
+                                          src='https://realibi.kz/file/108886.png'
+                                          style={{marginRight: '10px'}}
+                                      />
+                                      Правильный ответ - {selectedExerciseCorrectAnswer}
+                                  </span>  
+                              </div>
+                              }  
+                              <div style={answer?{display: 'flex'}:{display: 'none'}} className={styles.commentBlock}>
+                                  <span>Оставить комментарий</span>
+                                  <textarea 
+                                      className={styles.teacherComment}
+                                      placeholder="Оставьте краткое пояснение по домашнему заданию студента"
+                                      onChange={e => {
+                                          setTeacherComment(e.target.value)
+                                      }}
+                                  >
+                                  </textarea>
+                                  <button
+                                      className={styles.sendButton}
+                                      onClick={() => {
+                                          updateAnswerComment(answer.id, teacherComment)
+                                      }}
+                                      disabled={teacherComment == '' ? true : false}
+                                  >
+                                      Отправить
+                                  </button>
+                              </div>
+                        </div>
                         </>):
                         (role == 'student')?
                           (<>

@@ -93,7 +93,7 @@
 }
 
 .greetings h1{
-	font-family: 'Muller Bold';
+    font-family: 'Muller Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 24px;
@@ -146,7 +146,7 @@
 }
 
 .programsBlock h1{
-	font-family: 'Muller Bold';
+    font-family: 'Muller Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 24px;
@@ -313,7 +313,7 @@
 }
 
 .studentsBlock h1{
-	font-family: 'Muller Bold';
+    font-family: 'Muller Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 24px;
@@ -338,7 +338,7 @@
 }
 
 .studentsHeader span{
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 16px;
@@ -362,7 +362,7 @@
 }
 
 .student span{
-	font-family: 'Noto Sans Bold';
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 16px;

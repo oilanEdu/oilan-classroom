@@ -8,7 +8,6 @@ import Footer from "../../src/components/Footer/Footer";
 import HeaderTeacher from "../../src/components/HeaderTeacher/HeaderTeacher";
 import classnames from 'classnames';
 import TeacherSide from "../../src/components/TeacherSide/TeacherSide";
-import ControlBar from "../../src/components/ControlBar/ControlBar";
 // import socket from "../../src/socket";
 // import ACTIONS from "../../src/socket/actions";
 // import useWebRTC, {LOCAL_VIDEO} from '../../src/hooks/useWebRTC';
@@ -16,8 +15,6 @@ import ControlBar from "../../src/components/ControlBar/ControlBar";
 import GetToken from '../../src/utils/getToken';
 import {selectIsConnectedToRoom, useHMSStore, useHMSActions} from '@100mslive/react-sdk'
 import JoinRoom from '../../src/components/joinRoom/joinRoom';
-// import VideoTile from '../../src/components/VideoTile/VideoTile';
-import Conference from '../../src/components/Conference/Conference';
 import { HMSRoomProvider } from '@100mslive/react-sdk';
 import {
   selectLocalPeer,

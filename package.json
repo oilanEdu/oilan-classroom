@@ -24,6 +24,7 @@
     "freeice": "^2.2.2",
     "jquery": "^3.6.1",
     "jsdom": "^20.0.0",
+    "jsonwebtoken": "^8.5.1",
     "next": "12.3.1",
     "parse5": "^7.1.1",
     "postcss": "^8.4.16",
@@ -41,7 +42,8 @@
     "recaptcha-v3-react-function-async": "0.0.3",
     "recharts": "^2.1.16",
     "socket.io": "^4.5.3",
-    "socket.io-client": "^4.5.3"
+    "socket.io-client": "^4.5.3",
+    "uuid4": "^2.0.3"
   },
   "devDependencies": {
     "country-flag-icons": "^1.5.5",

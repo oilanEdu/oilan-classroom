@@ -1,0 +1,185 @@
+@font-face {
+  font-family: "Noto Sans Regular";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Medium";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Bold";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Regular";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Medium";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Bold";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background:#F1FAFF;
+  padding: 80px 0;
+  width: 555px;
+  margin: 0 auto;
+}
+
+.container h1 {
+  font-family: "Muller Medium";
+  font-size: 32px;
+}
+
+.subtitle {
+  font-size: 17px;
+  font-family: "Noto Sans Regular";
+}
+
+.form_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input, .selectBlock {
+  width: 400px;
+  margin-top: 12px;
+  padding: 10px 16px;
+  border: 1px solid #A2A7B2;
+  font-family: "Noto Sans Regular";
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+.button {
+  background: #007AFF;
+  border-radius: 4px;
+  border: none;
+  padding: 13px;
+  font-family: "Noto Sans Bold";
+  font-size: 16px;
+  color: #fff;
+  margin: 32px 0 20px;
+}
+
+.check_off {
+  font-family: "Noto Sans Regular";
+  background: url(https://realibi.kz/file/119055.png) no-repeat;
+  background-size: 24px 24px;
+  background-position: 0 50%;
+  font-size: 17px;
+}
+
+.check_on {
+  font-family: "Noto Sans Regular";
+  background: url(https://realibi.kz/file/349780.png) no-repeat;
+  background-size: 24px 24px;
+  background-position: 0 50%;
+  font-size: 17px;
+}
+
+.modal {
+  position: fixed;
+  z-index: 500;
+  background-color: #f3f3f3;
+  max-width: 480px;
+  padding: 40px;
+  /* left: 41%; */
+  text-align: center;
+  /* top: 20%; */
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
+  left: 50%;
+  margin-right: -50%;
+  /* transform: translate(-50%, -50%); */
+  top: 50%;
+  border-radius: 20px;
+}
+
+.modal_button {
+  font-family: "Noto Sans Bold";
+  cursor: pointer;
+  background-color: #007AFF;
+  color: white;
+  width: max-content;
+  border: none;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 12px;
+  transition: 0.8s;
+  font-size: 22px;
+  margin-bottom: 6px;
+  z-index: 5;
+  width: 100%;
+}
+
+.modal h3 {
+  font-family: "Muller Medium";
+  margin: 0px 0 20px;
+  text-transform: uppercase;
+  font-size: 18px;
+  text-align: start;
+}
+
+.modal_info {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.selectBlock {
+  background-image: url('data:image/svg+xml,\ <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">\<path d="M1 1.46387L7 8.5353L13 1.46387" stroke="black" stroke-width="2" stroke-linecap="round"/>\</svg>');
+  background-repeat: no-repeat, repeat;
+  background-position: right 0.7em top 50%, 0 0;
+  background-size: 0.65em auto, 100%;
+  -webkit-appearance: none;
+}
+
+.close_modal {
+  display: block;
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background: url('https://realibi.kz/file/904587.png');
+  background-size: cover;
+}
+
+@media screen and (max-width: 500px) {
+  .modal {
+    width: 400px;
+  }
+  .modal h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  .button {
+    margin: 15px 0 20px;
+  }
+  .input, .selectBlock {
+    width: 100%;
+  }
+  .check_off, .check_on {
+    font-size: 14px;
+    background-size: 21px 21px;
+  }
+}
+
+@media screen and (max-width: 410px) {
+  .modal {
+    width: 300px;
+    padding: 20px;
+  }
+  .check_off, .check_on {
+    font-size: 11px;
+    background-size: 17px 17px;
+  }
+}

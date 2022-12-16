@@ -1,0 +1,116 @@
+@font-face {
+  font-family: "Noto Sans Regular";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Medium";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Bold";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Regular";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Medium";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Bold";
+  src: url("../../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+}
+
+.container {
+  background: linear-gradient(180deg, #7B4397 0%, #B41D1C 100%);
+  padding: 40px;
+  border-radius: 32px;
+  margin: 5%;
+  position: relative;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  overflow-x: scroll;
+}
+
+.title {
+  padding: 10px;
+  padding-right: 50px;
+  background: url(https://realibi.kz/file/98476.png) no-repeat;
+  background-size: 38px 30px;
+  font-size: 27px;
+  font-family: "Muller Bold";
+  background-position: right;
+  color: #fff;
+}
+
+.days_container {
+  display: flex;
+  margin-top: 40px;
+  margin-bottom: 32px;
+}
+
+.day_present, .day_heart {
+  position: relative;
+  background: #fff;
+  border-radius: 32px;
+  padding: 30px;
+  min-width: 300px;
+}
+
+.day_present {
+  margin-right: 40px;
+}
+
+.day_present_title {
+  color: #1E2432;
+  padding: 16px 28px;
+  background: #FDCE1D;
+  border-radius: 32px;
+  font-size: 20px;
+  line-height: 150%;
+  font-family: "Muller Regular";
+}
+
+.day_present_text {
+  color: #1E2432;
+  font-size: 16px;
+  line-height: 150%;
+  font-family: "Noto Sans Regular";
+  margin: 40px 0;
+}
+
+.day_present_img {
+  width: 100%;
+}
+
+.day_present_icon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 30px;
+}
+
+.promise {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 16px;
+  line-height: 150%;
+  font-family: "Noto Sans Medium";
+  color: #FFFFFF;
+}
+
+.bg_line {
+  background: url(https://realibi.kz/file/950615.png);
+  background: url(https://realibi.kz/file/950615.png);
+  width: 100%;
+  background-size: 103%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}

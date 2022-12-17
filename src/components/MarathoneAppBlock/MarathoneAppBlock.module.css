@@ -198,8 +198,33 @@
 .NY{
   width: 464px;
   height: 560px;
+  background-image: url("https://realibi.kz/file/696541.png");
+  background-size: cover;
 }
 
+@media screen and (max-width: 1000px){
+  .fullFormContent{
+    flex-direction: column;
+    width: 95%
+  }
+  .leftFormContent{
+    margin: 40px;
+    text-align: center;
+    align-items: center;
+  }
+  .rightFormContent{
+    margin: 40px;
+    text-align: center;
+    align-items: center;
+  }
+  .leftFormContent span{
+    display: block;
+  }
+  .NY{
+    width: 100% !important;
+    height: 377px;
+  }
+}
 /* @media screen and (max-width: 490px) {
   .container {
     padding: 80px 20px;

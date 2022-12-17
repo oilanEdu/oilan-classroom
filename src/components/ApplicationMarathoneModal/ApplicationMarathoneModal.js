@@ -83,9 +83,9 @@ const ApplicationMarathoneModal = ({showSend, handleShowSend, onClose}) => {
       const ticketData = {
         fullname: fullname,
         phone: phone,
-        course_id: 1,
+        marathone_id: 1,
         connection: connection === 0 ? "Звонок" : "Whatsapp",
-        courseName: "Новогодний марафон",
+        marathone_name: "Новогодний марафон",
         teacherName: "Уразкенова Зауре Идрисовна"
       }
       setFullname("");

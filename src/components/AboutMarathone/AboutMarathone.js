@@ -34,7 +34,7 @@ const AboutMarathone = ({marathone}) => {
         <div className={styles.santa_block_text}>
           <p className={styles.santa_block_text_title}>Бесплатный 3-х дневный</p>
           <p className={styles.santa_block_text_bold}>Новогодний марафон</p>
-          <p className={styles.santa_block_text_subtitle}>Старт уже 20 декабря!</p> 
+          <p className={styles.santa_block_text_subtitle}>Старт уже 26 декабря!</p> 
           <p className={styles.santa_block_text_subtitle}>Оставь заявку и прими участие.</p>
         </div>
       </div>

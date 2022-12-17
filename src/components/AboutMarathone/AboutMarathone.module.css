@@ -156,3 +156,47 @@
   font-size: 16px;
   line-height: 150%;
 }
+
+@media screen and (max-width: 1000px){
+  .who_suits {
+    flex-direction: column;
+  }
+
+  .who_suits_img {
+    max-width: 300px;
+  }
+
+  .who_suits_img img { 
+    max-width: 100%;
+  }
+
+  .who_suits_text {
+    width: 100%;
+    text-align: justify;
+    padding: 0px;
+  }
+
+  .who_suits_text h1 {
+    margin-top: 10px;
+  }
+
+  .who_suits_text p {
+    font-family: "Noto Sans Regular";
+    font-size: 16px;
+    line-height: 150%;
+  }
+  .about_marathone {
+    flex-direction: column-reverse;
+    margin-top: 290px;
+  }
+  .santa_block{
+    max-width: 350px;
+  }
+  .santa_block_text{
+    right: 5px;
+  }
+  .info_block{
+    width: 95%;
+    margin-top: 10px;
+  }
+}

@@ -226,7 +226,7 @@ const MarathoneAppBlock = ({ marathone }) => {
         </form>
       </div>
       <div className={styles.rightFormContent}>
-        <Image src="https://realibi.kz/file/696541.png" className={styles.NY}/>
+        <div className={styles.NY}/>
       </div>
     </div>
   </div>

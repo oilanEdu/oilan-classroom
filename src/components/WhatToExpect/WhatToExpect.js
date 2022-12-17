@@ -3,7 +3,7 @@ import styles from "./WhatToExpect.module.css";
 const WhatToExpect = () => {
   return <div className={styles.container}>
     <div className={styles.content}>
-      <span className={styles.title}>Что тебя ждет на марафоне 20 по 22 декабря?</span>
+      <span className={styles.title}>Что тебя ждет на марафоне 26 по 28 декабря?</span>
 
       <div className={styles.days_container}>
         <div className={styles.day_present}>

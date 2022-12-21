@@ -300,6 +300,9 @@
   .ny_block {
     background-position: -100px;
   }
+  .container {
+    margin: 0px;
+  }
 }
 
 @media screen and (max-width: 390px){

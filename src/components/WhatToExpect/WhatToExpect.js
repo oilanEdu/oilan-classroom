@@ -2,9 +2,8 @@ import styles from "./WhatToExpect.module.css";
 
 const WhatToExpect = () => {
   return <div className={styles.container}>
+    <span className={styles.title}>Что тебя ждет на марафоне 26 по 28 декабря?</span>
     <div className={styles.content}>
-      <span className={styles.title}>Что тебя ждет на марафоне 26 по 28 декабря?</span>
-
       <div className={styles.days_container}>
         <div className={styles.day_present}>
           <span className={styles.day_present_title}>1 день</span>
@@ -25,8 +24,8 @@ const WhatToExpect = () => {
           <img className={styles.day_present_icon} src="https://realibi.kz/file/953588.png" />
         </div>
       </div>
-      <span className={styles.promise}>Вы сможете выучить более 100* слов на казахском языке</span>
     </div>
+    <span className={styles.promise}>Вы сможете выучить более 100* слов на казахском языке</span>
     <div className={styles.bg_line}></div>
   </div>
 };

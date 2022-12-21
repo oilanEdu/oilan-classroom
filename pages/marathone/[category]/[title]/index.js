@@ -33,8 +33,8 @@ function Marathone(props) {
         <HeaderMarathone  white={true} />
         <AboutMarathone marathone={marathone} />
         <WhatToExpect />
-        <TrainingWithUs />
         <AboutMarathoneTeacher />
+        <TrainingWithUs />
         <MarathoneAppBlock marathone={marathone} />
         <Footer />
       </div>

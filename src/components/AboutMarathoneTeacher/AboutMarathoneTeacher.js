@@ -57,13 +57,13 @@ export default function AboutMarathoneTeacher(props) {
       <SuccessfullyModal show={showSuccess} onClickNext={handleShowSuccess}/>
       <ApplicationModal showSend={showSend} handleShowSend={handleShowSend} onClose={closeHandler} course={props?.course} teacherByCourse={props?.teacherByCourse}/>
       <div className={styles.mainInfo}>
-        <h1>ПРЕПОДАВАТЕЛЬ КУРСА</h1>
+        <h1>ПРЕПОДАВАТЕЛЬ</h1>
         <div className={styles.previewBlock}>
           <div className={styles.logoBlock}>
             <Image src="https://realibi.kz/file/188127.png" className={styles.imgTeacher}/>
           </div>
           <div className={styles.infoBlock}>
-            <h2>Преподаватель курса</h2>
+            {/* <h2>Преподаватель курса</h2> */}
             <h3>Зауре Уразкенова</h3>
             <p>
               Выпускница ПГУ им С.Торайгырова. Использует авторскую эффективную программу обучения. Работая над улучшением уровня знаний учащихся, закрытием пробелов в знаниях, объяснением школьных программы и улучшению успеваемости учащихся, подготовкой для участия в олимпиадах и конкурсах, в том числе международных. Большой опыт работы с детьми и взрослыми.

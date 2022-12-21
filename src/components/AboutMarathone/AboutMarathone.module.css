@@ -31,7 +31,7 @@
 }
 
 .info_block {
-  width: 40%;
+  width: 36%;
 }
 
 .info_block span {
@@ -69,7 +69,7 @@
 }
 
 .santa_block {
-  width: 715px;
+  width: 60%;
   height: 420px;
   position: relative;
   border-radius: 32px;
@@ -108,7 +108,7 @@
   z-index: 2;
   width: 100%;
   height: 100%;
-  background: url(https://realibi.kz/file/620861.png);
+  background: url(https://realibi.kz/file/620861.png) no-repeat;
   background-size: 715px 420px;
   border-radius: 32px;
 }
@@ -132,7 +132,8 @@
 }
 
 .who_suits_img {
-  width: 600px;
+  width: 60%;
+  margin-right: 40px;
 }
 
 .who_suits_img img { 
@@ -160,43 +161,85 @@
 @media screen and (max-width: 1000px){
   .who_suits {
     flex-direction: column;
+    align-items: center;
   }
-
   .who_suits_img {
-    max-width: 300px;
+    width: 100%;
+    max-width: 600px;
+    margin-right: 0;
   }
-
-  .who_suits_img img { 
-    max-width: 100%;
-  }
-
   .who_suits_text {
     width: 100%;
-    text-align: justify;
-    padding: 0px;
+    max-width: 600px;
+    margin-top: 40px;
+    padding-right: 0;
   }
-
   .who_suits_text h1 {
-    margin-top: 10px;
+    font-size: 20px;
   }
-
-  .who_suits_text p {
-    font-family: "Noto Sans Regular";
+  .santa_block_text_bold {
+    font-size: 24px;
+  }
+  .santa_block_text_subtitle {
     font-size: 16px;
-    line-height: 150%;
   }
+  .info_block h1 {
+    font-size: 20px;
+  }
+  .santa_block {
+    width: 56%;
+  }
+  .info_block {
+    width: 43%;
+  }
+}
+
+@media screen and (max-width: 768px){
   .about_marathone {
     flex-direction: column-reverse;
-    margin-top: 290px;
+    margin: 35px 5% 60px;
   }
-  .santa_block{
-    max-width: 350px;
+  .santa_block {
+    width: 100%;
   }
-  .santa_block_text{
-    right: 5px;
+  .info_block {
+    margin-top: 40px;
+    width: 100%;
   }
-  .info_block{
-    width: 95%;
-    margin-top: 10px;
+  .santa_bg {
+    background-position: -66px;
+  }
+  .santa_block_text_bold {
+    font-size: 32px;
+  }
+  .santa_block_text_subtitle {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 480px){
+  .who_suits {
+    padding: 40px 20px;
+  }
+  .santa_block_text_title, .santa_block_text_subtitle {
+    font-size: 13px;
+  }
+  .santa_block_text_bold {
+    font-size: 20px;
+  }
+  .who_suits_text p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 390px){
+  .info_block h1 {
+    font-size: 18px;
+  }
+  .info_block p {
+    font-size: 14px;
+  }
+  .who_suits_text h1 {
+    font-size: 18px;
   }
 }

@@ -10,7 +10,7 @@ const TrainingWithUs = () => {
           <p className={styles.block_text}>Новый год - это пора сюрпризов, поэтому активных участников ждут исключительные подарки.</p>
         </div>
         
-        <img className={styles.first_block_img} src="https://realibi.kz/file/301012.png"/>
+        <div className={styles.first_block_img}></div>
       </div>
       <div className={styles.second_block}>
         <p className={styles.block_title}>😄 Бонус </p>

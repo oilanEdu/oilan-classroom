@@ -70,7 +70,10 @@
   right: 0;
   z-index: 1;
   object-fit: cover;
-  border-radius: 32px
+  border-radius: 32px;
+  background: url(https://realibi.kz/file/301012.png) no-repeat;
+  background-size: cover;
+  background-position: 100%;
 }
 
 .first_block_content {
@@ -105,6 +108,12 @@
   grid-area: third;
 }
 
+@media screen and (max-width: 1200px) {
+  .block_text {
+    padding-right: 100px;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .blocks {
     grid-template-areas: "first" "second" "third";
@@ -117,5 +126,32 @@
   }
   .first_block .block_text {
     padding-right: 181px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .first_block .block_text {
+    padding-right: 30px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .first_block_img {
+    background-position: 96% 63px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .first_block, .second_block, .third_block {
+    padding: 20px;
+  }
+  .first_block {
+    padding-bottom: 157px;
+  }
+  .block_text {
+    font-size: 14px;
+  }
+  .block_title {
+    font-size: 20px;
   }
 }

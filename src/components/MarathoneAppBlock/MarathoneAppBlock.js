@@ -217,16 +217,18 @@ const MarathoneAppBlock = ({ marathone }) => {
             >
               Оставить заявку
             </button>
-            <span 
-              style={{maxWidth: "375px", marginLeft: "10px", marginRight: "50px"}}
-            >
+            <span>
               Нажимая на кнопку "Оставить заявку", Вы принимаете <Link href="/offer"><a>условия публичной оферты</a></Link>
             </span>
           </div>
         </form>
       </div>
       <div className={styles.rightFormContent}>
-        <div className={styles.NY}/>
+        <div className={styles.ny_block}>
+          <h3 className={styles.app_ny_block_title}>Новогодний марафон</h3>
+          <p className={styles.app_ny_block_subtitle}>Близится новый год, и все подводят итоги. Вы успеете включить еще одну победу, научившись говорить на казахском в марафоне от Oilan io.</p>
+        </div>
+        
       </div>
     </div>
   </div>

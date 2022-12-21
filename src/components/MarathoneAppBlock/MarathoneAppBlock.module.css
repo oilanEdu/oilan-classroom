@@ -28,7 +28,10 @@
   flex-direction: column;
   align-items: center;
   background:#F1FAFF;
-  padding: 80px 0;
+  padding: 60px 50px;
+  margin: 5%;
+  background: #fff;
+  border-radius: 32px;
 }
 
 .container h1 {
@@ -48,7 +51,14 @@
 }
 
 .button_container {
-  
+  display: flex;
+  align-items: center
+
+}
+.button_container span {
+  width: 40%;
+  margin-left: 10px;
+  margin-right: 24px;
 }
 
 .input_container {
@@ -57,6 +67,7 @@
   padding: 10px 16px;
   border: 1px solid #A2A7B2;
   border-radius: 8px;
+  background: #F7F7F5;
 }
 
 .button {
@@ -83,6 +94,7 @@
   font-size: 16px;
   color: #fff;
   margin: 32px 0 20px;
+  width: 40%;
 }
 @keyframes gradient_animation {
 0% {
@@ -176,6 +188,7 @@
   font-size: 16px;
   border-radius: 4px;
   color: #757575;
+  background: #F7F7F5;
 }
 
 .fullFormContent{
@@ -184,91 +197,116 @@
   justify-content: space-between;
 }
 
+.ny_block {
+  background: url(https://realibi.kz/file/27399.png) no-repeat;
+  height: 560px;
+  width: 100%;
+  background-size: cover;
+  border-radius: 32px;
+}
+
+.app_ny_block_title {
+  font-size: 32px;
+  line-height: 150%;
+  color: #fff;
+  font-family: "Muller Medium";
+  padding: 30px 30px 0;
+}
+
+.app_ny_block_subtitle {
+  font-size: 16px;
+  line-height: 150%;
+  color: #fff;
+  font-family: "Noto Sans Regular";
+  padding: 0px 30px 0;
+}
+
 .leftFormContent{
   display: flex;
   flex-direction: column;
-  /*width: 50%;*/
+  width: 56%;
 }
 
 .rightFormContent{
   display: flex;
-  /*width: 50%;*/
+  background: linear-gradient(180deg, #7B4397 0%, #B41D1C 100%);
+  border-radius: 32px;
+  max-width: 464px;
 }
 
-.NY{
+/* .NY{
   width: 464px;
   height: 560px;
   background-image: url("https://realibi.kz/file/696541.png");
   background-size: cover;
-}
+} */
 
 @media screen and (max-width: 1000px){
   .fullFormContent{
     flex-direction: column;
+    align-items: center;
     width: 95%
+  }
+  .input_container {
+    width: 100%;
+  }
+  .selectBlock {
+    width: 100%;
+  }
+  .form_container {
+    max-width: 400px;
   }
   .leftFormContent{
     margin: 40px;
     text-align: center;
     align-items: center;
-  }
-  .rightFormContent{
-    margin: 40px;
-    text-align: center;
-    align-items: center;
+    width: auto;
   }
   .leftFormContent span{
     display: block;
   }
-  .NY{
-    width: 100% !important;
-    height: 377px;
+  .button_container {
+    flex-direction: column; 
   }
-}
-/* @media screen and (max-width: 490px) {
-  .container {
-    padding: 80px 20px;
-  }
-  .container h1 {
-    font-size: 16px;
-  }
-  .subtitle {
-    font-size: 13px;
-  }
-  .check_off, .check_on {
-    padding: 10px;
-    padding-left: 36px;
-    font-size: 14px;
-  }
-  .modal {
-    width: 355px;
-  }
-  .modal p {
-    padding: 28px 0px;
-  }
-}
-
-@media screen and (max-width: 440px) {
-  .input_container input {
+  .button_container button, .button_container span { 
     width: 100%;
   }
-} */
-/* 
-@media screen and (max-width: 390px) {
-  .container {
-    padding: 80px 10px;
+}
+
+
+@media screen and (max-width: 768px){
+  .leftFormContent {
+    margin: 0;
+    margin-bottom: 40px;
   }
-  .subtitle, .check_off, .check_on {
-    font-size: 12px;
+  .container {
+    padding: 60px 20px;
   }
 }
 
-@media screen and (max-width: 360px) {
-  .modal {
-    width: 280px;
-    padding: 20px;
+@media screen and (max-width: 480px){
+  .app_ny_block_title {
+    font-size: 27px;
   }
-  .modal h3 {
-    font-size: 18px;
+  .app_ny_block_subtitle {
+    font-size: 14px;
   }
-} */
+  .container {
+    background: none;
+  }
+}
+
+@media screen and (max-width: 450px){
+  .ny_block {
+    background-position: -100px;
+  }
+}
+
+@media screen and (max-width: 390px){
+  .app_ny_block_title {
+    padding: 30px 10px 0;
+  }
+  .app_ny_block_subtitle {
+    padding: 0px 10px;
+  }
+}

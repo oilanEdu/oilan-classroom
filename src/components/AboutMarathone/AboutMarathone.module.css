@@ -129,6 +129,7 @@
   background: #fff;
   border-radius: 32px;
   justify-content: space-between;
+  align-items: center;
 }
 
 .who_suits_img {
@@ -241,5 +242,9 @@
   }
   .who_suits_text h1 {
     font-size: 18px;
+  }
+  .santa_bg {
+    background: url(https://realibi.kz/file/759934.png);
+    background-size: cover;
   }
 }

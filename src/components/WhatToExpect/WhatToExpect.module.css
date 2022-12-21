@@ -46,6 +46,8 @@
   font-family: "Muller Bold";
   background-position: right;
   color: #fff;
+  position: relative;
+  z-index: 2;
 }
 
 .days_container {
@@ -102,6 +104,8 @@
   line-height: 150%;
   font-family: "Noto Sans Medium";
   color: #FFFFFF;
+  position: relative;
+  z-index: 2;
 }
 
 .bg_line {

@@ -194,7 +194,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
         <h2>Преподаватель курса</h2>
         
         <p>{student[0]?.teach_surname} {student[0]?.teach_name}</p>
-        <p>Занятие №{closerLesson.number} {closerLesson.title}</p>
+        {/* <p>Занятие №{closerLesson.number} {closerLesson.title}</p> */}
         <div>
           <button
           onClick={() => {

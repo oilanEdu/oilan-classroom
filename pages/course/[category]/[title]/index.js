@@ -9,9 +9,13 @@ import globals from "../../../../src/globals";
 import axios from "axios";
 import Footer from "../../../../src/components/Footer/Footer";
 import Header from "../../../../src/components/Header/Header";
+import Comments from "../../../../src/components/Comments/Comments";
 
 function Title(props) {
     const [course, setCourse] = useState()
+    useEffect(() => {
+        console.log(course, "course");
+    }, [course])
     const [courseTargets, setCourseTargets] = useState()
     const [courseInfoBlocks, setCourseInfoBlocks] = useState()
     const [courseSkills, setCourseSkills] = useState()
@@ -69,6 +73,7 @@ function Title(props) {
                     program={course?.program} 
                     courseStages={courseStages}
                 />
+                {course?.url === "EnglishForBeginner" ? <Comments /> : ''}
                 <CoursePrice course={course}/>
                 <ApplicationBlock 
                     course={course} 

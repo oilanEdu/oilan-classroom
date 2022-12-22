@@ -9,6 +9,7 @@ import WhatToExpect from "../../../../src/components/WhatToExpect/WhatToExpect";
 import TrainingWithUs from "../../../../src/components/TrainingWithUs/TrainingWithUs";
 import MarathoneAppBlock from "../../../../src/components/MarathoneAppBlock/MarathoneAppBlock";
 import AboutMarathoneTeacher from "../../../../src/components/AboutMarathoneTeacher/AboutMarathoneTeacher";
+import Comments from "../../../../src/components/Comments/Comments";
 
 function Marathone(props) {
   const router = useRouter();

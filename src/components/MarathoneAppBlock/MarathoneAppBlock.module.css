@@ -179,16 +179,61 @@
   align-items: flex-start;
 }
 
-.selectBlock {
+.connection_block_show {
   width: 400px;
   margin-top: 12px;
   padding: 10px 16px;
   border: 1px solid #A2A7B2;
   font-family: "Noto Sans Regular";
   font-size: 16px;
-  border-radius: 4px;
+  border-radius: 8px;
   color: #757575;
+  background: url(https://realibi.kz/file/635945.png) no-repeat #F7F7F5;
+  background-size: 16px;
+  background-position: 96%;
+  text-align: start;
+}
+
+.connection_block_hide {
+  width: 400px;
+  margin-top: 12px;
+  padding: 10px 16px;
+  border: 1px solid #A2A7B2;
+  font-family: "Noto Sans Regular";
+  font-size: 16px;
+  border-radius: 8px;
+  color: #757575;
+  background: url(https://realibi.kz/file/618464.png) no-repeat #F7F7F5;
+  background-size: 16px;
+  background-position: 96%;
+  text-align: start;
+}
+
+.connectionHide {
+  background: url(https://realibi.kz/file/618464.png) no-repeat;
+  background-position: right 50%;
+  background-size: 12px;
+  padding: 0 257px 0 0;
+}
+
+.connectionShow {
+  background: url(https://realibi.kz/file/635945.png) no-repeat;
+  background-position: right 50%;
+  background-size: 12px;
+  padding: 0 257px 0 0;
+}
+
+.connection_block_options {
+  position: absolute;
+  width: 400px;
+}
+
+.connection_block_options div {
+  margin: 0;
+  padding: 15px;
   background: #F7F7F5;
+  border-bottom: 1px solid;
+  text-align: start;
 }
 
 .fullFormContent{
@@ -250,7 +295,10 @@
   .input_container {
     width: 100%;
   }
-  .selectBlock {
+  .connection_block_show, .connection_block_hide {
+    width: 100%;
+  }
+  .connection_block_options {
     width: 100%;
   }
   .form_container {

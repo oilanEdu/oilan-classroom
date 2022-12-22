@@ -12,8 +12,8 @@ const MarathoneAppBlock = ({ marathone }) => {
   const [showCaptcha, setShowCaptcha] = useState(false)
   const [insertCaptchaText, setInsertCaptchaText] = useState('Введите текст с картинки')
   const [captchaText, setCaptchaText] = useState("");
-  const [connection, setConnection] = useState("");
-
+  const [connection, setConnection] = useState("Способ связи");
+  const [selectConnectShow, setSelectConnectShow] = useState(false);
   const [check, setCheck] = useState(false);
  
   const [fullname, setFullname] = useState("");
@@ -78,7 +78,7 @@ const MarathoneAppBlock = ({ marathone }) => {
       handlerOfProccessOfCaptcha(3)
       setProccessOfCaptcha(3)
       setFullname("");
-      setConnection("");
+      setConnection("Способ связи");
       setPhone("");
       setCheck(false);
       setShowCaptcha(false);
@@ -169,20 +169,35 @@ const MarathoneAppBlock = ({ marathone }) => {
               globals.checkPhoneMask(e.target.value, setPhone);
             }}
           />
-          <select 
-            className={styles.selectBlock} 
-            value={connection} 
-            onChange={e => {
-              if (phone.length > 10 && fullname.length > 3) {
-                setShowCaptcha(true)
-              }
-              setConnection(e.target.value)
-            }}
-          >
-            <option value="3">Способ связи</option>
-            <option value="0">Звонок</option>
-            <option value="1">Whatsapp</option>
-          </select>
+          <div style={{position: "relative"}}>
+            <div 
+              onClick={() => setSelectConnectShow(!selectConnectShow)}
+              className={selectConnectShow ? styles.connection_block_show : styles.connection_block_hide}
+            >
+              {connection}
+            </div>
+            <div 
+              style={{display: selectConnectShow ? "block" : "none"}}
+              className={styles.connection_block_options}
+            >
+              <div
+                onClick={() => {
+                  setConnection("Звонок");
+                  setSelectConnectShow(!selectConnectShow);
+                }}
+              >
+                Звонок
+              </div>
+              <div 
+                onClick={() => {
+                  setConnection("Whatsapp");
+                  setSelectConnectShow(!selectConnectShow);
+                }}
+              >
+                Whatsapp
+              </div>
+            </div>
+          </div>
           <CaptchaComponent
             insertCaptchaText={insertCaptchaText}
             setCaptchaText={setCaptchaText}

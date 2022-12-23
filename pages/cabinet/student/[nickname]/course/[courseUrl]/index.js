@@ -29,18 +29,12 @@ const StudentCourse = (props) => {
         setDataLoaded(true)
       });
     });
-
-    // const lessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo?couse_id=${router.query.courseId}&program_id=${programId}`);
     const scoresForAnswers = await axios.get(`${globals.productionServerDomain}/getStudentScores?student_nick=${nickname}&course_url=${courseUrl}`);
 
-    // await setStudent(response.data);
-    // await setLesson(lessons.data[0]);
-    // await setLessons(lessons.data);
     await setScores(scoresForAnswers.data); 
   };
 
   useEffect(() => {
-    // fetchData()
     if (!dataLoaded || !student || !lessons || !lesson || !scores){
       fetchData()
     };

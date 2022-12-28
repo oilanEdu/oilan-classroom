@@ -97,19 +97,28 @@ export default function useWebRTC(roomID) {
 
   useEffect(() => {
     async function setRemoteMedia({peerID, sessionDescription: remoteDescription}) {
-      await peerConnections.current[peerID]?.setRemoteDescription(
-        new RTCSessionDescription(remoteDescription)
-      );
+      try {
+        await peerConnections.current[peerID].setRemoteDescription(
+          new RTCSessionDescription(remoteDescription)
+        );
+      } catch (error) {
+        console.error(error);
+      }
 
       if (remoteDescription.type === 'offer') {
-        const answer = await peerConnections.current[peerID].createAnswer();
+        if (peerConnections.current[peerID].signalingState === 'have-remote-offer' || peerConnections.current[peerID].signalingState === 'have-local-pranswer') {
+          try {
+            const answer = await peerConnections.current[peerID].createAnswer();
+            await peerConnections.current[peerID].setLocalDescription(answer);
 
-        await peerConnections.current[peerID].setLocalDescription(answer);
-
-        socket.emit(ACTIONS.RELAY_SDP, {
-          peerID,
-          sessionDescription: answer,
-        });
+            socket.emit(ACTIONS.RELAY_SDP, {
+              peerID,
+              sessionDescription: answer,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        }
       }
     }
 

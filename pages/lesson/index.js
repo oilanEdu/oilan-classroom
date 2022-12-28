@@ -8,9 +8,9 @@ import Footer from "../../src/components/Footer/Footer";
 import HeaderTeacher from "../../src/components/HeaderTeacher/HeaderTeacher";
 import classnames from 'classnames';
 import TeacherSide from "../../src/components/TeacherSide/TeacherSide";
-// import socket from "../../src/socket";
-// import ACTIONS from "../../src/socket/actions";
-// import useWebRTC, {LOCAL_VIDEO} from '../../src/hooks/useWebRTC';
+import socket from "../../src/socket";
+import ACTIONS from "../../src/socket/actions";
+import useWebRTC, {LOCAL_VIDEO} from '../../src/hooks/useWebRTC';
 // import JitsiMeet, { JitsiMeetView } from 'react-jitsi';
 import GetToken from '../../src/utils/getToken';
 import {selectIsConnectedToRoom, useHMSStore, useHMSActions} from '@100mslive/react-sdk'
@@ -63,29 +63,29 @@ const Lesson = (props) => {
     const [selectedExerciseCorrectAnswer, setSelectedExerciseCorrectAnswer] = useState('')
     const [answer, setAnswer] = useState([]) 
     const [teacherComment, setTeacherComment] = useState('')
-    // const {clients, provideMediaRef} = useWebRTC(room)
-    // const rootNode = useRef();
+    const {clients, provideMediaRef} = useWebRTC(room)
+    const rootNode = useRef();
     
-    // console.log('teacherUrl',teacherUrl)
-    // console.log('room',room)
-    // console.log('clients',clients)
+    console.log('teacherUrl',teacherUrl)
+    console.log('room',room)
+    console.log('clients',clients)
 
-    // useWebRTC(room)
+    useWebRTC(room)
 
     useEffect(() => {
         loadBaseData() 
-        // if (role == 'teacher'){
-        //   loadTeacherData()
-        // }
-        // if (role == 'student'){
-        //   loadStudentData()
-        // }
+        if (role == 'teacher'){
+          loadTeacherData()
+        }
+        if (role == 'student'){
+          loadStudentData()
+        }
         console.log('PEERS!', peers)
-        // socket.on(ACTIONS.SHARE_ROOMS, ({rooms = []} = {}) => {
-        //     if (rootNode.current){
-        //         updateRooms(rooms);
-        //     }
-        // }) 
+        socket.on(ACTIONS.SHARE_ROOMS, ({rooms = []} = {}) => {
+            if (rootNode.current){
+                updateRooms(rooms);
+            }
+        }) 
     }, []) 
 
     const loadBaseData = async () => { 
@@ -102,116 +102,116 @@ const Lesson = (props) => {
         console.log('teacher',teacher) 
     }
 
-  //   const loadTeacherData = async () => {
-  //     let data = room
-  //     let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data)
-  //       setStudent(getStudentByLessonKey['data'][0])
-  //       setSelectedStudentId(student.student_id)
-  //       console.log('student',student)  
-  //   }
+    const loadTeacherData = async () => {
+      let data = room
+      let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data)
+        setStudent(getStudentByLessonKey['data'][0])
+        setSelectedStudentId(student.student_id)
+        console.log('student',student)  
+    }
 
-  //   const loadStudentData = async () => {
-  //     let data = room
-  //     let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data)
-  //       setTeacher(getTeacherByLessonKey['data'][0])
-  //       console.log('teacher',teacher)
-  //   }
+    const loadStudentData = async () => {
+      let data = room
+      let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data)
+        setTeacher(getTeacherByLessonKey['data'][0])
+        console.log('teacher',teacher)
+    }
 
-  //   const getLessonExercises = async (selectedLesson) => {
-  //       let exer_number = 0
-  //       let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.lesson_id).then(res => {
-  //           res.data.forEach(async exercise => {
-  //               let studentId = student.student_id
-  //               let exerciseId = exercise.id
-  //               let data = {
-  //                 studentId,
-  //                 exerciseId
-  //               };
-  //               console.log('data',data)
-  //               let exerciseAnswer = axios({ 
-  //                 method: "post",
-  //                 url: `${globals.productionServerDomain}/getAnswersByStudExId`,
-  //                 data: data,
-  //               })
-  //                 .then(function (res) {
-  //                   if (res.data[0]){
-  //                       console.log('EXE', res.data[0].status)
-  //                       exercise.answer_status = res.data[0].status
-  //                   }else{ 
-  //                       console.log('ответов нет')
-  //                   }
-  //                 })
-  //                 .catch((err) => {
-  //                   alert("Произошла ошибка");
-  //                 });
-  //               exer_number += 1
-  //               exercise.exer_number = exer_number
-  //               setNumberOfEx(exer_number)
-  //               setIsLoaded(true)
-  //           })
-  //           setExercises(res.data) 
-  //           console.log('exercises', exercises)
-  //       }
-  //       ) 
-  //   }
+    const getLessonExercises = async (selectedLesson) => {
+        let exer_number = 0
+        let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.lesson_id).then(res => {
+            res.data.forEach(async exercise => {
+                let studentId = student.student_id
+                let exerciseId = exercise.id
+                let data = {
+                  studentId,
+                  exerciseId
+                };
+                console.log('data',data)
+                let exerciseAnswer = axios({ 
+                  method: "post",
+                  url: `${globals.productionServerDomain}/getAnswersByStudExId`,
+                  data: data,
+                })
+                  .then(function (res) {
+                    if (res.data[0]){
+                        console.log('EXE', res.data[0].status)
+                        exercise.answer_status = res.data[0].status
+                    }else{ 
+                        console.log('ответов нет')
+                    }
+                  })
+                  .catch((err) => {
+                    alert("Произошла ошибка");
+                  });
+                exer_number += 1
+                exercise.exer_number = exer_number
+                setNumberOfEx(exer_number)
+                setIsLoaded(true)
+            })
+            setExercises(res.data) 
+            console.log('exercises', exercises)
+        }
+        ) 
+    }
 
-  //   const getAnswer = async (studentId, exerciseId) => {
-  //       const data = {
-  //         studentId,
-  //         exerciseId
-  //       };
-  //       await axios({
-  //         method: "post",
-  //         url: `${globals.productionServerDomain}/getAnswersByStudExId`,
-  //         data: data,
-  //       })
-  //         .then(function (res) {
-  //           setAnswer(res.data[0])
-  //         })
-  //         .catch((err) => {
-  //           alert("Произошла ошибка");
-  //         });
-  //       console.log('answer', answer)
-  //   }
+    const getAnswer = async (studentId, exerciseId) => {
+        const data = {
+          studentId,
+          exerciseId
+        };
+        await axios({
+          method: "post",
+          url: `${globals.productionServerDomain}/getAnswersByStudExId`,
+          data: data,
+        })
+          .then(function (res) {
+            setAnswer(res.data[0])
+          })
+          .catch((err) => {
+            alert("Произошла ошибка");
+          });
+        console.log('answer', answer)
+    }
 
-  //   const updateAnswerStatus = async (id, status) => {
-  //   const data = {
-  //     id,
-  //     status
-  //   }; 
-  //   await axios({
-  //     method: "put",
-  //     url: `${globals.productionServerDomain}/updateAnswerStatus`,
-  //     data: data,
-  //   })
-  //     .then(function (res) {
-  //       alert("Отметка о выполнении изменена"); 
-  //     })
-  //     .catch((err) => {
-  //       alert("Произошла ошибка"); 
-  //         });
-  //   }
+    const updateAnswerStatus = async (id, status) => {
+    const data = {
+      id,
+      status
+    }; 
+    await axios({
+      method: "put",
+      url: `${globals.productionServerDomain}/updateAnswerStatus`,
+      data: data,
+    })
+      .then(function (res) {
+        alert("Отметка о выполнении изменена"); 
+      })
+      .catch((err) => {
+        alert("Произошла ошибка"); 
+          });
+    }
 
-  //   const updateAnswerComment = async (studentId, exerciseId, text, date) => {
-  //       const data = {
-  //         studentId, 
-  //         exerciseId, 
-  //         text,
-  //         date
-  //       }; 
+    const updateAnswerComment = async (studentId, exerciseId, text, date) => {
+        const data = {
+          studentId, 
+          exerciseId, 
+          text,
+          date
+        }; 
 
-  //       await axios({
-  //         method: "post",
-  //         url: `${globals.productionServerDomain}/createTeacherComment`,
-  //         data: data,
-  //       })
-  //         .then(function (res) {
-  //       alert("Комментарий отправлен"); 
-  //     })
-  //     .catch((err) => {
-  //       alert("Произошла ошибка"); 
-  //     });
-  // }
+        await axios({
+          method: "post",
+          url: `${globals.productionServerDomain}/createTeacherComment`,
+          data: data,
+        })
+          .then(function (res) {
+        alert("Комментарий отправлен"); 
+      })
+      .catch((err) => {
+        alert("Произошла ошибка"); 
+      });
+  }
   const localPeer = useHMSStore(selectLocalPeer);
   const peers = useHMSStore(selectPeers);
   const hmsActions = useHMSActions();
@@ -277,7 +277,7 @@ const Lesson = (props) => {
   return ( 
         <>
             <div style={{backgroundColor: "#f1faff", width: "    100vw"}} 
-              // ref={rootNode}
+              ref={rootNode}
             >
                 <HeaderTeacher white={true} teacher={teacher}/>
 
@@ -313,10 +313,10 @@ const Lesson = (props) => {
                                 </button>
                               </div>
                             </>
-                          ) : <JoinRoom handleSubmit={handleSubmit} userName={(role == "teacher")?"teacher":"student"}/>
+                          ) : <JoinRoom handleSubmit={handleSubmit} userName={(role == "teacher")?"teacher":"student"} roomName={room}/>
                       }
                     </div>
-                    {/*<div className={styles.translationBlock}>
+                    <div className={styles.translationBlock}>
                         {clients.map((clientID) => {
                             return (
                                 <div key={clientID} className={styles.personVideo}>
@@ -332,7 +332,7 @@ const Lesson = (props) => {
                                 </div>
                                 )
                         })}
-                    </div>*/}
+                    </div>
                     {/*<div>
                       {(role == 'teacher')?
                         (<>

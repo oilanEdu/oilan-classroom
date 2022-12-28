@@ -1,0 +1,205 @@
+.wrapper {
+    width: auto;
+    margin: 0 auto;
+    overflow-x: scroll;
+    max-width: 1200px;
+    
+    margin: 40px 100px 0;
+}
+.wrapper::-webkit-scrollbar {
+    display: none;
+}
+.title {
+    font-family: 'Muller Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 150%;
+    text-transform: uppercase;
+    color: #1E2432;
+    /* margin: 0px 100px 0; */
+}
+.commentsWrapper {
+    /* width: 1200px;
+    width: auto;
+    margin: 40px 100px 0; */
+    /* width: 100%; */
+    /* height: 360px;
+    gap: 20px;
+    overflow-x: scroll;
+    display: grid;
+    grid-template-columns: 1fr 1fr; */
+
+    /* width: 1955px; */
+    width: max-content;
+    /* width: auto; */
+    /* margin: 40px 100px 0; */
+    /* width: 100%; */
+    height: 360px;
+    grid-gap: 20px;
+    gap: 20px;
+    overflow-x: scroll;
+    display: flex;
+    /* grid-template-columns: 1fr 1fr; */
+    flex-direction: row;
+}
+.commentsWrapper::-webkit-scrollbar {
+    display: none;
+  }
+.commentsWrapper p {
+    margin-bottom: 10px;
+}
+.comment {
+    width: 820px;
+    height: auto;
+    background: #FFFFFF;
+    border-radius: 32px;
+    padding: 30px;
+    overflow-y: scroll;
+}
+.comment::-webkit-scrollbar {
+    display: none;
+}
+.wrapper1 {
+    display: flex;
+    gap: 10px;
+}
+.avatar {
+    width: 60px;
+height: 60px;
+border-radius: 50%
+}
+.wrapper2 {
+    display: flex;
+    flex-direction: column;
+}
+.wrapper3 {
+    display: flex;
+    gap: 5px;
+}
+.name {
+    color: #1E2432;
+    font-family: 'Noto Sans Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+}
+.date {
+    color: #737070;
+}
+.wrapper4 {
+    display: flex;
+    gap: 5px;
+}
+.subAbout {
+    color: #737070;
+    
+}
+.wrapper5 {
+    display: flex;
+    gap: 5px;
+}
+.rating {
+    color: #007AFF;
+}
+.stars {
+    gap: 4px;
+    display: flex;
+    padding-top: 5px;
+}
+.star {
+    width: 16px;
+    height: 16px;
+}
+
+@media (min-width: 900px) and (max-width: 1400px){
+    .commentsWrapper {
+        /* width: 1240px; */
+    }
+}
+@media (min-width: 900px) and (max-width: 1280px){
+    .commentsWrapper {
+        /* width: 1200px; */
+    }   
+}
+@media (min-width: 900px) and (max-width: 1000px){
+    .commentsWrapper {
+        /* width: 920px; */
+    }
+}
+@media (max-width: 768px){
+    .commentsWrapper {
+        /* width: 688px; */
+    }
+}
+@media (max-width: 390px){
+    .commentsWrapper {
+        /* width: 370px; */
+    }
+}
+@media (max-width: 360px){
+    .commentsWrapper {
+        /* width: 340px; */
+    }
+}
+
+  
+@media (max-width: 1000px){
+    /* .commentsWrapper {
+        width: 1000px;
+    } */
+    .comment {
+        width: 50vw;
+    }
+    .title {
+        margin: 0px 40px 0;
+    }
+    .wrapper {
+        margin: 40px 40px 0;
+    }
+}
+
+@media (max-width: 768px){
+    .comment {
+        /* width: 688px; */
+        width: 100vw;
+    }
+    .title {
+        margin: 0px 20px 0;
+        font-size: 18px;
+    }
+    .wrapper {
+        margin: 20px 20px 0;
+    }
+}
+
+@media (max-width: 390px){
+    .commentsWrapper p {
+        font-weight: 400;
+        font-size: 14px;
+    }
+    .comment {
+        /* width: 370px; */
+        width: 100vw;
+    }
+    .title {
+        margin: 10px;
+        font-size: 18px;
+    }
+    .wrapper {
+        margin: 0;
+    }
+}
+
+@media (max-width: 360px){
+    .comment {
+        /* width: 340px; */
+        width: 100vw;
+    }
+    .title {
+        margin: 0;
+    }
+    .wrapper {
+        margin: 0;
+    }
+}

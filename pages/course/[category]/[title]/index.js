@@ -9,7 +9,7 @@ import globals from "../../../../src/globals";
 import axios from "axios";
 import Footer from "../../../../src/components/Footer/Footer";
 import Header from "../../../../src/components/Header/Header";
-import Comments from "../../../../src/components/Comments/Comments";
+import CourseComments from "../../../../src/components/CourseComments/CourseComments";
 
 function Title(props) {
     const [course, setCourse] = useState()
@@ -73,7 +73,8 @@ function Title(props) {
                     program={course?.program} 
                     courseStages={courseStages}
                 />
-                {course?.url === "EnglishForBeginner" ? <Comments /> : ''}
+                {/* {course?.url === "EnglishForBeginner" ? <Comments /> : ''} */}
+                <CourseComments course={course}/>
                 <CoursePrice course={course}/>
                 <ApplicationBlock 
                     course={course} 

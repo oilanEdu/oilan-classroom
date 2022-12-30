@@ -53,7 +53,7 @@ return (
   <div className={styles.calendarBlock}>
     <Calendar 
       value={props.selectedDate} 
-      // minDate={new Date(2023, 0, 4)}
+      minDate={new Date(2023, 0, 4)}
       onChange={(date) => {
         props.setBusyHours('00:00')
         props.setSelectedBlock('00:00') 

@@ -68,7 +68,7 @@ return (
           <div 
             className={props.busyHours.includes(block)?styles.timeBlockUnselected:styles.timeBlockSelected}
             onClick={() => {
-              if (!busyHours.includes(block)){
+              if (!props.busyHours.includes(block)){
                 props.setSelectedBlock(block)
                 props.setOutputDate(new Date(props.selectedDate).toISOString().split('T')[0]+'T'+props.selectedBlock+':00.000Z')
                 console.log('OUTPUT_DATE', props.outputDate)

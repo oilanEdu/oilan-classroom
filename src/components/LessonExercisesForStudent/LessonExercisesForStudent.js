@@ -3,20 +3,21 @@ import styles from "./LessonExercisesForStudent.module.css";
 import axios from "axios";
 import globals from "../../globals";
 
-const LessonExercisesForStudent = ({exercises, student, bg}) => {
-  const [ active, setActive ] = useState(null);
+const LessonExercisesForStudent = ({exercises, student, bg, padding, brickBorder}) => {
+  const [ active, setActive ] = useState(0);
   const [ answer, setAnswer ] = useState('')
   const [ editMode, setEditMode ] = useState(false)
   const [ teacherComments, setTeacherComments ] = useState([])
-  const [ symbols, setSymbols ] = useState(250)
+  const [ symbols, setSymbols ] = useState(250);
+  console.log(padding);
 
-  console.log(exercises)
+  console.log("eeeeee", exercises)
   console.log(student)
   const openExer = e => setActive(+e.target.dataset.index);
   useEffect(() => {
     if (active != null) {
       let studentId = student
-      let exerciseId = exercises[active].id
+      let exerciseId = exercises[active]?.id
       let data = {
         studentId,
         exerciseId
@@ -100,13 +101,28 @@ const LessonExercisesForStudent = ({exercises, student, bg}) => {
     }
   }
 
-  return <div styles={{ backgroundColor: bg}} className={styles.container}>
+  return <div style={{ backgroundColor: bg, padding: padding}} className={styles.container}>
     <div className={styles.exercises}>
       <h3 className={styles.exercises_title}>Домашние задания</h3>
       {exercises.map((exer, i) => {
-        return <div className={exercises[active]?.id == exer.id?styles.blueBrickBorder:styles.whiteBrickBorder}>
+        return <div 
+          style={exercises[active]?.id == exer.id 
+            ? {} 
+            : {border: brickBorder}
+          }
+          className={exercises[active]?.id == exer.id 
+            ? styles.blueBrickBorder
+            : styles.whiteBrickBorder
+          } 
+        >
           <div 
-            className={exer.answer_status == 'correct'?styles.correctExercise:exer.answer_status == 'uncorrect'?styles.uncorrectExercise:styles.emptyExercise} 
+            className={
+              exer.answer_status == 'correct'
+              ? styles.correctExercise
+              : exer.answer_status == 'uncorrect'
+              ? styles.uncorrectExercise
+              : styles.emptyExercise
+            } 
             onClick={openExer}
             data-index={i}
           >

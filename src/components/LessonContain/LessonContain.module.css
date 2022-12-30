@@ -25,7 +25,7 @@
 
 .container {
   background-color: rgb(241, 250, 255);
-  padding: 40px 120px;
+  max-width: 715px;
 }
 
 .teach, .lesson {

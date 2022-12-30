@@ -112,6 +112,17 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   overflow-x: scroll;
+  padding-bottom: 10px;
+}
+
+.price_container::-webkit-scrollbar {
+  width: 5px;
+  height: 1px;
+}
+
+.price_container::-webkit-scrollbar-thumb {
+  background: #3A66D7;
+  border-radius: 8px;
 }
 
 .price {

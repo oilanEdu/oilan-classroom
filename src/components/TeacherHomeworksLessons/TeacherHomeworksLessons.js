@@ -6,84 +6,83 @@ import axios from "axios";
 import globals from "../../globals";
 
 const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer, setShowCheck, setSelectedExerciseId, setAnswer, setSelectedExerciseNumber, setSelectedExerciseText, setSelectedExerciseCorrectAnswer, getAnswer, selectedStudentId, selectedExerciseNumber, selectedExerciseText, selectedExerciseCorrectAnswer, updateAnswerStatus, updateAnswerComment, setIsDateAndTimeChanged}) => {
-    const [exercises, setExercises] = useState([])
-    const [teacherComment, setTeacherComment] = useState('')
-    const [exercises2, setExercises2] = useState([])
-    const [isLoaded, setIsLoaded] = useState(false)
-    const [isLoaded2, setIsLoaded2] = useState(false)
-    const [numberOfEx, setNumberOfEx] = useState(0)
-    const [ symbols, setSymbols ] = useState(250)
+  const [exercises, setExercises] = useState([])
+  const [teacherComment, setTeacherComment] = useState('')
+  const [exercises2, setExercises2] = useState([])
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded2, setIsLoaded2] = useState(false)
+  const [numberOfEx, setNumberOfEx] = useState(0)
+  const [ symbols, setSymbols ] = useState(250)
 
-    useEffect(() => {
-        console.log(lesson, "lessonPROPS");
-    }, [])
-    useEffect(() => {
-        setExercises2(exercises)
-        console.log("isLoaded", isLoaded);
-    }, [isLoaded])
-    useEffect(() => {
-        setExercises2(exercises)
-        console.log("isLoaded2", isLoaded2);
-    }, [isLoaded2])
-    useEffect(() => {
-        console.log("exercises2 changed", exercises2 );
-    }, [exercises2])
-    useEffect(() => {
-        console.log("numberOfEx", numberOfEx);
-    }, [numberOfEx])
+  useEffect(() => {
+    console.log(lesson, "lessonPROPS");
+  }, [])
+  useEffect(() => {
+    setExercises2(exercises)
+    console.log("isLoaded", isLoaded);
+  }, [isLoaded])
+  useEffect(() => {
+    setExercises2(exercises)
+    console.log("isLoaded2", isLoaded2);
+  }, [isLoaded2])
+  useEffect(() => {
+    console.log("exercises2 changed", exercises2 );
+  }, [exercises2])
+  useEffect(() => {
+    console.log("numberOfEx", numberOfEx);
+  }, [numberOfEx])
 
-    const onKeyDownHandler = (e) => {
-        if (e.keyCode === 8) {
-            if (symbols === 250) {
-
-            } else if (teacherComment?.length >= 0 || teacherComment !== "") {
-              setSymbols(symbols + 1)
-            }
-        } else {
-          if (teacherComment?.length < 250 && symbols !== 0) {
-            setSymbols(symbols - 1)
-          }
-        }
+  const onKeyDownHandler = (e) => {
+    if (e.keyCode === 8) {
+      if (symbols === 250) {} 
+      else if (teacherComment?.length >= 0 || teacherComment !== "") {
+        setSymbols(symbols + 1)
       }
-    
-    const getLessonExercises = async (selectedLesson) => {
-        let exer_number = 0
-        let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + selectedLesson).then(res => {
-            res.data.forEach(async exercise => {
-                let studentId = selectedStudentId
-                let exerciseId = exercise.id
-                let data = {
-                  studentId,
-                  exerciseId
-                };
-                console.log('data',data)
-                let exerciseAnswer = axios({ 
-                  method: "post",
-                  url: `${globals.productionServerDomain}/getAnswersByStudExId`,
-                  data: data,
-                })
-                  .then(function (res) {
-                    if (res.data[0]){
-                        console.log('EXEXEXEXE', res.data[0].status)
-                        exercise.answer_status = res.data[0].status
-                    }else{
-                        console.log('ответов нет')
-                    }
-                  })
-                  .catch((err) => {
-                    alert("Произошла ошибка");
-                  });
-                exer_number += 1
-                exercise.exer_number = exer_number
-                setNumberOfEx(exer_number)
-                setIsLoaded(true)
-            })
-            setExercises(res.data)
-            console.log('exercises', exercises)
-        }
-        )
-        setIsLoaded2(true)
+    } else {
+      if (teacherComment?.length < 250 && symbols !== 0) {
+        setSymbols(symbols - 1)
+      }
     }
+  }
+    
+  const getLessonExercises = async (selectedLesson) => {
+    let exer_number = 0
+    let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + selectedLesson).then(res => {
+      res.data.forEach(async exercise => {
+        let studentId = selectedStudentId
+        let exerciseId = exercise.id
+        let data = {
+          studentId,
+          exerciseId
+        };
+        console.log('data',data)
+        let exerciseAnswer = axios({ 
+          method: "post",
+          url: `${globals.productionServerDomain}/getAnswersByStudExId`,
+          data: data,
+        })
+        .then(function (res) {
+          if (res.data[0]) {
+            console.log('EXEXEXEXE', res.data[0].status)
+            exercise.answer_status = res.data[0].status
+          } else {
+            console.log('ответов нет')
+          }
+        })
+        .catch((err) => {
+          alert("Произошла ошибка");
+        });
+        exer_number += 1
+        exercise.exer_number = exer_number
+        setNumberOfEx(exer_number)
+        setIsLoaded(true)
+      })
+      setExercises(res.data)
+      console.log('exercises', exercises)
+    })
+    setIsLoaded2(true)
+  }
+  
     const getLessonExercises22 = async (selectedLesson) => {
         let exer_number = 0
         let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + selectedLesson).then(res => {

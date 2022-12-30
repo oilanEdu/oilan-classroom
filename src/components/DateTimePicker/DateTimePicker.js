@@ -48,6 +48,9 @@ const workWithDates = (date) => {
 useEffect(() => {
   workWithDates(props.selectedDate)
 }, [props.selectedDate])
+useEffect(() => {
+props.setOutputDate(new Date(props.selectedDate).toISOString().split('T')[0]+'T'+props.selectedBlock+':00.000Z')
+}, [props.selectedBlock])
 return (
 
   <div className={styles.calendarBlock}>
@@ -70,8 +73,9 @@ return (
             onClick={() => {
               if (!props.busyHours.includes(block)){
                 props.setSelectedBlock(block)
-                props.setOutputDate(new Date(props.selectedDate).toISOString().split('T')[0]+'T'+props.selectedBlock+':00.000Z')
+                //props.setOutputDate(new Date(props.selectedDate).toISOString().split('T')[0]+'T'+props.selectedBlock+':00.000Z')
                 console.log('OUTPUT_DATE', props.outputDate)
+
               }
             }}
           >

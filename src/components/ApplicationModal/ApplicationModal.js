@@ -6,6 +6,7 @@ import Backdrop from "../Backdrop/Backdrop";
 import { Image } from "react-bootstrap";
 import CaptchaComponent from "../Captcha/Captcha";
 import Link from "next/link";
+import DateTimePicker from "../DateTimePicker/DateTimePicker";
 
 const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByCourse}) => {
   const [check, setCheck] = useState(false);
@@ -23,8 +24,19 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
   const [proccessOfCaptcha, setProccessOfCaptcha] = useState(0)
   const [proccessOfCaptchaUrl, setProccessOfCaptchaUrl] = useState('https://realibi.kz/file/633881.png')
 
+  const [outputDate, setOutputDate] = useState("")
+  const [dates, setDates] = useState('')
+  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [selectedTime, setSelectedTime] = useState(null)
+  const [busyHours, setBusyHours] = useState(['08:00']);
+  const [selectedBlock, setSelectedBlock] = useState('08:00')
+
   useEffect(()=> {
     loadCaptcha()
+    loadDates() 
+    if (!dates){ 
+      loadDates()
+    }
     console.log("proccessOfCaptchaUrl", proccessOfCaptchaUrl)
   }, [])
   useEffect(() => {
@@ -38,8 +50,15 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
     setRandomizedCaptchaData(captcha2['data'])
   }
 
+  const loadDates = async () => { 
+    let id = course?.id
+    let dates = await axios.post(`${globals.productionServerDomain}/getDatesForApplication/` + id)
+    // console.log("DATES!", dates['data'])
+    setDates(dates['data'])
+  }
+
   const firstStepValidation = () =>  {
-    if (fullname.length < 3) {
+    if (fullname.length < 3) { 
       alert("Заполните все поля!");
       return false;
     } else if (phone.length < 16) {
@@ -86,7 +105,8 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
         course_id: course?.id,
         connection: connection === 0 ? "Звонок" : "Whatsapp",
         courseName: course?.title,
-        teacherName: teacherByCourse?.name + ' ' + teacherByCourse?.surname
+        teacherName: teacherByCourse?.name + ' ' + teacherByCourse?.surname,
+        outputDate: outputDate
       }
       setFullname("");
       setConnection("");
@@ -189,6 +209,19 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           <option value="0">Звонок</option>
           <option value="1">Whatsapp</option>
         </select>
+        <DateTimePicker 
+          disabledDates={dates} 
+          outputDate={outputDate} 
+          setOutputDate={setOutputDate}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          selectedTime={selectedTime}
+          setSelectedTime={setSelectedTime}
+          busyHours={busyHours} 
+          setBusyHours={setBusyHours}
+          selectedBlock={selectedBlock}
+          setSelectedBlock={setSelectedBlock}
+        />
         <CaptchaComponent
           insertCaptchaText={insertCaptchaText}
           setCaptchaText={setCaptchaText}

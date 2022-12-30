@@ -7,15 +7,16 @@ import SuccessfullyModal from "../SuccessfullyModal/SuccessfullyModal";
 import { Image } from "react-bootstrap";
 import CaptchaComponent from "../Captcha/Captcha";
 import Link from "next/link";
+import DateTimePicker from "../DateTimePicker/DateTimePicker";
 
-const ApplicationBlock = (props) => {
+const ApplicationBlock = (props) => { 
   const [showCaptcha, setShowCaptcha] = useState(false)
   const [insertCaptchaText, setInsertCaptchaText] = useState('Введите текст с картинки')
   const [captchaText, setCaptchaText] = useState("");
   const [connection, setConnection] = useState("");
-
+  const [outputDate, setOutputDate] = useState("")
   const [check, setCheck] = useState(false);
- 
+   
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -26,13 +27,38 @@ const ApplicationBlock = (props) => {
 
   const [proccessOfCaptcha, setProccessOfCaptcha] = useState(0)
   const [proccessOfCaptchaUrl, setProccessOfCaptchaUrl] = useState('https://realibi.kz/file/633881.png')
+ 
+  const [dates, setDates] = useState('')
+  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [selectedTime, setSelectedTime] = useState(null)
+  const [busyHours, setBusyHours] = useState(['08:00']);
+  const [selectedBlock, setSelectedBlock] = useState('08:00')
 
   useEffect(()=> {
-    loadCaptcha()
-  }, [])
+    loadCaptcha() 
+    // loadDates() 
+    // if (!dates){ 
+    //   loadDates()
+    // }
+    console.log('OUT IN MAIN', props)
+  }, []) 
+
+  useEffect(() => {
+    if (props.course.id) {
+      loadDates() 
+    }
+  }, [props.course.id])
+
   useEffect(() => {
     loadCaptchaWithId()
-  }, [randomizedCaptchaId])
+  }, [randomizedCaptchaId])  
+ 
+  const loadDates = async () => { 
+    let id = props?.course?.id
+    let dates = await axios.post(`${globals.productionServerDomain}/getDatesForApplication/` + id)
+    // console.log("DATES!", dates['data'])
+    setDates(dates['data'])  
+  }
 
   const loadCaptchaWithId = async () => {
     let data = randomizedCaptchaId
@@ -42,7 +68,7 @@ const ApplicationBlock = (props) => {
   }
 
   const handleShowSend = () => setShowSend(true);
-
+ 
   const firstStepValidation = () =>  {
     if (fullname.length < 3) {
       alert("Заполните все поля!");
@@ -51,8 +77,8 @@ const ApplicationBlock = (props) => {
       alert("Заполните все поля!");
       return false;
     } else {
-      // setShowSend(true);
-      return true;
+      // setShowSend(true); 
+      return true; 
     }
   };
 
@@ -90,7 +116,7 @@ const ApplicationBlock = (props) => {
       setCheck(false);
       setShowCaptcha(false);
       setCaptchaText("");
-      setCheck(false);
+      setCheck(false); 
       loadCaptcha();
       setProccessOfCaptcha(0);
       setProccessOfCaptchaUrl("https://realibi.kz/file/633881.png");
@@ -102,9 +128,10 @@ const ApplicationBlock = (props) => {
         course_id: props?.course?.id,
         connection: "Звонок",
         courseName: props?.course?.title,
-        teacherName: props?.teacherByCourse?.name + '' + props?.teacherByCourse?.surname
+        teacherName: props?.teacherByCourse?.name + '' + props?.teacherByCourse?.surname,
+        outputDate: outputDate
       }
-
+ 
       axios({
         method: "post",
         url: `${globals.productionServerDomain}/createTicket`,
@@ -121,75 +148,16 @@ const ApplicationBlock = (props) => {
     } else {setInsertCaptchaText('Неверный ввод текста с картинки!')
             setProccessOfCaptcha(1)
             handlerOfProccessOfCaptcha(1)}
-  };
-
-
-  // const sendApplication = () => {
-  //   const ticketData = {
-  //     fullname: fullname,
-  //     email: email,
-  //     phone: phone,
-  //     course_id: 1
-  //   };
-
-  //   axios({
-  //     method: "post",
-  //     url: `${globals.productionServerDomain}/createTicket`,
-  //     data: ticketData,
-  //     headers: {
-  //       Authorization: `Bearer ${globals.localStorageKeys.authToken}`,
-  //     },
-  //   }).then((res) => {
-  //   })
-  //   .catch(() => {
-  //     alert("Что-то пошло не так!");
-  //   }); 
-  // };
-
-  // const loadCaptcha = async () => {
-  //   let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
-  //   // console.log('CAPTCHA', captcha)
-  //   const captchaFin = captcha['data'][0]
-  //   // console.log('CAPTCHA2', captchaFin)
-  // }
-  // const sendApplication = async() => {
-  //   let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
-  //   const captchaFin = captcha['data'][0]
-  //   loadCaptcha()
-  //   console.log('CAPTCHI',captchaFin.text,captchaText)
-  //   if (captchaFin.text == captchaText) {
-  //     console.log('CAPTCHI',captchaFin.text,captchaText)
-  //     const ticketData = {
-  //       fullname: fullname,
-  //       phone: phone,
-  //       course_id: 1,
-  //       connection: "Звонок"
-  //     }
-
-  //     axios({
-  //       method: "post",
-  //       url: `${globals.productionServerDomain}/createTicket`,
-  //       data: ticketData,
-  //       headers: {
-  //         Authorization: `Bearer ${globals.localStorageKeys.authToken}`,
-  //       },
-  //     }).then((res) => {
-  //     })
-  //     .catch(() => {
-  //       alert("Что-то пошло не так!");
-  //     }); 
-  //     handleShowSend()
-  //   } else {setInsertCaptchaText('Неверный ввод текста с картинки!')}
-  // };
+  }
 
   const onClickNext = () => {
     setShowSend(false);
     setFullname("");
     setEmail("");
-    setPhone("");
+    setPhone(""); 
     setCheck(false);
   };
-
+ 
     //желтый красный зеленый
     const handlerOfProccessOfCaptcha = (value) => {
       if (value === 0) {
@@ -220,8 +188,8 @@ const ApplicationBlock = (props) => {
               setShowCaptcha(true)
             }
             setFullname(e.target.value)
-          }}
-        />
+          }} 
+        /> 
       </label>
       <label className={styles.input_container}>
         Ваш E-mail
@@ -237,7 +205,7 @@ const ApplicationBlock = (props) => {
           }}
         />
       </label>
-      <label className={styles.input_container}>
+      <label className={styles.input_container}> 
         Ваш Телефон
         <input 
           placeholder="Ваш Телефон" 
@@ -246,7 +214,7 @@ const ApplicationBlock = (props) => {
           onKeyDown={(e) => {
             if (e.keyCode === 8) {
               setPhone(phone.slice(0, -1));
-            }
+            } 
           }}
           onChange={(e) => {
             if (phone.length > 10 && fullname.length > 3  && email.length > 6) {
@@ -254,8 +222,21 @@ const ApplicationBlock = (props) => {
             }
             globals.checkPhoneMask(e.target.value, setPhone);
           }}
-        />
+        /> 
       </label>
+      <DateTimePicker 
+        disabledDates={dates} 
+        outputDate={outputDate} 
+        setOutputDate={setOutputDate}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        selectedTime={selectedTime}
+        setSelectedTime={setSelectedTime}
+        busyHours={busyHours} 
+        setBusyHours={setBusyHours}
+        selectedBlock={selectedBlock}
+        setSelectedBlock={setSelectedBlock}
+      />
       <CaptchaComponent
         insertCaptchaText={insertCaptchaText}
         setCaptchaText={setCaptchaText}
@@ -271,7 +252,7 @@ const ApplicationBlock = (props) => {
         proccessOfCaptcha={proccessOfCaptcha}
         />
       <button 
-        className={styles.button_animate}
+        className={styles.button_animate} 
         onClick={(e) => {
           e.preventDefault();
           if (check === false) {
@@ -287,7 +268,7 @@ const ApplicationBlock = (props) => {
             }
           }
         }}
-      >
+      > 
         Попробовать бесплатно
       </button>
       <span 

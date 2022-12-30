@@ -13,6 +13,7 @@ import CourseComments from "../../../../src/components/CourseComments/CourseComm
 
 function Title(props) {
     const [course, setCourse] = useState()
+    const [dates, setDates] = useState()
     useEffect(() => {
         console.log(course, "course");
     }, [course])
@@ -36,7 +37,7 @@ function Title(props) {
         const teacherIdLocal = getCourseOC['data'][0]?.teacher_id
 
         let getCourseTargets = await axios.post(`${globals.productionServerDomain}/getCourseTargets/` + courseIdLocal)
-
+        let getDatesForApplication = await axios.post(`${globals.productionServerDomain}/getDatesForApplication/` + courseIdLocal)
         let getCourseInfoBlocks = await axios.post(`${globals.productionServerDomain}/getCourseInfoBlocks/` + courseIdLocal)
         let getCourseSkills = await axios.post(`${globals.productionServerDomain}/getCourseSkills/` + courseIdLocal)
         let getCourseStages = await axios.post(`${globals.productionServerDomain}/getCourseStages/` + courseIdLocal)
@@ -51,6 +52,7 @@ function Title(props) {
         setPrograms(getPrograms['data'])
         setTeacherByCourse(getTeacherByCourse['data'][0])
         setSertificates(getSertificateByTeacherId['data'])
+        setDates(getDatesForApplication['data'])
       }
 
     return (
@@ -76,10 +78,12 @@ function Title(props) {
                 {/* {course?.url === "EnglishForBeginner" ? <Comments /> : ''} */}
                 <CourseComments course={course}/>
                 <CoursePrice course={course}/>
-                <ApplicationBlock 
+                {course != undefined ?                 <ApplicationBlock 
                     course={course} 
+                    dates={dates}
                     teacherByCourse={teacherByCourse}
-                />
+                /> : ''}
+
                 <Footer />
             </div>
         </>

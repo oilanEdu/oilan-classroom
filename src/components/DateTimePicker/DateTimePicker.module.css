@@ -1,0 +1,104 @@
+
+.disabled-date {
+  color: red;
+}
+
+.calendarBlock{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	max-width: 1200px;
+    /*margin: 40px 100px 0;*/
+}
+
+.timeBlockSelected{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 0px;
+	gap: 10px;
+	width: 80px;
+	height: 32px;
+	background-color: #3C9AFF;
+	border-radius: 4px;
+	text-align: center;
+	cursor: pointer;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 22px;
+	color: #FFFFFF;
+}
+
+.timeBlockUnselected{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 0px;
+	gap: 10px;
+	width: 80px;
+	height: 32px;
+	background: linear-gradient(0deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8));
+	border: 1px solid gray;
+	cursor: default;
+	border-radius: 4px;
+	text-align: center;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 22px;
+	color: gray;
+}
+
+.calendarBlock{
+	margin-top:15px;
+}
+
+.calendar{
+	/*width: 65%;*/
+	margin-right: 10px;
+}
+
+.times{
+	/*width: 35%;*/
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap: wrap;
+	max-width: 120px;
+}
+
+.blueBorder{
+	border:3px solid #3C9AFF;
+	border-radius: 5px;
+	padding: 2px;
+}
+
+@media (max-width: 480px){
+	.calendarBlock{
+		max-width: 400px;
+	    /*margin: 40px 100px 0;*/
+	} 
+}
+@media (max-width: 430px){
+	.calendarBlock{
+		max-width: 300px;
+	    /*margin: 40px 100px 0;*/
+	} 
+	.calendarBlock{
+		flex-direction: column;
+	}
+	.times{
+		max-width: 220px;
+	}
+}
+@media (max-width: 380px){
+	.calendarBlock{
+		max-width: 220px;
+	    /*margin: 40px 100px 0;*/
+	} 
+}

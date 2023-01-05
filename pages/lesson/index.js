@@ -6,6 +6,7 @@ import axios from "axios";
 import Footer from "../../src/components/Footer/Footer";
 import ScreenShare from "../../src/components/ScreenShare/ScreenShare";
 import HeaderTeacher from "../../src/components/HeaderTeacher/HeaderTeacher";
+import Header from "../../src/components/Header/Header";
 import { selectIsConnectedToRoom, useHMSStore, useHMSActions, useScreenShare } from '@100mslive/react-sdk'
 import JoinRoom from '../../src/components/joinRoom/joinRoom';
 import {
@@ -313,7 +314,7 @@ const Lesson = (props) => {
     <>
       <div style={{backgroundColor: "#f1faff", width: "100vw"}}>
         {role === "student" 
-          ? <HeaderStudent name={student.name} surname={student.surname} /> 
+          ? <Header name={student.name} surname={student.surname} /> 
           : <HeaderTeacher white={true} teacher={teacher} />
         }
         <div className={styles.cantainer}>

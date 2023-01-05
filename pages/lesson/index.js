@@ -1,23 +1,28 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import globals from "../../src/globals";
 import styles from "./lesson.module.css";
 import axios from "axios";
 import Footer from "../../src/components/Footer/Footer";
+import ScreenShare from "../../src/components/ScreenShare/ScreenShare";
 import HeaderTeacher from "../../src/components/HeaderTeacher/HeaderTeacher";
-import { selectIsConnectedToRoom, useHMSStore, useHMSActions } from '@100mslive/react-sdk'
+import { selectIsConnectedToRoom, useHMSStore, useHMSActions, useScreenShare } from '@100mslive/react-sdk'
 import JoinRoom from '../../src/components/joinRoom/joinRoom';
 import {
   selectLocalPeer,
   selectPeers,
   selectIsLocalAudioEnabled,
   selectIsLocalVideoEnabled,
-  selectCameraStreamByPeerID
+  selectIsLocalScreenShared,
+  selectCameraStreamByPeerID,
+  selectScreenShareByPeerID
 } from "@100mslive/hms-video-react";
 import LessonContain from "../../src/components/LessonContain/LessonContain";
 import TeacherHomeworksLesson from "../../src/components/TeacherHomeworksLesson/TeacherHomeworksLesson";
 import HeaderStudent from "../../src/components/HeaderStudent/HeaderStudent";
 import LessonExercisesForStudent from "../../src/components/LessonExercisesForStudent/LessonExercisesForStudent";
+// import navigator from "navigator"
+// import { getDisplayMedia } from "navigator"
 
 const endPoint =
   "https://prod-in2.100ms.live/hmsapi/testdomain.app.100ms.live/";
@@ -35,9 +40,9 @@ const getToken = async (user_id, role) => {
   const { token } = await response.json();
   return token;
 };
-
 const Lesson = (props) => {
-  
+  const { startScreenShare, stopScreenShare, screenShareStatus } = useScreenShare();
+
   const router = useRouter()
   const teacherUrl = router.query.url;
   const room = router.query.room;
@@ -52,6 +57,7 @@ const Lesson = (props) => {
   const [numberOfEx, setNumberOfEx] = useState(0);
   const [selectedStudentId, setSelectedStudentId] = useState(0);
   const [answer, setAnswer] = useState([]);
+  const [translationMode, setTranslationMode] = useState(false)
 
   useEffect(() => {
     loadBaseData();
@@ -170,7 +176,7 @@ const Lesson = (props) => {
 
   const updateAnswerComment = async (studentId, exerciseId, text, date) => {
     const data = {
-      studentId, 
+      studentId,
       exerciseId, 
       text,
       date
@@ -195,7 +201,8 @@ const Lesson = (props) => {
   const isConnected = useHMSStore(selectIsConnectedToRoom);
   const isLocalAudioEnabled = useHMSStore(selectIsLocalAudioEnabled);
   const isLocalVideoEnabled = useHMSStore(selectIsLocalVideoEnabled);
-    
+  const isLocalScreenShared = useHMSStore(selectIsLocalScreenShared);
+  
   const handleSubmit = async (userName) => {
     const token = await getToken(userName, role);
     hmsActions.join({ authToken: token, userName });
@@ -209,15 +216,17 @@ const Lesson = (props) => {
     await hmsActions.setLocalVideoEnabled(!isLocalVideoEnabled);
   };
 
-  const VideoTile = ({ peer, isLocal }) => {
-    const hmsActions = useHMSActions();
-    const videoRef = React.useRef(null);
-    const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
+  const toggleShared = async () => {
+    await hmsActions.setScreenShareEnabled(!isLocalScreenShared);
+  };
 
-    React.useEffect(() => {
+  const VideoTile = ({ peer, isLocal }) => {
+    // const hmsActions = useHMSActions(); 
+    const videoRef = useRef(null);
+    const videoTrack = useHMSStore(isLocalScreenShared?selectScreenShareByPeerID(peer.id):selectCameraStreamByPeerID(peer.id));
+    // hmsActions.setScreenShareEnabled(translationMode);
+    useEffect(() => {
       (async () => {
-        // console.log(videoRef.current);
-        // console.log(videoTrack); 
         if (videoRef.current && videoTrack) {
           if (videoTrack.enabled) {
             await hmsActions.attachVideo(videoTrack.id, videoRef.current);
@@ -238,7 +247,7 @@ const Lesson = (props) => {
             playsInline
             muted={true}
           ></video>
-          : isLocal 
+          : isLocal
           ? <div className={styles.personVideo}>waiting</div>
           : <video
             className={styles.personVideo}
@@ -274,7 +283,7 @@ const Lesson = (props) => {
                       peers
                         .filter((peer) => !peer.isLocal)
                         .map((peer) => {
-                          return <VideoTile isLocal={false} peer={peer} />;
+                          return <><VideoTile isLocal={false} peer={peer} /></>;
                         })
                     } 
                   </>}
@@ -292,14 +301,21 @@ const Lesson = (props) => {
                   >
                     {isLocalVideoEnabled ? "Hide" : "Unhide"}
                   </button>
+                  <button
+                    className="text-xs uppercase tracking-wider bg-white py-1 px-2 rounded-lg shadow-lg text-indigo-500"
+                    onClick={toggleShared}
+                  >
+                    {isLocalScreenShared ? "Unshare" : "Share"}
+                  </button>
+                  
                 </div>
               </>) 
               : <>
                 <img src="https://realibi.kz/file/756332.png" style={{width: "100%"}} />
                 <JoinRoom handleSubmit={handleSubmit} 
                   userName={(role == "teacher")
-                    ? "teacher"
-                    : "student"
+                    ? teacher.name
+                    : student.name
                   } 
                 />
               </>

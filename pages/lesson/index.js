@@ -197,6 +197,7 @@ const Lesson = (props) => {
   
   const localPeer = useHMSStore(selectLocalPeer);
   const peers = useHMSStore(selectPeers);
+  console.log('PEERS', peers)
   const hmsActions = useHMSActions();
   const isConnected = useHMSStore(selectIsConnectedToRoom);
   const isLocalAudioEnabled = useHMSStore(selectIsLocalAudioEnabled);
@@ -218,12 +219,15 @@ const Lesson = (props) => {
 
   const toggleShared = async () => {
     await hmsActions.setScreenShareEnabled(!isLocalScreenShared);
+    await hmsActions.setLocalVideoEnabled(!isLocalVideoEnabled);
   };
 
-  const VideoTile = ({ peer, isLocal }) => {
+  const TeacherVideoTile = ({ peer, isLocal }) => {
     // const hmsActions = useHMSActions(); 
     const videoRef = useRef(null);
-    const videoTrack = useHMSStore(isLocalScreenShared?selectScreenShareByPeerID(peer.id):selectCameraStreamByPeerID(peer.id));
+    const screenRef = useRef(null)
+    const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
+    const screenTrack = useHMSStore(selectScreenShareByPeerID(peer.id));
     // hmsActions.setScreenShareEnabled(translationMode);
     useEffect(() => {
       (async () => {
@@ -233,32 +237,73 @@ const Lesson = (props) => {
           } else {
             await hmsActions.detachVideo(videoTrack.id, videoRef.current);
           }
-        }
+        } 
+          if (screenRef.current && screenTrack) {
+            if (screenTrack.enabled) {
+              await hmsActions.attachVideo(screenTrack.id, screenRef.current);
+            } else {
+              await hmsActions.detachVideo(screenTrack.id, screenRef.current);
+            }
+          }
+        
       })();
-    }, [videoTrack]);
+    }, [videoTrack, screenTrack]);
 
     return (
       <div style={{display: 'flex', flexDirection: 'column', width: '50%'}}>
-        {isLocalVideoEnabled
-          ? <video
-            className={styles.personVideo}
-            ref={videoRef}
-            autoPlay={true}
-            playsInline
-            muted={true}
-          ></video>
-          : isLocal
-          ? <div className={styles.personVideo}>waiting</div>
-          : <video
-            className={styles.personVideo}
-            ref={videoRef}
-            autoPlay={true}
-            playsInline
-            muted={true}
-          ></video>
-        }
+        {videoTrack ? (
+          <video ref={videoRef} autoPlay playsInline muted={isLocal} />
+        ) : null}
+        {/*{screenTrack ? (
+          <video ref={screenRef} autoPlay playsInline muted={isLocal} />
+        ) : null}*/}
         <div className="top-0 w-full absolute flex justify-center">
-          <div className={styles.clientName}>{`${peer.name}`}</div>
+          <div className={styles.clientName}>{`${peer.roleName}` + ` ${peer.id}`}</div>
+        </div>
+      </div>
+    );
+  };
+
+  const StudentVideoTile = ({ peer, isLocal }) => {
+    // const hmsActions = useHMSActions(); 
+    const videoRef = useRef(null);
+    const screenRef = useRef(null)
+    const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
+    const screenTrack = useHMSStore(selectScreenShareByPeerID(peer.id));
+    // hmsActions.setScreenShareEnabled(translationMode);
+    useEffect(() => {
+      (async () => {
+        if (videoRef.current && videoTrack) {
+          if (videoTrack.enabled) {
+            await hmsActions.attachVideo(videoTrack.id, videoRef.current);
+          } else {
+            await hmsActions.detachVideo(videoTrack.id, videoRef.current);
+          }
+        } 
+          if (screenRef.current && screenTrack) {
+            if (screenTrack.enabled) {
+              await hmsActions.attachVideo(screenTrack.id, screenRef.current);
+            } else {
+              await hmsActions.detachVideo(screenTrack.id, screenRef.current);
+            }
+          }
+        
+      })();
+    }, [videoTrack, screenTrack]);
+
+    return (
+      <div style={screenTrack?{display: 'flex', flexDirection: 'column', width: '85%'}:{display: 'flex', flexDirection: 'column', width: '15%'}}>
+        {videoTrack && !screenTrack ? (
+          <video ref={videoRef} autoPlay playsInline muted={isLocal} />
+        ) : null}
+        {screenTrack ? (
+          <video ref={screenRef} autoPlay playsInline muted={isLocal} />
+        ) : null}
+        <div className="top-0 w-full absolute flex justify-center">
+          <div className={styles.clientName}>
+            {/*{`${peer.name}`}*/}
+            {peer.roleName == 'student'?'Вы':`${peer.name}`}
+          </div>
         </div>
       </div>
     );
@@ -272,18 +317,18 @@ const Lesson = (props) => {
           : <HeaderTeacher white={true} teacher={teacher} />
         }
         <div className={styles.cantainer}>
-          {/* Room: {room} / Role: {role} */}
+          {role == 'teacher' ? (
           <div className="App">
             { isConnected 
               ? ( <> 
                 <div className={styles.translationBlock}>
                   {<>
-                    {localPeer && <VideoTile peer={localPeer} isLocal={true} />}
+                    {/*{localPeer && <TeacherVideoTile peer={localPeer} isLocal={true} />}*/}
                     {peers &&
                       peers
                         .filter((peer) => !peer.isLocal)
                         .map((peer) => {
-                          return <><VideoTile isLocal={false} peer={peer} /></>;
+                          return <><TeacherVideoTile isLocal={false} peer={peer} /></>;
                         })
                     } 
                   </>}
@@ -315,12 +360,57 @@ const Lesson = (props) => {
                 <JoinRoom handleSubmit={handleSubmit} 
                   userName={(role == "teacher")
                     ? teacher.name
+                    : student.name 
+                  } 
+                />
+              </>
+            }
+          </div>
+          ) : (
+          <div className="App">
+            { isConnected 
+              ? ( <> 
+                <div className={styles.translationBlock}>
+                  {<>
+                    {localPeer && <StudentVideoTile peer={localPeer} isLocal={true} />}
+                    {peers &&
+                      peers
+                        .filter((peer) => !peer.isLocal)
+                        .map((peer) => {
+                          return peer.roleName == 'teacher' && <><StudentVideoTile isLocal={false} peer={peer} /></>;
+                        })
+                    } 
+                  </>}
+                </div>
+                <div className="fixed bottom-0 h-10 bg-gray-400 w-screen flex items-center justify-center">
+                  <button
+                    className="text-xs uppercase tracking-wider bg-white py-1 px-2 rounded-lg shadow-lg text-indigo-500 mr-2"
+                    onClick={toggleAudio}
+                  >
+                    {isLocalAudioEnabled ? "Mute" : "Unmute"}
+                  </button>
+                  <button
+                    className="text-xs uppercase tracking-wider bg-white py-1 px-2 rounded-lg shadow-lg text-indigo-500"
+                    onClick={toggleVideo}
+                  >
+                    {isLocalVideoEnabled ? "Hide" : "Unhide"}
+                  </button>
+                  
+                  
+                </div>
+              </>) 
+              : <>
+                <img src="https://realibi.kz/file/756332.png" style={{width: "100%"}} />
+                <JoinRoom handleSubmit={handleSubmit} 
+                  userName={(role == "teacher")
+                    ? teacher.name
                     : student.name
                   } 
                 />
               </>
             }
           </div>
+          )}
           <LessonContain
             role={role}
             user={role === "student" ? teacher : student}

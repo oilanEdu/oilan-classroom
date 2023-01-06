@@ -86,6 +86,8 @@
 }
 
 .modal {
+  height: 95vh;
+  overflow: scroll;
   position: fixed;
   z-index: 500;
   background-color: #f3f3f3;
@@ -101,6 +103,9 @@
   /* transform: translate(-50%, -50%); */
   top: 50%;
   border-radius: 20px;
+}
+.modal::-webkit-scrollbar {
+  display: none;
 }
 
 .modal_button {

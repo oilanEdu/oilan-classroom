@@ -20,7 +20,7 @@ const workWithDates = (date) => {
   let myOurs = [] 
   console.log('DATE', date)
   console.log('CHECK', new Date(date).toISOString().split('T')[0])
-  for (const disabledDate of props.disabledDates) {
+  for (const disabledDate of props.disabledDates) {  
     if (disabledDate.lesson_time) {
       let regularDate = disabledDate.lesson_time
       let currentDateType = new Date(regularDate).toISOString().split('T')[0]
@@ -34,12 +34,31 @@ const workWithDates = (date) => {
         if (Number(currentTimeType.toString().substring(3,5)) > 0){
           myOurs = myOurs.concat((Number(currentTimeType.toString().substring(0,2))+1).toString()+':00')
         }
+
+        //24 часа вперед занять уроки
+        let dayBack = new Date(Date.now() + 1000 * 86400)
+        if (new Date(date).toISOString().split('T')[0] === dayBack.toISOString().split('T')[0]) {
+          console.log("HHHHHAAAAAAAAY!");
+          emptyTimes.map(el => {
+            const timeNow = new Date().getHours() + ":" + new Date().getMinutes()
+            if (parseInt(el.replace(':', '')) < parseInt(timeNow.replace(':', ''))) {
+            console.log("PASSED");
+            myOurs = myOurs.concat(el)
+          } else {
+            console.log("NOT PASSED");
+          }
+          console.log(parseInt(el.replace(':', '')), parseInt(timeNow.replace(':', '')), "THIS", el, date)
+        })
+          // console.log(new Date(date).toISOString().split('T')[0], dayBack.toISOString().split('T')[0], "HHAAY");
+        }
+
       props.setBusyHours(myOurs);
       if (!myOurs){props.setBusyHours(myOurs);}
       } 
       //setOutputDate(new Date(date).toISOString().split('T')[0]+'T'+selectedBlock+':00.000Z')
     }
   }
+  // debugger
 }
 // useEffect(() => {
 //   props.setSelectedDate
@@ -51,12 +70,20 @@ useEffect(() => {
 useEffect(() => {
 props.setOutputDate(new Date(props.selectedDate).toISOString().split('T')[0]+'T'+props.selectedBlock+':00.000Z')
 }, [props.selectedBlock])
+
+const date = new Date()
+const thisDay = date.getDate()
+const tomorrowDay = date.getDate() + 1
+const thisMonth = date.getMonth()
+const thisYear = date.getFullYear()
+
+
 return (
 
   <div className={styles.calendarBlock}>
     <Calendar 
       value={props.selectedDate} 
-      minDate={new Date(2023, 0, 4)}
+      minDate={new Date(thisYear, thisMonth, tomorrowDay)}
       onChange={(date) => {
         props.setBusyHours('00:00')
         props.setSelectedBlock('00:00') 

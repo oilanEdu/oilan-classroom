@@ -40,7 +40,7 @@ const workWithDates = (date) => {
         if (new Date(date).toISOString().split('T')[0] === dayBack.toISOString().split('T')[0]) {
           console.log("HHHHHAAAAAAAAY!");
           emptyTimes.map(el => {
-            const timeNow = new Date().getHours() + ":" + new Date().getMinutes()
+            const timeNow = new Date().getHours() + ":" + ((new Date().getMinutes() < 10) ? "0" + new Date().getMinutes() : new Date().getMinutes())
             if (parseInt(el.replace(':', '')) < parseInt(timeNow.replace(':', ''))) {
             console.log("PASSED");
             myOurs = myOurs.concat(el)

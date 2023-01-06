@@ -59,12 +59,12 @@ function Title(props) {
         <>
             <div style={{backgroundColor: "#f1faff"}}>
                 <Header white={true}/>
-                <AboutCourse 
+                {course != undefined ? <AboutCourse 
                     courseInfoBlocks={courseInfoBlocks} 
                     teacherByCourse={teacherByCourse} 
                     course={course} 
                     courseTargets={courseTargets}
-                />
+                /> : ''}
                 <AboutTeacher 
                     teacherByCourse={teacherByCourse} 
                     courseSkills={courseSkills} 

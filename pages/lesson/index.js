@@ -16,7 +16,8 @@ import {
   selectIsLocalVideoEnabled,
   selectIsLocalScreenShared,
   selectCameraStreamByPeerID,
-  selectScreenShareByPeerID
+  selectScreenShareByPeerID,
+  selectAudioTrackByPeerID 
 } from "@100mslive/hms-video-react";
 import LessonContain from "../../src/components/LessonContain/LessonContain";
 import TeacherHomeworksLesson from "../../src/components/TeacherHomeworksLesson/TeacherHomeworksLesson";
@@ -220,7 +221,31 @@ const Lesson = (props) => {
 
   const toggleShared = async () => {
     await hmsActions.setScreenShareEnabled(!isLocalScreenShared);
-    await hmsActions.setLocalVideoEnabled(!isLocalVideoEnabled);
+    // await hmsActions.setLocalVideoEnabled(!isLocalVideoEnabled);
+  };
+
+  const leaveRoom = async () => {
+    try {
+      // Останавливаем демонстрацию экрана, если она была запущена
+      if (isLocalScreenShared) {
+        await hmsActions.setScreenShareEnabled(false);
+      }
+
+      // Отключаем локальное видео, если оно было включено
+      if (isLocalVideoEnabled) {
+        await hmsActions.setLocalVideoEnabled(false);
+      }
+
+      // Отключаем локальный аудио, если он был включен
+      if (isLocalAudioEnabled) {
+        await hmsActions.setLocalAudioEnabled(false);
+      }
+
+      // Выходим из комнаты
+      await hmsActions.leave();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const TeacherVideoTile = ({ peer, isLocal }) => {
@@ -251,15 +276,91 @@ const Lesson = (props) => {
     }, [videoTrack, screenTrack]);
 
     return (
-      <div style={{display: 'flex', flexDirection: 'column', width: '50%'}}>
+      <div className={styles.innerBlock}>
         {videoTrack ? (
-          <video ref={videoRef} autoPlay playsInline muted={isLocal} />
+          <video className={styles.bigSquare} style={isLocalScreenShared || !isLocalVideoEnabled ? {display: 'none'}:{display: 'flex'}} ref={videoRef} autoPlay playsInline muted={isLocal} />
         ) : null}
-        {/*{screenTrack ? (
-          <video ref={screenRef} autoPlay playsInline muted={isLocal} />
-        ) : null}*/}
-        <div className="top-0 w-full absolute flex justify-center">
+        {screenTrack ? (
+          <video className={styles.bigSquare} ref={screenRef} autoPlay playsInline muted={isLocal} />
+        ) : null}
+        {!isLocalVideoEnabled && !isLocalScreenShared ? (
+          <div className={styles.zaglushkahaha}></div>
+          ) : null}
+        {/*<div className="top-0 w-full absolute flex justify-center">
           <div className={styles.clientName}>{`${peer.roleName}` + ` ${peer.id}`}</div>
+        </div>*/}
+      </div>
+    );
+  };
+
+  const TeacherUnderline = ({ peer, isLocal }) => {
+    // const hmsActions = useHMSActions(); 
+    const videoRef = useRef(null);
+    const screenRef = useRef(null)
+    const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
+    const audioTrack = useHMSStore(selectAudioTrackByPeerID(peer.id));
+    // const firstAudioTrack = audioTracks[0];
+    const screenTrack = useHMSStore(selectScreenShareByPeerID(peer.id));
+    // hmsActions.setScreenShareEnabled(translationMode);
+    console.log('CLIENT AUDIO', audioTrack)
+    useEffect(() => {
+      (async () => {
+        if (videoRef.current && videoTrack) {
+          if (videoTrack.enabled) {
+            await hmsActions.attachVideo(videoTrack.id, videoRef.current);
+          } else {
+            await hmsActions.detachVideo(videoTrack.id, videoRef.current);
+          }
+        }       
+      })();
+    }, [videoTrack]);
+
+    return (
+      <div style={{display: 'flex', flexDirection: 'column', width: '16.5%', marginRight: '12px'}}>
+        {videoTrack?.enabled ? (
+          <video style={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', borderRadius: '6px'}} className={styles.minVidArea} ref={videoRef} autoPlay playsInline muted={isLocal} ></video>
+        ) : <div className={styles.zaglushkahahaMini}></div>}
+        <div style={{position: 'absolute', bottom: '21px'}}>
+          {peer.roleName == 'teacher'?
+            (<div className={styles.clientName}>
+              <div className={styles.hatIco}>
+                <span
+                  style={{
+                    background: "url(https://realibi.kz/file/7922.png) no-repeat",
+                    backgroundPosition: "center",
+                    width: "13px",
+                    height: "11.78px",
+                    paddingRight: "30px",
+                  }}
+                >
+                </span>
+              </div>
+              <div className={styles.teacherLitera}>
+                {peer.name}
+              </div>
+            </div>):
+            (<div className={styles.clientName}>
+              <div className={styles.studentMiniRow}>
+              {audioTrack?.enabled? null : (
+                
+                  <div className={styles.micIco}>
+                    <span
+                      style={{
+                        background: "url(https://realibi.kz/file/384854.png) no-repeat",
+                        backgroundPosition: "center",
+                        width: "8.89px",
+                        height: "8.89px",
+                        paddingRight: "30px",
+                      }}
+                    >
+                    </span>
+                  </div>)} 
+                  {peer.roleName == 'teacher'?'Вы':`${peer.roleName}` + ` ${peer.id.slice(0, 5)}`}
+                </div>
+            </div>)
+          }
+          
+
         </div>
       </div>
     );
@@ -271,6 +372,7 @@ const Lesson = (props) => {
     const screenRef = useRef(null)
     const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
     const screenTrack = useHMSStore(selectScreenShareByPeerID(peer.id));
+    console.log('SCREENTRACK', screenTrack)
     // hmsActions.setScreenShareEnabled(translationMode);
     useEffect(() => {
       (async () => {
@@ -293,18 +395,88 @@ const Lesson = (props) => {
     }, [videoTrack, screenTrack]);
 
     return (
-      <div style={screenTrack?{display: 'flex', flexDirection: 'column', width: '85%'}:{display: 'flex', flexDirection: 'column', width: '15%'}}>
+      <div className={styles.innerBlock}>
         {videoTrack && !screenTrack ? (
-          <video ref={videoRef} autoPlay playsInline muted={isLocal} />
+          <video className={styles.bigSquare} style={isLocalScreenShared || !isLocalVideoEnabled ? {display: 'none'}:{display: 'flex'}} ref={videoRef} autoPlay playsInline muted={isLocal} />
         ) : null}
         {screenTrack ? (
-          <video ref={screenRef} autoPlay playsInline muted={isLocal} />
+          <video className={styles.bigSquare} ref={screenRef} autoPlay playsInline muted={isLocal} />
         ) : null}
-        <div className="top-0 w-full absolute flex justify-center">
-          <div className={styles.clientName}>
-            {/*{`${peer.name}`}*/}
-            {peer.roleName == 'student'?'Вы':`${peer.name}`}
-          </div>
+        {!isLocalVideoEnabled && !isLocalScreenShared ? (
+          <div className={styles.zaglushkahaha}></div>
+          ) : null}
+        {/*<div className="top-0 w-full absolute flex justify-center">
+          <div className={styles.clientName}>{`${peer.roleName}` + ` ${peer.id}`}</div>
+        </div>*/}
+      </div>
+    );
+  };
+
+  const StudentUnderline = ({ peer, isLocal }) => {
+    // const hmsActions = useHMSActions(); 
+    const videoRef = useRef(null);
+    const screenRef = useRef(null)
+    const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
+    const audioTrack = useHMSStore(selectAudioTrackByPeerID(peer.id));
+    // const firstAudioTrack = audioTracks[0];
+    const screenTrack = useHMSStore(selectScreenShareByPeerID(peer.id));
+    // hmsActions.setScreenShareEnabled(translationMode);
+    console.log('CLIENT AUDIO', audioTrack)
+    useEffect(() => {
+      (async () => {
+        if (videoRef.current && videoTrack) {
+          if (videoTrack.enabled) {
+            await hmsActions.attachVideo(videoTrack.id, videoRef.current);
+          } else {
+            await hmsActions.detachVideo(videoTrack.id, videoRef.current);
+          }
+        }       
+      })();
+    }, [videoTrack]);
+
+    return (
+      <div style={{display: 'flex', flexDirection: 'column', width: '16.5%', marginRight: '12px'}}>
+        {videoTrack?.enabled ? (
+          <video style={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', borderRadius: '6px'}} className={styles.minVidArea} ref={videoRef} autoPlay playsInline muted={isLocal} ></video>
+        ) : <div className={styles.zaglushkahahaMini}></div>}
+        <div style={{position: 'absolute', bottom: '21px'}}>
+          {peer.roleName == 'teacher'?
+            (<div className={styles.clientName}>
+              <div className={styles.hatIco}>
+                <span
+                  style={{
+                    background: "url(https://realibi.kz/file/7922.png) no-repeat",
+                    backgroundPosition: "center",
+                    width: "13px",
+                    height: "11.78px",
+                    paddingRight: "30px",
+                  }}
+                >
+                </span>
+              </div>
+              <div className={styles.teacherLitera}>
+                {peer.name}
+              </div>
+            </div>):
+            (<div className={styles.clientName}>
+              <div className={styles.studentMiniRow}>
+              {audioTrack?.enabled? null : (
+                  <div className={styles.micIco}>
+                    <span
+                      style={{
+                        background: "url(https://realibi.kz/file/384854.png) no-repeat",
+                        backgroundPosition: "center",
+                        width: "8.89px",
+                        height: "8.89px",
+                        paddingRight: "30px",
+                      }}
+                    >
+                    </span>
+                  </div>)} 
+                  {peer.isLocal?'Вы':`${peer.roleName}` + ` ${peer.id.slice(0, 5)}`}
+                </div>
+            </div>)
+          }
         </div>
       </div>
     );
@@ -324,36 +496,94 @@ const Lesson = (props) => {
               ? ( <> 
                 <div className={styles.translationBlock}>
                   {<>
-                    {/*{localPeer && <TeacherVideoTile peer={localPeer} isLocal={true} />}*/}
-                    {peers &&
-                      peers
-                        .filter((peer) => !peer.isLocal)
-                        .map((peer) => {
-                          return <><TeacherVideoTile isLocal={false} peer={peer} /></>;
-                        })
-                    } 
+                    {localPeer && <TeacherVideoTile peer={localPeer} isLocal={true} />}
+                    <div className={styles.underTileRow}>
+                      <div className={styles.studentsCountRow}>Студенты {peers?.length - 1}</div>
+                      <div className={styles.miniaturesLine}>
+                        {peers &&
+                          peers
+                            .filter((peer) => peer)
+                            .slice(0, 6)
+                            .map((peer) => {
+                              return <TeacherUnderline isLocal={false} peer={peer} />;
+                            })
+                        } 
+                      </div>
+                    </div>
                   </>}
-                </div>
-                <div className="fixed bottom-0 h-10 bg-gray-400 w-screen flex items-center justify-center">
-                  <button
-                    className="text-xs uppercase tracking-wider bg-white py-1 px-2 rounded-lg shadow-lg text-indigo-500 mr-2"
-                    onClick={toggleAudio}
-                  >
-                    {isLocalAudioEnabled ? "Mute" : "Unmute"}
-                  </button>
-                  <button
-                    className="text-xs uppercase tracking-wider bg-white py-1 px-2 rounded-lg shadow-lg text-indigo-500"
-                    onClick={toggleVideo}
-                  >
-                    {isLocalVideoEnabled ? "Hide" : "Unhide"}
-                  </button>
-                  <button
-                    className="text-xs uppercase tracking-wider bg-white py-1 px-2 rounded-lg shadow-lg text-indigo-500"
-                    onClick={toggleShared}
-                  >
-                    {isLocalScreenShared ? "Unshare" : "Share"}
-                  </button>
-                  
+                  <div className={styles.translationButtonsRow}>
+                    <div className={styles.leftButtons}>
+                      <button
+                        className={styles.audioButton}
+                        onClick={toggleAudio}
+                        style={isLocalAudioEnabled?{backgroundColor: '#2D3440'}:{backgroundColor: '#CC525F'}}
+                      >
+                        <span
+                          style={{
+                            background: "url(https://realibi.kz/file/720488.png) no-repeat",
+                            backgroundPosition: "center",
+                            width: "26.6px",
+                            height: "26.6px",
+                            paddingRight: "30px",
+                          }}
+                        >
+                        </span>
+                      </button>
+                      <button
+                        className={styles.videoButton}
+                        onClick={toggleVideo}
+                        style={isLocalVideoEnabled?{backgroundColor: '#2672ED'}:{backgroundColor: '#2D3440'}}
+                      >
+                        <span
+                          style={{
+                            background: "url(https://realibi.kz/file/972024.png) no-repeat",
+                            backgroundPosition: "center",
+                            width: "25.33px",
+                            height: "16.89px",
+                            paddingRight: "30px",
+                          }}
+                        >
+                        </span>
+                      </button>
+                      <button
+                        className={styles.shareButton}
+                        onClick={toggleShared}
+                        style={isLocalScreenShared?{backgroundColor: '#2672ED'}:{backgroundColor: '#2D3440'}}
+                      >
+                        <span
+                          style={{
+                            background: "url(https://realibi.kz/file/690286.png) no-repeat",
+                            backgroundPosition: "center",
+                            width: "24.53px",
+                            height: "20.32px",
+                            paddingRight: "30px",
+                          }}
+                        >
+                        </span>
+                      </button>
+                    </div>
+                    <div className={styles.rightButton}>
+                      <button
+                        className={styles.leaveRoomButton}
+                        onClick={() => {
+                            leaveRoom()
+                          }}
+                      >
+                        <span
+                          style={{
+                            background: "url(https://realibi.kz/file/359001.png) no-repeat",
+                            backgroundPosition: "center",
+                            width: "22.67px",
+                            height: "22.67px",
+                            paddingRight: "30px",
+                            marginRight: "12px"
+                          }}
+                        >
+                        </span>
+                        Покинуть
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </>) 
               : <>
@@ -373,31 +603,86 @@ const Lesson = (props) => {
               ? ( <> 
                 <div className={styles.translationBlock}>
                   {<>
-                    {localPeer && <StudentVideoTile peer={localPeer} isLocal={true} />}
                     {peers &&
-                      peers
-                        .filter((peer) => !peer.isLocal)
-                        .map((peer) => {
-                          return peer.roleName == 'teacher' && <><StudentVideoTile isLocal={false} peer={peer} /></>;
-                        })
-                    } 
+                          peers
+                            .filter((peer) => peer.roleName === 'teacher')
+                            .slice(0, 6)
+                            .map((peer) => {
+                              return <StudentVideoTile isLocal={false} peer={peer} />;
+                            })
+                        } 
+                    
+                    <div className={styles.underTileRow}>
+                      <div className={styles.studentsCountRow}>Участники {peers?.length}</div>
+                      <div className={styles.miniaturesLine}>
+                        {peers &&
+                          peers
+                            .filter((peer) => peer)
+                            .slice(0, 6)
+                            .map((peer) => {
+                              return <StudentUnderline isLocal={false} peer={peer} />;
+                            })
+                        } 
+                      </div>
+                    </div>
                   </>}
-                </div>
-                <div className="fixed bottom-0 h-10 bg-gray-400 w-screen flex items-center justify-center">
-                  <button
-                    className="text-xs uppercase tracking-wider bg-white py-1 px-2 rounded-lg shadow-lg text-indigo-500 mr-2"
-                    onClick={toggleAudio}
-                  >
-                    {isLocalAudioEnabled ? "Mute" : "Unmute"}
-                  </button>
-                  <button
-                    className="text-xs uppercase tracking-wider bg-white py-1 px-2 rounded-lg shadow-lg text-indigo-500"
-                    onClick={toggleVideo}
-                  >
-                    {isLocalVideoEnabled ? "Hide" : "Unhide"}
-                  </button>
-                  
-                  
+                  <div className={styles.translationButtonsRow}>
+                    <div className={styles.leftButtons}>
+                      <button
+                        className={styles.audioButton}
+                        onClick={toggleAudio}
+                        style={isLocalAudioEnabled?{backgroundColor: '#2D3440'}:{backgroundColor: '#CC525F'}}
+                      >
+                        <span
+                          style={{
+                            background: "url(https://realibi.kz/file/720488.png) no-repeat",
+                            backgroundPosition: "center",
+                            width: "26.6px",
+                            height: "26.6px",
+                            paddingRight: "30px",
+                          }}
+                        >
+                        </span>
+                      </button>
+                      <button
+                        className={styles.videoButton}
+                        onClick={toggleVideo}
+                        style={isLocalVideoEnabled?{backgroundColor: '#2672ED'}:{backgroundColor: '#2D3440'}}
+                      >
+                        <span
+                          style={{
+                            background: "url(https://realibi.kz/file/972024.png) no-repeat",
+                            backgroundPosition: "center",
+                            width: "25.33px",
+                            height: "16.89px",
+                            paddingRight: "30px",
+                          }}
+                        >
+                        </span>
+                      </button>
+                    </div>
+                    <div className={styles.rightButton}>
+                      <button
+                        className={styles.leaveRoomButton}
+                        onClick={() => {
+                            leaveRoom()
+                          }}
+                      >
+                        <span
+                          style={{
+                            background: "url(https://realibi.kz/file/359001.png) no-repeat",
+                            backgroundPosition: "center",
+                            width: "22.67px",
+                            height: "22.67px",
+                            paddingRight: "30px",
+                            marginRight: "12px"
+                          }}
+                        >
+                        </span>
+                        Покинуть
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </>) 
               : <>

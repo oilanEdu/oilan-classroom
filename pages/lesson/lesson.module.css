@@ -37,7 +37,10 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  /*border-radius: 50px;*/
+  border-radius: 16px;
+  background: linear-gradient(0deg, #183768, #183768);
+  padding-top: 20px;
+  margin-bottom: 40px
 }
 
 .personVideo{
@@ -51,14 +54,247 @@
   border-radius: 50px;
 }
 
+.innerBlock{
+  position: relative;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: end;
+  width: 100%;
+  aspect-ratio: 16/9; 
+}
+
+.zaglushkahaha{
+  width: 80%;
+  margin-left: 10%;
+  border-radius: 16px;
+  background-image: url("https://realibi.kz/file/114603.jpg");
+  background-size: 100% 100%;
+  aspect-ratio: 4/3;
+}
+
+.zaglushkahahaMini{
+  width: 100%;
+  border-radius: 6px;
+  background-image: url("https://realibi.kz/file/114603.jpg");
+  background-size: 100% 100%;
+  aspect-ratio: 4/3;
+  margin-right: 10px;
+  margin-top: 20px;
+}
+
+.underTileRow{
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 20px;
+  /*position: absolute;
+  left: 7.5%;
+  bottom: 0%;*/
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(22.5806px);
+  /*transform: translate(-50%, -50%);*/
+}
+
+.minVidArea{
+  margin-right: 10px;
+  margin-top: 20px;
+}
+
+.miniaturesLine{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 15px;
+}
+
+.bigSquare{
+  aspect-ratio: 4/3;
+  background-color: black; 
+  width: 80%;
+  margin-left: 10%;
+  border-radius: 16px;
+}
+
+.studentsCountRow{
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 17px;
+  color: rgba(0, 0, 0, 0.6);
+  padding-top: 7px;
+  padding-bottom: 6px;
+  background: #FFFFFF;
+  border-radius: 10px 10px 0px 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.translationButtonsRow{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 22px; 
+}
+
+.leftButtons{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.rightButton{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.audioButton{
+  margin-right: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #2D3440;
+  border-radius: 12px;
+}
+
+.videoButton{
+  margin-right: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #2D3440;
+  border-radius: 12px;
+}
+
+.shareButton{
+  margin-right: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #2D3440;
+  border-radius: 12px;
+}
+
+.leaveRoomButton{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  width: 143px;
+  height: 48px;
+  background: #CC525F;
+  border-radius: 12px;
+  font-family: 'Noto Sans Medium';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.98);
+  border: none;
+}
+
 .clientName{
+  display: flex;
+  flex-direction: row;
   font-family: 'Noto Sans Bold';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-  color: #000000;
-  margin-bottom: 5px;
+  color: #FFFFFF;
+  /*margin-bottom: 5px;*/
+}
+
+.hatIco{
+  margin-left: 6px;
+  margin-right: 2px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  gap: 4px;
+  width: 24px;
+  height: 24px;
+  background: #0F79DA;
+  backdrop-filter: blur(20px);
+  border-radius: 3px;
+}
+
+.micIco{
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 2.66667px;
+  width: 16px;
+  height: 16px;
+  background: #FF3459;
+  border: 0.333333px solid #FF3459;
+  border-radius: 4px;
+}
+
+.studentMiniRow{
+  margin-left: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px;
+  gap: 4px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  border-radius: 3px;
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 16px;
+  color: #FFFFFF;
+}
+
+.teacherLitera{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px;
+  gap: 4px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  border-radius: 3px;
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 16px;
+  color: #FFFFFF;
 }
 
 .reloadButton{

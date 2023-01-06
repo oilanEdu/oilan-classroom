@@ -195,7 +195,7 @@
 }
 
 .program span{
-    font-family: 'Noto Sans Medium';
+  font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 16px;
@@ -240,7 +240,7 @@
 	width: 20%;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: center;
 }
 
 .pDatesHead{
@@ -249,6 +249,7 @@
 
 .pEdit{
 	padding-left: 10px;
+
 	width: 15%;
 	font-family: 'Noto Sans Medium';
 	font-style: normal;

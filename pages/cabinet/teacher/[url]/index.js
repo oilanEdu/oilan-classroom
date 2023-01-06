@@ -13,6 +13,7 @@ import classnames from "classnames";
 import Pagination from "../../../../src/components/Pagination/Pagination";
 import GoToLessonWithTimerComponent from "../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 import ClickAwayListener from '@mui/base/ClickAwayListener';
+import ProgramItem from "../../../../src/components/ProgramItem/ProgramItem";
 
 function TeacherCabinet(props) {
     const [teacher, setTeacher] = useState([])
@@ -39,7 +40,7 @@ function TeacherCabinet(props) {
     const [sortType, setSortType] = useState("");
     const [sortMode, setSortMode] = useState(false)
     
-
+    const [showSetting, setShowSetting] = useState(false)
     const [currentPage, setCurrentPage] = useState(1);
     const [cardsPerPage] = useState(10);
     const indexOfLastPost = currentPage * cardsPerPage;
@@ -65,7 +66,6 @@ function TeacherCabinet(props) {
         const h = Math.floor( diff / (1000*60*60) );
         const m = Math.floor( diff / (1000*60) );
         const s = Math.floor( diff / 1000 );
-
 
         // const hour = (h - d  * 24) + (days * 24);
         
@@ -120,18 +120,22 @@ function TeacherCabinet(props) {
           teacherCourses['data'].forEach(course => { 
             setEmptyProgramCourseId(course.id)
             }
-           ); 
+          ); 
         let teacherPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByTeacherId/` + teacherIdLocal)
         let count = 0
-          teacherPrograms['data'].forEach(program => {  
-            count += 1 
+          teacherPrograms['data'].forEach(async program => {
+            console.log(program);
+            const qtyStudentsInProgram = await axios.post(`${globals.productionServerDomain}/getQtyStudentsInProgram`, program.id);
+            console.log(qtyStudentsInProgram);
+
+            count += 1
             program.number = count
-             setEmptyProgramCourseId(program.course_id)
+              setEmptyProgramCourseId(program.course_id)
             }
-           ); 
+          ); 
         const dataStudents = {
-            id: teacherIdLocal,
-            sort: sortType
+          id: teacherIdLocal,
+          sort: sortType
         }
         setTeacher(getTeacherByUrl['data'][0])
         setPrograms(teacherPrograms['data'])
@@ -347,6 +351,8 @@ function TeacherCabinet(props) {
       return (a, b) => a[field] > b[field] ? 1 : -1;
     }
 
+    console.log(programs);
+
     return (
       <>
         {showModalLesson ? (
@@ -437,49 +443,14 @@ function TeacherCabinet(props) {
                   Кол-во занятий
                 </span>
                 <span className={classnames(styles.pDates, styles.pDatesHead)}>
-                  Даты начала и конца
+                  Количество студентов
                 </span>
                 <span className={styles.pEditTitle}>Программа</span>
               </div>
               {programs.map((program) => (
-                <div className={styles.program}>
-                  <span className={styles.pNumber}>№{program.number}</span>
-                  <span className={styles.pCourse}>{program.course_title}</span>
-                  <span className={styles.pProgram}>
-                    <Image
-                      src="https://realibi.kz/file/846025.png"
-                      style={{ marginRight: "8px" }}
-                    />
-                    {program.title}
-                  </span>
-                  <span className={styles.pLessCount}>
-                    {program.lessons_count} занятий
-                  </span>
-                  <span className={styles.pDates}>
-                    <span>
-                      {new Date(program.start_date).toLocaleDateString()}
-                    </span>
-                    <span>
-                      {new Date(program.end_date).toLocaleDateString()}
-                    </span>
-                  </span>
-                  <span className={styles.pEdit}>
-                    <Link
-                      href={`${encodeURIComponent(
-                        props.url
-                      )}/editProgram/?programId=${encodeURIComponent(
-                        program.id
-                      )}`}
-                      target="_blank"
-                    >
-                      Редактировать
-                    </Link>
-                    <Image
-                      src="https://realibi.kz/file/109637.png"
-                      style={{ marginLeft: "8px" }}
-                    />
-                  </span>
-                </div>
+                <>
+                  <ProgramItem program={program} url={props.url} />
+                </>
               ))}
               <div className={styles.addProgramContainer}>
                 <button

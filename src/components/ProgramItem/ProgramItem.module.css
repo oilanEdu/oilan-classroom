@@ -1,0 +1,160 @@
+.program{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 20px;
+	height: 80px;
+	align-items: center;
+	padding: 16px;
+	gap: 12px;
+	background: #FFFFFF;
+	border-radius: 16px;
+}
+
+.program span{
+  font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 150%;
+	color: #1E2432;
+	padding: 5px;
+}
+
+.pNumber{
+	width: 5%;
+}
+
+.pNumberHead {
+	position: relative;
+}
+
+.pCourse{
+	width: 20%;
+}
+
+.pCourseHead{
+	position: relative;
+}
+
+.pProgram{
+	width: 25%;
+}
+
+.pProgramHead{
+	position: relative;
+}
+
+.pLessCount{
+	width: 15%;
+}
+
+.pLessCountHead{
+	position: relative;
+}
+
+.pDates{
+	width: 20%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.pDatesHead{
+	position: relative;
+}
+
+.pEdit{
+	padding-left: 10px;
+
+	width: 15%;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 150%;
+	align-items: center;
+	color: #007AFF !important;
+}
+
+.pEdit a{
+	text-decoration-line: none;
+}
+
+.pEdit a:hover{
+	text-decoration-line: underline;
+}
+
+.pEditTitle{
+	padding-left: 10px;
+	width: 15%;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 150%;
+	align-items: center;
+	text-decoration-line: none;
+}
+
+.editSet {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  padding: 10px 5px;
+  background: #fff;
+  left: -5px;
+  margin: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.setting {
+  position: relative;
+  background: #fff;
+  padding: 10px 0px;
+}
+
+.settingTitleHide {
+  font-family: 'Noto Sans Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  color: #0f376e !important;
+  margin: 0;
+  background: url(https://realibi.kz/file/618464.png) no-repeat;
+  background-position: 80% 60%;
+  background-size: 12px;
+  /* padding: 0 121px 0 0; */
+}
+
+.settingTitleShow {
+  font-family: 'Noto Sans Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  color: #0f376e !important;
+  margin: 0;
+  background: url(https://realibi.kz/file/635945.png) no-repeat;
+  background-position: 80% 50%;
+  background-size: 12px;
+  /* padding: 0 121px 0 0; */
+}
+
+.deleteSet {
+  position: absolute;
+  top: 87px;
+  left: -5px;
+  width: 100%;
+  padding: 10px 5px;
+  background: #fff;
+  z-index: 5;
+  margin: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.deleteSet:hover {
+  text-decoration: underline;
+}

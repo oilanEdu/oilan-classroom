@@ -320,7 +320,7 @@ const Lesson = (props) => {
         {videoTrack?.enabled ? (
           <video style={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', borderRadius: '6px'}} className={styles.minVidArea} ref={videoRef} autoPlay playsInline muted={isLocal} ></video>
         ) : <div className={styles.zaglushkahahaMini}></div>}
-        <div style={{position: 'absolute', bottom: '21px'}}>
+        <div style={{position: 'absolute', bottom: '6px'}}>
           {peer.roleName == 'teacher'?
             (<div className={styles.clientName}>
               <div className={styles.hatIco}>
@@ -439,7 +439,7 @@ const Lesson = (props) => {
         {videoTrack?.enabled ? (
           <video style={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', borderRadius: '6px'}} className={styles.minVidArea} ref={videoRef} autoPlay playsInline muted={isLocal} ></video>
         ) : <div className={styles.zaglushkahahaMini}></div>}
-        <div style={{position: 'absolute', bottom: '21px'}}>
+        <div style={{position: 'absolute', bottom: '6px'}}>
           {peer.roleName == 'teacher'?
             (<div className={styles.clientName}>
               <div className={styles.hatIco}>
@@ -498,7 +498,7 @@ const Lesson = (props) => {
                   {<>
                     {localPeer && <TeacherVideoTile peer={localPeer} isLocal={true} />}
                     <div className={styles.underTileRow}>
-                      <div className={styles.studentsCountRow}>Студенты {peers?.length - 1}</div>
+                      {/*<div className={styles.studentsCountRow}>Студенты {peers?.length - 1}</div>*/}
                       <div className={styles.miniaturesLine}>
                         {peers &&
                           peers
@@ -513,6 +513,22 @@ const Lesson = (props) => {
                   </>}
                   <div className={styles.translationButtonsRow}>
                     <div className={styles.leftButtons}>
+                      <div
+                        className={styles.peersCount}
+                      >
+                        <span
+                          style={{
+                            background: "url(https://realibi.kz/file/645686.png) no-repeat",
+                            backgroundPosition: "center",
+                            width: "25.6px",
+                            height: "21.33px",
+                            paddingRight: "30px",
+                            marginRight: "14px"
+                          }}
+                        >
+                        </span>
+                        {peers?.length}
+                      </div>
                       <button
                         className={styles.audioButton}
                         onClick={toggleAudio}
@@ -613,7 +629,7 @@ const Lesson = (props) => {
                         } 
                     
                     <div className={styles.underTileRow}>
-                      <div className={styles.studentsCountRow}>Участники {peers?.length}</div>
+                      {/*<div className={styles.studentsCountRow}>Участники {peers?.length}</div>*/}
                       <div className={styles.miniaturesLine}>
                         {peers &&
                           peers
@@ -628,6 +644,22 @@ const Lesson = (props) => {
                   </>}
                   <div className={styles.translationButtonsRow}>
                     <div className={styles.leftButtons}>
+                      <div
+                        className={styles.peersCount}
+                      >
+                        <span
+                          style={{
+                            background: "url(https://realibi.kz/file/645686.png) no-repeat",
+                            backgroundPosition: "center",
+                            width: "25.6px",
+                            height: "21.33px",
+                            paddingRight: "30px",
+                            marginRight: "14px"
+                          }}
+                        >
+                        </span>
+                        {peers?.length}
+                      </div>
                       <button
                         className={styles.audioButton}
                         onClick={toggleAudio}

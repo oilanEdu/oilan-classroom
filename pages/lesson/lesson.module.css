@@ -82,15 +82,35 @@
   margin-top: 20px;
 }
 
+.peersCount{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+  background: #404C60;
+  border: 1px solid #404C60;
+  border-radius: 12px;
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: 0.5px;
+  color: rgba(245, 249, 255, 0.95);
+  margin-right: 10px
+}
+
 .underTileRow{
   width: 80%;
   margin-left: 10%;
-  margin-top: 20px;
+  /*margin-top: 20px;*/
   /*position: absolute;
   left: 7.5%;
   bottom: 0%;*/
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.6);
+  /*background-color: rgba(255, 255, 255, 0.6);*/
   backdrop-filter: blur(22.5806px);
   /*transform: translate(-50%, -50%);*/
 }
@@ -104,9 +124,9 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding-left: 20px;
+  /*padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 15px;
+  padding-bottom: 15px;*/
 }
 
 .bigSquare{

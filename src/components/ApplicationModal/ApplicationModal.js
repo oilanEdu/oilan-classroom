@@ -33,7 +33,8 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
   const thisYear = date.getFullYear()
   
   const [dates, setDates] = useState('')
-  const [selectedDate, setSelectedDate] = useState(new Date(thisYear, thisMonth, tomorrowDay))
+  const [datesLoaded, setDatesLoaded] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(new Date(thisYear, thisMonth, tomorrowDay, 10, 10, 10))
   const [selectedTime, setSelectedTime] = useState(null)
   const [busyHours, setBusyHours] = useState(['08:00']);
   const [selectedBlock, setSelectedBlock] = useState('08:00')
@@ -62,6 +63,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
     let dates = await axios.post(`${globals.productionServerDomain}/getDatesForApplication/` + id)
     // console.log("DATES!", dates['data'])
     setDates(dates['data'])
+    setDatesLoaded(true)
   }
 
   const firstStepValidation = () =>  {
@@ -216,7 +218,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           <option value="0">Звонок</option>
           <option value="1">Whatsapp</option>
         </select>
-        <DateTimePicker 
+        {datesLoaded === true ? <DateTimePicker 
           disabledDates={dates} 
           outputDate={outputDate} 
           setOutputDate={setOutputDate}
@@ -228,7 +230,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           setBusyHours={setBusyHours}
           selectedBlock={selectedBlock}
           setSelectedBlock={setSelectedBlock}
-        />
+        /> : ''}
         <CaptchaComponent
           insertCaptchaText={insertCaptchaText}
           setCaptchaText={setCaptchaText}

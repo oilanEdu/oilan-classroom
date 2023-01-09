@@ -25,8 +25,15 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
   const [proccessOfCaptchaUrl, setProccessOfCaptchaUrl] = useState('https://realibi.kz/file/633881.png')
 
   const [outputDate, setOutputDate] = useState("")
+  
+  const date = new Date()
+  const thisDay = date.getDate()
+  const tomorrowDay = date.getDate() + 1
+  const thisMonth = date.getMonth()
+  const thisYear = date.getFullYear()
+  
   const [dates, setDates] = useState('')
-  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [selectedDate, setSelectedDate] = useState(new Date(thisYear, thisMonth, tomorrowDay))
   const [selectedTime, setSelectedTime] = useState(null)
   const [busyHours, setBusyHours] = useState(['08:00']);
   const [selectedBlock, setSelectedBlock] = useState('08:00')

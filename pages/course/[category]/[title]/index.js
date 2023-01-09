@@ -78,7 +78,7 @@ function Title(props) {
                 {/* {course?.url === "EnglishForBeginner" ? <Comments /> : ''} */}
                 <CourseComments course={course}/>
                 <CoursePrice course={course}/>
-                {course != undefined ?                 <ApplicationBlock 
+                {course != undefined ? <ApplicationBlock 
                     course={course} 
                     dates={dates}
                     teacherByCourse={teacherByCourse}

@@ -16,6 +16,8 @@ useEffect(()=> {
     } 
   }, [])
 const workWithDates = (date) => {
+  console.log("workWithDates", date);
+  console.log(props.disabledDates, "props.disabledDates");
   //date.setDate(date.getDate() + 1);
   let myOurs = [] 
   console.log('DATE', date)
@@ -66,6 +68,7 @@ const workWithDates = (date) => {
 // }, [props.setSelectedDate])
 useEffect(() => {
   workWithDates(props.selectedDate)
+  console.log(props.selectedDate, "props.selectedDate");
 }, [props.selectedDate])
 useEffect(() => {
 props.setOutputDate(new Date(props.selectedDate).toISOString().split('T')[0]+'T'+props.selectedBlock+':00.000Z')
@@ -88,6 +91,7 @@ return (
         props.setBusyHours('00:00')
         props.setSelectedBlock('00:00') 
         props.setSelectedDate(new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000 + 24*60*60*1000));
+        console.log(date, "DAAATE");
         }
       }
       className={styles.calendar}

@@ -92,6 +92,7 @@ return (
         props.setSelectedBlock('00:00') 
         props.setSelectedDate(new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000 + 24*60*60*1000));
         console.log(date, "DAAATE");
+        props.setTimeIsSelected(false)
         }
       }
       className={styles.calendar}
@@ -106,7 +107,7 @@ return (
                 props.setSelectedBlock(block)
                 //props.setOutputDate(new Date(props.selectedDate).toISOString().split('T')[0]+'T'+props.selectedBlock+':00.000Z')
                 console.log('OUTPUT_DATE', props.outputDate)
-
+                props.setTimeIsSelected(true)
               }
             }}
           >

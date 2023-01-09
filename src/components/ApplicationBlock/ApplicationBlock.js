@@ -37,6 +37,7 @@ const ApplicationBlock = (props) => {
 
   const [dates, setDates] = useState('')
   const [datesLoaded, setDatesLoaded] = useState(false)
+  const [timeIsSelected, setTimeIsSelected] = useState(false)
   const [selectedDate, setSelectedDate] = useState(new Date(thisYear, thisMonth, tomorrowDay, 10, 10, 10))
   const [selectedTime, setSelectedTime] = useState(null)
   const [busyHours, setBusyHours] = useState(['08:00']);
@@ -178,6 +179,13 @@ const ApplicationBlock = (props) => {
       setProccessOfCaptchaUrl('https://realibi.kz/file/98680.png');}
     }
 
+  //проверка все ли условия выполнены перед отправкой заявки
+  useEffect(() => {
+    if (phone.length > 10 && fullname.length > 3 && email.length > 6 && timeIsSelected == true) {
+      setShowCaptcha(true)
+    }
+  }, [phone, fullname, email, timeIsSelected])
+
   return <div className={styles.container}>
     <SuccessfullyModal show={showSend} onClickNext={onClickNext} handleShow={handleShowSend} />
     <Backdrop show={showSend} />
@@ -193,9 +201,9 @@ const ApplicationBlock = (props) => {
           name="fullname"
           value={fullname}
           onChange={(e) => {
-            if (phone.length > 10 && fullname.length > 3 && email.length > 6) {
-              setShowCaptcha(true)
-            }
+            // if (phone.length > 10 && fullname.length > 3 && email.length > 6 && timeIsSelected == true) {
+            //   setShowCaptcha(true)
+            // }
             setFullname(e.target.value)
           }} 
         /> 
@@ -207,9 +215,9 @@ const ApplicationBlock = (props) => {
           name="email"
           value={email}
           onChange={(e) => {
-            if (phone.length > 10 && fullname.length > 3 && email.length > 6) {
-              setShowCaptcha(true)
-            }
+            // if (phone.length > 10 && fullname.length > 3 && email.length > 6 && timeIsSelected == true) {
+            //   setShowCaptcha(true)
+            // }
             setEmail(e.target.value)
           }}
         />
@@ -226,14 +234,15 @@ const ApplicationBlock = (props) => {
             } 
           }}
           onChange={(e) => {
-            if (phone.length > 10 && fullname.length > 3  && email.length > 6) {
-              setShowCaptcha(true)
-            }
+            // if (phone.length > 10 && fullname.length > 3 && email.length > 6 && timeIsSelected == true) {
+            //   setShowCaptcha(true)
+            // }
             globals.checkPhoneMask(e.target.value, setPhone);
           }}
         /> 
       </label>
-      {datesLoaded === true ? <DateTimePicker 
+      {datesLoaded === true ? 
+      <DateTimePicker 
         disabledDates={dates} 
         outputDate={outputDate} 
         setOutputDate={setOutputDate}
@@ -245,6 +254,7 @@ const ApplicationBlock = (props) => {
         setBusyHours={setBusyHours}
         selectedBlock={selectedBlock}
         setSelectedBlock={setSelectedBlock}
+        setTimeIsSelected={setTimeIsSelected}
       /> : ''}
       <CaptchaComponent
         insertCaptchaText={insertCaptchaText}

@@ -34,6 +34,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
   
   const [dates, setDates] = useState('')
   const [datesLoaded, setDatesLoaded] = useState(false)
+  const [timeIsSelected, setTimeIsSelected] = useState(false)
   const [selectedDate, setSelectedDate] = useState(new Date(thisYear, thisMonth, tomorrowDay, 10, 10, 10))
   const [selectedTime, setSelectedTime] = useState(null)
   const [busyHours, setBusyHours] = useState(['08:00']);
@@ -162,6 +163,13 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
     setProccessOfCaptchaUrl('https://realibi.kz/file/98680.png');}
   }
 
+    //проверка все ли условия выполнены перед отправкой заявки
+    useEffect(() => {
+      if (phone.length > 10 && fullname.length > 3 && connection !== "" && timeIsSelected === true) {
+        setShowCaptcha(true)
+      }
+    }, [phone, fullname, connection, timeIsSelected,])
+
   return <>
     <div style={{
       transform: `translate(${showSend ? "-50%, -50%" : "-50%, -100%"})`,
@@ -181,9 +189,9 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           name="fullname"
           value={fullname}
           onChange={(e) => {
-            if (phone.length > 10 && fullname.length > 3 && connection !== "") {
-              setShowCaptcha(true)
-            }
+            // if (phone.length > 10 && fullname.length > 3 && connection !== "" && timeIsSelected === true) {
+            //   setShowCaptcha(true)
+            // }
             setFullname(e.target.value)
           }}
         />
@@ -198,9 +206,9 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
             }
           }}
           onChange={(e) => {
-            if (phone.length > 10 && fullname.length > 3 && connection !== "") {
-              setShowCaptcha(true)
-            }
+            // if (phone.length > 10 && fullname.length > 3 && connection !== "" && timeIsSelected === true) {
+            //   setShowCaptcha(true)
+            // }
             globals.checkPhoneMask(e.target.value, setPhone)
           }}
         />
@@ -208,9 +216,9 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           className={styles.selectBlock} 
           value={connection} 
           onChange={e => {
-            if (phone.length > 10 && fullname.length > 3) {
-              setShowCaptcha(true)
-            }
+            // if (phone.length > 10 && fullname.length > 3 && connection !== "" && timeIsSelected === true) {
+            //   setShowCaptcha(true)
+            // }
             setConnection(e.target.value)
           }}
         >
@@ -218,7 +226,8 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           <option value="0">Звонок</option>
           <option value="1">Whatsapp</option>
         </select>
-        {datesLoaded === true ? <DateTimePicker 
+        {datesLoaded === true ? 
+        <DateTimePicker 
           disabledDates={dates} 
           outputDate={outputDate} 
           setOutputDate={setOutputDate}
@@ -230,6 +239,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           setBusyHours={setBusyHours}
           selectedBlock={selectedBlock}
           setSelectedBlock={setSelectedBlock}
+          setTimeIsSelected={setTimeIsSelected}
         /> : ''}
         <CaptchaComponent
           insertCaptchaText={insertCaptchaText}

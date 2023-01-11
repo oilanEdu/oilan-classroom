@@ -7,7 +7,7 @@ import { PieChart, Pie, Sector, Cell } from "recharts";
 import GoToLessonWithTimer from "../GoToLessonWithTimer/GoToLessonWithTimer";
 import GoToLessonWithTimerComponent from "../GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 
-const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, courseId}) => {
+const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, courseId, courseUrl}) => {
   // console.log('stat data', student, lesson, lessons, scores)
   const [days, setDays] = useState('');
   const [hours, setHours] = useState(0);
@@ -29,7 +29,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
   }, [closerLesson])
 
   const updateTimer = () => {
-    const future = Date.parse(closerLesson.start_time);
+    const future = Date.parse(closerLesson?.start_time);
     const now = new Date();
     const diff = future - now;
     
@@ -75,11 +75,18 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
                   console.log('check', 1)
                   diff = Date.parse(new Date()) - Date.parse(new Date(lesson.fact_date)) 
                   closerDate = lessonFactDate
-                  setCloserLesson(lesson) 
+                  // setCloserLesson(lesson) 
                 }else{
-                  setCloserLesson(lesson) 
+                  // setCloserLesson(lesson) 
                 }
     })
+    let lessonsForNearestDate = lessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0))
+    var temp = lessonsForNearestDate.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
+    // var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
+    var idx = temp.indexOf(Math.min(...temp));
+    let closerLessonLocal =  lessonsForNearestDate[idx];
+    setCloserLesson(closerLessonLocal) 
+
     console.log('TOTAL', baseMark, total)
     console.log('CloserLesson', closerLesson)
     console.log('lessons', lessons)
@@ -185,7 +192,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
     }
   
   return <div className={styles.container}>     
-    <GoToLessonWithTimerComponent isTeacher={false} url={student.nickname} student={student} lesson={lesson} lessons={lessons} scores={scores} nickname={nickname} courseId={courseId}/>
+    <GoToLessonWithTimerComponent isTeacher={false} url={student.nickname} nickname={nickname} courseUrl={courseUrl}/>
     <div className={styles.course_container}>
       <div>
         <p>Онлайн-курс</p>
@@ -195,7 +202,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
         <h2>Преподаватель курса</h2>
         
         <p>{student[0]?.teach_surname} {student[0]?.teach_name}</p>
-        {/* <p>Занятие №{closerLesson.number} {closerLesson.title}</p> */}
+        <p>Занятие №{closerLesson?.number} {closerLesson?.title}</p>
         <div>
           <button
           onClick={() => {

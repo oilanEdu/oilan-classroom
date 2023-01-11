@@ -39,7 +39,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
 
     const [idOfNearest, setIdOfNearest] = useState()
     const [lessonsForNearestDate, setLessonsForNearestDate] = useState([])
-    useEffect(() => {
+    useEffect(() => { 
       if (lessonsForNearestDate.length >= 1) {
         nearestDate(lessonsForNearestDate, Date.now()) 
       }
@@ -475,13 +475,13 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     //STUDENT
     const [data2Loaded, setData2Loaded] = useState(false)
     const fetchData = async () => {
-      // const response = await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${nickname}&course_url=${courseUrl}`).then(async (res) => {
-      //   await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${courseUrl}&program_id=${res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(res => {
-      //     setLessons(res.data);
-      //     debugger
-      //     setData2Loaded(true)
-      //   });
-      // });
+      console.log(nickname, courseUrl, "nickname, courseUrl");
+      const response = await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${nickname}&course_url=${courseUrl}`).then(async (res) => {
+        await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${courseUrl}&program_id=${res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(res => {
+          setLessons(res.data);
+          setData2Loaded(true)
+        });
+      });
     };
     useEffect(() => {
       // fetchData()

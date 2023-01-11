@@ -53,7 +53,7 @@ const StudentCourse = (props) => {
           (<></>):
           (
             <>
-              <StudentCourseStatics student={student} lesson={lesson} lessons={lessons} scores={scores} />
+              <StudentCourseStatics student={student} lesson={lesson} lessons={lessons} scores={scores} courseUrl={courseUrl} nickname={nickname} />
               <StudentLessonsProgram courseUrl={courseUrl} nickname={nickname} lessons={lessons} />
             </>
           )

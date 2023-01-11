@@ -53,6 +53,7 @@ const Homeworks = (props) => {
   return <>
     <HeaderStudent white={true} name={student?.name} surname={student[0]?.surname} />
     <div style={{padding: "82px 120px", backgroundColor: "#F1FAFF"}}>
+    <GoToLessonWithTimerComponent isTeacher={false} courseUrl={courseUrl} nickname={nickname}/>
       {lessons.map((lesson) => {
         return <StudentHomeworks lesson={lesson} student={student.id} padding={"40px 120px"}/>
       })}
@@ -62,14 +63,14 @@ const Homeworks = (props) => {
 };
 
 Homeworks.getInitialProps = async (ctx) => {
-  if (ctx.query.courseUrl !== undefined && ctx.query.nickname !== undefined) {
-    return {
-      courseUrl: ctx.query.courseUrl,
-      nickname: ctx.query.nickname
+    if(ctx.query.courseUrl !== undefined && ctx.query.nickname !== undefined) {
+        return {
+            courseUrl: ctx.query.courseUrl,
+            nickname: ctx.query.nickname
+        }
+    }else{
+        return {};
     }
-  } else {
-    return {};
-  }
-};
+}
 
 export default Homeworks;

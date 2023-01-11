@@ -127,6 +127,13 @@ function ModalForLessonConfiguration(props) {
     loadStudentLessons(props?.student?.student_id, props?.student?.program_id)
   }, []) 
 
+  const [lessons2, setLessons2] = useState()
+  useEffect(() => {
+    if (lessonsUpcoming != undefined) {
+      setLessons2(lessonsUpcoming) 
+      debugger
+    }
+  }, [lessonsUpcoming])
   return (
     <div >
       <div className={styles.blackBackground}>
@@ -171,8 +178,8 @@ function ModalForLessonConfiguration(props) {
           <h3 className={styles.title}>ВЫБРАТЬ ДАТЫ И ВРЕМЯ ЗАНЯТИЙ</h3>
           <div className={styles.innerWrapper}>
             <div className={styles.timetablesWrapper}>
-            {lessonsUpcoming?.map(lesson => 
-                <DateAndTimePickerForLesson lesson={lesson} student={props.student} saveLessonDateAndTime={saveLessonDateAndTime} saveIsClicked={saveIsClicked}/> 
+            {lessons2?.map(lesson => 
+                <DateAndTimePickerForLesson lessons2={lessons2} setLessons2={setLessons2} lesson={lesson} lesson_id={lesson.id} lesson_order={lesson.lesson_order} student={props.student} saveLessonDateAndTime={saveLessonDateAndTime} saveIsClicked={saveIsClicked}/> 
           )} 
             </div>
           <div className={styles.buttonWrapper}>

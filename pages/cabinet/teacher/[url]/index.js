@@ -57,7 +57,7 @@ function TeacherCabinet(props) {
     const isInMainPage = true
     
     const updateTimer = () => {
-        const future = Date.parse(closerLesson.fact_time);
+        const future = Date.parse(closerLesson.personal_time);
         const now = new Date();
         const diff = future - now;
         
@@ -66,6 +66,7 @@ function TeacherCabinet(props) {
         const h = Math.floor( diff / (1000*60*60) );
         const m = Math.floor( diff / (1000*60) );
         const s = Math.floor( diff / 1000 );
+
 
         // const hour = (h - d  * 24) + (days * 24);
         
@@ -132,10 +133,10 @@ function TeacherCabinet(props) {
             program.number = count
               setEmptyProgramCourseId(program.course_id)
             }
-          ); 
+           ); 
         const dataStudents = {
-          id: teacherIdLocal,
-          sort: sortType
+            id: teacherIdLocal,
+            sort: sortType
         }
         setTeacher(getTeacherByUrl['data'][0])
         setPrograms(teacherPrograms['data'])
@@ -171,10 +172,10 @@ function TeacherCabinet(props) {
                         closerDate = lessonDate
                         if (closerLesson){
                             if (closerDate < new Date(closerLesson.fact_time).toLocaleDateString()){
-                                setCloserLesson(lesson)
+                                // setCloserLesson(lesson)
                             }
                         }else{
-                            setCloserLesson(lesson)
+                            // setCloserLesson(lesson)
                         }
                         let curr_hours = dateStr.getHours();
                         let curr_minutes = dateStr.getMinutes();
@@ -221,16 +222,19 @@ function TeacherCabinet(props) {
                         }
                     })
                 })   
-                var lessonsFuture = lessons.filter(el => (new Date() - new Date(el.fact_time).getTime() < 0))
-                var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.fact_time).getTime()));
+                var lessonsFuture = lessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0)) 
+                var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.personal_time).getTime()));
                 var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
                 var idx = withoutNan.indexOf(Math.min(...withoutNan)); 
-                let curr_hours = new Date(lessonsFuture[idx].fact_time).getHours();
-                let curr_minutes = new Date(lessonsFuture[idx].fact_time).getMinutes();
-                student.closer_date = new Date(lessonsFuture[idx].fact_time).toLocaleDateString()
+                let curr_hours = new Date(lessonsFuture[idx].personal_time).getHours();
+                let curr_minutes = new Date(lessonsFuture[idx].personal_time).getMinutes();
+                student.closer_date = new Date(lessonsFuture[idx].personal_time).toLocaleDateString()
                 student.curr_hours = curr_hours 
                 student.curr_minutes = curr_minutes 
-                student.lesson_date = new Date(lessonsFuture[idx].fact_time).toLocaleDateString()
+                student.lesson_date = new Date(lessonsFuture[idx].personal_time).toLocaleDateString()
+                if (new Date(lessonsFuture[idx].personal_time).getTime() > new Date(closerLesson.personal_time).getTime()) {
+                  setCloserLesson(lessonsFuture[idx]) 
+                }
             })
             }
            );
@@ -392,6 +396,7 @@ function TeacherCabinet(props) {
                   запланированной программе и проверяйтя домашние задания
                   студентов.
                 </p>
+                {/* <p>Занятие №{closerLesson.lesson_number} {closerLesson.title}</p> */}
                 <button
                   onClick={() => {
                     closerLesson.personal_lesson_link ||

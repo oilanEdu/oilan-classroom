@@ -63,12 +63,38 @@ const ApplicationBlock = (props) => {
   }, [randomizedCaptchaId])  
  
   const loadDates = async () => { 
-    let id = props?.course?.id
-    let dates = await axios.post(`${globals.productionServerDomain}/getDatesForApplication/` + id)
+    let teacherId = props.teacherId
+    let getCoursesId = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + teacherId)
+    let coursesId = []
+    getCoursesId['data'].map(el => {
+      coursesId.push(el.id)
+    })
+    // let id = props?.course?.id
+    const data = {
+      coursesId, 
+      teacherId 
+    };
+    // let dates = await axios.post(`${globals.productionServerDomain}/getDatesForApplicationSecond/` + data)
+
+    let array1 = axios({ 
+      method: "post",
+      url: `${globals.productionServerDomain}/getDatesForApplicationSecond`,
+      data: data,
+    })
+    .then(function (res) {
+      if (res.data[0]) {
+        setDates(res['data'])
+      } else {
+        console.log("No dates");
+      }
+    })
+    .catch((err) => {
+      alert("Произошла ошибка");
+    });
     // console.log("DATES!", dates['data'])
-    setDates(dates['data'])  
+    // setDates(dates['data'])  
     setDatesLoaded(true)
-  }
+  } 
 
   const loadCaptchaWithId = async () => {
     let data = randomizedCaptchaId
@@ -222,7 +248,7 @@ const ApplicationBlock = (props) => {
           }}
         />
       </label>
-      <label className={styles.input_container}> 
+      <label className={styles.input_container}>  
         Ваш Телефон
         <input 
           placeholder="Ваш Телефон" 

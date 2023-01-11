@@ -20,8 +20,9 @@ const workWithDates = (date) => {
   console.log(props.disabledDates, "props.disabledDates");
   //date.setDate(date.getDate() + 1);
   let myOurs = [] 
+  let myOursForEmptyApplications = [] 
   console.log('DATE', date)
-  console.log('CHECK', new Date(date).toISOString().split('T')[0])
+  console.log('CHECK', new Date(date).toISOString().split('T')[0]) 
   for (const disabledDate of props.disabledDates) {  
     if (disabledDate.lesson_time) {
       let regularDate = disabledDate.lesson_time
@@ -36,31 +37,72 @@ const workWithDates = (date) => {
         if (Number(currentTimeType.toString().substring(3,5)) > 0){
           myOurs = myOurs.concat((Number(currentTimeType.toString().substring(0,2))+1).toString()+':00')
         }
-
-        //24 часа вперед занять уроки
-        let dayBack = new Date(Date.now() + 1000 * 86400)
-        if (new Date(date).toISOString().split('T')[0] === dayBack.toISOString().split('T')[0]) {
-          console.log("HHHHHAAAAAAAAY!");
-          emptyTimes.map(el => {
-            const timeNow = new Date().getHours() + ":" + ((new Date().getMinutes() < 10) ? "0" + new Date().getMinutes() : new Date().getMinutes())
-            if (parseInt(el.replace(':', '')) < parseInt(timeNow.replace(':', ''))) {
-            console.log("PASSED");
-            myOurs = myOurs.concat(el)
-          } else {
-            console.log("NOT PASSED");
-          }
-          console.log(parseInt(el.replace(':', '')), parseInt(timeNow.replace(':', '')), "THIS", el, date)
-        })
-          // console.log(new Date(date).toISOString().split('T')[0], dayBack.toISOString().split('T')[0], "HHAAY");
-        }
-
-      props.setBusyHours(myOurs);
-      if (!myOurs){props.setBusyHours(myOurs);}
       } 
       //setOutputDate(new Date(date).toISOString().split('T')[0]+'T'+selectedBlock+':00.000Z')
     }
   }
-  // debugger
+  //24 часа вперед занять уроки
+  let dayBack = new Date(Date.now() + 1000 * 86400)
+  if (new Date(date).toISOString().split('T')[0] === dayBack.toISOString().split('T')[0]) {
+    console.log("HHHHHAAAAAAAAY!"); 
+    emptyTimes.map(el => {
+      const timeNow = new Date().getHours() + ":" + ((new Date().getMinutes() < 10) ? "0" + new Date().getMinutes() : new Date().getMinutes())
+      if (parseInt(el.replace(':', '')) < parseInt(timeNow.replace(':', ''))) {
+      console.log("PASSED");
+      myOurs = myOurs.concat(el)
+    } else {
+      console.log("NOT PASSED");
+    }
+    console.log(parseInt(el.replace(':', '')), parseInt(timeNow.replace(':', '')), "THIS", el, date)
+    })
+    // console.log(new Date(date).toISOString().split('T')[0], dayBack.toISOString().split('T')[0], "HHAAY");
+  }
+  props.setBusyHours(myOurs);
+  if (!myOurs){props.setBusyHours(myOurs);}
+
+  // //Занимает ближайшие 24 часа, дубликат кода выше, но срабатывает в случае когда у курса нет заявок.
+  // if (props.disabledDates.length == 0) {
+  //   console.log("Занятых уроков нет")
+  //     //24 часа вперед занять уроки
+  //     let dayBack = new Date(Date.now() + 1000 * 86400)
+  //     if (new Date(date).toISOString().split('T')[0] === dayBack.toISOString().split('T')[0]) {
+  //       emptyTimes.map(el => {
+  //         const timeNow = new Date().getHours() + ":" + ((new Date().getMinutes() < 10) ? "0" + new Date().getMinutes() : new Date().getMinutes())
+  //         if (parseInt(el.replace(':', '')) < parseInt(timeNow.replace(':', ''))) {
+  //         console.log("PASSED");
+  //         myOurs.push(el)
+  //       } else {
+  //         console.log("NOT PASSED");
+  //       }
+  //       console.log(parseInt(el.replace(':', '')), parseInt(timeNow.replace(':', '')), "THIS", el, date)
+  //     })
+  //       // console.log(new Date(date).toISOString().split('T')[0], dayBack.toISOString().split('T')[0], "HHAAY");
+  //     }
+  //     props.setBusyHours(myOurs);
+  //     if (!myOurs){props.setBusyHours(myOurs);}
+  // }
+
+  // //Если у курса будут только заявки без времени,занять на 24 часа, тоже дубликат
+  // if (props.disabledDates.every(el => el.lesson_time == null)) {
+  //   console.log("Занятых уроков нет")
+  //     //24 часа вперед занять уроки
+  //     let dayBack = new Date(Date.now() + 1000 * 86400)
+  //     if (new Date(date).toISOString().split('T')[0] === dayBack.toISOString().split('T')[0]) {
+  //       emptyTimes.map(el => {
+  //         const timeNow = new Date().getHours() + ":" + ((new Date().getMinutes() < 10) ? "0" + new Date().getMinutes() : new Date().getMinutes())
+  //         if (parseInt(el.replace(':', '')) < parseInt(timeNow.replace(':', ''))) {
+  //         console.log("PASSED");
+  //         myOurs.push(el)
+  //       } else {
+  //         console.log("NOT PASSED");
+  //       }
+  //       console.log(parseInt(el.replace(':', '')), parseInt(timeNow.replace(':', '')), "THIS", el, date)
+  //     })
+  //       // console.log(new Date(date).toISOString().split('T')[0], dayBack.toISOString().split('T')[0], "HHAAY");
+  //     }
+  //     props.setBusyHours(myOurs);
+  //     if (!myOurs){props.setBusyHours(myOurs);}
+  // }
 }
 // useEffect(() => {
 //   props.setSelectedDate

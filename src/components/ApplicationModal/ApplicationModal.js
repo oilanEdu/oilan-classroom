@@ -8,7 +8,7 @@ import CaptchaComponent from "../Captcha/Captcha";
 import Link from "next/link";
 import DateTimePicker from "../DateTimePicker/DateTimePicker";
 
-const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByCourse}) => {
+const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByCourse, teacherId}) => {
   const [check, setCheck] = useState(false);
   const [fullname, setFullname] = useState("");
   const [phone, setPhone] = useState("");
@@ -58,14 +58,40 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
     console.log("captcha2", captcha2['data'])
     setRandomizedCaptchaData(captcha2['data'])
   }
-
   const loadDates = async () => { 
-    let id = course?.id
-    let dates = await axios.post(`${globals.productionServerDomain}/getDatesForApplication/` + id)
+    let id = teacherId
+    let getCoursesId = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + id)
+    let coursesId = []
+    getCoursesId['data'].map(el => {
+      coursesId.push(el.id)
+    })
+    // let id = props?.course?.id
+    let dates = await axios.post(`${globals.productionServerDomain}/getDatesForApplication/` + coursesId)
     // console.log("DATES!", dates['data'])
-    setDates(dates['data'])
+    const data = {
+      coursesId, 
+      teacherId 
+    };
+    // let dates = await axios.post(`${globals.productionServerDomain}/getDatesForApplicationSecond/` + data)
+
+    let array1 = axios({ 
+      method: "post",
+      url: `${globals.productionServerDomain}/getDatesForApplicationSecond`,
+      data: data,
+    })
+    .then(function (res) {
+      if (res.data[0]) {
+        setDates(res['data'])
+      } else {
+        console.log("No dates");
+      }
+    })
+    .catch((err) => {
+      alert("Произошла ошибка");
+    });
+    setDates(dates['data'])  
     setDatesLoaded(true)
-  }
+  } 
 
   const firstStepValidation = () =>  {
     if (fullname.length < 3) { 

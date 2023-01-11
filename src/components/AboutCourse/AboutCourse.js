@@ -29,7 +29,7 @@ export default function AboutCourse(props) {
   return (
     <div className={styles.container}>
       <SuccessfullyModal show={showSuccess} onClickNext={handleShowSuccess}/>
-      <ApplicationModal course={props?.course} showSend={showSend} handleShowSend={handleShowSend} onClose={closeHandler} teacherByCourse={props?.teacherByCourse}/>
+      <ApplicationModal course={props?.course} showSend={showSend} handleShowSend={handleShowSend} onClose={closeHandler} teacherByCourse={props?.teacherByCourse} teacherId={props.teacherId}/>
       <div className={styles.mainInfo}>
         <div className={styles.leftMainInfo}>
           <div className={styles.flud}>

@@ -24,6 +24,7 @@ function Title(props) {
     const [programs, setPrograms] = useState()
     const [teacherByCourse, setTeacherByCourse] = useState()
     const [sertificates, setSertificates] = useState()
+    const [teacherId, setTeacherId] = useState()
     const router = useRouter()
 
     useEffect(() => {
@@ -53,6 +54,7 @@ function Title(props) {
         setTeacherByCourse(getTeacherByCourse['data'][0])
         setSertificates(getSertificateByTeacherId['data'])
         setDates(getDatesForApplication['data'])
+        setTeacherId(teacherIdLocal)
       }
 
     return (
@@ -61,9 +63,10 @@ function Title(props) {
                 <Header white={true}/>
                 {course != undefined ? <AboutCourse 
                     courseInfoBlocks={courseInfoBlocks} 
-                    teacherByCourse={teacherByCourse} 
+                    teacherByCourse={teacherByCourse}  
                     course={course} 
                     courseTargets={courseTargets}
+                    teacherId={teacherId}
                 /> : ''}
                 <AboutTeacher 
                     teacherByCourse={teacherByCourse} 
@@ -82,6 +85,7 @@ function Title(props) {
                     course={course} 
                     dates={dates}
                     teacherByCourse={teacherByCourse}
+                    teacherId={teacherId}
                 /> : ''}
 
                 <Footer />

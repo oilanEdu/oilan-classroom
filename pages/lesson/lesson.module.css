@@ -58,9 +58,9 @@
   position: relative;
   display: flex; 
   flex-direction: column; 
-  justify-content: end;
+  justify-content: flex-start;
   width: 100%;
-  aspect-ratio: 16/9; 
+  /*aspect-ratio: 16/9; */
 }
 
 .zaglushkahaha{
@@ -69,7 +69,7 @@
   border-radius: 16px;
   background-image: url("https://realibi.kz/file/114603.jpg");
   background-size: 100% 100%;
-  aspect-ratio: 4/3;
+  aspect-ratio: 16/9;
 }
 
 .zaglushkahahaMini{
@@ -130,7 +130,7 @@
 }
 
 .bigSquare{
-  aspect-ratio: 4/3;
+  aspect-ratio: 16/9;
   background-color: black; 
   width: 80%;
   margin-left: 10%;

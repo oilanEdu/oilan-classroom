@@ -320,7 +320,7 @@ const Lesson = (props) => {
         {videoTrack?.enabled ? (
           <video style={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', borderRadius: '6px'}} className={styles.minVidArea} ref={videoRef} autoPlay playsInline muted={isLocal} ></video>
         ) : <div className={styles.zaglushkahahaMini}></div>}
-        <div style={{position: 'absolute', bottom: '6px'}}>
+        <div style={{transform: 'translate(0px, -30px)', bottom: '6px'}}>
           {peer.roleName == 'teacher'?
             (<div className={styles.clientName}>
               <div className={styles.hatIco}>
@@ -437,9 +437,9 @@ const Lesson = (props) => {
     return (
       <div style={{display: 'flex', flexDirection: 'column', width: '16.5%', marginRight: '12px'}}>
         {videoTrack?.enabled ? (
-          <video style={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', borderRadius: '6px'}} className={styles.minVidArea} ref={videoRef} autoPlay playsInline muted={isLocal} ></video>
+          <video style={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', aspectRatio: '4/3', background: 'black', borderRadius: '6px'}} className={styles.minVidArea} ref={videoRef} autoPlay playsInline muted={isLocal} ></video>
         ) : <div className={styles.zaglushkahahaMini}></div>}
-        <div style={{position: 'absolute', bottom: '6px'}}>
+        <div style={{transform: 'translate(0px, -30px)', bottom: '6px'}}>
           {peer.roleName == 'teacher'?
             (<div className={styles.clientName}>
               <div className={styles.hatIco}>

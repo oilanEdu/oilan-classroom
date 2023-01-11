@@ -62,6 +62,7 @@ const Lesson = (props) => {
   const [translationMode, setTranslationMode] = useState(false)
 
   useEffect(() => {
+    console.log('VW', window.innerWidth)
     loadBaseData();
     if (role == 'teacher') {
       loadTeacherData();
@@ -484,7 +485,7 @@ const Lesson = (props) => {
 
   return ( 
     <>
-      <div style={{backgroundColor: "#f1faff", maxWidth: "1440px"}}>
+      <div style={{backgroundColor: "#f1faff", maxWidth: "1440px", paddingLeft: `${window.innerWidth > 1440?((window.innerWidth - 1440) / 2):0}`}}>
         {role === "student" 
           ? <Header name={student.name} surname={student.surname} /> 
           : <HeaderTeacher white={true} teacher={teacher} />

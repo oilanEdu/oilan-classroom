@@ -452,9 +452,9 @@ function TeacherCabinet(props) {
                 </span>
                 <span className={styles.pEditTitle}>Программа</span>
               </div>
-              {programs.map((program) => (
+              {programs.map((program, index) => (
                 <>
-                  <ProgramItem program={program} url={props.url} />
+                  <ProgramItem index={index} program={program} url={props.url} />
                 </>
               ))}
               <div className={styles.addProgramContainer}>
@@ -602,7 +602,7 @@ function TeacherCabinet(props) {
                           {student.curr_hours == 23
                             ? "00"
                             : student.curr_hours + 1 < 10
-                            ? student.curr_hours === 0 ? "01" : "0" + student.curr_hours + 1
+                            ? "0" + (student.curr_hours + 1)
                             : student.curr_hours + 1}
                           :
                           {student.curr_minutes < 10

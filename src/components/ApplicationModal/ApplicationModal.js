@@ -236,6 +236,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
             //   setShowCaptcha(true)
             // }
             globals.checkPhoneMask(e.target.value, setPhone)
+            console.log(e.target.value, "phoneNumber");
           }}
         />
         <select 

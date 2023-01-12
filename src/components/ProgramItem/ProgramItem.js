@@ -5,7 +5,7 @@ import { Image } from "react-bootstrap";
 import axios from "axios";
 import globals from "../../../src/globals";
 
-const ProgramItem = ({program, url}) => {
+const ProgramItem = ({program, url, index}) => {
 
   const deleteHandler = async (id) => {
     const data = {
@@ -27,7 +27,7 @@ const ProgramItem = ({program, url}) => {
   }
   const [showSetting, setShowSetting] = useState(false)
   return <div className={styles.program}>
-  <span className={styles.pNumber}>№{program.number}</span>
+  <span className={styles.pNumber}>№ {index + 1}</span>
   <span className={styles.pCourse}>{program.course_title}</span>
   <span className={styles.pProgram}>
     <Image

@@ -485,7 +485,7 @@ const Lesson = (props) => {
 
   return ( 
     <>
-      <div style={{backgroundColor: "#f1faff", maxWidth: "1440px", paddingLeft: `${window.innerWidth > 1440?((window.innerWidth - 1440) / 2):0}`}}>
+      <div style={{backgroundColor: "#f1faff", maxWidth: "1440px"}}>
         {role === "student" 
           ? <Header name={student.name} surname={student.surname} /> 
           : <HeaderTeacher white={true} teacher={teacher} />

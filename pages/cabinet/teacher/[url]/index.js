@@ -540,7 +540,7 @@ function TeacherCabinet(props) {
                 >
                   Следующее занятие
                 </span>
-                <span className={styles.sProgram}>Программа</span>
+                <span className={styles.sProgram}>Расписание</span>
               </div>
               {(sortMode ? studentsList : currentPosts).map((student) => (
                 <div className={styles.student}>

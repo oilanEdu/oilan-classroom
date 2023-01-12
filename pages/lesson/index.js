@@ -484,8 +484,8 @@ const Lesson = (props) => {
   };
 
   return ( 
-    <>
-      <div style={{backgroundColor: "#f1faff", maxWidth: "1440px"}}>
+    <div className={styles.all}>
+      <div style={{backgroundColor: "#f1faff", width: "100%"}}>
         {role === "student" 
           ? <Header name={student.name} surname={student.surname} /> 
           : <HeaderTeacher white={true} teacher={teacher} />
@@ -747,7 +747,7 @@ const Lesson = (props) => {
         </div>            
         <Footer />
       </div>
-    </>
+    </div>
   );
 };
 

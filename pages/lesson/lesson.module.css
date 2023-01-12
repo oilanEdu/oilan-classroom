@@ -23,18 +23,23 @@
   src: url("../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
 }
 
+
+.all {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .cantainer{
   width: 90%;
   margin-left: 5%;
   display: flex;
   flex-direction: column;
   margin-top: 80px;
-  /*transform: translateX(15%);*/
 }
 
 .translationBlock{
   width: 100%;
-  /*border: 1px solid black;*/
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -741,8 +746,9 @@
   color: #FFFFFF;
 }
 
-@media (min-width: 1440px){
-  .cantainer{
-    transform: translateX(15%);
+@media (min-width: 1440px) {
+  .all {
+    width: 1440px;
+    margin: 0 auto;
   }
 }

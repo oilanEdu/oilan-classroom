@@ -32,6 +32,7 @@
     background: white;
     width: 100vw;
     padding: 50px;
+    left: 0px;
 }
 .logo{
     display: flex;

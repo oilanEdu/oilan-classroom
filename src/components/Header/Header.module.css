@@ -301,3 +301,10 @@
     display: block;
   }
 }
+
+@media (min-width: 1440px){
+.desktopHeader {
+    transform: translateX(15%);
+    background: #f1faff;
+}
+}

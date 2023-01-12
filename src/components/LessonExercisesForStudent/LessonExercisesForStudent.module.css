@@ -30,12 +30,20 @@
 }
 
 .exercises {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: start;
+  align-items: end;
 }
 
 .exercises_title {
   font-size: 24px;
   text-transform: uppercase;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  margin-left: 20px;
 }
 
 .correctExercise {

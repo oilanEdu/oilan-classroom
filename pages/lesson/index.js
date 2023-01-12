@@ -607,8 +607,8 @@ const Lesson = (props) => {
                 <img src="https://realibi.kz/file/756332.png" style={{width: "100%"}} />
                 <JoinRoom handleSubmit={handleSubmit} 
                   userName={(role == "teacher")
-                    ? teacher.name
-                    : student.name 
+                    ? teacher?.name
+                    : student?.name 
                   } 
                 />
               </>

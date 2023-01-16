@@ -76,7 +76,6 @@ const Lesson = (props) => {
     getLessonExercises();
   }, [lesson]);
 
-
   const loadBaseData = async () => { 
     let data = room;
     let getLessonByRoomKey = await axios.post(`${globals.productionServerDomain}/getLessonByRoomKey/` + data);
@@ -206,7 +205,7 @@ const Lesson = (props) => {
   const isLocalAudioEnabled = useHMSStore(selectIsLocalAudioEnabled);
   const isLocalVideoEnabled = useHMSStore(selectIsLocalVideoEnabled);
   const isLocalScreenShared = useHMSStore(selectIsLocalScreenShared);
-  
+
   const handleSubmit = async (userName) => {
     const token = await getToken(userName, role);
     hmsActions.join({ authToken: token, userName });
@@ -247,6 +246,37 @@ const Lesson = (props) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const LJ = async () => {
+    try {
+      // Останавливаем демонстрацию экрана, если она была запущена
+      if (isLocalScreenShared) {
+        await hmsActions.setScreenShareEnabled(false);
+      }
+
+      // Отключаем локальное видео, если оно было включено
+      if (isLocalVideoEnabled) {
+        await hmsActions.setLocalVideoEnabled(false);
+      }
+
+      // Отключаем локальный аудио, если он был включен
+      if (isLocalAudioEnabled) {
+        await hmsActions.setLocalAudioEnabled(false);
+      }
+
+      // Выходим из комнаты
+      await hmsActions.leave();
+    } catch (error) {
+      console.error(error);
+    }
+    const token = await getToken(userName, role);
+    const userName = (role == "teacher")
+                    ? teacher?.name
+                    : student?.name 
+                  
+    hmsActions.join({ authToken: token, userName });
+
   };
 
   const TeacherVideoTile = ({ peer, isLocal }) => {
@@ -580,6 +610,11 @@ const Lesson = (props) => {
                       </button>
                     </div>
                     <div className={styles.rightButton}>
+                      <button 
+                        onClick={() => {
+                            LJ()
+                          }}
+                      >LJ</button>
                       <button
                         className={styles.leaveRoomButton}
                         onClick={() => {
@@ -695,6 +730,11 @@ const Lesson = (props) => {
                       </button>
                     </div>
                     <div className={styles.rightButton}>
+                      <button 
+                        onClick={() => {
+                            LJ()
+                          }}
+                      >LJ</button>
                       <button
                         className={styles.leaveRoomButton}
                         onClick={() => {

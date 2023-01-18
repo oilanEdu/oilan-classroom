@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import React, {useEffect, useState} from "react";
-import globals from "../../../../../src/globals";
+import globals from "../../../../../../src/globals";
 import styles from "./styles.module.css";
 import axios from "axios";
-import Footer from "../../../../../src/components/Footer/Footer";
-import HeaderTeacher from "../../../../../src/components/HeaderTeacher/HeaderTeacher";
+import Footer from "../../../../../../src/components/Footer/Footer";
+import HeaderTeacher from "../../../../../../src/components/HeaderTeacher/HeaderTeacher";
 import { Card } from "react-bootstrap";
 
 function EditProgram(props) {

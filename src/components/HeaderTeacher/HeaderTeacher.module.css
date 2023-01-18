@@ -10,6 +10,9 @@
   font-family: "Rubik Bold";
   src: url("../../../public/fonts/Rubik/Rubik-Bold.ttf") format("truetype");
 }
+.outerContainer {
+
+}
 .desktopHeader {
   width: 100%;
   display: flex;
@@ -37,7 +40,9 @@
   top: 0;
 }
 .whiteHeader {
-  width: 100%;
+  padding: 0 120px;
+  margin: 0 auto;
+  width: 1440px;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -103,7 +108,7 @@
 }
 
 .menu_ul li a {
-  font-family: "Rubik Medium";
+  font-family: "Noto Sans Medium";
   cursor: pointer;
   display: flex;
   align-content: center;
@@ -118,7 +123,8 @@
 }
 
 .menu_ul li a:hover {
-  text-decoration: none;
+  /* text-decoration: none; */
+  text-decoration-line: underline;
   cursor: pointer;
 }
 .link > a {
@@ -186,6 +192,10 @@
 .studentInfo {
   display: flex;
   flex-direction: column;
+}
+.contactName {
+  font-family: 'Noto Sans Bold';
+  font-size: 16px;
 }
 .exitBtn {
   font-size: 14px;

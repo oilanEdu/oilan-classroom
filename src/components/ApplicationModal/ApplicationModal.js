@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./ApplicationModal.module.css";
 import globals from "../../globals";
 import axios from "axios";
@@ -196,6 +196,30 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
       }
     }, [phone, fullname, connection, timeIsSelected,])
 
+    // const fixedElRef = useRef(null)
+
+    // useEffect(() => {
+    //   const fixedEl = fixedElRef.current
+    //   if (!fixedEl) return
+  
+    //   const rect = fixedEl.getBoundingClientRect()
+    //   const distanceFromWindowTop = rect.top
+    //   const distanceFromWindowLeft = rect.left
+    //   debugger
+    //   let top = fixedEl.offsetTop
+    //   let left = fixedEl.offsetLeft
+  
+    //   if (distanceFromWindowTop !== 0) {
+    //     top = -distanceFromWindowTop
+    //     fixedEl.style.top = `${top}px`
+    //   }
+  
+    //   if (distanceFromWindowLeft !== 0) {
+    //     left = -distanceFromWindowLeft
+    //     fixedEl.style.left = `${left}px`
+    //   }
+    // }, [])
+
   return <>
     <div style={{
       transform: `translate(${showSend ? "-50%, -50%" : "-50%, -100%"})`,
@@ -203,6 +227,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
       opacity: showSend ? 1 : 0
     }}
       className={styles.modal}
+      // ref={fixedElRef}
     >
       <span className={styles.close_modal} onClick={onClose}></span>
       <div className={styles.modal_info}>

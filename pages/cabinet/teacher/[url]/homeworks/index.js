@@ -280,8 +280,9 @@ function Homeworks(props) {
           </div>
           <div className={styles.lessons}>
             {lessons.length > 0 
-              ? <> {lessons.map(lesson => (
+              ? <> {lessons.map((lesson, index) => (
                 <TeacherHomeworksLessons 
+                  index={index}
                   lesson={lesson} 
                   showCheck={showCheck} 
                   selectedExerciseId={selectedExerciseId} 

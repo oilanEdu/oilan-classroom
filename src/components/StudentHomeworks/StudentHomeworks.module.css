@@ -12,16 +12,23 @@
 }
 @font-face {
   font-family: "Muller Regular";
-  src: url("../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
+  src: url("../../../public/fonts/Muller/MullerRegular.ttf") format("truetype");
 }
 @font-face {
   font-family: "Muller Medium";
-  src: url("../../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
+  src: url("../../../public/fonts/Muller/MullerMedium.ttf") format("truetype");
 }
 @font-face {
   font-family: "Muller Bold";
-  src: url("../../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+  src: url("../../../public/fonts/Muller/MullerBold.ttf") format("truetype");
 }
+
+.StudentHomeworksWrapper {
+  max-width: 1440px;
+  padding: 0 120px;
+  margin: 0 auto;
+}
+/* используется в контейнере где появляются все домашки */
 
 .lesson {
   display: grid;

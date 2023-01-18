@@ -11,7 +11,9 @@
   src: url("../../../public/fonts/Rubik/Rubik-Bold.ttf") format("truetype");
 }
 .desktopHeader {
-  width: 100%;
+  padding: 0 120px;
+  margin: 0 auto;
+  width: 1440px;
   display: flex;
   height: auto;
   justify-content: space-between;
@@ -102,7 +104,8 @@
 }
 
 .menu_ul li a {
-  font-family: "Rubik Medium";
+  font-family: "Noto Sans Medium";
+  font-size: 16px;
   cursor: pointer;
   display: flex;
   align-content: center;
@@ -110,14 +113,14 @@
   height: auto;
   margin: 20px;
   color: white;
-  font-size: 16px;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .menu_ul li a:hover {
-  text-decoration: none;
+  /* text-decoration: none; */
   cursor: pointer;
+  text-decoration-line: underline;
 }
 .link > a {
   color: white;

@@ -11,7 +11,9 @@
   src: url("../../../public/fonts/Rubik/Rubik-Bold.ttf") format("truetype");
 }
 .desktopHeader {
-  width: 100%;
+  padding: 0 120px;
+  margin: 0 auto;
+  width: 1440px;
   display: flex;
   height: auto;
   justify-content: space-between;

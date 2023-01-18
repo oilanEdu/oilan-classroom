@@ -30,6 +30,7 @@ export default function Footer(props) {
   }, []);
 
   return (
+    <div className={styles.outerContainer}>
     <div className={styles.container}>
       <ModalWindow 
         show={show} 
@@ -133,6 +134,7 @@ export default function Footer(props) {
       <div className={classnames(styles.column, styles.copy_abaz)}>
         <span>© 2022 ЧК «Oilan.io Ltd»</span>
       </div>
+    </div>
     </div>
   );
 };

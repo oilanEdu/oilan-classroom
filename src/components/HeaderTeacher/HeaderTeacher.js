@@ -203,7 +203,7 @@ export default function HeaderTeacher(props) {
           <b className={styles.contactName}>
             {props.teacher?.name} {props.teacher?.surname}
           </b>
-          <span>Преподаватель</span>
+          <span style={{fontFamily: 'Noto Sans Regular'}}>Преподаватель</span>
         </div>
         <div
           onClick={() => {

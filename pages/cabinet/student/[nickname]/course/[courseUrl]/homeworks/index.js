@@ -6,6 +6,7 @@ import HeaderStudent from "../../../../../../../src/components/HeaderStudent/Hea
 import Footer from "../../../../../../../src/components/Footer/Footer";
 import StudentHomeworks from "../../../../../../../src/components/StudentHomeworks/StudentHomeworks";
 import GoToLessonWithTimerComponent from "../../../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
+import stylesStudentHomeworks from "../../../../../../../src/components/StudentHomeworks/StudentHomeworks.module.css"
 
 const Homeworks = (props) => { 
   const router = useRouter();
@@ -52,11 +53,13 @@ const Homeworks = (props) => {
   
   return <>
     <HeaderStudent white={true} name={student?.name} surname={student[0]?.surname} />
-    <div style={{padding: "82px 120px", backgroundColor: "#F1FAFF"}}>
+    <div style={{backgroundColor: "#F1FAFF"}}>
     <GoToLessonWithTimerComponent isTeacher={false} courseUrl={courseUrl} nickname={nickname}/>
-      {lessons.map((lesson) => {
+    <div className={stylesStudentHomeworks.StudentHomeworksWrapper}>
+    {lessons.map((lesson) => {
         return <StudentHomeworks lesson={lesson} student={student.id} padding={"40px 120px"}/>
       })}
+    </div>
     </div>
     <Footer />
   </>

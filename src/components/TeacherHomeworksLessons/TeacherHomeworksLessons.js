@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import axios from "axios";
 import globals from "../../globals";
 
-const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer, setShowCheck, setSelectedExerciseId, setAnswer, setSelectedExerciseNumber, setSelectedExerciseText, setSelectedExerciseCorrectAnswer, getAnswer, selectedStudentId, selectedExerciseNumber, selectedExerciseText, selectedExerciseCorrectAnswer, updateAnswerStatus, updateAnswerComment, setIsDateAndTimeChanged}) => {
+const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, answer, setShowCheck, setSelectedExerciseId, setAnswer, setSelectedExerciseNumber, setSelectedExerciseText, setSelectedExerciseCorrectAnswer, getAnswer, selectedStudentId, selectedExerciseNumber, selectedExerciseText, selectedExerciseCorrectAnswer, updateAnswerStatus, updateAnswerComment, setIsDateAndTimeChanged}) => {
   const [exercises, setExercises] = useState([])
   const [teacherComment, setTeacherComment] = useState('')
   const [exercises2, setExercises2] = useState([])
@@ -16,6 +16,9 @@ const TeacherHomeworksLessons = ({lesson, showCheck, selectedExerciseId, answer,
 
   useEffect(() => {
     console.log(lesson, "lessonPROPS");
+    if (index === 0) {
+      setShowCheck(lesson.id)
+    }
   }, [])
   useEffect(() => {
     setExercises2(exercises)

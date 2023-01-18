@@ -47,7 +47,7 @@ const StudentCourse = (props) => {
 
   return <>
     <HeaderStudent white={true} name={student[0]?.name} surname={student[0]?.surname} />
-    <div>
+    <div style={{backgroundColor: "#F1FAFF"}}>
       {
         (!dataLoaded || !student || !lessons || !lesson || !scores)?
           (<></>):

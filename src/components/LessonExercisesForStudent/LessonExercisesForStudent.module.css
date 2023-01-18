@@ -12,32 +12,36 @@
 }
 @font-face {
   font-family: "Muller Regular";
-  src: url("../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
+  src: url("../../../public/fonts/Muller/MullerRegular.ttf") format("truetype");
 }
 @font-face {
   font-family: "Muller Medium";
-  src: url("../../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
+  src: url("../../../public/fonts/Muller/MullerMedium.ttf") format("truetype");
 }
 @font-face {
   font-family: "Muller Bold";
-  src: url("../../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+  src: url("../../../public/fonts/Muller/MullerBold.ttf") format("truetype");
 }
 
 .container {
   /* background-color: rgb(241, 250, 255); */
-  padding: 40px 120px;
-  max-width: 715px;
+  padding: 40px 60px;
+  min-width: 715px;
 }
 
 .exercises {
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-items: start;
-  align-items: end;
+  align-items: end; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .exercises_title {
-  font-size: 24px;
+  font-family: 'Noto Sans Medium';
+  font-size: 20px;
   text-transform: uppercase;
   grid-column-start: 1;
   grid-column-end: 4;

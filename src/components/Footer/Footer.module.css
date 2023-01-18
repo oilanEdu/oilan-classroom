@@ -13,26 +13,33 @@
 
 @font-face {
     font-family: "Muller Regular";
-    src: url("../../../public/fonts/Muller/Muller-Trial-Regular.ttf") format("truetype");
+    src: url("../../../public/fonts/Muller/MullerRegular.ttf") format("truetype");
   }
   @font-face {
     font-family: "Muller Medium";
-    src: url("../../../public/fonts/Muller/Muller-Trial-Medium.ttf") format("truetype");
+    src: url("../../../public/fonts/Muller/MullerMedium.ttf") format("truetype");
   }
   @font-face {
     font-family: "Muller Bold";
-    src: url("../../../public/fonts/Muller/Muller-Trial-Bold.ttf") format("truetype");
+    src: url("../../../public/fonts/Muller/MullerBold.ttf") format("truetype");
   }
 
+.outerContainer {
+    background: white;
+    width: 100%;
+    /* padding: 50px; */
+    left: 0px;
+}
+
 .container{
+    padding: 50px 120px;
+    max-width: 1440px;
+    margin: 0 auto;
     display: grid;
+    justify-content: space-between;
     grid-template-areas:
         'logo instagram phone partner privacy'
         'logo email phone partner privacy';
-    background: white;
-    width: 100%;
-    padding: 50px;
-    left: 0px;
 }
 .logo{
     display: flex;

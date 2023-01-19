@@ -59,7 +59,8 @@ function Title(props) {
 
     return (
         <>
-            <div style={{backgroundColor: "#f1faff"}}>
+            <div style={{backgroundColor: "#f1faff",
+                        overflowX: "auto"}}>
                 <Header white={true}/>
                 {course != undefined ? <AboutCourse 
                     courseInfoBlocks={courseInfoBlocks} 

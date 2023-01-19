@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 import axios from "axios";
 import Footer from "../../../../../src/components/Footer/Footer";
 import HeaderTeacher from "../../../../../src/components/HeaderTeacher/HeaderTeacher";
+import { Card } from "react-bootstrap";
 
 function EditProgram(props) {
     
@@ -50,10 +51,6 @@ function EditProgram(props) {
     setTeacher(getTeacherByUrl['data'][0])
   }
 
-
-
-
-
     const isProgramIdLoaded = () => {
 
       if (programId !== undefined) {
@@ -80,13 +77,19 @@ function EditProgram(props) {
 
         let lessonsCount = 0
         let studentLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + programId).then(res => {
-            res.data.forEach(row => {
+            res.data.forEach(async row => {
                 lessonsCount += 1
                 row.lesson_number = lessonsCount
+                const data = {
+                  new_number: lessonsCount,
+                  lesson_id: row.id
+                }
+                await axios.put(`${globals.productionServerDomain}/updateLessonNumber/`, data)
                 if (row.lesson_order > lastLessonOrder){
                     setLastLessonOrder(row.lesson_order) 
                 }
             })
+            console.log(res.data);
             setLessons(res.data)
         })
     }
@@ -94,9 +97,15 @@ function EditProgram(props) {
     const loadLessonExercises = async (value) => { 
         let count = 0
         let getExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + value.id).then(res => {
-            res.data.forEach(row => {
+            res.data.forEach(async row => {
                 count += 1
                 row.exercise_order = count
+                
+                const data = {
+                  new_order: count,
+                  exercise_id: row.id
+                }
+                await axios.put(`${globals.productionServerDomain}/updateExerNumber/`, data)
             })
             setExercises(res.data)
         })
@@ -266,7 +275,115 @@ function EditProgram(props) {
           });
     }
 
-    console.log(teacher);
+    const [currentLesson, setCurrentLesson] = useState();
+
+    function dragStartHandler(e, lesson) {
+      // e.preventDefault()
+      console.log('drag', lesson);
+      setCurrentLesson(lesson)
+    }
+    function dragEndHandler(e) {
+      // e.target.style.background = "white"
+    }
+    function dragOverHandler(e) {
+      e.preventDefault()
+      // e.target.style.background = "lightgrey"
+    }
+
+    function dropHandler(e, lesson) {
+      e.preventDefault();
+      console.log(currentLesson);
+      const newLessons = lessons.map(async les => {
+        if (les.id === lesson.id) {
+          const data = {
+            new_number: currentLesson.lesson_number,
+            lesson_id: les.id
+          }
+          await axios.put(`${globals.productionServerDomain}/updateLessonNumber/`, data)
+          return {...les, lesson_order: currentLesson.lesson_number, lesson_number: currentLesson.lesson_number}
+        } 
+        if (les.id === currentLesson.id) {
+          const data = {
+            new_number: lesson.lesson_number,
+            lesson_id: les.id
+          }
+           await axios.put(`${globals.productionServerDomain}/updateLessonNumber/`, data)
+          return {...les, lesson_order: lesson.lesson_number, lesson_number: lesson.lesson_number}
+        }
+        return les
+      })
+      console.log(newLessons);
+      Promise.all(newLessons).then((res) => {
+        console.log(res);
+        setLessons([...res])
+      })
+      // setLessons([...newLessons])
+      // e.target.style.background = "white"
+    }
+
+    const sortLessons = (a, b) => {
+      if (+a.lesson_order > +b.lesson_order) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+  
+    const [currentExer, setCurrentExer] = useState();
+
+    function exerDragStartHandler(e, exercise) {
+      // e.preventDefault()
+      console.log('drag', exercise);
+      setCurrentExer(exercise)
+    }
+    function exerDragEndHandler(e) {
+      // e.target.style.background = "white"
+    }
+    function exerDragOverHandler(e) {
+      e.preventDefault()
+      // e.target.style.background = "lightgrey"
+    }
+
+    function exerDropHandler(e, exercise) {
+      e.preventDefault();
+      console.log(currentExer);
+      const newExers = exercises.map(async ex => {
+        if (ex.id === exercise.id) {
+          const data = {
+            new_order: currentExer.exercise_order,
+            exercise_id: ex.id
+          }
+          await axios.put(`${globals.productionServerDomain}/updateExerNumber/`, data)
+          return {...ex, exer_order: currentExer.exercise_order, exercise_order: currentExer.exercise_order}
+        } 
+        if (ex.id === currentExer.id) {
+          const data = {
+            new_order: exercise.exercise_order,
+            exercise_id: ex.id
+          }
+          await axios.put(`${globals.productionServerDomain}/updateLessonNumber/`, data)
+          return {...ex, exer_order: exercise.exercise_order, exercise_order: exercise.exercise_order}
+        }
+        return ex
+      })
+      console.log(newExers);
+      Promise.all(newExers).then((res) => {
+        console.log(res);
+        setExercises([...res])
+      })
+    }
+
+    const sortExercises = (a, b) => {
+      if (+a.exer_order > +b.exer_order) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+
+
+    console.log(lessons);
+    console.log(exercises);
     return ( 
         <>
             <div style={{backgroundColor: "#f1faff", width: "    100vw", padding: "20px 20px 0 20px"}}>
@@ -323,8 +440,15 @@ function EditProgram(props) {
                     <div className={styles.lessonsBlock}>
                         <h1>Занятия программы</h1>
                         <div className={styles.lessonSelectBlock}>
-                            {lessons.map(lesson => (
-                                <div style={lesson.id == selectedLesson.id?{display:'flex', padding: '2px', border: '3px solid #007AFF', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}:{display:'flex', padding: '2px', border: '3px solid white', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}}>
+                            {lessons.sort(sortLessons).map(lesson => (
+                                <div 
+                                  onDragStart={(e) => dragStartHandler(e, lesson)}
+                                  onDragLeave={(e) => dragEndHandler(e)} 
+                                  onDragEnd={(e) => dragEndHandler(e)} 
+                                  onDragOver={(e) => dragOverHandler(e)}
+                                  onDrop={(e) => dropHandler(e, lesson)}
+                                  draggable={true}
+                                  style={lesson.id == selectedLesson.id?{display:'flex', padding: '2px', border: '3px solid #007AFF', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}:{display:'flex', padding: '2px', border: '3px solid white', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}}>
                                     <div 
                                         className={
                                             (selectedLesson.id == lesson.id)
@@ -411,8 +535,16 @@ function EditProgram(props) {
                     <div className={styles.exercisesBlock}>
                         <h1>Задания к уроку</h1>
                         <div className={styles.exerciseSelectBlock}>
-                            {exercises.map(exercise => (
-                                <div style={exercise.id == selectedExercise.id?{display:'flex', padding: '2px', border: '3px solid #007AFF', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}:{display:'flex', padding: '2px', border: '3px solid white', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}}>
+                            {exercises.sort(sortExercises).map(exercise => (
+                                <div 
+                                  onDragStart={(e) => exerDragStartHandler(e, exercise)}
+                                  onDragLeave={(e) => exerDragEndHandler(e)} 
+                                  onDragEnd={(e) => exerDragEndHandler(e)} 
+                                  onDragOver={(e) => exerDragOverHandler(e)}
+                                  onDrop={(e) => exerDropHandler(e, exercise)}
+                                  draggable={true}
+                                  style={exercise.id == selectedExercise.id?{display:'flex', padding: '2px', border: '3px solid #007AFF', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}:{display:'flex', padding: '2px', border: '3px solid white', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}}
+                                >
                                     <div 
                                         className={
                                             (selectedExercise.id == exercise.id)
@@ -426,7 +558,7 @@ function EditProgram(props) {
                                             setExerciseText(exercise.text)
                                             setExerciseAnswer(exercise.correct_answer)
                                         }}
-                                    >{exercise.exercise_order}</div>
+                                    >{exercise.exer_order}</div>
                                 </div>
                             ))}
                             <div 

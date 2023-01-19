@@ -349,7 +349,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
 
     const startLessonLink = async (translationLink) => {
         loadTeacherData()
-        const role = 'student'
+        const role = 'teacher'
         const redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}`
         
         await router.push(redirectUrl)
@@ -434,7 +434,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
             .catch((err) => {
               alert("Произошла ошибка"); 
             });
-      }else{
+      }else{ 
           let data = {
               lessonId: closerLesson.id,
               lessonKey: roomKey

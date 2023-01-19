@@ -232,9 +232,8 @@ function TeacherCabinet(props) {
                 student.curr_hours = curr_hours 
                 student.curr_minutes = curr_minutes 
                 student.lesson_date = new Date(lessonsFuture[idx].personal_time).toLocaleDateString()
-                if (new Date(lessonsFuture[idx].personal_time).getTime() > new Date(closerLesson.personal_time).getTime()) {
-                  setCloserLesson(lessonsFuture[idx]) 
-                }
+                
+                setCloserLesson(lessonsFuture[idx]) 
             })
             }
            );
@@ -398,15 +397,25 @@ function TeacherCabinet(props) {
                 </p>
                 {/* <p>Занятие №{closerLesson.lesson_number} {closerLesson.title}</p> */}
                 <button
+                  // onClick={() => {
+                  //   closerLesson.personal_lesson_link ||
+                  //   closerLesson.default_lesson_link
+                  //     ? startLessonLink(
+                  //         closerLesson.personal_lesson_link
+                  //           ? closerLesson.personal_lesson_link
+                  //           : closerLesson.default_lesson_link
+                  //       )
+                  //     : startNewLesson();
+                  // }}
                   onClick={() => {
                     closerLesson.personal_lesson_link ||
                     closerLesson.default_lesson_link
-                      ? startLessonLink(
-                          closerLesson.personal_lesson_link
-                            ? closerLesson.personal_lesson_link
-                            : closerLesson.default_lesson_link
-                        )
-                      : startNewLesson();
+                    ? startLessonLink(
+                        closerLesson.personal_lesson_link
+                          ? closerLesson.personal_lesson_link
+                          : closerLesson.default_lesson_link
+                      )
+                    : startNewLesson()
                   }}
                 >
                   Перейти к занятию

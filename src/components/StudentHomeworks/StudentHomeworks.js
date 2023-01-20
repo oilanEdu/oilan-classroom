@@ -4,7 +4,7 @@ import styles from "./StudentHomeworks.module.css";
 import axios from "axios";
 import globals from "../../globals";
 
-const StudentHomeworks = ({lesson, student}) => {
+const StudentHomeworks = ({index, lesson, student}) => {
   const [showTesis, setShowTesis] = useState(false);
   let isActive = (new Date(lesson.start_time).getTime()) <= (new Date().getTime());
 
@@ -24,6 +24,9 @@ const StudentHomeworks = ({lesson, student}) => {
 
   useEffect(() => {
     fetchData();
+    if (index === 0) {
+      setShowTesis(true)
+    }
     console.log(exercises)
   }, []);
 
@@ -52,7 +55,7 @@ const StudentHomeworks = ({lesson, student}) => {
         </p> */}
       </div>
       <p className={styles.lesson_tesis} style={{display: showTesis ? "block" : "none"}}>
-        <LessonExercisesForStudent exercises={exercises} student={student}/>
+        <LessonExercisesForStudent exercises={exercises} student={student} fetchData={fetchData}/>
       </p>
 
     </div>

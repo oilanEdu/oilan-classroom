@@ -3,7 +3,7 @@ import styles from "./LessonExercisesForStudent.module.css";
 import axios from "axios";
 import globals from "../../globals";
 
-const LessonExercisesForStudent = ({exercises, student, bg, padding, brickBorder}) => {
+const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, brickBorder}) => {
   const [ active, setActive ] = useState(0);
   const [ answer, setAnswer ] = useState('')
   const [ editMode, setEditMode ] = useState(false)
@@ -159,8 +159,9 @@ const LessonExercisesForStudent = ({exercises, student, bg, padding, brickBorder
             
             <button 
               className={styles.answer_btn}
-              onClick={() => {
-                sendAnswer(answer, exercises[active].lesson_id, exercises[active].id, student, 'not verified')
+              onClick={async() => {
+                await sendAnswer(answer, exercises[active].lesson_id, exercises[active].id, student, 'not verified')
+                await fetchData()
               }}
             >
               Ответить
@@ -206,8 +207,9 @@ const LessonExercisesForStudent = ({exercises, student, bg, padding, brickBorder
                     </div>
                     <button 
                       className={styles.answer_btn}
-                      onClick={() => {
-                        sendEditedAnswer(answer, exercises[active].answer_id, 'not verified')
+                      onClick={async() => {
+                        await sendEditedAnswer(answer, exercises[active].answer_id, 'not verified')
+                        await fetchData()
                       }}
                     >
                       Ответить

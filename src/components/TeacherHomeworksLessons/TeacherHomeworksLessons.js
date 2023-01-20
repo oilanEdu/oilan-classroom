@@ -18,6 +18,7 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
     console.log(lesson, "lessonPROPS");
     if (index === 0) {
       setShowCheck(lesson.id)
+      clickOnPlusHandler()
     }
   }, [])
   useEffect(() => {
@@ -218,6 +219,17 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
         setTimeState(dateStrTime)
       }, []);
       const [showInputsOfDate, setShowInputsOfDate] = useState(false)
+      
+      const clickOnPlusHandler = async() => {
+          await getLessonExercises2(lesson.id)
+          // await getLessonExercises3(lesson.id)
+          await getLessonExercises4(lesson.id)
+          await getLessonExercises(lesson.id)
+          setShowCheck(lesson.id)
+          setSelectedExerciseId(0)
+          setAnswer(null)
+          setTeacherComment(null)
+      }
 
     return <> <div className={styles.lesson}>
         <div className={styles.lessonTopRow}>

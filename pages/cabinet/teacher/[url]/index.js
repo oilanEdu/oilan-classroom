@@ -420,6 +420,9 @@ function TeacherCabinet(props) {
                 >
                   Перейти к занятию
                 </button>
+                {closerLesson ? 
+                <b className={styles.closerLessonInfo}>Занятие №{closerLesson.lesson_order} Тема - {closerLesson.title}  </b>
+                : ''}
               </div>
               <div className={styles.calendarBlock}>
                 <Calendar2 lessons={lessons} />

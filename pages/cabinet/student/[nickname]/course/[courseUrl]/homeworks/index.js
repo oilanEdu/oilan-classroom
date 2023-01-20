@@ -56,8 +56,8 @@ const Homeworks = (props) => {
     <div style={{backgroundColor: "#F1FAFF"}}>
     <GoToLessonWithTimerComponent isTeacher={false} courseUrl={courseUrl} nickname={nickname}/>
     <div className={stylesStudentHomeworks.StudentHomeworksWrapper}>
-    {lessons.map((lesson) => {
-        return <StudentHomeworks lesson={lesson} student={student.id} padding={"40px 120px"}/>
+    {lessons.map((lesson, index) => {
+        return <StudentHomeworks index={index} lesson={lesson} student={student.id} padding={"40px 120px"}/>
       })}
     </div>
     </div>

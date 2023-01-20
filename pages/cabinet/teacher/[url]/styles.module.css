@@ -72,6 +72,12 @@
   font-size: 16px;
 }
 
+.closerLessonInfo {
+	font-family: 'Noto Sans Bold';
+    font-size: 16px;
+	margin-top: 10px;
+}
+
 .topBlock{
 	width: 100%;
 	display: flex;

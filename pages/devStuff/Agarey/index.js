@@ -1,23 +1,3 @@
-// import Axios from 'axios';
-// import React from 'react';
-
-// function Agarey(props) {
-//     const handleJoin = () => {
-//         Axios.get(`http://localhost:3031/join`).then(res => {
-//             props.history?.push(`/join/${res.data.link}?quality=${quality}`);
-//         })
-//     }
-
-//     return (
-//         <React.Fragment>
-//             <button onClick={handleJoin}>join</button>
-//         </React.Fragment>
-//     )
-// }
-
-// export default Agarey;
-
-
 import { useRouter } from "next/router";
 import React, {useEffect, useState, useRef} from "react";
 import globals from "../../../src/globals";
@@ -115,7 +95,7 @@ const Agarey = (props) => {
         console.log('LESSON',getLessonByRoomKey['data'][0])
         let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data)
         setStudent(getStudentByLessonKey['data'][0])
-        setSelectedStudentId(student.student_id)
+        setSelectedStudentId(1)
         console.log('student',student) 
         let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data)
         setTeacher(getTeacherByLessonKey['data'][0])
@@ -126,7 +106,7 @@ const Agarey = (props) => {
       let data = room
       let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data)
         setStudent(getStudentByLessonKey['data'][0])
-        setSelectedStudentId(student.student_id)
+        setSelectedStudentId(1)
         console.log('student',student)  
     }
 

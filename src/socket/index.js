@@ -10,13 +10,5 @@ const options = {
 }
 
 const socket = io("wss://realibi.kz:3031", options);
-// const socket = io(ENDPOINT, {  
-//         cors: {
-//         origin: "wss://realibi.kz:3031",
-//         credentials: true
-//       },transports : ['websocket'],
-//       	"force new connection": true,
-// 		reconnectionAttempts: "Infinity",
-// 		timeout: 10000 });
 
 export default socket; 

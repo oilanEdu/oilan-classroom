@@ -72,14 +72,14 @@ export default function useWebRTC(roomID) {
         }
       }
 
-      localMediaStream.current.getTracks().forEach(track => {
+      localMediaStream?.current?.getTracks().forEach(track => {
         peerConnections.current[peerID].addTrack(track, localMediaStream.current);
       });
 
       if (createOffer) {
         const offer = await peerConnections.current[peerID].createOffer();
 
-        await peerConnections.current[peerID].setLocalDescription(offer);
+        await peerConnections.current[peerID]?.setLocalDescription(offer);
 
         socket.emit(ACTIONS.RELAY_SDP, {
           peerID,
@@ -89,7 +89,7 @@ export default function useWebRTC(roomID) {
     }
 
     socket.on(ACTIONS.ADD_PEER, handleNewPeer);
-
+    
     return () => {
       socket.off(ACTIONS.ADD_PEER);
     }

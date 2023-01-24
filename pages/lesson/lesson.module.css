@@ -746,9 +746,9 @@
   color: #FFFFFF;
 }
 
-@media (min-width: 1440px) {
+/* @media (min-width: 1440px) {
   .all {
     width: 1440px;
     margin: 0 auto;
   }
-}
+} */

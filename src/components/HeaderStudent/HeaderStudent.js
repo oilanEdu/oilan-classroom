@@ -29,6 +29,8 @@ export default function HeaderStudent(props) {
 
   const [loadingData, setLoadingData] = useState(true);
 
+  const [mainPageLink, setMainPageLink] = useState()
+
   const loadUserInfo = async () => {
     await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${router.query.nickname}&course_url=${courseUrl}`).then(async (res) => {
       setStudent(res.data[0]);
@@ -102,6 +104,7 @@ export default function HeaderStudent(props) {
     loadUserInfo();
     setLoadingData(false);
     console.log("pathname = " + window.location.pathname);
+    mainPage();
   }, []);
   useEffect(() => {
     if (lessons[0] != undefined) {
@@ -112,8 +115,17 @@ export default function HeaderStudent(props) {
       balance1
       setBalance(balance1)
     }
-  }, [lessons])
+  }, [lessons]);
 
+  const mainPage = () => {
+    if (nickname !== undefined) {
+      setMainPageLink(`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseUrl}`)
+    } else {
+      setMainPageLink(`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}`)
+    }
+  }
+
+  console.log(mainPageLink);
   return (
     <div id={"header"} className={styles.whiteHeader}>
       {/*<YMInitializer accounts={[78186067]} options={{webvisor: true, defer: true}} version="2" />*/}
@@ -162,7 +174,7 @@ export default function HeaderStudent(props) {
           <ul className={styles.menu_ul}>
             <li>
             <Link
-                href={`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseUrl}`}
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}`}
                 target="_blank"
                 
               >
@@ -174,7 +186,7 @@ export default function HeaderStudent(props) {
             </li>
             <li>
             <Link
-                href={`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseUrl}`}
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}`}
                 target="_blank"
                 
               >
@@ -192,7 +204,7 @@ export default function HeaderStudent(props) {
             <li>
               {/* /cabinet/student/test/course/1/homeworks */}
             <Link
-                href={`/cabinet/student/${encodeURIComponent(nickname)}/course/${courseUrl}/homeworks`}
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}/homeworks`}
                 target="_blank"
                 
               >

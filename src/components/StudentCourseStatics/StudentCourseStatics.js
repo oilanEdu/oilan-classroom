@@ -140,11 +140,12 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
   const startLessonLink = async (translationLink) => {
     console.log('proverkha1')
     const role = 'student'
-    const redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}`
+    const redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}&id=${student[0].id}`
+    console.log(student);
         
     await router.push(redirectUrl)
   }
-
+  console.log(student);
   const startNewLesson = async () => {
         console.log('proverkha2')
         let alphabet = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789";
@@ -192,7 +193,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
     }
   
   return <div className={styles.container}>     
-    <GoToLessonWithTimerComponent isTeacher={false} url={student.nickname} nickname={nickname} courseUrl={courseUrl}/>
+    <GoToLessonWithTimerComponent isTeacher={false} url={student[0].nickname} nickname={nickname} courseUrl={courseUrl}/>
     <div className={styles.course_container}>
       <div>
         <p>Онлайн-курс</p>

@@ -47,6 +47,7 @@ const Lesson = (props) => {
 
   const router = useRouter()
   const teacherUrl = router.query.url;
+  const studentId = router.query.id;
   const room = router.query.room;
   const jitsiServerUrl = 'https://meet.jit.si/';
   const role = router.query.role;
@@ -60,6 +61,9 @@ const Lesson = (props) => {
   const [selectedStudentId, setSelectedStudentId] = useState(0);
   const [answer, setAnswer] = useState([]);
   const [translationMode, setTranslationMode] = useState(false)
+
+  console.log(student);
+  // console.log(router);
 
   useEffect(() => {
     console.log('VW', window.innerWidth)
@@ -78,19 +82,35 @@ const Lesson = (props) => {
 
   const loadBaseData = async () => { 
     let data = room;
+
+    console.log(data);
+    const studentData = {
+      studentId: studentId
+    }
     let getLessonByRoomKey = await axios.post(`${globals.productionServerDomain}/getLessonByRoomKey/` + data);
+    console.log(getLessonByRoomKey);
     setLesson(getLessonByRoomKey['data'][0]);
 
-    let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data);
-    setStudent(getStudentByLessonKey['data'][0]);
+    if (role == 'teacher') {
+      let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data);
+      setStudent(getStudentByLessonKey['data'][0]);
+    } else {
+      let getStudentByIdForLesson = await axios.post(`${globals.productionServerDomain}/getStudentByIdForLesson/`, studentData);
+      setStudent(getStudentByIdForLesson['data'][0]);
+    }
+    
+    console.log(studentId);
+    
     setSelectedStudentId(student?.student_id);
 
     let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data);
+    console.log(data);
     setTeacher(getTeacherByLessonKey['data'][0]);
   };
 
   const loadTeacherData = async () => {
     let data = room;
+    console.log(room);
     let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data);
     setStudent(getStudentByLessonKey['data'][0]);
     setSelectedStudentId(student?.student_id);
@@ -98,16 +118,25 @@ const Lesson = (props) => {
 
   const loadStudentData = async () => {
     let data = room;
-    let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data);
-    setTeacher(getTeacherByLessonKey['data'][0]);
+    console.log(room);
+    // if (peers.length === 0) {
+      let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data);
+      setTeacher(getTeacherByLessonKey['data'][0]);
+    // } else {
+    //   let getStudentByIdForLesson = await axios.post(`${globals.productionServerDomain}/getStudentByIdForLesson/`, studentData);
+    //   setStudent(getStudentByIdForLesson['data'][0]);
+    // }
+    
   };
 
   const getLessonExercises = async () => {
     let exer_number = 0
+
+    console.log(lesson);
         
     let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson?.lesson_id).then(res => {
       res.data.forEach(async exercise => {
-        let studentId = student.student_id
+        // let studentId = student.student_id
         let exerciseId = exercise.id
         let data = {
           studentId,
@@ -513,11 +542,15 @@ const Lesson = (props) => {
     );
   };
 
+  console.log(teacher);
+  console.log(student);
+
   return ( 
     <div className={styles.all}>
       <div style={{backgroundColor: "#f1faff", width: "100%"}}>
         {role === "student" 
-          ? <Header name={student.name} surname={student.surname} /> 
+          ? 
+          <HeaderStudent name={student?.name} surname={student?.surname} nickname={student?.nickname} courseUrl={student?.url} />
           : <HeaderTeacher white={true} teacher={teacher} />
         }
         <div className={styles.cantainer}>
@@ -529,7 +562,6 @@ const Lesson = (props) => {
                   {<>
                     {localPeer && <TeacherVideoTile peer={localPeer} isLocal={true} />}
                     <div className={styles.underTileRow}>
-                      {/*<div className={styles.studentsCountRow}>Студенты {peers?.length - 1}</div>*/}
                       <div className={styles.miniaturesLine}>
                         {peers &&
                           peers
@@ -762,8 +794,8 @@ const Lesson = (props) => {
                 <img src="https://realibi.kz/file/756332.png" style={{width: "100%"}} />
                 <JoinRoom handleSubmit={handleSubmit} 
                   userName={(role == "teacher")
-                    ? teacher.name
-                    : student.name
+                    ? teacher?.name
+                    : student?.name
                   } 
                 />
               </>
@@ -774,15 +806,18 @@ const Lesson = (props) => {
             role={role}
             user={role === "student" ? teacher : student}
             lesson={lesson}
+            peers={peers}
           />
           {(role == "teacher")
+            ? peers.lenght > 0 
             ? <TeacherHomeworksLesson 
               lesson={lesson}
               getAnswer={getAnswer}
               updateAnswerStatus={updateAnswerStatus} 
               updateAnswerComment={updateAnswerComment}
-            />
-            : <LessonExercisesForStudent exercises={exercises} student={student.id} padding={"40px 0"} brickBorder={"3px solid #f1faff"}/>
+            /> 
+            : ""
+            : <LessonExercisesForStudent exercises={exercises} student={student?.id} padding={"40px 0"} brickBorder={"3px solid #f1faff"}/>
           }
         </div>            
         <Footer />

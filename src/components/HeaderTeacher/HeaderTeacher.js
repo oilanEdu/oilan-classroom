@@ -88,6 +88,8 @@ export default function HeaderTeacher(props) {
     console.log("pathname = " + window.location.pathname);
   }, []);
 
+  console.log(props.teacher);
+
   return (
     <div id={"header"} className={styles.whiteHeader}>
       {/*<YMInitializer accounts={[78186067]} options={{webvisor: true, defer: true}} version="2" />*/}
@@ -160,7 +162,7 @@ export default function HeaderTeacher(props) {
           <ul className={styles.menu_ul}>
             <li>
               <Link
-                href={`/cabinet/teacher/${encodeURIComponent(url)}`}
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}`}
                 target="_blank"
                 className={styles.titleLink}
               >
@@ -171,7 +173,7 @@ export default function HeaderTeacher(props) {
             </li>
             <li>
               <Link
-                href={`/cabinet/teacher/${encodeURIComponent(url)}`}
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}`}
                 target="_blank"
                 className={styles.titleLink}
               >
@@ -190,7 +192,7 @@ export default function HeaderTeacher(props) {
             </li>
             <li>
               <Link
-                href={`/cabinet/teacher/${encodeURIComponent(url)}/homeworks`}
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/homeworks`}
                 target="_blank"
                 className={styles.titleLink}
               >
@@ -255,7 +257,7 @@ export default function HeaderTeacher(props) {
           <ul className={styles.menu_ul}>
             <li>
             <Link
-                href={`/cabinet/teacher/${encodeURIComponent(url)}`}
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}`}
                 target="_blank"
                 className={styles.titleLink}
               >
@@ -266,7 +268,7 @@ export default function HeaderTeacher(props) {
             </li>
             <li>
               <Link
-                href={`/cabinet/teacher/${encodeURIComponent(url)}`}
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}`}
                 target="_blank"
                 className={styles.titleLink}
               >
@@ -285,7 +287,7 @@ export default function HeaderTeacher(props) {
             </li>
             <li>
               <Link
-                href={`/cabinet/teacher/${encodeURIComponent(url)}/homeworks`}
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/homeworks`}
                 target="_blank"
                 className={styles.titleLink}
               >

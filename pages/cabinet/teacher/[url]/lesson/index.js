@@ -45,7 +45,7 @@ function Lesson(props) {
 	return ( 
         <>
             <div style={{backgroundColor: "#f1faff", width: "100vw"}} ref={rootNode}>
-                <HeaderTeacher white={true} teacher={teacher}/>
+                <HeaderTeacher white={true} teacher={teacher} />
 
               	<div className={styles.cantainer}>
               		{room}

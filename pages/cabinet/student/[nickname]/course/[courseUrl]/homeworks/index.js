@@ -52,7 +52,7 @@ const Homeworks = (props) => {
   console.log(exercises);
   
   return <>
-    <HeaderStudent white={true} name={student?.name} surname={student[0]?.surname} />
+    <HeaderStudent white={true} name={student?.name} surname={student?.surname} courseUrl={courseUrl} nickname={nickname} />
     <div style={{backgroundColor: "#F1FAFF"}}>
     <GoToLessonWithTimerComponent isTeacher={false} courseUrl={courseUrl} nickname={nickname}/>
     <div className={stylesStudentHomeworks.StudentHomeworksWrapper}>

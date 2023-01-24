@@ -46,7 +46,7 @@ const StudentCourse = (props) => {
   console.log('scores', scores);
 
   return <>
-    <HeaderStudent white={true} name={student[0]?.name} surname={student[0]?.surname} />
+    <HeaderStudent white={true} name={student[0]?.name} surname={student[0]?.surname} courseUrl={courseUrl} nickname={nickname} />
     <div style={{backgroundColor: "#F1FAFF"}}>
       {
         (!dataLoaded || !student || !lessons || !lesson || !scores)?

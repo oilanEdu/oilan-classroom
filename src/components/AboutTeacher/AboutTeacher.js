@@ -36,7 +36,7 @@ export default function AboutTeacher(props) {
   return (
     <div className={styles.container}>
       <SuccessfullyModal show={showSuccess} onClickNext={handleShowSuccess}/>
-      <ApplicationModal showSend={showSend} handleShowSend={handleShowSend} onClose={closeHandler} course={props?.course} teacherByCourse={props?.teacherByCourse}/>
+      <ApplicationModal course={props?.course} showSend={showSend} handleShowSend={handleShowSend} onClose={closeHandler} teacherByCourse={props?.teacherByCourse} teacherId={props.teacherId}/>
       <div className={styles.mainInfo}>
         <h1>ПРЕПОДАВАТЕЛЬ КУРСА</h1>
         <div className={styles.previewBlock}>

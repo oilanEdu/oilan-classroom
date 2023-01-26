@@ -553,27 +553,54 @@ function EditProgram(props) {
                                                         (exercise.text && exercise.text !== 'Текст')?
                                                         styles.fillExercise:styles.emptyExercise
                                                 }
-                                        onClick={() => {
-                                            setSelectedExercise(exercise)
-                                            setExerciseText(exercise.text)
-                                            setExerciseAnswer(exercise.correct_answer)
+                                        onClick={async() => {
+                                            await setSelectedExercise(exercise)
+                                            await setExerciseText(exercise.text)
+                                            await setExerciseAnswer(exercise.correct_answer)
+
+                                            await loadLessonExercises(selectedLesson) 
+                                            // await setSelectedLesson(lesson)
+                                            await setLessonTitle(selectedLesson.title)
+                                            await setLessonTesis(selectedLesson.tesis)
+                                            await setLessonDate(selectedLesson.start_time)
+                                            await loadLessonExercises(selectedLesson)
+                                            await loadLessonExercises(selectedLesson)
                                         }}
                                     >{exercise.exer_order}</div>
                                 </div>
                             ))}
                             <div 
                                 className={styles.plusMinusButton}
-                                onClick={() => {
-                                    createEmptyExercise()
-                                    loadProgramData() 
+                                onClick={async() => {
+                                    await createEmptyExercise()
+                                    await loadProgramData()
+                                    await loadLessonExercises(selectedLesson) 
+
+                                    // await setSelectedLesson(lesson)
+                                    await setSelectedExercise('')
+                                    await setLessonTitle(selectedLesson.title)
+                                    await setLessonTesis(selectedLesson.tesis)
+                                    await setLessonDate(selectedLesson.start_time)
+                                    await loadLessonExercises(selectedLesson)
+                                    await loadLessonExercises(selectedLesson)
                                 }}
                             >+</div>
                             <div 
                                 style={{padding: '3px'}}
                                 className={styles.plusMinusButton}
-                                onClick={() => {
-                                    deleteExercise(selectedExercise.id)
-                                    loadProgramData()
+                                onClick={async() => {
+                                    await deleteExercise(selectedExercise.id)
+                                    await loadProgramData()
+
+                                    await loadLessonExercises(selectedLesson) 
+
+                                    // await setSelectedLesson(lesson)
+                                    await setSelectedExercise('')
+                                    await setLessonTitle(selectedLesson.title)
+                                    await setLessonTesis(selectedLesson.tesis)
+                                    await setLessonDate(selectedLesson.start_time)
+                                    await loadLessonExercises(selectedLesson)
+                                    await loadLessonExercises(selectedLesson)
                                 }}
                             >-</div>
                         </div>
@@ -601,8 +628,16 @@ function EditProgram(props) {
                                 <button 
                                 style={selectedExercise == ''?{display: 'none'}:{display: 'flex'}}
                                 className={styles.saveButton}
-                                    onClick={() => {
+                                    onClick={async() => {
                                         updateExercise(selectedExercise.id, exerciseText, exerciseAnswer)
+
+                                        await loadLessonExercises(selectedLesson) 
+                                        // await setSelectedLesson(lesson)
+                                        await setLessonTitle(selectedLesson.title)
+                                        await setLessonTesis(selectedLesson.tesis)
+                                        await setLessonDate(selectedLesson.start_time)
+                                        await loadLessonExercises(selectedLesson)
+                                        await loadLessonExercises(selectedLesson)
                                     }}
                                 >Сохранить</button> 
                             </div>

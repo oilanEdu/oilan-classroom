@@ -69,12 +69,13 @@ function Title(props) {
                     courseTargets={courseTargets}
                     teacherId={teacherId}
                 /> : ''}
-                <AboutTeacher 
+                {course != undefined ? <AboutTeacher 
                     teacherByCourse={teacherByCourse} 
                     courseSkills={courseSkills} 
                     course={course} 
+                    teacherId={teacherId}
                     sertificates={sertificates}
-                />
+                /> : ''}
                 <Program 
                     program={course?.program} 
                     courseStages={courseStages}

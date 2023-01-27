@@ -117,11 +117,14 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
         >
           <div 
             className={
-              exer.answer_status == 'correct'
-              ? styles.correctExercise
-              : exer.answer_status == 'uncorrect'
-              ? styles.uncorrectExercise
-              : styles.emptyExercise
+              exer.answer_text == undefined 
+              ? styles.emptyExercise
+              : 
+                exer.answer_status == 'correct'
+                ? styles.correctExercise
+                : exer.answer_status == 'uncorrect'
+                ? styles.uncorrectExercise
+                : styles.notCheckedExercise
             } 
             onClick={openExer}
             data-index={i}

@@ -15,6 +15,9 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
   const [ symbols, setSymbols ] = useState(250)
 
   useEffect(() => {
+    console.log(exercises2, "exercises2");
+  }, [exercises2])
+  useEffect(() => {
     console.log(lesson, "lessonPROPS");
     if (index === 0) {
       setShowCheck(lesson.id)
@@ -308,7 +311,15 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
                 {numberOfEx == exercises2.length ? <>                {exercises2.map(exercise => (
                     <div style={exercise.id == selectedExerciseId?{display:'flex', padding: '2px', border: '3px solid #007AFF', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}:{display:'flex', padding: '2px', border: '3px solid white', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}}>
                         <div 
-                            className={exercise.answer_status?exercise.answer_status == 'not verified'?styles.exerBrickWhite:exercise.answer_status == 'correct'?styles.exerBrickGreen:styles.exerBrickRed:styles.exerBrickWhite}
+                            // className={exercise.answer_status?exercise.answer_status == 'not verified'?styles.exerBrickWhite:exercise.answer_status == 'correct'?styles.exerBrickGreen:styles.exerBrickRed:styles.exerBrickWhite}
+                            className={exercise.answer_status == undefined 
+                                      ? styles.emptyExercise
+                                      : 
+                                      exercise.answer_status == 'not verified'
+                                        ? styles.notCheckedExercise
+                                        : exercise.answer_status == 'correct'
+                                        ? styles.exerBrickGreen
+                                        : styles.exerBrickRed}
                             onClick={async () => {
                                 await getAnswer(selectedStudentId, exercise.id)
                                 setSelectedExerciseId(exercise.id)

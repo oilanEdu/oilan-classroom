@@ -85,7 +85,7 @@
   font-family: "Noto Sans Regular";
 }
 
-.course_container button {
+.goToLessonButton {
   border: none;
   font-family: "Noto Sans Bold";
   background: #007AFF;
@@ -94,6 +94,16 @@
   padding: 13px 65px;
   font-size: 16px;
 }
+.goToLessonButton:disabled {
+  border: none;
+  font-family: "Noto Sans Bold";
+	background: #D8D8DC;
+	color: #fff;
+  border-radius: 8px;
+  padding: 13px 65px;
+  font-size: 16px;
+}
+
 
 .pie_text {
   text-transform: uppercase;

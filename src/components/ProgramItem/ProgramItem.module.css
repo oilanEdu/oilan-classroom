@@ -99,6 +99,7 @@
 }
 
 .editSet {
+  cursor: pointer;
   position: absolute;
   top: 40px;
   width: 100%;
@@ -116,6 +117,7 @@
 }
 
 .settingTitleHide {
+  cursor: pointer;
   font-family: 'Noto Sans Medium';
   font-style: normal;
   font-weight: 500;
@@ -130,6 +132,7 @@
 }
 
 .settingTitleShow {
+  cursor: pointer;
   font-family: 'Noto Sans Medium';
   font-style: normal;
   font-weight: 500;
@@ -144,6 +147,7 @@
 }
 
 .deleteSet {
+  cursor: pointer;
   position: absolute;
   top: 87px;
   left: -5px;

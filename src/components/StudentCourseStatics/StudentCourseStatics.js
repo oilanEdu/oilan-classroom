@@ -21,6 +21,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
   const [loadedData, setLoadedData] = useState(false)
   const [closerLesson, setCloserLesson] = useState(lesson)
   const router = useRouter();
+  const [disableButton, setDisableButton]= useState(true)
 
   let baseMark = 0;
   let count = 0;
@@ -29,7 +30,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
   }, [closerLesson])
 
   const updateTimer = () => {
-    const future = Date.parse(closerLesson?.start_time);
+    const future = Date.parse(closerLesson?.personal_time);
     const now = new Date();
     const diff = future - now;
     
@@ -46,6 +47,15 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
     setMinutes(m  - h * 60);
     setSeconds(s  - m  * 60);
   };
+
+  useEffect(() => {
+    if ((hours * 60 + minutes) * 60 + seconds >= 600 && hours != NaN && minutes != NaN && seconds != NaN) {
+      setDisableButton(true)
+    }
+    if ((hours * 60 + minutes) * 60 + seconds < 600 && hours != NaN && minutes != NaN && seconds != NaN) {
+      setDisableButton(false)
+    }
+  }, [seconds])
 
   setInterval(() => {updateTimer()}, 1000);
 
@@ -206,6 +216,8 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
         <p>Занятие №{closerLesson?.number} {closerLesson?.title}</p>
         <div>
           <button
+          className={styles.goToLessonButton}
+          disabled={disableButton}
           onClick={() => {
             (closerLesson.personal_lesson_link || closerLesson.default_lesson_link)?
               startLessonLink(closerLesson.personal_lesson_link?closerLesson.personal_lesson_link:closerLesson.default_lesson_link):

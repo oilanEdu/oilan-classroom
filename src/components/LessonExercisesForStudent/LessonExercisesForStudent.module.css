@@ -62,7 +62,7 @@
 
 .uncorrectExercise {
   padding: 5px 35px;
-  background:  linear-gradient(0deg, #EA6756, #EA6756);
+  background:  rgba(234, 103, 86, 0.8);
   border-radius: 4px;
   font-size: 16px;
   color: #FFFFFF;
@@ -72,7 +72,20 @@
 
 .emptyExercise {
   padding: 5px 35px;
-  background:  linear-gradient(0deg, #CAE3FF, #CAE3FF);
+  /* background:  linear-gradient(0deg, #CAE3FF, #CAE3FF); */
+  background-color: white;
+  border-radius: 4px;
+  font-size: 16px;
+  color: black;
+  font-family: "Noto Sans Bold";
+  cursor: pointer;
+  border: 1px solid #4A4A4A;
+  border-radius: 4px;
+}
+
+.notCheckedExercise {
+  padding: 5px 35px;
+  background-color:rgba(60, 154, 255, 1);
   border-radius: 4px;
   font-size: 16px;
   color: #FFFFFF;

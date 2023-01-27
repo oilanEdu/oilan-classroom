@@ -72,11 +72,6 @@
   font-size: 16px;
 }
 
-.closerLessonInfo {
-	font-family: 'Noto Sans Bold';
-    font-size: 16px;
-	margin-top: 10px;
-}
 
 .topBlock{
 	width: 100%;
@@ -120,7 +115,7 @@
 	color: #1E2432;
 }
 
-.greetings button{
+.goToLessonButton{
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -138,6 +133,25 @@
 	font-size: 16px;
 	line-height: 22px;
 	color: #FFFFFF;
+}
+.goToLessonButton:disabled {
+	background: #D8D8DC;
+	color: #fff;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 18px 60px;
+	gap: 10px;
+	width: 295px;
+	height: 48px;
+	border: none;
+	border-radius: 8px;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 22px;
 }
 
 .calendarBlock{

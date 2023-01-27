@@ -259,6 +259,48 @@ text-align: center;
 	cursor: pointer;
 }
 
+.emptyExercise {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 0px;
+	gap: 10px;
+	width: 80px;
+	height: 32px;
+	border-radius: 4px;
+	background-color: white;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 22px;
+	color: black;
+	cursor: pointer;
+	border: 1px solid #4A4A4A;
+	border-radius: 4px;
+}
+
+.notCheckedExercise {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 0px;
+	gap: 10px;
+	width: 80px;
+	height: 32px;
+	border-radius: 4px;
+	background-color: rgba(60, 154, 255, 1);
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 22px;
+	color: white;
+	cursor: pointer;
+}
+
 .exerBrickRed{
 	display: flex;
 	flex-direction: row;
@@ -269,7 +311,7 @@ text-align: center;
 	width: 80px;
 	height: 32px;
 	border-radius: 4px;
-	background-color: #EB8478;
+	background-color:rgba(234, 103, 86, 0.8);;
 	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 700;

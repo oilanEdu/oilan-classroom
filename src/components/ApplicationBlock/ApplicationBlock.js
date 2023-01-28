@@ -106,10 +106,10 @@ const ApplicationBlock = (props) => {
   const handleShowSend = () => setShowSend(true);
  
   const firstStepValidation = () =>  {
-    if (fullname.length < 3) {
+    if (fullname !== "") {
       alert("Заполните все поля!");
       return false;
-    } else if (phone.length < 16) {
+    } else if (phone.length < 10) {
       alert("Заполните все поля!");
       return false;
     } else {
@@ -207,7 +207,7 @@ const ApplicationBlock = (props) => {
 
   //проверка все ли условия выполнены перед отправкой заявки
   useEffect(() => {
-    if (phone.length > 10 && fullname.length > 3 && email.length > 6 && timeIsSelected == true) {
+    if (phone.length > 10 && fullname != "" && email.length > 3 && timeIsSelected == true) {
       setShowCaptcha(true)
     }
   }, [phone, fullname, email, timeIsSelected])
@@ -300,18 +300,12 @@ const ApplicationBlock = (props) => {
         className={styles.button_animate} 
         onClick={(e) => {
           e.preventDefault();
-          if (check === false) {
-            alert(
-              "Прочтите публичную оферту и дайте свое согласие!"
-            );
-          } else {
             if (firstStepValidation()) {
               // sendApplication();
               // setShowCaptcha(true)
             } else {
               alert("Заполните пожалуйста все поля.")
             }
-          }
         }}
       > 
         Попробовать бесплатно

@@ -115,15 +115,8 @@ function ModalForLessonConfiguration(props) {
           lesson_number += 1
           lesson.lesson_number = lesson_number
       })
-    let lessonsOfProgramButNotOfStudent = lessons.filter(element => !lessonsUpcoming.find(item => item.id === element.id));
-    let mixedArray = lessonsUpcoming.concat(lessonsOfProgramButNotOfStudent)
-    setLessonsUpcoming(mixedArray)
+    setLessonsUpcoming(lessons)
     })} 
-    useEffect(() => {
-      if (lessonsUpcoming != undefined) {
-        loadLessonsByProgram(studentProgramUpcoming) 
-      }
-    }, [lessonsUpcoming])
  
   // useEffect(() => {
   //   loadStudentLessons(props?.student?.student_id, props?.student?.program_id)
@@ -136,13 +129,13 @@ function ModalForLessonConfiguration(props) {
 
   const [lessons2, setLessons2] = useState()
   useEffect(() => {
-    console.log(lessons2, "lessons2");
-  }, [lessons2])
-  useEffect(() => {
     if (lessonsUpcoming != undefined) {
       setLessons2(lessonsUpcoming) 
+      debugger
     }
   }, [lessonsUpcoming])
+
+  console.log(lessons2);
   return (
     <div >
       <div className={styles.blackBackground}>

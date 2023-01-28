@@ -10,7 +10,7 @@ function GoToLessonWithTimer({closerLesson, hours, minutes, seconds, isTeacher, 
   const [second, setSecond] = useState()
 
   useEffect(() => {
-    //фикс дергающегося таймера, наверно
+
     const hour1 = document.getElementById('hour').textContent;
     const minute1 = document.getElementById('minute').textContent;
     const second1 = document.getElementById('second').textContent;
@@ -26,7 +26,7 @@ function GoToLessonWithTimer({closerLesson, hours, minutes, seconds, isTeacher, 
             <p>
               Следующее занятие через <span id="hour">{hours ? hours.toString().padStart(2, "0") : prevCountRefHours.toString().padStart(2, "0")}:</span>
               <span id="minute">{minutes ? minutes.toString().padStart(2, "0") : prevCountRefMinutes.toString().padStart(2, "0")}</span>:
-              <span id="second">{seconds ? seconds.toString().padStart(2, "0") : prevCountRefSeconds.toString().padStart(2, "0")}</span>
+              <span id="second">{seconds ? seconds.toString().padStart(2, "0") : prevCountRefSeconds.toString().padStart(2, "0")}</span> часов
             </p>
             <p>
               Занятие №{closerLesson.lesson_number} {closerLesson.title}

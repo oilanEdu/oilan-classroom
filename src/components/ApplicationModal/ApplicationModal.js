@@ -9,7 +9,7 @@ import Link from "next/link";
 import DateTimePicker from "../DateTimePicker/DateTimePicker";
 
 const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByCourse, teacherId}) => {
-  const [check, setCheck] = useState(false);
+  // const [check, setCheck] = useState(false);
   const [fullname, setFullname] = useState("");
   const [phone, setPhone] = useState("");
   const [connection, setConnection] = useState("");
@@ -94,7 +94,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
   } 
 
   const firstStepValidation = () =>  {
-    if (fullname.length < 3) { 
+    if (fullname !== "") { 
       alert("Заполните все поля!");
       return false;
     } else if (phone.length < 16) {
@@ -149,8 +149,9 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
       setPhone("");
       setShowCaptcha(false);
       setCaptchaText("");
-      setCheck(false);
+      // setCheck(false);
       loadCaptcha();
+      setCaptchaCheck(false);
       setProccessOfCaptcha(0);
       setProccessOfCaptchaUrl("https://realibi.kz/file/633881.png");
 
@@ -191,7 +192,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
 
     //проверка все ли условия выполнены перед отправкой заявки
     useEffect(() => {
-      if (phone.length > 10 && fullname.length > 3 && connection !== "" && timeIsSelected === true) {
+      if (phone.length > 10 && fullname !== "" && connection !== "" && timeIsSelected === true) {
         setShowCaptcha(true)
       }
     }, [phone, fullname, connection, timeIsSelected,])
@@ -300,7 +301,7 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           setFullname={setFullname}
           setConnection={setConnection}
           setPhone={setPhone}
-          setCheck={setCheck}
+          // setCheck={setCheck}
           showCaptcha={showCaptcha}
           captchaImage={randomizedCaptchaData?.[0]?.link}
           anotherImage={anotherImage}
@@ -311,17 +312,17 @@ const ApplicationModal = ({showSend, handleShowSend, onClose, course, teacherByC
           className={styles.button}
           onClick={(e) => {
             e.preventDefault();
-            if (check === false) {
-              alert(
-                "Прочтите публичную оферту и дайте свое согласие!"
-              );
-            } else {
+            // if (check === false) {
+            //   alert(
+            //     "Прочтите публичную оферту и дайте свое согласие!"
+            //   );
+            // } else {
               if (firstStepValidation ()) {
                 // setShowCaptcha(true)
               } else {
                 alert("Заполните пожалуйста все поля.")
               }
-            }
+            // }
           }}
         >
           Оставить заявку

@@ -23,11 +23,17 @@ const StudentCourse = (props) => {
   const fetchData = async () => {
     const response = await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${nickname}&course_url=${courseUrl}`).then(async (res) => {
       setStudent(res.data);
-      await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${courseUrl}&program_id=${res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(res => {
-        setLesson(res.data[0]);
-        setLessons(res.data);
-        setDataLoaded(true)
-      });
+      console.log(res.data);
+      console.log(res.data[0] !== undefined);
+      if (res.data.length !== 0) {
+        await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${courseUrl}&program_id=${res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(res => {
+          setLesson(res.data[0]);
+          setLessons(res.data);
+          setDataLoaded(true)
+        });
+      } else {
+        return;
+      }
     });
     const scoresForAnswers = await axios.get(`${globals.productionServerDomain}/getStudentScores?student_nick=${nickname}&course_url=${courseUrl}`);
 

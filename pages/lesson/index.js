@@ -61,6 +61,38 @@ const Lesson = (props) => {
   const [selectedStudentId, setSelectedStudentId] = useState(0);
   const [answer, setAnswer] = useState([]);
   const [translationMode, setTranslationMode] = useState(false)
+  
+  // innerWidth
+  const [width, setWidth] = useState();
+  const [height, setHeight] = useState();
+  const [percentOfUnderTile, setPercentOfUnderTile] = useState("16.5%")
+  useEffect(() => {
+    console.log(percentOfUnderTile, "percentOfUnderTile");
+  }, [percentOfUnderTile])
+
+  // useEffect(() => {
+  //   function handleResize() {
+  //     setWidth(window.innerWidth);
+  //     setHeight(window.innerHeight);
+  //   }
+  //   window.addEventListener('resize', handleResize);
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, []);
+
+  useEffect(() => {
+    console.log(window.innerWidth, "width2");
+    if (window.innerWidth <= 480) {
+      setPercentOfUnderTile("50%")
+    }
+    if (window.innerWidth <= 768 && window.innerWidth > 480) {
+      setPercentOfUnderTile("30%")
+    }
+    if (window.innerWidth <= 1000 && window.innerWidth > 768) {
+      setPercentOfUnderTile("20%")
+    }
+
+  }, [])
+  // innerWidth
 
   console.log(student);
   // console.log(router);
@@ -376,7 +408,7 @@ const Lesson = (props) => {
     }, [videoTrack]);
 
     return (
-      <div style={{display: 'flex', flexDirection: 'column', width: '16.5%', marginRight: '12px'}}>
+      <div style={{display: 'flex', flexDirection: 'column', width: percentOfUnderTile, marginRight: '12px'}}>
         {videoTrack?.enabled ? (
           <video style={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', borderRadius: '6px'}} className={styles.minVidArea} ref={videoRef} autoPlay playsInline muted={isLocal} ></video>
         ) : <div className={styles.zaglushkahahaMini}></div>}
@@ -495,7 +527,7 @@ const Lesson = (props) => {
     }, [videoTrack]);
 
     return (
-      <div style={{display: 'flex', flexDirection: 'column', width: '16.5%', marginRight: '12px'}}>
+      <div style={{display: 'flex', flexDirection: 'column', width: percentOfUnderTile, marginRight: '12px'}}>
         {videoTrack?.enabled ? (
           <video style={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', aspectRatio: '4/3', background: 'black', borderRadius: '6px'}} className={styles.minVidArea} ref={videoRef} autoPlay playsInline muted={isLocal} ></video>
         ) : <div className={styles.zaglushkahahaMini}></div>}
@@ -643,10 +675,13 @@ const Lesson = (props) => {
                     </div>
                     <div className={styles.rightButton}>
                       <button 
+                        className={styles.LJ}
                         onClick={() => {
                             LJ()
                           }}
-                      >LJ</button>
+                      >
+                        <img src="https://realibi.kz/file/193097.png"/>
+                      </button>
                       <button
                         className={styles.leaveRoomButton}
                         onClick={() => {
@@ -664,7 +699,8 @@ const Lesson = (props) => {
                           }}
                         >
                         </span>
-                        Покинуть
+                        {/* {window.innerWidth < 480 ? "" : "Покинуть"} */}
+                        {/* Покинуть */}
                       </button>
                     </div>
                   </div>
@@ -763,10 +799,13 @@ const Lesson = (props) => {
                     </div>
                     <div className={styles.rightButton}>
                       <button 
+                        className={styles.LJ}
                         onClick={() => {
                             LJ()
                           }}
-                      >LJ</button>
+                      >
+                        <img src="https://realibi.kz/file/193097.png"/>
+                      </button>
                       <button
                         className={styles.leaveRoomButton}
                         onClick={() => {
@@ -784,7 +823,7 @@ const Lesson = (props) => {
                           }}
                         >
                         </span>
-                        Покинуть
+                        {/* Покинуть */}
                       </button>
                     </div>
                   </div>

@@ -325,6 +325,11 @@ a {
     opacity: 1;
 }
 }
+@media screen and (max-width: 480px) {
+    .py-1-5 {
+        width: 50px;
+    }
+}
 
 @media (min-width: 1440px) {
   body {

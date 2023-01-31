@@ -30,7 +30,24 @@ const StudentHomeworks = ({index, lesson, student}) => {
     console.log(exercises)
   }, []);
 
+
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+  useEffect(() => {
+    console.log(width, "width");
+  }, [width])
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return <div key={lesson.id} className={styles.lesson}>
+    {width <= 480 ? '' : <>
     <div>
       <div className={styles.lesson_content}>
         <p className={styles.lesson_order}>№ {lesson.lesson_order}</p>
@@ -68,6 +85,50 @@ const StudentHomeworks = ({index, lesson, student}) => {
         className={styles.block} 
       ></span>
     }
+    </>}
+
+    {/* здесь начинается мобильная вёрстка 480 */}
+    {width <= 480 ? <>
+      <div>
+      <div className={styles.lesson_content}>
+        <p className={styles.lesson_order}>№ {lesson.lesson_order}</p>
+        <p className={styles.lesson_content_title}>{lesson.title}</p>
+        {/* <p 
+          style={{
+            background: +lesson.score === 0 ? "#CAE3FF" : +lesson.score < 50 ? "#EA6756" : +lesson.score < 80 ? "#F8D576" : "#74C87D"
+          }}
+          className={styles.lesson_score}
+        >
+          + {lesson.score * 10} ₸
+        </p> */}
+        {isActive
+          ? <span 
+            className={showTesis ? styles.close : styles.open} 
+            onClick={() => setShowTesis(!showTesis)}
+          ></span>
+          : <span
+            className={styles.block} 
+          ></span>
+        }
+      </div>
+      <p className={styles.lesson_tesis} style={{display: showTesis ? "block" : "none"}}>
+        <div className={styles.dates}>
+          <p className={styles.lesson_date}>{new Date(lesson.start_time).toLocaleDateString()}</p>
+          <p className={styles.lesson_time}>{new Date(lesson.start_time).toLocaleTimeString().slice(0, 5)}</p>
+        </div>
+        <p 
+          style={{
+            background: +lesson.score === 0 ? "#CAE3FF" : +lesson.score < 50 ? "#EA6756" : +lesson.score < 80 ? "#F8D576" : "#74C87D"
+          }}
+          className={styles.lesson_grade}
+        >
+          Оценка - {lesson.score?lesson.score:'0'} ({lesson.done_exer}/{lesson.all_exer})
+        </p>
+        <LessonExercisesForStudent exercises={exercises} student={student} fetchData={fetchData}/>
+      </p>
+
+    </div>
+    </> : ''}
   </div>
 };
 

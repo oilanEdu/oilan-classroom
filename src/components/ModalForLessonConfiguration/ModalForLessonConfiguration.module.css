@@ -100,7 +100,8 @@
     font-size: 16px;
     line-height: 22px;
     color: #FFFFFF;
-    background: #5BCB91;
+    /* background: #5BCB91; */
+    background: rgba(0, 122, 255, 1);
     border-radius: 8px;
     border: none;
     margin-top: 40px;
@@ -135,4 +136,27 @@
     background-color: #c5c5c5;
     background-clip: content-box;
         border-radius: 32px;
+  }
+
+  @media screen and (max-width: 480px) {
+    .title {
+        text-align: start;
+        padding-left: 20px;
+    }
+    .modalWrapper {
+        width: 100%;
+    }
+    .close {
+        right: 7px;
+        top: 47px;
+    }
+    .innerWrapper {
+        padding: 0 20px;
+    }
+    .save {
+        width: 100%;
+    }
+    .buttonWrapper {
+        justify-content: center;
+    }
   }

@@ -131,3 +131,10 @@
     color: white;
     font-weight: bold;
 }
+
+@media screen and (max-width: 480px) {
+    .calendar_wrapper {
+        width: auto;
+        height: auto;
+    }
+}

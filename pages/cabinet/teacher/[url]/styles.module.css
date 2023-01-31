@@ -592,3 +592,96 @@
   .sConfigure:hover{
 	  text-decoration-line: underline;
   }
+
+  @media screen and (max-width: 1000px) {
+	.cantainer {
+		padding: 0 40px;
+	}
+  }
+  @media screen and (max-width: 768px) {
+	.cantainer {
+		padding: 0 10px;
+	}
+	.topBlock {
+		display: flex;
+		flex-direction: column-reverse;
+	}
+	.greetings {
+		width: 100%;
+		word-break: break-word;
+	}
+	.calendarBlock {
+		width: auto;
+	}
+	.programsBlock {
+		overflow-x: scroll;
+		width: auto;
+		align-items: flex-start
+	}
+	.programsHeader {
+		width: 1440px;
+	}
+	.program {
+		width: 1440px;
+	}
+	
+	.studentsBlock {
+		overflow-y: scroll;
+	}
+	.titleContainer {
+		width: 1440px;
+	}
+	.studentsHeader {
+		width: 1440px;
+	}
+	.student {
+		width: 1440px;
+	}
+	/* .calendarBlock {
+		order: 1;
+	} */
+} 
+
+@media screen and (max-width: 480px) {
+	.cantainer {
+		padding: 0 10px;
+	}
+	.topBlock {
+		display: flex;
+		flex-direction: column-reverse;
+	}
+	.greetings {
+		width: 100%;
+		word-break: break-word;
+	}
+	.calendarBlock {
+		width: auto;
+	}
+	.programsBlock {
+		overflow-x: scroll;
+		width: auto;
+		align-items: flex-start
+	}
+	.programsHeader {
+		width: 1440px;
+	}
+	.program {
+		width: 1440px;
+	}
+	
+	.studentsBlock {
+		overflow-y: scroll;
+	}
+	.titleContainer {
+		width: 1440px;
+	}
+	.studentsHeader {
+		width: 1440px;
+	}
+	.student {
+		width: 1440px;
+	}
+	/* .calendarBlock {
+		order: 1;
+	} */
+} 

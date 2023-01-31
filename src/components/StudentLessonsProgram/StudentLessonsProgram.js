@@ -22,11 +22,18 @@ const StudentLessonsProgram = ({lessons, courseUrl, nickname}) => {
         });
       }
     });
+    console.log(lessons, "lessonsStudentLessonsProgram");
   }, []);
 
   useEffect(() => {
     setDone((100 * doneLessons.length) / lessons.length);
   }, [doneLessons]);
+
+  useEffect(() => {
+    lessons.map((el) => {
+      console.log(Number.isInteger(el.number / 3), "lessons.map StudentsLessonsProgramRounds");
+    }) 
+  }, [])
 
   return <div className={styles.container}>
     <h2>Пройдено {+done.toFixed(2)} % курса</h2>
@@ -37,12 +44,14 @@ const StudentLessonsProgram = ({lessons, courseUrl, nickname}) => {
             <span className={+lesson.score > 0 ? styles.lesson_item_done : styles.lesson_item}>{+lesson.score > 0 ? null : lesson.number}</span>
             <p className={styles.lesson_date}>{+lesson.score > 0 ? "Пройден" : lesson.personal_time?new Date(lesson.personal_time).toLocaleDateString():new Date(lesson.start_time).toLocaleDateString()}</p>
           </div>
+          {/* {Number.isInteger(lesson.number / 3) ? null :  */}
           <p className={styles.order_line}></p>
+          {/* } */} 
         </>
       })}
     </div>
     
-    <h2>Программа курса</h2>
+    <h2 id="programs">Программа курса</h2>
 
     {lessons.map(lesson => {
       return <StudentLessonsProgramItem courseUrl={courseUrl} nickname={nickname} lesson={lesson}/>

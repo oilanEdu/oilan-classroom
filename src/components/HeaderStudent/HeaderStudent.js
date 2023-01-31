@@ -270,30 +270,47 @@ export default function HeaderStudent(props) {
         <div style={{ display: "block" }} className={styles.mobileMenu}>
           <ul className={styles.menu_ul}>
             <li>
-              <a
-                className={styles.link}
-                style={{ color: "black" }}
+            <Link
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}`}
+                target="_blank"
+                
               >
-                Главная
-              </a>
+                <a className={styles.link}
+                style={{ color: "black" }}>
+                Главная  
+                </a>
+              </Link>
             </li>
             <li>
-              <a
-                className={styles.link}
-                style={{ color: "black" }}
+            <Link
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}`}
+                target="_blank"
+                
               >
-                Программа
-              </a>
+                <a className={styles.link}
+                onClick={() =>
+                  setTimeout(() => {
+                    router.push("#programs");
+                  }, props.isInMainPage ? 0 : 1000)
+                }
+                style={{ color: "black" }}>
+                Программа  
+                </a>
+              </Link>
             </li>
-            <li onClick={handleShow}>
-              <a
-                className={styles.link}
-                style={{ color: "black" }}
+            <li>
+              {/* /cabinet/student/test/course/1/homeworks */}
+            <Link
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}/homeworks`}
+                target="_blank"
+                
               >
-                Домашние задания
-              </a>
+                <a className={styles.link}
+                style={{ color: "black" }}>
+                Домашние задания  
+                </a>
+              </Link>
             </li>
-            
           </ul>
         </div>
       ) : null}

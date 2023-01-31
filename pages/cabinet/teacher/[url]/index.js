@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import globals from "../../../../src/globals";
 import styles from "./styles.module.css";
 import axios from "axios";
@@ -47,7 +47,18 @@ function TeacherCabinet(props) {
     const indexOfFirstPost = indexOfLastPost - cardsPerPage;
     const currentPosts = students?.slice(indexOfFirstPost, indexOfLastPost)
 
+    const [disableButton, setDisableButton]= useState(true)
+
     const [studentsList, setStudentsList] = useState(currentPosts)
+    const [closerStudent, setCloserStudent] = useState()
+    useEffect(() => {
+      console.log(closerLesson, "closerLesson");
+      if (closerLesson != undefined && students != undefined) {
+        let closerStudentLocal = students.find(el => el.student_id === closerLesson.student_id)
+        setCloserStudent(closerStudentLocal)
+        console.log(closerStudentLocal, "closerStudentLocal", students, closerLesson);
+      }
+    }, [students, closerLesson])
     useEffect(() => {
         console.log(studentsList, "studentsList");
     }, [studentsList])
@@ -75,6 +86,38 @@ function TeacherCabinet(props) {
         setMinutes(m  - h * 60);
         setSeconds(s  - m  * 60);
       };
+
+      useEffect(() => {
+        if ((hours * 60 + minutes) * 60 + seconds >= 600 && hours != NaN && minutes != NaN && seconds != NaN) {
+          setDisableButton(true)
+        }
+        if ((hours * 60 + minutes) * 60 + seconds < 600 && hours != NaN && minutes != NaN && seconds != NaN) {
+          setDisableButton(false)
+        }
+      }, [seconds])
+    //ниже 11 строк кода сделаны чтобы предотвратить конвулсьсии таймера. Автор кода - Ануар.
+    // const prevCountRefDays = useRef(0);
+    // const prevCountRefHours = useRef(0);
+    // const prevCountRefMinutes = useRef(0);
+    // const prevCountRefSeconds = useRef(0);
+    // useEffect(() => {
+    //   //assign the ref's current value to the count Hook
+    //   if (seconds != NaN) {
+    //     prevCountRefSeconds.current = seconds
+    //   }
+    //   if (minutes != NaN) {
+    //     prevCountRefMinutes.current = minutes
+    //   }
+    //   if (hours != NaN) {
+    //     prevCountRefHours.current = hours
+    //   }
+    //   prevCountRefDays.current = days;
+
+
+
+
+    //   console.log(prevCountRefHours.current, prevCountRefMinutes.current, prevCountRefSeconds.current, "hours.current, minutes.current, seconds.current");
+    // }, [seconds]); //run this code when the value of count changes
 
       
      
@@ -242,8 +285,8 @@ function TeacherCabinet(props) {
             setStudentsLoaded(true)
         }
         setDataLoaded(true) 
-        // console.log('programs', programs)
-        // console.log('students', students)
+        console.log('programs', programs)
+        console.log('students', students)
                 // setCheckIsLoaded(true)
       }
 
@@ -378,10 +421,25 @@ function TeacherCabinet(props) {
         }
         // console.log(a[field], b[field]);
         // a[field] > b[field] ? 1 : -1
-      };
-    }
-    // console.log(programs);
+      };}
+    console.log(programs);
 
+
+    const [width, setWidth] = useState();
+    const [height, setHeight] = useState();
+    useEffect(() => {
+      console.log(width, "width");
+    }, [width])
+  
+    useEffect(() => {
+      function handleResize() {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+      }
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+    
     return (
       <>
         {showModalLesson ? (
@@ -433,6 +491,8 @@ function TeacherCabinet(props) {
                   //       )
                   //     : startNewLesson();
                   // }}
+                  className={styles.goToLessonButton}
+                  disabled={disableButton}
                   onClick={() => {
                     closerLesson.personal_lesson_link ||
                     closerLesson.default_lesson_link
@@ -446,8 +506,11 @@ function TeacherCabinet(props) {
                 >
                   Перейти к занятию
                 </button>
-                {closerLesson ? 
-                <b className={styles.closerLessonInfo}>Занятие №{closerLesson.lesson_order} Тема - {closerLesson.title}  </b>
+                {closerLesson !== undefined && students.length > 0 && closerStudent != undefined ? 
+                <>
+                  <p className={styles.closerLessonInfo}>Занятие №{closerLesson.lesson_order} Тема - {closerLesson.title}  </p>
+                  <p className={styles.closerLessonInfo}>Студент - {closerStudent?.name} {closerStudent?.surname}</p>
+                </>
                 : ''}
               </div>
               <div className={styles.calendarBlock}>
@@ -531,7 +594,7 @@ function TeacherCabinet(props) {
                       className={styles.sortOptions}
                       style={{ display: showSort ? "flex" : "none" }}
                     >
-                      <span onClick={() => ultimateSortDate("lesson_date", "curr_hours")}>
+                      <span onClick={() => ultimateSort("lesson_date")}>
                         Следующие занятие
                       </span>
                       <span onClick={() => ultimateSort("surname")}>

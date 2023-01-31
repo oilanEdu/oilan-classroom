@@ -23,6 +23,12 @@
   src: url("../../../../../public/fonts/Muller/MullerBold.ttf") format("truetype");
 }
 
+.mainWrapperOfEditProgram {
+	background-color: #f1faff;
+	width: 100vw;
+	padding: 20px 20px 0 20px
+}
+
 .cantainer{
 	max-width: 1440px;
     margin-left: auto;
@@ -572,4 +578,38 @@
 	padding: 3px;
 	cursor: pointer;
 	border: none;
+}
+
+@media screen and (max-width: 1000px) {
+	.mainWrapperOfEditProgram {
+		padding: 0
+	}
+	.cantainer {
+		margin: 0;
+	}
+	.lessonInfoFirstRow {
+		flex-direction: column;
+	}
+}
+@media screen and (max-width: 768px) {
+	.mainWrapperOfEditProgram {
+		padding: 0
+	}
+	.cantainer {
+		margin: 0;
+	}
+	.lessonInfoFirstRow {
+		flex-direction: column;
+	}
+}
+@media screen and (max-width: 480px) {
+	.mainWrapperOfEditProgram {
+		padding: 0
+	}
+	.cantainer {
+		margin: 0;
+	}
+	.lessonInfoFirstRow {
+		flex-direction: column;
+	}
 }

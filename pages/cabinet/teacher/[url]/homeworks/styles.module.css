@@ -640,3 +640,51 @@ text-align: center;
   color: #807d7d;
 	margin-bottom: 20px;
 }
+
+@media screen and (max-width: 480px)  {
+	.selectBlock {
+		width: auto;
+	}
+	.lesson {
+		width: auto;
+	}
+	.primeLessonInfo {
+		width: 100%;;
+	}
+	.lessonTopRow {
+		background: white;
+	}
+	.cantainer {
+		padding: 0 10px;
+	}
+	.detailInfo {
+		padding-left: 10px;
+		padding-top: 20px;
+		padding-bottom: 40px;
+	}
+	.datesWrapper {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 10px;
+	}
+	.lesson_grade {
+		position: initial;
+	}
+	.lessonDatetime {
+		width: 100%;
+		justify-content: flex-start;
+		gap: 10px;
+	}
+	.inputs {
+		width: auto;
+	}
+	.lessons {
+		width: 100%;
+	}
+	.select_program_container {
+		margin: 0;
+	}
+	.teacherComment {
+		width: 100%;
+	}
+}

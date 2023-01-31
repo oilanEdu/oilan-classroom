@@ -23,6 +23,8 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
   const router = useRouter();
   const [disableButton, setDisableButton]= useState(true)
 
+  const [lessonIsGoing, setLessonIsGoing] = useState(false)
+
   let baseMark = 0;
   let count = 0;
   useEffect(() => {
@@ -49,11 +51,15 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
   };
 
   useEffect(() => {
-    if ((hours * 60 + minutes) * 60 + seconds >= 600 && hours != NaN && minutes != NaN && seconds != NaN) {
-      setDisableButton(true)
-    }
-    if ((hours * 60 + minutes) * 60 + seconds < 600 && hours != NaN && minutes != NaN && seconds != NaN) {
+    if (lessonIsGoing) {
       setDisableButton(false)
+    } else {
+      if ((hours * 60 + minutes) * 60 + seconds >= 600 && hours != NaN && minutes != NaN && seconds != NaN) {
+        setDisableButton(true)
+      }
+      if ((hours * 60 + minutes) * 60 + seconds < 600 && hours != NaN && minutes != NaN && seconds != NaN) {
+        setDisableButton(false)
+      } 
     }
   }, [seconds])
 
@@ -95,11 +101,16 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
     // var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
     var idx = temp.indexOf(Math.min(...temp));
     let closerLessonLocal =  lessonsForNearestDate[idx];
-    setCloserLesson(closerLessonLocal) 
-
+    
+    let lessonIsGoingHandler = lessons.find(el => new Date().getTime() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() <= 3600000)
+    setCloserLesson(lessonIsGoingHandler ? lessonIsGoingHandler : closerLessonLocal) 
+    setLessonIsGoing(lessonIsGoingHandler ? true : false)
     console.log('TOTAL', baseMark, total)
     console.log('CloserLesson', closerLesson)
     console.log('lessons', lessons)
+    // console.log(lessons.find(el => new Date() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() >= -3600));
+    lessons.map(el => console.log(new Date().getTime() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime(), "lessons.map"))
+    console.log();
   };
 
   const totalLesson = () => {
@@ -201,11 +212,26 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
               });
         }
     }
+
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
+    useEffect(() => {
+      console.log(width, "width");
+    }, [width])
+  
+    useEffect(() => {
+      function handleResize() {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+      }
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
   
   return <div className={styles.container}>     
     <GoToLessonWithTimerComponent isTeacher={false} url={student[0].nickname} nickname={nickname} courseUrl={courseUrl}/>
     <div className={styles.course_container}>
-      <div>
+      <div className={styles.course_container_1}>
         <p>Онлайн-курс</p>
         <h2>{student[0]?.title}</h2>
         <p>{student[0]?.description}</p>
@@ -226,23 +252,23 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
           >Перейти к занятию</button>
         </div>
       </div>
-      <div>
-        <PieChart width={400} height={400}>
-          <text className={styles.pie_text_score} x={208} y={170} textAnchor="middle" dominantBaseline="middle">
+      <div style={{overflowX: width <= 480 ? 'hidden' : ' ', margin: '0 auto'}}>
+        <PieChart width={width <= 480 ? 350 : 400} height={400}>
+          <text className={styles.pie_text_score} x={width <= 480 ? 173 : 208} y={170} textAnchor="middle" dominantBaseline="middle">
             {isNaN(total) ? 0 : total}
           </text>
-          <text className={styles.pie_text} x={208} y={220} textAnchor="middle" dominantBaseline="middle">
+          <text className={styles.pie_text} x={width <= 480 ? 173 : 208} y={220} textAnchor="middle" dominantBaseline="middle">
             Общая оценка
           </text>
-          <text className={styles.pie_text} x={208} y={260} textAnchor="middle" dominantBaseline="middle">
+          <text className={styles.pie_text} x={width <= 480 ? 173 : 208} y={260} textAnchor="middle" dominantBaseline="middle">
             за курс
           </text>
           <Pie
             data={lessons}
-            cx={200}
+            cx={width <= 480 ? 165 : 200}
             cy={200}
             innerRadius={140}
-            outerRadius={180}
+            outerRadius={width <= 480 ? 170 : 180}
             fill="#CAE3FF"
             paddingAngle={1}
             dataKey="course_id"
@@ -267,7 +293,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
         </PieChart>
         <div>№ {selectedLesson !== lesson?selectedLesson.lesson_order:lesson.lesson_order}. {selectedLesson !== lesson?selectedLesson.title:lesson.title}</div> 
         <div style={{
-          width: "380px",
+          width: width <= 480 ? "auto" : "380px",
           height: "22px",
           border: "1px solid #CAE3FF",
           background: "#fff",

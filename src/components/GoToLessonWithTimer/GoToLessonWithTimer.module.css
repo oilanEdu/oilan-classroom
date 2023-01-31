@@ -48,3 +48,32 @@
     font-family: "Noto Sans Bold";
     font-size: 16px;
   }
+
+  @media screen and (max-width: 1000px){
+    .next_lesson_content {
+      flex-direction: column;
+      gap: 20px;
+      align-items: stretch;
+    }
+  }
+  @media screen and (max-width: 768px){
+    .next_lesson_content {
+      flex-direction: column;
+      gap: 20px;
+      align-items: stretch;
+    }
+  }
+  @media screen and (max-width: 480px){
+    .next_lesson_content {
+      flex-direction: column;
+      gap: 20px;
+      align-items: stretch;
+    }
+  }
+  @media screen and (max-width: 360px){
+    .next_lesson_content {
+      flex-direction: column;
+      gap: 20px;
+      align-items: stretch;
+    }
+  }

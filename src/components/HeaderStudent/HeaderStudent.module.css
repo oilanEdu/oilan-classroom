@@ -201,7 +201,7 @@
 .exitBtn:hover {
   text-decoration: underline;
 }
-@media screen and (max-width: 761px) {
+@media screen and (max-width: 768px) {
   .header {
     width: 100%;
     display: flex;
@@ -254,7 +254,28 @@
     height: 40px;
     width: 85px;
   }
+
+  /* header normalize */
+  .desktopHeader {
+    width: 100%;
+    display: flex;
+    height: auto;
+    align-items: center;
+    background: transparent;
+    justify-content: space-between;
+    padding: 0;
+  }
+  .whiteHeader {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
+
+@media screen and (max-width: 1440px) {
+  .desktopHeader {
+    width: auto;
+  }
+} 
 
 @media screen and (max-width: 1024px) {
   .header {
@@ -306,6 +327,20 @@
     height: 40px;
     width: 85px;
   }
+
+  .desktopHeader {
+    width: 100%;
+    display: flex;
+    height: auto;
+    align-items: center;
+    background: transparent;
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+  .whiteHeader {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 @media screen and (max-width: 500px) {
   .logo {
@@ -315,3 +350,36 @@
     display: block;
   }
 }
+
+@media screen and (max-width: 480px){
+  .desktopHeader {
+    width: 100%;
+    display: flex;
+    height: auto;
+    align-items: center;
+    background: transparent;
+    justify-content: space-between;
+    padding: 0;
+  }
+  .whiteHeader {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media screen and (max-width: 360px){
+  .desktopHeader {
+    width: 100%;
+    display: flex;
+    height: auto;
+    align-items: center;
+    background: transparent;
+    justify-content: space-between;
+    padding: 0;
+  }
+  .whiteHeader {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+

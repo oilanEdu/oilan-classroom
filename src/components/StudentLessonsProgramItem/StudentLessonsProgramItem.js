@@ -12,6 +12,20 @@ const StudentLessonsProgramItem = ({lesson, courseUrl, nickname}) => {
   let isActive = (new Date(lesson.start_time).getTime()) <= (new Date().getTime());
   const router = useRouter() 
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+  useEffect(() => {
+    console.log(width, "width");
+  }, [width])
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const getLessonExercises = async (selectedLesson) => {
         let exer_number = 0
         let counter = 0
@@ -67,17 +81,30 @@ const StudentLessonsProgramItem = ({lesson, courseUrl, nickname}) => {
     <div>
       <div className={styles.lesson_content}>
         <p className={styles.lesson_order}>№ {lesson.number}</p>
-        <p className={styles.lesson_date}>{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).toLocaleDateString()}</p>
-        <p className={styles.lesson_time}>{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).toLocaleTimeString().slice(0, 5)}</p>
+        <p className={styles.lesson_date} style={{display: width >= 480 ? "block" : "none"}}>{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).toLocaleDateString()}</p>
+        <p className={styles.lesson_time} style={{display: width >= 480 ? "block" : "none"}}>{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).toLocaleTimeString().slice(0, 5)}</p>
         <p className={styles.lesson_content_title}>{lesson.title}</p>
         <p 
           style={{
-            background: +lesson.score === 0 ? "#CAE3FF" : +lesson.score < 50 ? "#EA6756" : +lesson.score < 80 ? "#F8D576" : "#74C87D"
+            display: width >= 480 ? "block" : "none",  background: +lesson.score === 0 ? "#CAE3FF" : +lesson.score < 50 ? "#EA6756" : +lesson.score < 80 ? "#F8D576" : "#74C87D"
           }}
           className={styles.lesson_grade}
         >
           Оценка - {lesson.score} ({lesson.done_exer}/{lesson.all_exer})
         </p>
+        {isActive
+          ? <span 
+            style={{display: width >= 480 ? "none" : "block"}}
+            className={styles.open} 
+            onClick={() => {
+              setShowTesis(!showTesis)
+              }
+            }
+          ></span>
+          : <span
+            className={styles.block} 
+          ></span>
+        }
         {/* <p 
           style={{
             background: +lesson.score === 0 ? "#CAE3FF" : +lesson.score < 50 ? "#EA6756" : +lesson.score < 80 ? "#F8D576" : "#74C87D"
@@ -88,6 +115,19 @@ const StudentLessonsProgramItem = ({lesson, courseUrl, nickname}) => {
         </p> */}
       </div>
       <div className={styles.lesson_tesis} style={{display: showTesis ? "block" : "none"}}>
+        <div className={styles.mobileDatesWrapper}>
+          <p className={styles.lesson_date} style={{display: width >= 480 ? "none" : "block"}}>{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).toLocaleDateString()}</p>
+          <p className={styles.lesson_time} style={{display: width >= 480 ? "none" : "block"}}>{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).toLocaleTimeString().slice(0, 5)}</p>
+
+        </div>
+        <p 
+          style={{
+            display: width >= 480 ? "none" : "block",  background: +lesson.score === 0 ? "#CAE3FF" : +lesson.score < 50 ? "#EA6756" : +lesson.score < 80 ? "#F8D576" : "#74C87D"
+          }}
+          className={styles.lesson_grade}
+        >
+          Оценка - {lesson.score} ({lesson.done_exer}/{lesson.all_exer})
+        </p>
         <span>{lesson.tesis}</span>
         <span>Задания:{
           exercises.map(exercise => {
@@ -114,6 +154,7 @@ const StudentLessonsProgramItem = ({lesson, courseUrl, nickname}) => {
     </div>
     {isActive
       ? <span 
+        style={{display: width >= 480 ? "block" : "none"}}
         className={styles.open} 
         onClick={() => {
           setShowTesis(!showTesis)

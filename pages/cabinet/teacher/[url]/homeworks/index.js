@@ -96,7 +96,7 @@ function Homeworks(props) {
           } else {
             lesson.fact_time = lesson.start_time
           }
-          let strDate = new Date(lesson.fact_time)
+          let strDate = new Date(lesson.personal_time)
           let curr_hours = strDate.getHours();
           let curr_minutes = strDate.getMinutes(); 
           lesson.out_date = new Date(strDate).toLocaleDateString() 
@@ -205,7 +205,7 @@ function Homeworks(props) {
 
 	return ( 
     <>
-      <div style={{backgroundColor: "#f1faff", width: "    100vw"}}>
+      <div style={{backgroundColor: "#f1faff", width: "100vw", overflowX: "hidden"}}>
         <HeaderTeacher white={true} teacher={teacher} />
         <div className={styles.cantainer}>
                 <GoToLessonWithTimerComponent isTeacher={true} url={props.url}/>

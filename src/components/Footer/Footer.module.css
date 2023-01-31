@@ -186,6 +186,12 @@
     .container{
         grid-template-areas: 'logo phone partner' 'instagram email privacy';
         grid-template-columns: 1fr 1fr 1fr;
+        display: grid;
+        grid-template-areas:
+            'logo phone partner'
+            'instagram email privacy';
+        gap: 10px;
+        justify-items: center;
     }
 }
 
@@ -197,10 +203,15 @@
 }
 
 @media screen and (max-width: 600px){
-    .container{
+    /* .container{
         grid-template-areas: 'logo logo' 'instagram phone' 'partner email'
         'privacy email';
         grid-template-columns: 1fr 1fr;
+    } */
+    .container{
+        grid-template-areas: 'logo' 'instagram' 'partner' 'phone' 'email'
+        'privacy';
+        grid-template-columns: 1fr;
     }
     .columnTitle {
         font-weight: 700;

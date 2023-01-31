@@ -179,6 +179,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  gap: 10px;
 }
 
 .audioButton{
@@ -229,7 +230,8 @@
   justify-content: center;
   align-items: center;
   padding: 8px;
-  width: 143px;
+  /* width: 143px; */
+  width: 48px;
   height: 48px;
   background: #CC525F;
   border-radius: 12px;
@@ -752,3 +754,37 @@
     margin: 0 auto;
   }
 } */
+.LJ {
+  width: 48px;
+  height: 48px;
+  background-color: rgba(64, 76, 96, 1);
+  border: none;
+  border-radius: 12px;
+}
+
+@media screen and (max-width: 480px) {
+  .bigSquare {
+    width: 100%;
+    margin-left: 0;
+  }
+  .translationButtonsRow {
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center
+  }
+  .rightButton {
+    gap: 4px;
+  }
+  .peersCount {
+    margin-right: 4px;
+  }
+  .audioButton {
+    margin-right: 4px;
+  }
+  .videoButton {
+    margin-right: 4px;
+  }
+  .shareButton {
+    margin-right: 4px;
+  }
+}

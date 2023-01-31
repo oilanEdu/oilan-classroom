@@ -113,3 +113,54 @@
 .pie_text_score {
   font-size: 48px;
 }
+
+@media (max-width: 1000px) {
+  .container {
+    padding: 40px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 40px 10px;
+  }
+  /* .course_container:first-child {
+    order: 2;
+  } */
+  .course_container_1 {
+    order: 2;
+  }
+  .course_container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 40px 10px;
+  }
+  /* .course_container:first-child {
+    order: 2;
+  } */
+  .course_container_1 {
+    order: 2;
+  }
+  .course_container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 40px 10px;
+  }
+  /* .course_container:first-child {
+    order: 2;
+  } */
+  .course_container_1 {
+    order: 2;
+  }
+  .course_container {
+    flex-direction: column;
+  }
+}

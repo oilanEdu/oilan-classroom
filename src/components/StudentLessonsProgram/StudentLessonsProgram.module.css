@@ -94,3 +94,80 @@
   border: 1px solid #179427;
   margin-bottom: 10px;
 }
+
+@media screen and (max-width: 1000px){ 
+  .course_lessons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+  .order_line {
+    width: 50px;
+  }
+  .order_line:nth-child(3n) {
+    display: none;
+  }
+  .order_line:last-of-type {
+    display: none;
+  }
+  .container {
+    padding: 40px 10px;
+  }
+}
+
+@media screen and (max-width: 768px){ 
+  .course_lessons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+  .order_line {
+    width: 50px;
+  }
+  .order_line:nth-child(3n) {
+    display: none;
+  }
+  .order_line:last-of-type {
+    display: none;
+  }
+  .container {
+    padding: 40px 10px;
+  }
+}
+
+@media screen and (max-width: 480px){ 
+  .course_lessons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+  .order_line {
+    width: 50px;
+  }
+  .order_line:nth-child(3n) {
+    display: none;
+  }
+  .order_line:last-of-type {
+    display: none;
+  }
+  .container {
+    padding: 40px 10px;
+  }
+}
+
+@media screen and (max-width: 360px){ 
+  .course_lessons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+  .order_line {
+    width: 50px;
+  }
+  .order_line:nth-child(3n) {
+    display: none;
+  }
+  .order_line:last-of-type {
+    display: none;
+  }
+  .container {
+    padding: 40px 10px;
+  }
+}
+

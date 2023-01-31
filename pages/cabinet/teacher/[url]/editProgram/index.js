@@ -386,7 +386,9 @@ function EditProgram(props) {
     console.log(exercises);
     return ( 
         <>
-            <div style={{backgroundColor: "#f1faff", width: "    100vw", padding: "20px 20px 0 20px"}}>
+            <div className={styles.mainWrapperOfEditProgram} 
+            // style={{backgroundColor: "#f1faff", width: "    100vw", padding: "20px 20px 0 20px"}}
+            >
                 <HeaderTeacher white={true} teacher={teacher} />
 
                 <div className={styles.cantainer}>

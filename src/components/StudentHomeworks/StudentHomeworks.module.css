@@ -113,3 +113,40 @@
   border-radius: 8px;
   padding: 18px 20px;
 }
+
+@media screen and (max-width: 768px) {
+  .StudentHomeworksWrapper {
+    padding: 0 40px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .lesson_content {
+    grid-template-columns: 0.5fr 1fr 1fr;
+  }
+  .StudentHomeworksWrapper {
+    padding: 0 10px;
+  }
+  .lesson_date {
+    background: rgba(202, 227, 255, 1);
+    border-radius: 8px;
+    padding: 20px;
+    width: -moz-min-content;
+    width: min-content;
+    text-align: center;
+  }
+  .lesson_time {
+    background: rgba(202, 227, 255, 1);
+    border-radius: 8px;
+    padding: 20px;
+    width: -moz-min-content;
+    width: min-content;
+    text-align: center;
+  }
+  .dates {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-start;
+  }
+}

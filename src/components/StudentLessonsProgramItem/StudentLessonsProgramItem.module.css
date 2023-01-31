@@ -142,3 +142,112 @@
 .commentDate {
   color: gray !important;
 }
+
+@media screen and (max-width: 768px){ 
+  /* .lesson_grade {
+    width: auto;
+  } */
+  /* .lesson_tesis {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 40px;
+    padding-right: 10px;
+  } */
+  .lesson_content {
+    grid-template-columns: 1fr 1fr 1fr 2fr 2.5fr;
+  }
+  /* .lesson_date {
+    background: rgba(202, 227, 255, 1);
+    border-radius: 8px;
+    padding: 20px;
+    width: min-content;
+    text-align: center;
+  }
+  .lesson_time {
+    background: rgba(202, 227, 255, 1);
+    border-radius: 8px;
+    padding: 20px;
+    width: min-content;
+    text-align: center;
+  } */
+  /* .mobileDatesWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    gap: 10px;
+  } */
+}
+@media screen and (max-width: 360px){ 
+  .lesson_grade {
+    width: auto;
+  }
+  .lesson_tesis {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 40px;
+    padding-right: 10px;
+  }
+  .lesson_content {
+    grid-template-columns: 0.5fr 1fr 1fr;
+  }
+  .lesson_date {
+    background: rgba(202, 227, 255, 1);
+    border-radius: 8px;
+    padding: 20px;
+    width: min-content;
+    text-align: center;
+  }
+  .lesson_time {
+    background: rgba(202, 227, 255, 1);
+    border-radius: 8px;
+    padding: 20px;
+    width: min-content;
+    text-align: center;
+  }
+  .mobileDatesWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 480px){ 
+  .lesson_grade {
+    width: auto;
+  }
+  .lesson_tesis {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 40px;
+    padding-right: 10px;
+  }
+  .lesson_content {
+    grid-template-columns: 0.5fr 1fr 1fr;
+  }
+  .lesson_date {
+    background: rgba(202, 227, 255, 1);
+    border-radius: 8px;
+    padding: 20px;
+    width: min-content;
+    text-align: center;
+  }
+  .lesson_time {
+    background: rgba(202, 227, 255, 1);
+    border-radius: 8px;
+    padding: 20px;
+    width: min-content;
+    text-align: center;
+  }
+  .mobileDatesWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    gap: 10px;
+  }
+}

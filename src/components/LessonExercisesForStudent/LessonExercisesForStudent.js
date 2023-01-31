@@ -101,7 +101,23 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
     }
   }
 
+  const [width, setWidth] = useState();
+  const [height, setHeight] = useState();
+  useEffect(() => {
+    console.log(width, "width");
+  }, [width])
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return <div style={{ backgroundColor: bg, padding: padding}} className={styles.container}>
+    {width <= 480 ? '' : <>
     <div className={styles.exercises}>
       <h3 className={styles.exercises_title}>Домашние задания</h3>
       {exercises.map((exer, i) => {
@@ -234,6 +250,143 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
       </>)
     }
     </div>}
+    </>}
+
+    {/* //начинается мобильная вёрстка */}
+    {width <= 480 ? 
+    <> <div className={styles.exercises}>
+    <h3 className={styles.exercises_title}>Домашние задания</h3>
+    {exercises.map((exer, i) => {
+      return <div 
+        style={exercises[active]?.id == exer.id 
+          ? {} 
+          : {border: brickBorder}
+        }
+        className={exercises[active]?.id == exer.id 
+          ? styles.blueBrickBorder
+          : styles.whiteBrickBorder
+        } 
+      >
+        <div 
+          className={
+            exer.answer_text == undefined 
+            ? styles.emptyExercise
+            : 
+              exer.answer_status == 'correct'
+              ? styles.correctExercise
+              : exer.answer_status == 'uncorrect'
+              ? styles.uncorrectExercise
+              : styles.notCheckedExercise
+          } 
+          onClick={openExer}
+          data-index={i}
+        >
+          {exer.exer_number}
+        </div>
+      </div>
+    })}
+  </div>
+  {exercises[active] && <div>
+    {!exercises[active].answer_text?
+    (
+      <>
+        <p className={styles.answer_text}>
+          {exercises[active].exer_number}) {exercises[active].text} 
+        </p>
+        <div className={styles.answer_row}>
+          <div className={styles.answer_input}>
+            <textarea  
+              className={styles.answer} 
+              placeholder="Ответ"
+              value={answer}
+              onChange={e => {
+                if (symbols !== 0 && answer.length <= 250) {
+                  setAnswer(e.target.value)
+                  console.log(answer)
+                }
+              }}
+              onKeyDown={(e) => onKeyDownHandler(e)}
+            ></textarea>
+            <label>
+              Осталось символов <span>{symbols}</span>
+            </label>
+          </div>
+          
+          <button 
+            className={styles.answer_btn}
+            onClick={async() => {
+              await sendAnswer(answer, exercises[active].lesson_id, exercises[active].id, student, 'not verified')
+              await fetchData()
+            }}
+          >
+            Ответить
+          </button>
+        </div>
+      </>
+    ):
+    (<>
+        <div className={styles.reTryBlock}>
+          <span>Задание: {exercises[active].text}</span>
+          <span>Ваш ответ: {exercises[active].answer_text}</span>
+          <div className={styles.advice}>{exercises[active].answer_status == 'correct'?<><div className={styles.correctAdvice}></div>Сдано на отлично</>:exercises[active].answer_status == 'uncorrect'?<><><div className={styles.uncorrectAdvice}></div>Есть ошибки попробуйте снова</></>:''}</div>
+          <button 
+            className={styles.reanswer_btn}
+            onClick={() => {
+              setEditMode(true)
+            }}
+          >
+            Изменить ответ
+          </button>
+          {editMode?
+            (
+            <>
+              <div className={styles.editAnswerBlock}>
+                <div>
+                  <div className={styles.answer_input}>
+                    <textarea 
+                      type="text" 
+                      className={styles.answer} 
+                      placeholder="Ответ"
+                      value={answer}
+                      onChange={e => {
+                        if (symbols !== 0 && answer.length <= 250) {
+                          setAnswer(e.target.value)
+                          console.log(answer)
+                        }
+                      }}
+                      onKeyDown={(e) => onKeyDownHandler(e)}
+                    />
+                    <label>
+                      Осталось символов <span>{symbols}</span>
+                    </label>
+                  </div>
+                  <button 
+                    className={styles.answer_btn}
+                    onClick={async() => {
+                      await sendEditedAnswer(answer, exercises[active].answer_id, 'not verified')
+                      await fetchData()
+                    }}
+                  >
+                    Ответить
+                  </button>
+                </div>
+              </div>
+            </>):(<></>)
+          }
+          <div>
+            <div className={styles.teacherComment}><img src="https://realibi.kz/file/108886.png" className={styles.mailLogo}/><span>Комментарий преподователя:</span></div>
+            {teacherComments.map(comment => {
+            return <div className={styles.comment}>
+            <span>{comment.text}</span>
+            <span className={styles.commentDate}>{comment.date?.toLocaleString().substring(0, 10)} {comment.date?.toLocaleString('ru', { hour12: false }).substring(11, 16)}</span>  
+          </div> 
+        })}
+          </div>
+        </div>
+    </>)
+  }
+    </div>}</>
+    : ''}
   </div>
 };
 

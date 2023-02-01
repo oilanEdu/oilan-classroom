@@ -1,8 +1,8 @@
-import { useEffect, useRef, useCallback } from 'react';
-import useStateWithCallback from './useStateWithCallback'
-import freeice from 'freeice'
-import socket from '../socket'
-import ACTIONS from '../socket/actions'
+import {useEffect, useRef, useCallback} from 'react';
+import freeice from 'freeice';
+import useStateWithCallback from './useStateWithCallback';
+import socket from "../../../../src/socket/index.js";
+import ACTIONS from "../../../../src/socket/actions.js";
 
 export const LOCAL_VIDEO = 'LOCAL_VIDEO';
 
@@ -37,17 +37,13 @@ export default function useWebRTC(roomID) {
       });
 
       peerConnections.current[peerID].onicecandidate = event => {
-          if (event.candidate) {
-              if (peerConnections.current[peerID].remoteDescription && 
-                  peerConnections.current[peerID].remoteDescription.type !== "null") {
-                  peerConnections.current[peerID].addIceCandidate(new RTCIceCandidate(event.candidate));
-              }
-              socket.emit(ACTIONS.RELAY_ICE, {
-                  peerID,
-                  iceCandidate: event.candidate,
-              });
-          }
-      };
+        if (event.candidate) {
+          socket.emit(ACTIONS.RELAY_ICE, {
+            peerID,
+            iceCandidate: event.candidate,
+          });
+        }
+      }
 
       let tracksNumber = 0;
       peerConnections.current[peerID].ontrack = ({streams: [remoteStream]}) => {
@@ -76,17 +72,13 @@ export default function useWebRTC(roomID) {
         }
       }
 
-      localMediaStream?.current?.getTracks().forEach(track => {
+      localMediaStream.current.getTracks().forEach(track => {
         peerConnections.current[peerID].addTrack(track, localMediaStream.current);
       });
 
       if (createOffer) {
         const offer = await peerConnections.current[peerID].createOffer();
 
-        if (peerConnections.current[peerID].signalingState !== 'stable') {
-          console.error('PeerConnection is not stable. State:', peerConnections.current[peerID].signalingState);
-          return;
-        }
         await peerConnections.current[peerID].setLocalDescription(offer);
 
         socket.emit(ACTIONS.RELAY_SDP, {
@@ -105,28 +97,19 @@ export default function useWebRTC(roomID) {
 
   useEffect(() => {
     async function setRemoteMedia({peerID, sessionDescription: remoteDescription}) {
-      try {
-        await peerConnections.current[peerID].setRemoteDescription(
-          new RTCSessionDescription(remoteDescription)
-        );
-      } catch (error) {
-        console.error(error);
-      }
+      await peerConnections.current[peerID]?.setRemoteDescription(
+        new RTCSessionDescription(remoteDescription)
+      );
 
       if (remoteDescription.type === 'offer') {
-        if (peerConnections.current[peerID].signalingState === 'have-remote-offer' || peerConnections.current[peerID].signalingState === 'have-local-pranswer') {
-          try {
-            const answer = await peerConnections.current[peerID].createAnswer();
-            await peerConnections.current[peerID]?.setLocalDescription(answer);
+        const answer = await peerConnections.current[peerID].createAnswer();
 
-            socket.emit(ACTIONS.RELAY_SDP, {
-              peerID,
-              sessionDescription: answer,
-            });
-          } catch (error) {
-            console.error(error);
-          }
-        }
+        await peerConnections.current[peerID].setLocalDescription(answer);
+
+        socket.emit(ACTIONS.RELAY_SDP, {
+          peerID,
+          sessionDescription: answer,
+        });
       }
     }
 
@@ -173,8 +156,8 @@ export default function useWebRTC(roomID) {
       localMediaStream.current = await navigator.mediaDevices.getUserMedia({
         audio: true,
         video: {
-          width: 600,
-          height: 360,
+          width: 1280,
+          height: 720,
         }
       });
 

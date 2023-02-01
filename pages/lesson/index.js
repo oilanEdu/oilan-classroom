@@ -29,14 +29,27 @@ import LessonExercisesForStudent from "../../src/components/LessonExercisesForSt
 const endPoint =
   "https://prod-in2.100ms.live/hmsapi/testdomain.app.100ms.live/";
 
-const getToken = async (user_id, role) => {
+const getToken = async (user_id, role, teacher) => {
+  let room_key = '6397fa226d95375c45153bfa'
+  if (teacher == 13) {
+    room_key = '63da37d9cd8175701aac0217'
+  }
+  if (teacher == 6) {
+    room_key = '63da37e5cd8175701aac0218'
+  }
+  if (teacher == 4) {
+    room_key = '63da37f0da7e7ca812840b55'
+  }
+  if (teacher == 1) {
+    room_key = '63da37fbda7e7ca812840b56'
+  }
   const response = await fetch(`${endPoint}api/token`, {
     method: "POST",
     body: JSON.stringify({
       user_id,
       role: role, //host, teacher, guest, student
       type: "app",
-      room_id: "6397fa226d95375c45153bfa"
+      room_id: room_key
     })
   });
   const { token } = await response.json();
@@ -268,7 +281,7 @@ const Lesson = (props) => {
   const isLocalScreenShared = useHMSStore(selectIsLocalScreenShared);
 
   const handleSubmit = async (userName) => {
-    const token = await getToken(userName, role);
+    const token = await getToken(userName, role, teacher.teacher_id);
     hmsActions.join({ authToken: token, userName });
   };
 
@@ -331,7 +344,7 @@ const Lesson = (props) => {
     } catch (error) {
       console.error(error);
     }
-    const token = await getToken(userName, role);
+    const token = await getToken(userName, role, teacher.teacher_id);
     const userName = (role == "teacher")
                     ? teacher?.name
                     : student?.name 
@@ -713,6 +726,7 @@ const Lesson = (props) => {
                     ? teacher?.name
                     : student?.name 
                   } 
+                  roomName={room}
                 />
               </>
             }
@@ -836,6 +850,7 @@ const Lesson = (props) => {
                     ? teacher?.name
                     : student?.name
                   } 
+                  roomName={room}
                 />
               </>
             }

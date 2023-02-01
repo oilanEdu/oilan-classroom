@@ -1,6 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
-import socket from './socket/index.js';
-import ACTIONS from './socket/actions';
+import socket from "../../../src/socket/index.js";
+import ACTIONS from "../../../src/socket/actions.js";
 import {v4} from 'uuid';
 import useWebRTC, {LOCAL_VIDEO} from './hooks/useWebRTC';
 

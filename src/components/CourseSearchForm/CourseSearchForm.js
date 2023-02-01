@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import styles from './CourseSearchForm'
-const axios = require('axios').default;
+import styles from './CourseSearchForm.module.css'
+import axios from "axios";
 import globals from "../../globals";
 import PhoneInput from "react-phone-number-input/input";
 import 'react-phone-number-input/style.css'

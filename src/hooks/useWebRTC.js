@@ -7,7 +7,8 @@ import ACTIONS from "./../socket/actions.js";
 export const LOCAL_VIDEO = 'LOCAL_VIDEO';
 
 
-export default function useWebRTC(roomID) {
+export default function useWebRTC(roomID, videoState, audioState) {
+  console.log('ROOMID', roomID)
   const [clients, updateClients] = useStateWithCallback([]);
 
   const addNewClient = useCallback((newClient, cb) => {
@@ -25,6 +26,16 @@ export default function useWebRTC(roomID) {
   const peerMediaElements = useRef({
     [LOCAL_VIDEO]: null,
   });
+
+  // useEffect(() => {
+  //   if (peerMediaElements.current[LOCAL_VIDEO]) {
+  //     if (videoState === 'false') {
+  //       peerMediaElements.current[LOCAL_VIDEO].muted = true;
+  //     } else if (videoState === 'true') {
+  //       peerMediaElements.current[LOCAL_VIDEO].muted = false;
+  //     }
+  //   }
+  // }, [videoState]);
 
   useEffect(() => {
     async function handleNewPeer({peerID, createOffer}) {
@@ -73,6 +84,13 @@ export default function useWebRTC(roomID) {
       }
 
       localMediaStream.current.getTracks().forEach(track => {
+        console.log('track', track)
+        // if (videoState && track.kind === 'video'){
+        //   track.enabled = true
+        // }
+        // if (videoState && track.kind === 'video'){
+        //   track.enabled = true
+        // }
         peerConnections.current[peerID].addTrack(track, localMediaStream.current);
       });
 

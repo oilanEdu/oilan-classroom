@@ -1,4 +1,5 @@
 import {useState, useEffect, useRef} from 'react';
+import { useRouter } from "next/router";
 import socket from "../../../src/socket/index.js";
 import ACTIONS from "../../../src/socket/actions.js";
 import {v4} from 'uuid';
@@ -15,7 +16,7 @@ function layout(clientsNumber = 1) {
     }, []);
 
   const rowsNumber = pairs.length;
-  const height = `${100 / rowsNumber}%`;
+  const height = 'auto';
 
   return pairs.map((row, index, arr) => {
 
@@ -34,34 +35,94 @@ function layout(clientsNumber = 1) {
 }
 
 export default function Room() {
-  const {id: roomID} = 'test';
-  const {clients, provideMediaRef} = useWebRTC(roomID);
-  const videoLayout = layout(clients.length);
+  const router = useRouter();
+  const [room, setRoom] = useState('123');
+  const [videoState, setVideoState] = useState(true)
+  const [audioState, setAudioState] = useState(true)
+  
+  const [connected, setConnected] = useState(false)
 
-  return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexWrap: 'wrap',
-      height: '100vh',
-    }}>
-      {clients.map((clientID, index) => {
-        return (
+  useEffect(() => {
+    if (router.query.room) {
+      setRoom(router.query.room);
+    }
+  }, [router.query.room]);
+
+  // console.log('CLIENTS', clients)
+  console.log('router.query.room', router.query.room)
+
+  const RenderVideo = () => {
+    const { clients, provideMediaRef } = useWebRTC(room, videoState, audioState);
+    const videoLayout = layout(clients.length);
+    console.log('CLIENTS', clients, room)
+    useEffect(() => {
+      console.log('state changed')
+    }, [videoState, audioState])
+
+
+    return (
+      clients.map((clientID, index) => (
+        (clientID === LOCAL_VIDEO) ? (
           <div key={clientID} style={videoLayout[index]} id={clientID}>
             <video
-              width='100%'
-              height='100%'
+              width="100%"
+              height="100%"
               ref={instance => {
                 provideMediaRef(clientID, instance);
               }}
               autoPlay
               playsInline
-              muted={clientID === LOCAL_VIDEO}
+              muted={true}
+            />
+            {/*<button onClick={() => {
+              setAudioState(!audioState)
+            }}>au</button>
+            <button onClick={() => {
+              setVideoState(!videoState)
+            }}>vi</button>*/}
+          </div>
+        ) : (
+          <div key={clientID} style={videoLayout[index]} id={clientID}>
+            <video
+              width="100%"
+              height="100%"
+              ref={instance => {
+                provideMediaRef(clientID, instance);
+              }}
+              autoPlay
+              playsInline
+              muted={false}
             />
           </div>
-        );
-      })}
-    </div>
+        )
+      ))
+    );
+  }
+  return (
+    <>
+      <div>
+        <button onClick={() => {
+          setConnected(true)
+        }}>Connect</button>
+        {/*<button onClick={() => {
+          setConnected(false)
+        }}>Disonnect</button>
+        <button onClick={() => {
+          setAudioState(!audioState)
+        }}>au</button>
+        <button onClick={() => {
+          setVideoState(!videoState)
+        }}>vi</button>*/}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+          height: '100vh',
+        }}>
+          {connected?<RenderVideo/>:null}
+        </div>
+      </div>
+    </>
   );
 }

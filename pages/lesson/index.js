@@ -74,6 +74,16 @@ const Lesson = (props) => {
   const [selectedStudentId, setSelectedStudentId] = useState(0);
   const [answer, setAnswer] = useState([]);
   const [translationMode, setTranslationMode] = useState(false)
+  const [showMessageCantHearYou, setShowMessageCantHearYou] = useState(true)
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setShowMessageCantHearYou(false)
+    }, 600000);
+  
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, []);
   
   // innerWidth
   const [width, setWidth] = useState();
@@ -687,14 +697,23 @@ const Lesson = (props) => {
                       </button>
                     </div>
                     <div className={styles.rightButton}>
-                      <button 
-                        className={styles.LJ}
-                        onClick={() => {
-                            LJ()
-                          }}
-                      >
-                        <img src="https://realibi.kz/file/193097.png"/>
-                      </button>
+                    <div className={styles.LJ_button_wrapper}>
+                        {showMessageCantHearYou ?
+                          <p style={{position: showMessageCantHearYou ? "absolute" : "none"}} className={styles.cantHearYou}>Вас не слышно?</p> 
+                          : ''}
+                        {showMessageCantHearYou ?
+                          <img style={{position: showMessageCantHearYou ? "absolute" : "none"}} className={styles.cantHearYouArrow} src="https://realibi.kz/file/906453.png"></img> 
+                          : ''}
+                        <button 
+                          className={styles.LJ}
+                          onClick={() => {
+                              LJ()
+                              setShowMessageCantHearYou(false)
+                            }}
+                        >
+                          <img src="https://realibi.kz/file/193097.png"/>
+                        </button>
+                      </div>
                       <button
                         className={styles.leaveRoomButton}
                         onClick={() => {
@@ -812,14 +831,24 @@ const Lesson = (props) => {
                       </button>
                     </div>
                     <div className={styles.rightButton}>
-                      <button 
-                        className={styles.LJ}
-                        onClick={() => {
-                            LJ()
-                          }}
-                      >
-                        <img src="https://realibi.kz/file/193097.png"/>
-                      </button>
+                      <div className={styles.LJ_button_wrapper}>
+                      {showMessageCantHearYou ?
+                          <p style={{position: showMessageCantHearYou ? "absolute" : "none"}} className={styles.cantHearYou}>Вас не слышно?</p> 
+                          : ''}
+                        {showMessageCantHearYou ?
+                          <img style={{position: showMessageCantHearYou ? "absolute" : "none"}} className={styles.cantHearYouArrow} src="https://realibi.kz/file/906453.png"></img> 
+                          : ''}
+                        <button 
+                          className={styles.LJ}
+                          onClick={() => {
+                              LJ()
+                              setShowMessageCantHearYou(false)
+                            }}
+                        >
+                          <img src="https://realibi.kz/file/193097.png"/>
+                        </button>
+                      </div>
+
                       <button
                         className={styles.leaveRoomButton}
                         onClick={() => {

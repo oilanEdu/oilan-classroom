@@ -761,6 +761,27 @@
   border: none;
   border-radius: 12px;
 }
+.cantHearYou {
+  position: absolute;
+  top: -45px;
+  width: -moz-max-content;
+  width: max-content;
+  background-color: rgb(19 22 27);
+  border: 1px solid #404c60;
+  /* border: none; */
+  border-radius: 12px;
+  padding: 5px;
+  left: -40px;
+  color: #e4e9ef;
+}
+.LJ_button_wrapper {
+  position: relative;
+}
+.cantHearYouArrow {
+  position: absolute;
+  left: 16px;
+  top: -12px;
+}
 
 @media screen and (max-width: 480px) {
   .bigSquare {

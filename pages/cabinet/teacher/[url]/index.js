@@ -94,7 +94,7 @@ function TeacherCabinet(props) {
         if ((hours * 60 + minutes) * 60 + seconds < 600 && hours != NaN && minutes != NaN && seconds != NaN) {
           setDisableButton(false)
         }
-        if (closerLesson === undefined) {
+        if (closerLesson.length === 0) {
           setDisableButton(true)
         }
       }, [seconds])

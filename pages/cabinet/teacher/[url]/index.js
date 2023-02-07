@@ -94,6 +94,9 @@ function TeacherCabinet(props) {
         if ((hours * 60 + minutes) * 60 + seconds < 600 && hours != NaN && minutes != NaN && seconds != NaN) {
           setDisableButton(false)
         }
+        if (closerLesson === undefined) {
+          setDisableButton(true)
+        }
       }, [seconds])
     //ниже 11 строк кода сделаны чтобы предотвратить конвулсьсии таймера. Автор кода - Ануар.
     // const prevCountRefDays = useRef(0);

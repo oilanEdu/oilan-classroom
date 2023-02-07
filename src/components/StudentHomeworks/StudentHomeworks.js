@@ -51,8 +51,8 @@ const StudentHomeworks = ({index, lesson, student}) => {
     <div>
       <div className={styles.lesson_content}>
         <p className={styles.lesson_order}>№ {lesson.lesson_order}</p>
-        <p className={styles.lesson_date}>{new Date(lesson.start_time).toLocaleDateString()}</p>
-        <p className={styles.lesson_time}>{new Date(lesson.start_time).toLocaleTimeString().slice(0, 5)}</p>
+        <p className={styles.lesson_date}>{new Date(lesson.personal_time).toLocaleDateString()}</p>
+        <p className={styles.lesson_time}>{new Date(lesson.personal_time).toLocaleTimeString().slice(0, 5)}</p>
         <p className={styles.lesson_content_title}>{lesson.title}</p>
         <p 
           style={{
@@ -72,7 +72,8 @@ const StudentHomeworks = ({index, lesson, student}) => {
         </p> */}
       </div>
       <p className={styles.lesson_tesis} style={{display: showTesis ? "block" : "none"}}>
-        <LessonExercisesForStudent exercises={exercises} student={student} fetchData={fetchData}/>
+        {exercises.length > 0 ? <LessonExercisesForStudent exercises={exercises} student={student} fetchData={fetchData}/> : ''}
+
       </p>
 
     </div>
@@ -113,8 +114,8 @@ const StudentHomeworks = ({index, lesson, student}) => {
       </div>
       <p className={styles.lesson_tesis} style={{display: showTesis ? "block" : "none"}}>
         <div className={styles.dates}>
-          <p className={styles.lesson_date}>{new Date(lesson.start_time).toLocaleDateString()}</p>
-          <p className={styles.lesson_time}>{new Date(lesson.start_time).toLocaleTimeString().slice(0, 5)}</p>
+          <p className={styles.lesson_date}>{new Date(lesson.personal_time).toLocaleDateString()}</p>
+          <p className={styles.lesson_time}>{new Date(lesson.personal_time).toLocaleTimeString().slice(0, 5)}</p>
         </div>
         <p 
           style={{
@@ -124,7 +125,7 @@ const StudentHomeworks = ({index, lesson, student}) => {
         >
           Оценка - {lesson.score?lesson.score:'0'} ({lesson.done_exer}/{lesson.all_exer})
         </p>
-        <LessonExercisesForStudent exercises={exercises} student={student} fetchData={fetchData}/>
+        {exercises.length > 0 ? <LessonExercisesForStudent exercises={exercises} student={student} fetchData={fetchData}/> : ''}
       </p>
 
     </div>

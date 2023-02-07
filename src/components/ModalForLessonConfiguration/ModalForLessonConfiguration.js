@@ -119,11 +119,11 @@ function ModalForLessonConfiguration(props) {
     let mixedArray = lessonsUpcoming.concat(lessonsOfProgramButNotOfStudent)
     setLessonsUpcoming(mixedArray)
     })} 
-    useEffect(() => {
-      if (lessonsUpcoming != undefined) {
-        loadLessonsByProgram(studentProgramUpcoming) 
-      }
-    }, [lessonsUpcoming])
+    // useEffect(() => {
+    //   if (lessonsUpcoming != undefined) {
+    //     loadLessonsByProgram(studentProgramUpcoming) 
+    //   }
+    // }, [lessonsUpcoming])
  
   // useEffect(() => {
   //   loadStudentLessons(props?.student?.student_id, props?.student?.program_id)
@@ -164,9 +164,18 @@ function ModalForLessonConfiguration(props) {
           </div> 
           <select
           className={styles.select}
-            onChange={(e) => {
+            onChange={async (e) => {
               setStudentProgramUpcoming(e.target.value);
-              loadLessonsByProgram(e.target.value)
+              // loadLessonsByProgram(e.target.value)
+
+              setSaveIsClicked(!saveIsClicked)
+              await props.updateStudentProgram( 
+                props.student.student_id,
+                props.student.course_id,
+                e.target.value
+              );
+              await props.loadTeacherData();
+              await loadStudentLessons(props?.student?.student_id, e.target.value)
             }}
             value={studentProgramUpcoming}
           >

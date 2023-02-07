@@ -507,7 +507,7 @@ const Lesson = (props) => {
         {screenTrack ? (
           <video className={styles.bigSquare} ref={screenRef} autoPlay playsInline muted={isLocal} />
         ) : null}
-        {!isLocalVideoEnabled && !isLocalScreenShared ? (
+        {!isLocalVideoEnabled && isLocalScreenShared ? (
           <div className={styles.zaglushkahaha}></div>
           ) : null}
         {/*<div className="top-0 w-full absolute flex justify-center">

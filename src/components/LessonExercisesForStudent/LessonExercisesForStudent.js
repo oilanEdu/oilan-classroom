@@ -9,12 +9,46 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
   const [ editMode, setEditMode ] = useState(false)
   const [ teacherComments, setTeacherComments ] = useState([])
   const [ symbols, setSymbols ] = useState(250);
-  console.log(padding);
+  const [ exerciseText, setExerciseText ] = useState([])
+  function linkify(text) {
+    var url_pattern = /(https?:\/\/\S+)/g;
+    // return text.replace(url_pattern, '<a href="$1">$1</a>');
+    // let result = text?.replace(url_pattern, '<a href="$1">$1</a>')
+    // let result2 = result?.split('<a').join(' SplitLinkHere ').split('a>').join(' SplitLinkHere ')
+    // let result3 = result2?.split('SplitLinkHere')
+
+
+    let test = text?.split(url_pattern)
+
+    console.log(test, "splitter");
+    // return result3 
+    setExerciseText(test)
+    // console.log(text?.replace(url_pattern, '<a href="$1">$1</a>'), "REPLACER");
+  }
+ 
+  console.log(padding); 
+
+  // function linkify(arg) {
+  //   let result = [];
+  //   let regex = /(\b\w+\b)((?:https?:\/\/)?(?:www\.)?\S+)/g;
+  //   let match;
+    
+  //   while ((match = regex.exec(arg)) !== null) {
+  //     result.push({
+  //       text: match[1],
+  //       link: match[2]
+  //     });
+  //   }
+  
+  //   console.log(result, "REPLACER", arg);
+  //   return result;
+  // }
 
   console.log("eeeeee", exercises)
   console.log(student)
   const openExer = e => setActive(+e.target.dataset.index);
   useEffect(() => {
+    
     if (active != null) {
       let studentId = student
       let exerciseId = exercises[active]?.id
@@ -41,6 +75,8 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
         .catch((err) => {
           alert("Произошла ошибка");   
         });
+      
+      linkify(exercises[active]?.text)
     }
   }, [active])
   
@@ -116,6 +152,17 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const ExerciseText = (props) => {
+    // useEffect(() => {
+
+    // }, [])
+    // {index % 2 === 0 ? <p>{el}</p> : <a href={el}>{el}</a>}
+
+    return <>
+    {/* {props.indexOfText % 2 === 0 ? <p>{props.el}</p> : <a href={props.el}>{props.el}</a>} */}
+    {props.exerciseText?.map((el, index) => index % 2 === 0 ? el : <a href={el}>{el}</a>)}
+    </>
+  }
   return <div style={{ backgroundColor: bg, padding: padding}} className={styles.container}>
     {width <= 480 ? '' : <>
     <div className={styles.exercises}>
@@ -190,7 +237,13 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
       ):
       (<>
           <div className={styles.reTryBlock}>
-            <span>Задание: {exercises[active].text}</span>
+            {/* {exerciseText.map((el, index) => {
+              
+            })} */}
+            <p>
+            Задание: <ExerciseText exerciseText={exerciseText}/>
+            </p>
+            {/* <span>Задание: {exerciseText.map((el, index) => el)}</span> */}
             <span>Ваш ответ: {exercises[active].answer_text}</span>
             <div className={styles.advice}>{exercises[active].answer_status == 'correct'?<><div className={styles.correctAdvice}></div>Сдано на отлично</>:exercises[active].answer_status == 'uncorrect'?<><><div className={styles.uncorrectAdvice}></div>Есть ошибки попробуйте снова</></>:''}</div>
             <button 
@@ -326,7 +379,10 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
     ):
     (<>
         <div className={styles.reTryBlock}>
-          <span>Задание: {exercises[active].text}</span>
+          {/* <span>Задание: {exerciseText}</span> */}
+          <p>
+          Задание: <ExerciseText exerciseText={exerciseText}/>
+            </p>
           <span>Ваш ответ: {exercises[active].answer_text}</span>
           <div className={styles.advice}>{exercises[active].answer_status == 'correct'?<><div className={styles.correctAdvice}></div>Сдано на отлично</>:exercises[active].answer_status == 'uncorrect'?<><><div className={styles.uncorrectAdvice}></div>Есть ошибки попробуйте снова</></>:''}</div>
           <button 

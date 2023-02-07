@@ -27,6 +27,9 @@ a {
 }
 
 /* calendar 2 */
+.col-start-1 {
+    grid-column-start: 7;
+}
 .col-start-2 {
     grid-column-start: 1;
 }

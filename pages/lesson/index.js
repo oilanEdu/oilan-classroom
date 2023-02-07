@@ -891,7 +891,7 @@ const Lesson = (props) => {
             lesson={lesson}
             peers={peers}
           />
-          {(role == "teacher")
+          {/* {(role == "teacher")
             ? peers.lenght > 0 
             ? <TeacherHomeworksLesson 
               lesson={lesson}
@@ -901,7 +901,7 @@ const Lesson = (props) => {
             /> 
             : ""
             : <LessonExercisesForStudent exercises={exercises} student={student?.id} padding={"40px 0"} brickBorder={"3px solid #f1faff"}/>
-          }
+          } */}
         </div>            
         <Footer />
       </div>

@@ -202,7 +202,7 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
       (
         <>
           <p className={styles.answer_text}>
-            {exercises[active].exer_number}) {exercises[active].text} 
+            {exercises[active].exer_number}) <ExerciseText exerciseText={exerciseText}/>
           </p>
           <div className={styles.answer_row}>
             <div className={styles.answer_input}>
@@ -344,7 +344,7 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
     (
       <>
         <p className={styles.answer_text}>
-          {exercises[active].exer_number}) {exercises[active].text} 
+          {exercises[active].exer_number}) <ExerciseText exerciseText={exerciseText}/>
         </p>
         <div className={styles.answer_row}>
           <div className={styles.answer_input}>

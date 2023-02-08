@@ -41,6 +41,7 @@
     "react-helmet": "^6.1.0",
     "react-native": "^0.70.4",
     "react-phone-number-input": "^3.2.11",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
     "react-yandex-metrika": "^2.6.0",
     "recaptcha-v3-react-function-async": "0.0.3",

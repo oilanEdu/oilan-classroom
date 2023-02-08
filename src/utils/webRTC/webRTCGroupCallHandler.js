@@ -2,7 +2,6 @@ import * as wss from '../wssConnection/wssConnection';
 import { connectWithWebSocket } from '../wssConnection/wssConnection';
 import store from '../../store/store';
 import { setGroupCallActive, setCallState, callStates, setGroupCallIncomingStreams, clearGroupCallData } from '../../store/actions/callActions';
-import socketClient from 'socket.io-client';
 
 let myPeer;
 let myPeerId;
@@ -10,18 +9,19 @@ let groupCallRoomId;
 let groupCallHost = false;
 
 export const connectWithMyPeer = () => {
-  const SERVER = 'wss://realibi.kz:3031';
-  myPeer = socketClient(SERVER);
-  // myPeer = new window.Peer(undefined, {
-  //   host: 'realibi.kz',
-  //   port: '3031',
-  //   path: '/peerjs',
-  //   ws: wss
-  // });
-
-  myPeer.on('open', (id) => {
-    console.log('succesfully connected with peer server', myPeer);
-    myPeerId = 3;
+  if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
+    const {Peer} = require('peerjs');
+    myPeer = new Peer(undefined, {
+      host: 'realibi.kz',
+      port: '3031',
+      path: '/peerjs',
+    });
+    console.log('myPeer', myPeer)
+    console.log('window', window)
+    console.log('window.navigator', window.navigator)
+    myPeer.on('open', (id) => {
+    console.log('succesfully connected with peer server');
+    myPeerId = id;
   });
 
   myPeer.on('call', call => {
@@ -35,7 +35,7 @@ export const connectWithMyPeer = () => {
       }
     });
   });
-};
+};}
 
 export const createNewGroupCall = () => {
   groupCallHost = true;
@@ -51,7 +51,7 @@ export const createNewGroupCall = () => {
 export const joinGroupCall = (hostSocketId, roomId) => {
   const localStream = store.getState().call.localStream;
   groupCallRoomId = roomId;
-
+  console.log('test', myPeerId, hostSocketId, roomId, localStream.id)
   wss.userWantsToJoinGroupCall({
     peerId: myPeerId,
     hostSocketId,

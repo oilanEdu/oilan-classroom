@@ -18,7 +18,7 @@ export const connectWithWebSocket = () => {
   console.log('socket', socket)
   socket.on('connection', () => {
     console.log('succesfully connected with wss server');
-    console.log(socket.id);
+    console.log(socket);
   });
 
   socket.on('broadcast', (data) => {
@@ -102,6 +102,7 @@ export const registerGroupCall = (data) => {
 };
 
 export const userWantsToJoinGroupCall = (data) => {
+  console.log('test2', data)
   socket.emit('group-call-join-request', data);
 };
 

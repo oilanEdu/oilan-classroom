@@ -1,128 +1,98 @@
-import {useState, useEffect, useRef} from 'react';
-import { useRouter } from "next/router";
-import socket from "../../../src/socket/index.js";
-import ACTIONS from "../../../src/socket/actions.js";
-import {v4} from 'uuid';
-import useWebRTC, {LOCAL_VIDEO} from '../../../src/hooks/useWebRTC';
-
-function layout(clientsNumber = 1) {
-  const pairs = Array.from({length: clientsNumber})
-    .reduce((acc, next, index, arr) => {
-      if (index % 2 === 0) {
-        acc.push(arr.slice(index, index + 2));
-      }
-
-      return acc;
-    }, []);
-
-  const rowsNumber = pairs.length;
-  const height = 'auto';
-
-  return pairs.map((row, index, arr) => {
-
-    if (index === arr.length - 1 && row.length === 1) {
-      return [{
-        width: '100%',
-        height,
-      }];
-    }
-
-    return row.map(() => ({
-      width: '50%',
-      height,
-    }));
-  }).flat();
-}
-
-export default function Room() {
-  const router = useRouter();
-  const [room, setRoom] = useState('123');
-  const [videoState, setVideoState] = useState(true)
-  const [audioState, setAudioState] = useState(true)
-  
-  const [connected, setConnected] = useState(false)
-
-  useEffect(() => {
-    if (router.query.room) {
-      setRoom(router.query.room);
-    }
-  }, [router.query.room]);
-
-  // console.log('CLIENTS', clients)
-  console.log('router.query.room', router.query.room)
-
-  const RenderVideo = () => {
-    const { clients, provideMediaRef } = useWebRTC(room, videoState, audioState);
-    const videoLayout = layout(clients.length);
-    console.log('CLIENTS', clients, room)
-    useEffect(() => {
-      console.log('state changed')
-    }, [videoState, audioState])
+import React, { useState, useMemo, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { Provider, useSelector, useDispatch } from 'react-redux';
+import { registerNewUser, connectWithWebSocket } from '../../../src/utils/wssConnection/wssConnection';
+import { setUsername } from '../../../src/store/actions/dashboardActions';
+import styles from './agarey.module.css';
+import logo from '../../../src/resources/logo.png';
+import UsernameInput from '../../../src/components/UsernameInput/UsernameInput';
+import SubmitButton from '../../../src/components/SubmitButton/SubmitButton';
+import store from '../../../src/store/store.js';
 
 
-    return (
-      clients.map((clientID, index) => (
-        (clientID === LOCAL_VIDEO) ? (
-          <div key={clientID} style={videoLayout[index]} id={clientID}>
-            <video
-              width="100%"
-              height="100%"
-              ref={instance => {
-                provideMediaRef(clientID, instance);
-              }}
-              autoPlay
-              playsInline
-              muted={true}
-            />
-            {/*<button onClick={() => {
-              setAudioState(!audioState)
-            }}>au</button>
-            <button onClick={() => {
-              setVideoState(!videoState)
-            }}>vi</button>*/}
-          </div>
-        ) : (
-          <div key={clientID} style={videoLayout[index]} id={clientID}>
-            <video
-              width="100%"
-              height="100%"
-              ref={instance => {
-                provideMediaRef(clientID, instance);
-              }}
-              autoPlay
-              playsInline
-              muted={false}
-            />
-          </div>
-        )
-      ))
-    );
-  }
-  return (
-    <>
-      <div>
-        <button onClick={() => {
-          setConnected(true)
-        }}>Connect</button>
-        {/*<button onClick={() => {
-          setConnected(false)
-        }}>Disonnect</button>
-        <button onClick={() => {
-          setAudioState(!audioState)
-        }}>au</button>
-        <button onClick={() => {
-          setVideoState(!videoState)
-        }}>vi</button>*/}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-          height: '100vh',
-        }}>
-          {connected?<RenderVideo/>:null}
-        </div>
-      </div>
-    </>
+import { callStates } from '../../../src/store/actions/callActions';
+import * as webRTCHandler from '../../../src/utils/webRTC/webRTCHandler';
+import * as webRTCGroupHandler from '../../../src/utils/webRTC/webRTCGroupCallHandler';
+import DashboardInformation from '../../../src/components/Dashboardinformation/Dashboardinformation';
+import DirectCall from '../../../src/components/DirectCall/DirectCall';
+import GroupCallRoomsList from '../../../src/components/GroupCallRoomsList/GroupCallRoomsList';
+import ActiveUsersList from '../../../src/components/ActiveUsersList/ActiveUsersList';
+import GroupCall from '../../../src/components/GroupCall/GroupCall';
+
+
+const Index = () => {
+	const [check, setCheck] = useState(false)
+	function LoginPage() {
+	  const [username, setUsernameState] = useState('');
+	  const dispatch = useDispatch();
+	  const router = useRouter();
+	  const handleSubmitButtonPressed = () => {
+	  	connectWithWebSocket()
+	    registerNewUser(username);
+	    dispatch(setUsername(username));
+	    setCheck(true)
+	    // router.push('/devStuff/Agarey/Dashboard');
+	  };
+
+	  return (
+	    <div className={styles['login-page_container']}>
+	      <div className={styles['login-page_login_box']}>
+	        <div className={styles['login-page_logo_container']}>
+	          <img
+	            className={styles['login-page_logo_image']}
+	            src={logo}
+	            alt='VideoTalker'
+	          />
+	        </div>
+	        <div className={styles['login-page_title_container']}>
+	          <h2>VIDEO CHAT</h2>
+	        </div>
+	        <UsernameInput
+	          username={username}
+	          setUsername={setUsernameState}
+	        />
+	        <SubmitButton handleSubmitButtonPressed={handleSubmitButtonPressed} />
+	      </div>
+	    </div>
+	  );
+	}
+
+	function Dashboard() {
+		const username = useSelector(state => state.dashboard.username);
+		const callState = useSelector(state => state.call.callState);
+
+		useEffect(() => {
+			webRTCHandler.getLocalStream();
+			webRTCGroupHandler.connectWithMyPeer();
+		}, []);
+
+		return (
+			<div className={styles['dashboard_container']}>
+				<div className={styles['dashboard_left_section']}>
+					<div className={styles['dashboard_content_container']}>
+						<DirectCall />
+						<GroupCall />
+						{callState !== callStates.CALL_IN_PROGRESS && (
+							<DashboardInformation username={username} />
+						)}
+					</div>
+					<div className={styles['dashboard_rooms_container']}>
+						<GroupCallRoomsList />
+					</div>
+				</div>
+				<div className={styles['dashboard_right_section']}>
+					<ActiveUsersList />
+				</div>
+			</div>
+		);
+	}
+
+return (
+    <Provider store={store}>
+      {check?<Dashboard />:<LoginPage />}
+    </Provider>
   );
 }
+
+
+export default Index

@@ -43,6 +43,9 @@ const getToken = async (user_id, role, teacher) => {
   if (teacher == 1) {
     room_key = '63da37fbda7e7ca812840b56'
   }
+  if (teacher == 15) {
+    room_key = '63e3aa8fcd8175701aac02ce'
+  }
   const response = await fetch(`${endPoint}api/token`, {
     method: "POST",
     body: JSON.stringify({

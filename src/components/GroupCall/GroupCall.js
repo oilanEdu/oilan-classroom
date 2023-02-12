@@ -6,6 +6,7 @@ import * as webRTCGroupCallHandler from '../../../src/utils/webRTC/webRTCGroupCa
 import GroupCallRoom from '../GroupCallRoom/GroupCallRoom';
 
 const GroupCall = (props) => {
+  console.log('PROPS IN GC', props)
   // eslint-disable-next-line
   const { callState, localStream, groupCallActive, groupCallStreams } = props;
 
@@ -21,7 +22,7 @@ const GroupCall = (props) => {
     <>
       {!groupCallActive && localStream && callState !== callStates.CALL_IN_PROGRESS &&
         <GroupCallButton onClickHandler={createRoom} label='Create room' />}
-      {groupCallActive && <GroupCallRoom {...props} />}
+      {groupCallActive && <GroupCallRoom role={props.role} {...props} />}
       {groupCallActive && <GroupCallButton onClickHandler={leaveRoom} label='Leave room' />}
     </>
   );

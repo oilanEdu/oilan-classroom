@@ -3,15 +3,15 @@ import React, { useRef, useEffect } from 'react';
 const styles = {
   videoContainer: {
     width: '150px',
-    height: '150px',
-    borderRadius: '8px',
+    height: 'auto',
     position: 'absolute',
     top: '5%',
     right: '23%'
   },
   videoElement: {
     width: '100%',
-    height: '100%'
+    height: '100%',
+    borderRadius: '8px'
   }
 };
 

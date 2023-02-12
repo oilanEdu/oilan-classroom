@@ -13,7 +13,7 @@ const defaultConstrains = {
     width: 480,
     height: 360
   },
-  audio: true
+  audio: true,
 };
 
 const configuration = {
@@ -25,23 +25,60 @@ const configuration = {
 let connectedUserSocketId;
 let peerConnection;
 let dataChannel;
+let cameraStream;
+let screenSharingStream;
 
-export const getLocalStream = () => {
-  navigator.mediaDevices.getUserMedia(defaultConstrains)
-    .then(stream => {
-      store.dispatch(setLocalStream(stream));
-      store.dispatch(setCallState(callStates.CALL_AVAILABLE));
-      createPeerConnection();
-    })
-    .catch(err => {
-      console.log('error occured when trying to get an access to get local stream');
-      console.log(err);
-    });
+export const getLocalStream = async () => {
+  let audioStream;
+
+  if (!store.getState().call.screenSharingActive) {
+    if (!cameraStream) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ ...defaultConstrains, video: true });
+        cameraStream = stream;
+        audioStream = new MediaStream();
+        stream.getAudioTracks().forEach(track => audioStream.addTrack(track));
+      } catch (err) {
+        console.log('error occured when trying to get an access to get local camera stream');
+        console.log(err);
+        return;
+      }
+    }
+    store.dispatch(setLocalStream(cameraStream));
+    store.dispatch(setCallState(callStates.CALL_AVAILABLE));
+    createPeerConnection();
+  } else {
+    if (!screenSharingStream) {
+      try {
+        const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        screenSharingStream = stream;
+        audioStream = new MediaStream();
+        cameraStream.getAudioTracks().forEach(track => audioStream.addTrack(track));
+        const videoStream = new MediaStream();
+        stream.getVideoTracks().forEach(track => videoStream.addTrack(track));
+        const combinedStream = new MediaStream();
+        audioStream.getTracks().forEach(track => combinedStream.addTrack(track));
+        videoStream.getTracks().forEach(track => combinedStream.addTrack(track));
+        screenSharingStream = combinedStream;
+      } catch (err) {
+        console.log('error occured when trying to get an access to get local screen sharing stream');
+        console.log(err);
+        return;
+      }
+    }
+    store.dispatch(setLocalStream(screenSharingStream));
+    store.dispatch(setCallState(callStates.CALL_AVAILABLE));
+    createPeerConnection();
+  }
 };
 
 const createPeerConnection = () => {
+  if (peerConnection) {
+    peerConnection.close();
+    peerConnection = null;
+  }
   peerConnection = new RTCPeerConnection(configuration);
-
+  
   const localStream = store.getState().call.localStream;
 
   for (const track of localStream.getTracks()) {
@@ -52,7 +89,6 @@ const createPeerConnection = () => {
     store.dispatch(setRemoteStream(stream));
   };
 
-  // incoming data channel messages
   peerConnection.ondatachannel = (event) => {
     const dataChannel = event.channel;
 
@@ -192,27 +228,9 @@ export const checkIfCallIsPossible = () => {
   }
 };
 
-let screenSharingStream;
-
 export const switchForScreenSharingStream = async () => {
-  if (!store.getState().call.screenSharingActive) {
-    try {
-      screenSharingStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-      store.dispatch(setScreenSharingActive(true));
-      const senders = peerConnection.getSenders();
-      const sender = senders.find(sender => sender.track.kind === screenSharingStream.getVideoTracks()[0].kind);
-      sender.replaceTrack(screenSharingStream.getVideoTracks()[0]);
-    } catch (err) {
-      console.error('error occured when trying to get screen sharing stream', err);
-    }
-  } else {
-    const localStream = store.getState().call.localStream;
-    const senders = peerConnection.getSenders();
-    const sender = senders.find(sender => sender.track.kind === localStream.getVideoTracks()[0].kind);
-    sender.replaceTrack(localStream.getVideoTracks()[0]);
-    store.dispatch(setScreenSharingActive(false));
-    screenSharingStream.getTracks().forEach(track => track.stop());
-  }
+  store.dispatch(setScreenSharingActive(!store.getState().call.screenSharingActive));
+  getLocalStream();
 };
 
 export const handleUserHangedUp = () => {

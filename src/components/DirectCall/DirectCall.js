@@ -22,10 +22,12 @@ const DirectCall = (props) => {
     message
   } = props;
 
+  console.log('PRPRS', props)
+
   return (
     <>
       <LocalVideoView localStream={localStream} />
-      {remoteStream && callState === callStates.CALL_IN_PROGRESS && <RemoteVideoView remoteStream={remoteStream} />}
+      {remoteStream && callState === callStates.CALL_IN_PROGRESS && <RemoteVideoView role={props.role} remoteStream={remoteStream} />}
       {callRejected.rejected && <CallRejectedDialog
         reason={callRejected.reason}
         hideCallRejectedDialog={hideCallRejectedDialog}

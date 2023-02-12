@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 const styles = {
   videoContainer: {
@@ -11,14 +11,20 @@ const styles = {
   }
 };
 
-const LocalVideoView = props => {
+const RemoteVideoView = props => {
   const { remoteStream } = props;
   const remoteVideoRef = useRef();
+  const [stream, setStream] = useState(remoteStream);
+  console.log('remoteStream in RemoteVideoView', remoteStream)
+  
+  useEffect(() => {
+    setStream(remoteStream);
+  }, [remoteStream]);
 
   useEffect(() => {
     if (remoteStream) {
       const remoteVideo = remoteVideoRef.current;
-      remoteVideo.srcObject = remoteStream;
+      remoteVideo.srcObject = stream;
 
       remoteVideo.onloadedmetadata = () => {
         remoteVideo.play();
@@ -28,9 +34,10 @@ const LocalVideoView = props => {
 
   return (
     <div style={styles.videoContainer}>
-      <video style={styles.videoElement} ref={remoteVideoRef} autoPlay />
+      RemoteVideoView {props.role}
+      <video style={styles.videoElement} ref={remoteVideoRef} autoPlay srcObject={stream}/>
     </div>
   );
 };
 
-export default LocalVideoView;
+export default RemoteVideoView;

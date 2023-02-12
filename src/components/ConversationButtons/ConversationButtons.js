@@ -27,7 +27,8 @@ const ConversationButtons = (props) => {
     screenSharingActive,
     groupCall
   } = props;
-
+  console.log('BUTTON PROPS', props)
+  // console.log('remoteStream1', remoteStream1)
   const handleMicButtonPressed = () => {
     const micEnabled = localMicrophoneEnabled;
     localStream.getAudioTracks()[0].enabled = !micEnabled;
@@ -59,9 +60,9 @@ const ConversationButtons = (props) => {
       <ConversationButton onClickHandler={handleCameraButtonPressed}>
         {localCameraEnabled ? <button>MdVideocam </button> : <button>MdVideocamOff</button>}
       </ConversationButton>
-      {!groupCall && <ConversationButton onClickHandler={handleScreenSharingButtonPressed}>
+      <ConversationButton onClickHandler={handleScreenSharingButtonPressed}>
         {screenSharingActive ? <button>MdCamera</button> : <button>MdVideoLabel</button>}
-      </ConversationButton>}
+      </ConversationButton>
     </div>
   );
 };

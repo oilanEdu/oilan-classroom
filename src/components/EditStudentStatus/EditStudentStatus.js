@@ -127,7 +127,7 @@ export default function EditStudentStatus({ show, setShow, student, programs } )
       data: data,
     })
       .then(function (res) {
-        alert("Студент успешно создан");
+        alert("Программа успешно обновлена");
       })
       .catch((err) => {
         alert("Произошла ошибка");

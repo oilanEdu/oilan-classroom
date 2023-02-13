@@ -95,7 +95,8 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
             {student?.surname} {student?.name} {student?.patronymic}
           </span>
           <span className={styles.id}>
-            id:{" "}
+            id: {student?.student_id}
+            {/* {"0".repeat(7 - String(student?.student_id).length) + student?.student_id} */}
             {/* {"0".repeat(7 - String(student?.student_id).length) +
               student?.student_id} */}
           </span>

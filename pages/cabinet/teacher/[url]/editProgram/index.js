@@ -650,7 +650,7 @@ function EditProgram(props) {
                 
                 <Footer />
             </div>
-        <>)} else {return <></>}
+        </>)} else {return <></>}
        )
 }
 

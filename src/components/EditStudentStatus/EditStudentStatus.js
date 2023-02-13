@@ -85,7 +85,7 @@ export default function EditStudentStatus({ show, setShow, student, programs } )
 
   useEffect(() => {
     getProgramsByStudentId();
-  }, []);
+  }, [student?.student_id]);
 
   console.log(studentPrograms);
 

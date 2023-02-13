@@ -326,7 +326,19 @@
 .addProgramContainer{
 	display: flex;
 	flex-direction: row;
-	justify-content: end;
+	justify-content: space-between;
+}
+
+.moreCourses {
+	display: flex;
+	flex-direction: column;
+	width: 140px;
+}
+
+.morePrograms {
+	display: flex;
+	flex-direction: column;
+	width: 140px;
 }
 
 .studentsBlock{
@@ -641,6 +653,40 @@
 		order: 1;
 	} */
 } 
+
+.settingTitleHide {
+  cursor: pointer;
+    font-family: 'Noto Sans Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid;
+    line-height: 150%;
+    color: #0f376e !important;
+    margin: 0;
+    background: url(https://realibi.kz/file/618464.png) #fff no-repeat;
+    background-position: 50% 50%;
+    background-size: 15px;
+}
+
+.settingTitleShow {
+	cursor: pointer;
+    font-family: 'Noto Sans Medium';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid;
+    line-height: 150%;
+    color: #0f376e !important;
+    margin: 0;
+    background: url(https://realibi.kz/file/635945.png) #fff no-repeat;
+    background-position: 50% 50%;
+    background-size: 15px;
+}
 
 @media screen and (max-width: 480px) {
 	.cantainer {

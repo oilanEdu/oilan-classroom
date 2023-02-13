@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from "./Pagination.module.css";
 import classnames from 'classnames';
 
-function Pagination({ pages = 10, setCurrentPage }) {
+function Pagination({ pages = 10, setCurrentPage, more, setMore }) {
   const numberOfPages = [];
   for (let i = 1; i <= pages; i++) {
     numberOfPages.push(i);
@@ -63,6 +63,14 @@ function Pagination({ pages = 10, setCurrentPage }) {
           onClick={() => {
             window.scrollBy(0, 1200)
             setCurrentButton(prev => prev <= 1 ? prev : prev - 1)
+          }}
+        ></a>
+        <a
+          href="#students"
+          className={!more ? styles.top_btn : styles.btm_btn}
+          onClick={() => {
+            window.scrollBy(0, 1200)
+            setMore(!more)
           }}
         ></a>
         <a

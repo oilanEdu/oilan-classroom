@@ -48,6 +48,23 @@
   margin-right: 15px;
 }
 
+.top_btn {
+  background: url(https://realibi.kz/file/405510.png) no-repeat;
+  transform: rotateZ(270deg);
+  background-size: 32px;
+  background-position: 50%;
+  /* margin-right: 15px; */
+}
+
+.btm_btn {
+  background: url(https://realibi.kz/file/405510.png) no-repeat;
+  transform: rotateZ(90deg);
+  background-size: 32px;
+  background-position: 50%;
+  /* margin-right: 15px; */
+}
+
+
 .next_btn {
   background: url(https://realibi.kz/file/73301.png) no-repeat;
   /* transform: rotate(180deg); */

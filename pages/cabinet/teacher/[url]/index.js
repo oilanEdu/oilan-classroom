@@ -14,8 +14,12 @@ import Pagination from "../../../../src/components/Pagination/Pagination";
 import GoToLessonWithTimerComponent from "../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import ProgramItem from "../../../../src/components/ProgramItem/ProgramItem";
+import CourseItem from "../../../../src/components/CourseItem/CourseItem";
+import NewCourse from "../../../../src/components/NewCourse/NewCourse";
+import NewStudent from "../../../../src/components/NewStudent/NewStudent";
+import StudentItem from "../../../../src/components/StudentItem/StudentItem";
 
-const TeacherCabinet = (props) => {
+function TeacherCabinet(props) {
     const [teacher, setTeacher] = useState([])
     const [programs, setPrograms] = useState([])
     const [students, setStudents] = useState([])
@@ -50,7 +54,17 @@ const TeacherCabinet = (props) => {
     const [disableButton, setDisableButton]= useState(true)
 
     const [studentsList, setStudentsList] = useState(currentPosts)
-    const [closerStudent, setCloserStudent] = useState()
+    const [closerStudent, setCloserStudent] = useState();
+    const [courses, setCourses] = useState([]);
+    const [showAllCourses, setShowAllCourses] = useState(false);
+    const [showAllPrograms, setShowAllPrograms] = useState(false);
+    const [showAllStudents, setShowAllStudents] = useState(false) 
+
+    const [addCourseModalShow, setAddCourseModalShow] = useState(false);
+    const [addStudentModalShow, setAddStudentModalShow] = useState(false);
+
+    const [currentCourse, setCurrentCourse] = useState(0);
+
     useEffect(() => {
       console.log(closerLesson, "closerLesson");
       if (closerLesson != undefined && students != undefined) {
@@ -65,7 +79,7 @@ const TeacherCabinet = (props) => {
  
     const howManyPages = Math.ceil(students?.length/cardsPerPage)
 
-    const isInMainPage = true
+    const isInMainPage = true;
     
     const updateTimer = () => {
         const future = Date.parse(closerLesson.personal_time);
@@ -164,10 +178,14 @@ const TeacherCabinet = (props) => {
         const teacherIdLocal = getTeacherByUrl['data'][0]?.id
         setEmptyProgramTeacherId(teacherIdLocal)
         let teacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + teacherIdLocal)
-          teacherCourses['data'].forEach(course => { 
-            setEmptyProgramCourseId(course.id)
-            }
-          ); 
+        setCourses(teacherCourses['data'])
+        teacherCourses['data'].forEach(async course => { 
+          setEmptyProgramCourseId(course.id)
+          const allStudents = await axios.post(`${globals.productionServerDomain}/getAllStudents/` + course.id)
+          course.all_students = allStudents.data[0].all_students;
+          const passedStudents = await axios.post(`${globals.productionServerDomain}/getPassedStudents/` + course.id)
+          course.passed_students = passedStudents.data[0].passed_students;
+        }); 
         let teacherPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByTeacherId/` + teacherIdLocal)
         let count = 0
           teacherPrograms['data'].forEach(async program => {
@@ -396,6 +414,8 @@ const TeacherCabinet = (props) => {
         loadTeacherData()
     }
 
+    console.log(courses);
+
     const ultimateSortDate = async (day, hours) => {
       setSortMode(true)
       currentPosts.sort(byFieldDate(day, hours)); 
@@ -526,6 +546,85 @@ const TeacherCabinet = (props) => {
               <div className={styles.programsHeader}>
                 <span
                   className={classnames(styles.pNumber, styles.pNumberHead)}
+
+                >
+                  <input type="checkbox" checked={currentCourse === 0 ? true : false} onChange={() => setCurrentCourse(0)}/>
+                  №
+                </span>
+                <span
+                  className={classnames(styles.pCourse, styles.pCourseHead)}
+                >
+                  Название
+                </span>
+                <span
+                  className={classnames(styles.pProgram, styles.pProgramHead)}
+                >
+                  <Image
+                    src="https://realibi.kz/file/846025.png"
+                    style={{ marginRight: "8px" }}
+                  />
+                  Количество программ
+                </span>
+                <span
+                  className={classnames(
+                    styles.pLessCount,
+                    styles.pLessCountHead
+                  )}
+                >
+                  Прошли курс
+                </span>
+                <span className={classnames(styles.pDates, styles.pDatesHead)}>
+                  Сейчас на курсе
+                </span>
+                <span className={styles.pEditTitle}>Курс</span>
+              </div>
+              {showAllCourses 
+                ? courses.map((course, index) => (
+                  <>
+                    <CourseItem 
+                      index={index} 
+                      course={course} 
+                      url={props.url} 
+                      onCheck={() => setCurrentCourse(course.id)}
+                      checked={currentCourse === course.id ? true : false}
+                    />
+                  </>
+                )) 
+                : <CourseItem 
+                    index={0} 
+                    course={courses[0]} 
+                    url={props.url} 
+                    onCheck={() => setCurrentCourse(courses[0].id)} 
+                    checked={currentCourse === courses[0]?.id ? true : false}
+                  />
+                  }
+              <div className={styles.addProgramContainer}>
+                <div className={styles.moreCourses}>
+                  <p>{showAllCourses ? "" : `+ еще ${courses.length - 1} курса`}</p>
+                  <button className={showAllCourses ? styles.settingTitleShow : styles.settingTitleHide} onClick={() => setShowAllCourses(!showAllCourses)}></button>
+                </div>
+              
+                <button
+                  onClick={() => {
+                    setAddCourseModalShow(!addCourseModalShow)
+                  }}
+                  className={styles.addProgram}
+                >
+                  <Image
+                    src="https://realibi.kz/file/316050.png"
+                    style={{ marginRight: "8px" }}
+                  />
+                  Добавить курс
+                </button>
+              </div>
+              <NewCourse show={addCourseModalShow} setShow={setAddCourseModalShow} teacher={teacher} />
+            </div>
+
+            <div className={styles.programsBlock}>
+              <h1>ПРОГРАММЫ ДЛЯ СТУДЕНТОВ</h1>
+              <div className={styles.programsHeader}>
+                <span
+                  className={classnames(styles.pNumber, styles.pNumberHead)}
                 >
                   №
                 </span>
@@ -556,12 +655,22 @@ const TeacherCabinet = (props) => {
                 </span>
                 <span className={styles.pEditTitle}>Программа</span>
               </div>
-              {programs.map((program, index) => (
-                <>
-                  <ProgramItem index={index} program={program} url={props.url} />
-                </>
-              ))}
+              {showAllPrograms 
+                ? programs.map((program, index) => (
+                  currentCourse === 0 
+                    ? <ProgramItem  index={index} program={program} url={props.url} /> 
+                    : currentCourse === program.course_id 
+                    ? <ProgramItem  index={index} program={program} url={props.url} /> 
+                    : <></>
+                )) 
+                : <ProgramItem index={0} program={programs[0]} url={props.url} />
+              }
+              
               <div className={styles.addProgramContainer}>
+                <div className={styles.morePrograms}>
+                  <p>{showAllPrograms ? "" : `+ еще ${programs.length - 1} курса`}</p>
+                  <button className={showAllPrograms ? styles.settingTitleShow : styles.settingTitleHide} onClick={() => setShowAllPrograms(!showAllPrograms)}></button>
+                </div>
                 <button
                   onClick={() => {
                     createEmptyProgram();
@@ -581,6 +690,22 @@ const TeacherCabinet = (props) => {
             <div className={styles.studentsBlock} id={"students"}>
               <div className={styles.titleContainer}>
                 <h1>СПИСОК СТУДЕНТОВ</h1>
+                <div className={styles.addProgramContainer}>
+              
+                  <button
+                    onClick={() => {
+                      setAddStudentModalShow(!addStudentModalShow)
+                    }}
+                    className={styles.addProgram}
+                  >
+                    <Image
+                      src="https://realibi.kz/file/316050.png"
+                      style={{ marginRight: "8px" }}
+                    />
+                    Добавить студента
+                  </button>
+                </div>
+                <NewStudent show={addStudentModalShow} setShow={setAddStudentModalShow} programs={programs} />
                 <ClickAwayListener onClickAway={() => setShowSort(false)}>
                   <div className={styles.sortContainer}>
                     <div
@@ -644,108 +769,42 @@ const TeacherCabinet = (props) => {
                 >
                   Следующее занятие
                 </span>
-                <span className={styles.sProgram}>Расписание</span>
+                <span className={styles.sProgram}>Настройки</span>
               </div>
-              {(sortMode ? studentsList : currentPosts).map((student) => (
-                <div className={styles.student}>
-                  <span className={styles.sCourse}>
-                    {student.course_title} ({student.program_title})
-                  </span>
-                  <span
-                    className={styles.sFullname}
-                    onClick={() => {
-                      personalLink(student.student_id, student.program_id);
-                    }}
-                  >
-                    <div className={styles.studentCage}>
-                      <span>
-                        <Image
-                          src="https://realibi.kz/file/142617.png"
-                          style={{ marginRight: "8px", width: "40px" }}
-                        />
-                      </span>
-                      <div className={styles.idAndName}>
-                        <span className={styles.name}>
-                          {student.surname} {student.name} {student.patronymic}
-                        </span>
-                        <span className={styles.id}>
-                          id:{" "}
-                          {"0".repeat(7 - String(student.student_id).length) +
-                            student.student_id}
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                  <span className={styles.sComplietedLessons}>
-                    <div className={styles.progressLine}>
-                      <div
-                        className={styles.studentProgress}
-                        style={{
-                          width: student.progress
-                            ? student.progress + "%"
-                            : "0" + "%",
-                        }}
-                      ></div>
-                    </div>
-                    {student.check ? student.check : "0"} из{" "}
-                    {student.lessons_count ? student.lessons_count : ""}
-                  </span>
-                  <span className={styles.sNextLesson}>
-                    <span>{student.closer_date}</span>
-                    <span>
-                      {student.curr_hours != undefined ? (
-                        <>
-                          {student.curr_hours < 10
-                            ? "0" + student.curr_hours
-                            : student.curr_hours}
-                          :
-                          {student.curr_minutes < 10
-                            ? "0" + student.curr_minutes
-                            : student.curr_minutes}
-                          -
-                          {student.curr_hours == 23
-                            ? "00"
-                            : student.curr_hours + 1 < 10
-                            ? "0" + (student.curr_hours + 1)
-                            : student.curr_hours + 1}
-                          :
-                          {student.curr_minutes < 10
-                            ? "0" + student.curr_minutes
-                            : student.curr_minutes}
-                        </>
-                      ) : (
-                        "Следующее занятие не запланировано"
-                      )}
-                    </span>
-                  </span>
-                  <div className={styles.sConfigureWrapper}>
-                    <span
-                      className={styles.sConfigure}
-                      onClick={() => {
-                        setShowModalLesson(!showModalLesson);
-                        setStudentForModal(student);
-                      }}
-                    >
-                      Настроить
-                    </span>
-                    <div className={styles.sConfigureGear}></div>
-                  </div>
-                </div>
-              ))}
+              {showAllStudents 
+                ? (sortMode ? studentsList : currentPosts).map((student) => (
+                   <StudentItem 
+                    student={student} 
+                    showModalLesson={showModalLesson} 
+                    setShowModalLesson={setShowModalLesson} 
+                    setStudentForModal={setStudentForModal} 
+                    programs={programs}
+                  />
+                )) 
+                : <StudentItem 
+                    student={sortMode ? studentsList[0] : currentPosts[0]} 
+                    showModalLesson={showModalLesson} 
+                    setShowModalLesson={setShowModalLesson} 
+                    setStudentForModal={setStudentForModal} 
+                    programs={programs}
+                  />
+                }
               {students.length <= 0 ? (
                 <></>
               ) : (
                 <Pagination
                   pages={howManyPages}
                   setCurrentPage={setCurrentPage}
+                  more={showAllStudents}
+                  setMore={setShowAllStudents}
                 />
               )}
             </div>
           </div>
           <Footer />
         </div>
-      </>:<></>
-    )} else {return <></>}
+      </>
+    );
 }
 
 TeacherCabinet.getInitialProps = async (ctx) => { 

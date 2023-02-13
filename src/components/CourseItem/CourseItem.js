@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { useState } from "react";
-import styles from "./ProgramItem.module.css";
+import styles from "./CourseItem.module.css";
 import { Image } from "react-bootstrap";
 import axios from "axios";
-import globals from "../../../src/globals";
+import globals from "../../globals";
 
-const ProgramItem = ({program, url, index}) => {
+const CourseItem = ({course, url, index, onCheck, checked}) => {
 
   const deleteHandler = async (id) => {
     const data = {
@@ -27,20 +27,16 @@ const ProgramItem = ({program, url, index}) => {
   }
   const [showSetting, setShowSetting] = useState(false)
   return <div className={styles.program}>
-  <span className={styles.pNumber}>№ {index + 1}</span>
-  <span className={styles.pCourse}>{program?.course_title}</span>
+  <span className={styles.pNumber}><input type="checkbox" checked={checked} onChange={onCheck} />№ {index + 1}</span>
+  <span className={styles.pCourse}>{course?.title}</span>
   <span className={styles.pProgram}>
-    <Image
-      src="https://realibi.kz/file/846025.png"
-      style={{ marginRight: "8px" }}
-    />
-    {program?.title}
+    {course?.program_count}
   </span>
   <span className={styles.pLessCount}>
-    {program?.lessons_count} занятий
+    {+course?.passed_students}
   </span>
   <span className={styles.pDates}>
-    <p>{program?.studentqty}</p>
+    {+course?.all_students - +course?.passed_students}
   </span>
   <span className={styles.pEdit}>
     <div 
@@ -57,8 +53,8 @@ const ProgramItem = ({program, url, index}) => {
         <Link
           href={`${encodeURIComponent(
             url
-          )}/editProgram/?programId=${encodeURIComponent(
-            program?.id
+          )}/editCourse/?courseId=${encodeURIComponent(
+            course?.id
           )}`}
           target="_blank"
         >
@@ -73,7 +69,7 @@ const ProgramItem = ({program, url, index}) => {
       <div 
         className={styles.deleteSet}
         style={{display: showSetting ? "block" : "none"}}
-        onClick={() => deleteHandler(program?.id)}
+        onClick={() => deleteHandler(course.id)}
       >
         Удалить
       </div>
@@ -83,4 +79,4 @@ const ProgramItem = ({program, url, index}) => {
 </div>
 };
 
-export default ProgramItem;
+export default CourseItem;

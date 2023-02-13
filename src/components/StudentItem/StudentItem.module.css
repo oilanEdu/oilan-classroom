@@ -1,0 +1,341 @@
+.editSetSh, .editSetProg, .editSetData {
+  cursor: pointer;
+  position: absolute;
+  width: 100%;
+  padding: 10px 5px;
+  background: #fff;
+  left: -5px;
+  margin: 10px 0;
+  border-bottom: 2px solid #ccc;
+  z-index: 30;
+}
+
+.editSetData {
+  top: 33px;
+}
+
+.editSetProg {
+  top: 80px;
+}
+
+.editSetSh {
+  top: 150px;
+}
+.settingTitleHide {
+  cursor: pointer;
+  font-family: 'Noto Sans Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  color: #0f376e !important;
+  margin: 0;
+  /* background: url(https://realibi.kz/file/618464.png) no-repeat;
+  background-position: 80% 60%;
+  background-size: 12px; */
+  /* padding: 0 121px 0 0; */
+}
+
+.setting {
+  position: relative;
+  background: #fff;
+  padding: 10px 0px;
+}
+
+.settingTitleShow {
+  cursor: pointer;
+  font-family: 'Noto Sans Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  color: #0f376e !important;
+  margin: 0;
+  /* background: url(https://realibi.kz/file/635945.png) no-repeat;
+  background-position: 80% 50%;
+  background-size: 12px; */
+  /* padding: 0 121px 0 0; */
+}
+
+
+
+.studentsBlock{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	margin: 92px 0 60px;
+}
+
+.studentsBlock h1{
+    font-family: 'Muller Medium';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 150%;
+	text-transform: uppercase;
+	color: #1E2432;
+	margin-bottom: 40px;
+}
+
+.studentsHeader{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 20px;
+	height: 80px;
+	align-items: center;
+	padding: 16px;
+	gap: 12px;
+	background: #FFFFFF;
+	border-radius: 16px;
+}
+
+.studentsHeader span{
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 150%;
+	color: #1E2432;
+	padding: 5px;
+}
+
+.student{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 20px;
+	/* height: 80px; */
+	align-items: center;
+	padding: 16px;
+	gap: 12px;
+	background: #FFFFFF;
+	border-radius: 16px;
+}
+
+.student span{
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 150%;
+	color: #1E2432;
+	padding: 5px;
+}
+
+.sCourse{
+	width: 20%;
+}
+
+.sFullname{
+	width: 20%;
+	display: flex;
+	flex-direction: row;
+}
+
+.sComplietedLessons{
+	width: 20%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.sNextLesson{
+	width: 20%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.sProgram{
+	width: 20%;
+}
+
+.studentCage{
+	display: flex;
+	flex-direction: row;
+	cursor: pointer;
+	align-items: center;
+}
+
+.idAndName{
+	display: flex;
+	flex-direction: column;
+}
+
+.name{
+	font-family: 'Noto Sans Bold';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 150%;
+	color: #1E2432;
+}
+
+.id{
+	font-family: 'Noto Sans Regular' !important;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 22px;
+	color: #191D23;
+}
+
+.progressLine{
+	display: flex;
+	height: 8px;
+	width: 150px;
+	background: #F9F5FF;
+	border-radius: 4px;
+	margin-right: 12px;
+}
+
+.studentProgress{
+	height: 8px;
+	background: #007AFF;
+	border-radius: 4px;
+}
+
+.sCourseHead, .sFullnameHead, .sComplietedLessonsHead, .sNextLessonHead {
+	position: relative;
+}
+
+.pNumberHead::after, 
+.pCourseHead::after, 
+.pDatesHead::after, 
+.pLessCountHead::after, 
+.pProgramHead::after {
+	content: "";
+	border-right: 1px solid #D8D8DC;
+	display: block;
+	height: 80px;
+	position: absolute;
+	right: 0;
+	top: -23px;
+}
+
+.sCourseHead::after {
+	content: "";
+	border-right: 1px solid #D8D8DC;
+	display: block;
+	height: 80px;
+	position: absolute;
+	right: 0;
+	top: -11px;
+}
+
+.sFullnameHead::after, .sComplietedLessonsHead::after, .sNextLessonHead::after {
+	content: "";
+	border-right: 1px solid #D8D8DC;
+	display: block;
+	height: 80px;
+	position: absolute;
+	right: 0;
+	top: -23px;
+}
+
+.titleContainer {
+	display: flex;
+	justify-content: space-between;
+}
+
+.sortOptions {
+	flex-direction: column;
+	margin-bottom: 30px;
+	position: absolute;
+	width: 100%;
+	z-index: 9;
+}
+
+.sortContainer {
+	position: relative;
+	cursor: pointer;
+}
+
+.sortTitle {
+	width: 285px;
+  border: 1px solid #A2A7B2;
+  padding: 15px 40px;
+  background: url(https://realibi.kz/file/523525.png) no-repeat #fff;
+  background-position: 10px 50%;
+  background-size: 20px;
+  border-radius: 8px;
+}
+
+.sortHide {
+	background: url(https://realibi.kz/file/618464.png) no-repeat;
+  background-position: right 50%;
+  background-size: 12px;
+  padding: 0 121px 0 0;
+}
+
+.sortShow {
+	background: url(https://realibi.kz/file/635945.png) no-repeat;
+  background-position: right 50%;
+  background-size: 12px;
+  padding: 0 121px 0 0;
+}
+
+.sortOptions span {
+	padding: 15px;
+	background: #fff;
+	border-bottom: 1px solid #8E8E93;
+	cursor: pointer;
+}
+
+.sortOptions span:hover {
+	background: #f1faff;
+	cursor: pointer;
+}
+  .sConfigureWrapper {
+	  display: flex;
+	  flex-direction: row;
+	  align-items: center;
+	  width: 20%;
+  }
+  .sConfigureGear {
+	  background-image: url(https://realibi.kz/file/867377.png);
+	  width: 20px;
+	  height: 20px;
+	  background-size: cover;
+  }
+  
+  .sConfigure {
+	  cursor: pointer;
+  }
+  .sConfigure{
+	  padding-left: 10px;
+	  width: auto;
+	  font-family: 'Noto Sans Medium';
+	  font-style: normal;
+	  font-weight: 500;
+	  font-size: 16px;
+	  line-height: 150%;
+	  align-items: center;
+	  color: #007AFF !important;
+  }
+  .deleteSet {
+    cursor: pointer;
+    position: absolute;
+    top: 197px;
+    left: -5px;
+    width: 100%;
+    padding: 10px 5px;
+    background: #fff;
+    z-index: 5;
+    margin: 10px 0;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  .deleteSet:hover {
+    text-decoration: underline;
+  }
+
+  .sConfigure {
+	  text-decoration-line: none;
+  }
+  .sConfigure:hover{
+	  text-decoration-line: underline;
+  }

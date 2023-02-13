@@ -463,7 +463,7 @@ function TeacherCabinet(props) {
       return () => window.removeEventListener('resize', handleResize);
     }, []);
     if (typeof localStorage !== "undefined") {
-    return (localStorage && teacher.url == localStorage.login?
+    return (localStorage && teacher.url == localStorage.login ?
       <>
         {showModalLesson ? (
           <>
@@ -803,18 +803,20 @@ function TeacherCabinet(props) {
           </div>
           <Footer />
         </div>
-      </>
-    );
+        </>:<></>
+    )} else {return <></>}
 }
+
 
 TeacherCabinet.getInitialProps = async (ctx) => { 
-    if(ctx.query.url !== undefined) {
-        return {
-            url: ctx.query.url,
-        }
-    }else{
-        return {};
-    }
+  if(ctx.query.url !== undefined) {
+      return {
+          url: ctx.query.url,
+      }
+  }else{
+      return {};
+  }
 }
 
-export default TeacherCabinet 
+
+export default TeacherCabinet

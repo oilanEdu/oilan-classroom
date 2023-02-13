@@ -1,19 +1,24 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-const Main = (props) => {
+const Authenticator = ({ children }) => {
+  const router = useRouter();
+
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.location.href = '/course/kazLang/speachKaz';
+    const login = localStorage.getItem('login');
+    const role = localStorage.getItem('role');
+    const token = localStorage.getItem('token');
+
+    if (!login || !role || !token) {
+      router.push('/auth');
+    } else if (role === 'admin') {
+      router.push('/cabinet/admin');
+    } else {
+      router.push(`/cabinet/${role}/${login}`);
     }
   }, []);
 
-  return <div>Redirecting...</div>;
+  return <>{children}</>;
 };
 
-Main.getInitialProps = async ({ res }) => {
-    res.writeHead(302, { Location: '/course/kazLang/speachKaz' });
-    res.end();
-    return {};
-};
-
-export default Main;
+export default Authenticator;

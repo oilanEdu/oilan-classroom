@@ -13,6 +13,21 @@
 .outerContainer {
 
 }
+
+.menu-active {
+  display: block;
+}
+
+.li {
+  padding: 10px 20px;
+  cursor: pointer;
+  list-style-type: none;
+}
+
+.li:hover {
+  background-color: lightgray;
+}
+
 .desktopHeader {
   width: 100%;
   display: flex;

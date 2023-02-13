@@ -202,8 +202,8 @@ function Homeworks(props) {
         alert("Произошла ошибка"); 
       });
   }
-
-	return ( 
+  if (typeof localStorage !== "undefined") {
+	return (localStorage && teacher.url == localStorage.login?
     <>
       <div style={{backgroundColor: "#f1faff", width: "100vw", overflowX: "hidden"}}>
         <HeaderTeacher white={true} teacher={teacher} />
@@ -310,8 +310,8 @@ function Homeworks(props) {
       </div>            	
       <Footer />
       </div>
-    </>
-  )
+    </>:<></>
+  )} else {return <></>}
 }
 
 Homeworks.getInitialProps = async (ctx) => {

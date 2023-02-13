@@ -23,8 +23,6 @@ import LessonContain from "../../src/components/LessonContain/LessonContain";
 import TeacherHomeworksLesson from "../../src/components/TeacherHomeworksLesson/TeacherHomeworksLesson";
 import HeaderStudent from "../../src/components/HeaderStudent/HeaderStudent";
 import LessonExercisesForStudent from "../../src/components/LessonExercisesForStudent/LessonExercisesForStudent";
-// import navigator from "navigator"
-// import { getDisplayMedia } from "navigator"
 
 const endPoint =
   "https://prod-in2.100ms.live/hmsapi/testdomain.app.100ms.live/";
@@ -121,7 +119,6 @@ const Lesson = (props) => {
   // innerWidth
 
   console.log(student);
-  // console.log(router);
 
   useEffect(() => {
     console.log('VW', window.innerWidth)
@@ -603,7 +600,9 @@ const Lesson = (props) => {
   console.log(teacher);
   console.log(student);
 
-  return ( 
+  //if (typeof localStorage !== "undefined") {
+    return (
+    //localStorage && teacher.url == localStorage.login || student?.nickname == localStorage.login?
     <div className={styles.all}>
       <div style={{backgroundColor: "#f1faff", width: "100%"}}>
         {role === "student" 
@@ -908,8 +907,9 @@ const Lesson = (props) => {
         </div>            
         <Footer />
       </div>
-    </div>
-  );
+    </div>)
+    //:<></>
+    //)} else {return <></>}
 };
 
 Lesson.getInitialProps = async (ctx) => {

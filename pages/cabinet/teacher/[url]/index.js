@@ -15,7 +15,7 @@ import GoToLessonWithTimerComponent from "../../../../src/components/GoToLessonW
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import ProgramItem from "../../../../src/components/ProgramItem/ProgramItem";
 
-function TeacherCabinet(props) {
+const TeacherCabinet = (props) => {
     const [teacher, setTeacher] = useState([])
     const [programs, setPrograms] = useState([])
     const [students, setStudents] = useState([])
@@ -442,8 +442,8 @@ function TeacherCabinet(props) {
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
     }, []);
-    
-    return (
+    if (typeof localStorage !== "undefined") {
+    return (localStorage && teacher.url == localStorage.login?
       <>
         {showModalLesson ? (
           <>
@@ -744,8 +744,8 @@ function TeacherCabinet(props) {
           </div>
           <Footer />
         </div>
-      </>
-    );
+      </>:<></>
+    )} else {return <></>}
 }
 
 TeacherCabinet.getInitialProps = async (ctx) => { 

@@ -16,7 +16,13 @@ export default function HeaderStudent(props) {
   const [isLogged, setIsLogged] = useState(false);
   const [cabinetRoute, setCabinetRoute] = useState("/login");
   const router = useRouter();
-
+  const [menuVisible, setMenuVisible] = useState(false)
+  const handleLogout = () => {
+      localStorage.removeItem('token')
+      localStorage.removeItem('login')
+      localStorage.removeItem('role')
+      router.push('/auth')
+    }
   const [courseUrl, setCourseUrl] = useState(router.query.courseUrl)
   const  [nickname, setNickname] = useState(router.query.nickname)
 
@@ -216,10 +222,16 @@ export default function HeaderStudent(props) {
             </li>
           </ul>
         </div>
-        <div className={styles.contact}>
+        <div className={styles.contact} onClick={() => setMenuVisible(!menuVisible)}>
           <p>{props.name} {props.surname}</p>
           <span>Студент</span>
           {/* <span>Баланс - {balance * 10}</span> */}
+          {menuVisible && (
+            <ul className={`menu ${menuVisible ? "menu-active" : ""}`}>
+              <li className={styles.li}>Профиль</li>
+              <li className={styles.li} onClick={handleLogout}>Выйти</li>
+            </ul>
+          )}
         </div>
         <div
           onClick={() => {

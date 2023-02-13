@@ -16,6 +16,7 @@ export default function HeaderTeacher(props) {
   const [isLogged, setIsLogged] = useState(false);
   const [cabinetRoute, setCabinetRoute] = useState("/login");
   const router = useRouter();
+  const [menuVisible, setMenuVisible] = useState(false)
   const [student, setStudent] = useState({});
   const [center, setCenter] = useState({});
   const [url, setUrl] = useState(router.query.url);
@@ -81,6 +82,12 @@ export default function HeaderTeacher(props) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('login')
+    localStorage.removeItem('role')
+    router.push('/auth')
+  }
 
   useEffect(function () {
     loadUserInfo();
@@ -201,11 +208,17 @@ export default function HeaderTeacher(props) {
             </li>
           </ul>
         </div>
-        <div className={styles.contact}>
+        <div className={styles.contact} onClick={() => setMenuVisible(!menuVisible)}>
           <b className={styles.contactName}>
             {props.teacher?.name} {props.teacher?.surname}
           </b>
           <span style={{fontFamily: 'Noto Sans Regular'}}>Преподаватель</span>
+          {menuVisible && (
+            <ul className={`menu ${menuVisible ? "menu-active" : ""}`}>
+              <li className={styles.li}>Профиль</li>
+              <li className={styles.li} onClick={handleLogout}>Выйти</li>
+            </ul>
+          )}
         </div>
         <div
           onClick={() => {

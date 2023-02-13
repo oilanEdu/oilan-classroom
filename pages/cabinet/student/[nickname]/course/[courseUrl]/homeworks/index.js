@@ -54,7 +54,10 @@ const Homeworks = (props) => {
   console.log(scores);
   console.log(exercises);
   
-  return <>
+  //if (typeof localStorage !== "undefined") {
+    return (
+      //localStorage && student.nickname == localStorage.login? 
+    <>
     <HeaderStudent white={true} name={student?.name} surname={student?.surname} courseUrl={courseUrl} nickname={nickname} />
     <div style={{backgroundColor: "#F1FAFF"}}>
     <GoToLessonWithTimerComponent isTeacher={false} courseUrl={courseUrl} nickname={nickname}/>
@@ -65,8 +68,9 @@ const Homeworks = (props) => {
     </div>
     </div>
     <Footer />
-  </>
-};
+  </>)}
+  //:<></>)} else {return <></>}
+
 
 Homeworks.getInitialProps = async (ctx) => {
     if(ctx.query.courseUrl !== undefined && ctx.query.nickname !== undefined) {

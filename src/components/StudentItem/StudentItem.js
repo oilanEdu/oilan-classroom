@@ -202,12 +202,12 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
         style={{display: showSetting ? "block" : "none"}}
         onClick={() => {
           if (studentPrograms.length > 1) {
-            deleteProgram(student.student_id);
+            deleteProgram(student.student_id, student.program_id);
             window.location.reload();
           } else {
-            // deleteProgram(student.student_id);
-            // deletestudent(student.student_id);
-            // window.location.reload();
+            deleteProgram(student.student_id, student?.program_id);
+            deletestudent(student.student_id);
+            window.location.reload();
           }
         }}
       >

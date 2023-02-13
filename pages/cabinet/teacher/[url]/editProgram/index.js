@@ -651,7 +651,7 @@ function EditProgram(props) {
                 <Footer />
             </div>
         </>:<></>)} else {return <></>}
-       )
+       
 }
 
 EditProgram.getInitialProps = async (ctx) => {

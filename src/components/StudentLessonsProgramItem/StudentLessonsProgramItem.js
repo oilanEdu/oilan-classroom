@@ -9,7 +9,7 @@ const StudentLessonsProgramItem = ({lesson, courseUrl, nickname}) => {
   const [exercises, setExercises] = useState([])
   const [answers, setAnswers] = useState([])
   const [teacherComments, setTeacherComments] = useState([])
-  let isActive = (new Date(lesson.start_time).getTime()) <= (new Date().getTime());
+  let isActive = (new Date(lesson.personal_time).getTime()) <= (new Date().getTime());
   const router = useRouter() 
 
   const [width, setWidth] = useState(window.innerWidth);
@@ -102,6 +102,7 @@ const StudentLessonsProgramItem = ({lesson, courseUrl, nickname}) => {
             }
           ></span>
           : <span
+            style={{display: width >= 480 ? "none" : "block"}}
             className={styles.block} 
           ></span>
         }
@@ -162,6 +163,7 @@ const StudentLessonsProgramItem = ({lesson, courseUrl, nickname}) => {
       }
       ></span>
       : <span
+        style={{display: width >= 480 ? "block" : "none"}}
         className={styles.block} 
       ></span>
     }

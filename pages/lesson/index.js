@@ -27,30 +27,30 @@ import LessonExercisesForStudent from "../../src/components/LessonExercisesForSt
 const endPoint =
   "https://prod-in2.100ms.live/hmsapi/testdomain.app.100ms.live/";
 
-const getToken = async (user_id, role, teacher) => {
-  let room_key = '6397fa226d95375c45153bfa'
-  if (teacher == 13) {
-    room_key = '63da37d9cd8175701aac0217'
-  }
-  if (teacher == 6) {
-    room_key = '63da37e5cd8175701aac0218'
-  }
-  if (teacher == 4) {
-    room_key = '63da37f0da7e7ca812840b55'
-  }
-  if (teacher == 1) {
-    room_key = '63da37fbda7e7ca812840b56'
-  }
-  if (teacher == 15) {
-    room_key = '63e3aa8fcd8175701aac02ce'
-  }
+const getToken = async (user_id, role, teacher, idOfNewRoom) => {
+  // let room_key = '6397fa226d95375c45153bfa'
+  // if (teacher == 13) {
+  //   room_key = '63da37d9cd8175701aac0217'
+  // }
+  // if (teacher == 6) {
+  //   room_key = '63da37e5cd8175701aac0218'
+  // }
+  // if (teacher == 4) {
+  //   room_key = '63da37f0da7e7ca812840b55'
+  // }
+  // if (teacher == 1) {
+  //   room_key = '63da37fbda7e7ca812840b56'
+  // }
+  //
+
+  //
   const response = await fetch(`${endPoint}api/token`, {
     method: "POST",
     body: JSON.stringify({
       user_id,
       role: role, //host, teacher, guest, student
       type: "app",
-      room_id: room_key
+      room_id: idOfNewRoom
     })
   });
   const { token } = await response.json();
@@ -60,6 +60,8 @@ const Lesson = (props) => {
   const { startScreenShare, stopScreenShare, screenShareStatus } = useScreenShare();
 
   const router = useRouter()
+  const [token, setToken] = useState('')
+  const [idOfNewRoom, setIdOfNewRoom] = useState()
   const teacherUrl = router.query.url;
   const studentId = router.query.id;
   const room = router.query.room;
@@ -130,6 +132,9 @@ const Lesson = (props) => {
       loadStudentData();     
     }
   }, []); 
+  useEffect(() => {
+    console.log(room, "room");
+  }, [room])
 
   useEffect(() => {
     getLessonExercises();
@@ -291,7 +296,7 @@ const Lesson = (props) => {
   const isLocalScreenShared = useHMSStore(selectIsLocalScreenShared);
 
   const handleSubmit = async (userName) => {
-    const token = await getToken(userName, role, teacher.teacher_id);
+    const token = await getToken(userName, role, teacher.teacher_id, idOfNewRoom);
     hmsActions.join({ authToken: token, userName });
   };
 
@@ -742,7 +747,11 @@ const Lesson = (props) => {
               </>) 
               : <>
                 <img src="https://realibi.kz/file/756332.png" style={{width: "100%"}} />
-                <JoinRoom handleSubmit={handleSubmit} 
+                <JoinRoom handleSubmit={handleSubmit}
+                  idOfNewRoom={idOfNewRoom}
+                  setIdOfNewRoom={setIdOfNewRoom}
+                  token={token} 
+                  setToken={setToken}
                   userName={(role == "teacher")
                     ? teacher?.name
                     : student?.name 
@@ -877,6 +886,10 @@ const Lesson = (props) => {
               : <>
                 <img src="https://realibi.kz/file/756332.png" style={{width: "100%"}} />
                 <JoinRoom handleSubmit={handleSubmit} 
+                  idOfNewRoom={idOfNewRoom}
+                  setIdOfNewRoom={setIdOfNewRoom}
+                  token={token} 
+                  setToken={setToken}
                   userName={(role == "teacher")
                     ? teacher?.name
                     : student?.name

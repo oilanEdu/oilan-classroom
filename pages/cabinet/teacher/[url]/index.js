@@ -108,7 +108,7 @@ function TeacherCabinet(props) {
         if ((hours * 60 + minutes) * 60 + seconds < 600 && hours != NaN && minutes != NaN && seconds != NaN) {
           setDisableButton(false)
         }
-        if (closerLesson.length === 0) {
+        if (closerLesson?.length === 0) {
           setDisableButton(true)
         }
       }, [seconds])
@@ -290,14 +290,25 @@ function TeacherCabinet(props) {
                 var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.personal_time).getTime()));
                 var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
                 var idx = withoutNan.indexOf(Math.min(...withoutNan)); 
-                let curr_hours = new Date(lessonsFuture[idx].personal_time).getHours();
-                let curr_minutes = new Date(lessonsFuture[idx].personal_time).getMinutes();
-                student.closer_date = new Date(lessonsFuture[idx].personal_time).toLocaleDateString()
-                student.curr_hours = curr_hours 
-                student.curr_minutes = curr_minutes 
-                student.lesson_date = new Date(lessonsFuture[idx].personal_time).toLocaleDateString()
-                
-                setCloserLesson(lessonsFuture[idx]) 
+                if (lessonsFuture[idx] != undefined) {
+                  let curr_hours = new Date(lessonsFuture[idx]?.personal_time).getHours();
+                  let curr_minutes = new Date(lessonsFuture[idx]?.personal_time).getMinutes();
+                  student.closer_date = new Date(lessonsFuture[idx]?.personal_time).toLocaleDateString()
+                  student.curr_hours = curr_hours 
+                  student.curr_minutes = curr_minutes 
+                  student.lesson_date = new Date(lessonsFuture[idx]?.personal_time).toLocaleDateString() 
+                } else {
+                  let curr_hours = undefined
+                  let curr_minutes = undefined
+                  student.closer_date = undefined
+                  student.curr_hours = undefined
+                  student.curr_minutes = undefined
+                  student.lesson_date = undefined
+                }
+                 
+                // setCloserLesson(lessonsFuture[idx]) 
+                let lessonIsGoingHandler = lessons.find(el => new Date().getTime() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() <= 3600000)
+                setCloserLesson(lessonIsGoingHandler ? lessonIsGoingHandler : lessonsFuture[idx]) 
             })
             }
            );
@@ -811,10 +822,10 @@ function TeacherCabinet(props) {
 TeacherCabinet.getInitialProps = async (ctx) => { 
   if(ctx.query.url !== undefined) {
       return {
-          url: ctx.query.url,
-      }
-  }else{
-      return {};
+            url: ctx.query.url,
+        }
+    }else{
+        return {};
   }
 }
 

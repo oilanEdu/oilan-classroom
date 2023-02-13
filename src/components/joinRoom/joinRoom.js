@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import jwt from 'jsonwebtoken';
 import uuid4 from 'uuid4';
 import axios from 'axios';
 
-const joinRoom = ({ handleSubmit, userName, roomName }) => {
+const joinRoom = ({ handleSubmit, userName, roomName, token, setToken, setIdOfNewRoom, idOfNewRoom }) => {
   console.log('USER!!!', userName);
   const app_access_key = '6397f78ad466dc3af17f0ad2';
   const app_secret = 'S1IFrWRERMMot9rtDZvL2oQegp7PFEeSwKvyrUvJTsR1PHSooYn420fpyqb4FMW65Bn5FuYI0C5xp8g2ThDOAE-HLWpJRdy8DMjgVy7X2kWZ6Xl-PIjaXzN9pN0PoexDHJVMbgGp6kATAECxe6CrLs2Mb_F-6WdAsOkBx2X5oZI=';
 
-  const [token, setToken] = useState('')
+  // const [token, setToken] = useState('')
+  useEffect(() => {
+    if (token != undefined) {
+      createRoom() 
+    }
+  }, [token])
+  useEffect(() => {
+    if (idOfNewRoom != undefined) {
+      handleSubmit(userName);
+    }
+  }, [idOfNewRoom])
 
   const getToken = async () => {
         jwt.sign(
@@ -33,7 +43,8 @@ const joinRoom = ({ handleSubmit, userName, roomName }) => {
   }
 
   const createRoom = async () => {
-    console.log('IN JOIN ROOM', roomName)
+    console.log('111 IN JOIN ROOM', roomName)
+    console.log("111 token", token);
     try {
       const response = await axios.post(
         'https://api.100ms.live/v2/rooms',
@@ -50,7 +61,8 @@ const joinRoom = ({ handleSubmit, userName, roomName }) => {
           },
         }
       );
-      console.log('response.data',response.data)
+      console.log('111 response.data',response.data)
+      setIdOfNewRoom(response.data.id)
       return response.data;
     } catch (error) {
       console.error(error);
@@ -64,8 +76,8 @@ const joinRoom = ({ handleSubmit, userName, roomName }) => {
           onSubmit={(e) => {
             e.preventDefault();
             getToken()
-            createRoom()
-            handleSubmit(userName);
+            // createRoom()
+            // handleSubmit(userName);
           }}
         >
           <button 

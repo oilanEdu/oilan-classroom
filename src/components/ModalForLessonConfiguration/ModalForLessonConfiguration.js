@@ -176,6 +176,8 @@ function ModalForLessonConfiguration(props) {
               );
               await props.loadTeacherData();
               await loadStudentLessons(props?.student?.student_id, e.target.value)
+              window.location.reload()
+              // this.forceUpdate();
             }}
             value={studentProgramUpcoming}
           >
@@ -203,15 +205,16 @@ function ModalForLessonConfiguration(props) {
           <div className={styles.buttonWrapper}>
           <button
           className={styles.save}
-            onClick={() => {
+            onClick={async() => {
               // updateStudentProgram
-              setSaveIsClicked(!saveIsClicked)
-              props.updateStudentProgram( 
+              await setSaveIsClicked(!saveIsClicked)
+              await props.updateStudentProgram( 
                 props.student.student_id,
                 props.student.course_id,
                 studentProgramUpcoming
               );
-              props.loadTeacherData();
+              await props.loadTeacherData();
+              await window.location.reload()
             }}
           >
             Сохранить

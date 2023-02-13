@@ -17,7 +17,7 @@ function DateAndTimePickerForLesson(props) {
     console.log("testo", props.lessons2.map(el => new Date(dateAndTimeMerger).getTime() > new Date(el.personal_time).getTime() && props.lesson_order > el.lesson_order ));
     // if (props.lessons2.map(el => new Date(dateAndTimeMerger).getTime() > new Date(el.personal_time).getTime() && props.lesson_order > el.lesson_order )) {
       
-    // } 
+    // }  
     // if (props.lessons2.map(el => new Date(dateAndTimeMerger).getTime() < new Date(el.personal_time).getTime() && props.lesson_order < el.lesson_order )) {
       
     // }
@@ -123,7 +123,7 @@ function DateAndTimePickerForLesson(props) {
         id="date"
         type="date"
         value={dateState}
-        onChange={(e) => setDateState(e.target.value)}
+        onChange={(e) => {setDateState(e.target.value)}}
       ></input>
       <input
         style={{borderColor: errorOfDate ? "red" : ""}}

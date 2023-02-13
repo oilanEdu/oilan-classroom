@@ -1,12 +1,14 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./CourseItem.module.css";
 import { Image } from "react-bootstrap";
 import axios from "axios";
 import globals from "../../globals";
 
 const CourseItem = ({course, url, index, onCheck, checked}) => {
-
+  useEffect(() => {
+    console.log('CourseItem', course)
+  }, [course]);
   const deleteHandler = async (id) => {
     const data = {
       id

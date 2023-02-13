@@ -332,13 +332,13 @@
 .moreCourses {
 	display: flex;
 	flex-direction: column;
-	width: 140px;
+	width: 150px;
 }
 
 .morePrograms {
 	display: flex;
 	flex-direction: column;
-	width: 140px;
+	width: 150px;
 }
 
 .studentsBlock{

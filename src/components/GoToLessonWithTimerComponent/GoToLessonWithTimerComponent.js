@@ -45,14 +45,14 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
       }
     }, [lessonsForNearestDate])
     useEffect(() => {
-      console.log("idOfNearest", idOfNearest);
+
       if (idOfNearest != undefined && isTeacher == true) {
-        console.log(lessons[idOfNearest], "idOfNearest2");
+
         let closerLessonLocal =  lessonsForNearestDate[idOfNearest];
         setCloserLesson(closerLessonLocal) 
       } 
       if (idOfNearest != undefined && isTeacher == false) {
-        console.log(lessons[idOfNearest], "idOfNearest2");
+
         let closerLessonLocal =  lessonsForNearestDate[idOfNearest];
         setCloserLesson(closerLessonLocal) 
       }
@@ -77,7 +77,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
       var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
       var idx = withoutNan.indexOf(Math.min(...withoutNan));
       
-      console.log("idx", idx);
+
       setIdOfNearest(idx)  
       // dates.forEach(function (date, index) { 
       //   date = new Date(date.personal_time)
@@ -100,7 +100,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     useEffect(() => {
       if (lessons.length > 1) { 
         // setCloserLesson(lessons[winnerIndex])
-        console.log(lessons, "lessons5"); 
+
         setLessonsForNearestDate(lessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0)))
         // nearestDate(lessons, Date.now())  
       }   
@@ -147,9 +147,9 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
 
     useEffect(() => {
         if (isTeacher === true) {
-          console.log(router)
+
           // console.log('PROPS', props)
-          console.log(lessons) 
+
           loadTeacherData()          
         }   
     }, []) 
@@ -161,7 +161,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
             studentId,
             programId
         };
-        console.log('studentId, programId', studentId, programId)
+
         await axios({
             method: "post",
             url: `${globals.productionServerDomain}/getStudentLessonsByProgramId`,
@@ -179,7 +179,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
             .catch((err) => {
                 alert("Произошла ошибка");
             });
-        console.log('lessonsURL', lessons)
+
     }
     
     const loadTeacherData = async () => {
@@ -208,7 +208,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
         setTeacher(getTeacherByUrl['data'][0])
         setPrograms(teacherPrograms['data'])
         teacherStudents['data'].forEach(async student => {
-        console.log('checks', student.check)
+
         let diff = 604800000*7
             loadStudentLessons(student.student_id, student.program_id) 
             let answersCount = 0 
@@ -270,13 +270,13 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
                                     if ((exercises.length > 0) && (exercises.length == answersCount)){
                                         student.check += 1 
                                         studentCheck += 1
-                                        console.log('studentCheck', studentCheck)
+
                                         setCheck(student.check)
                                         student.check = studentCheck  
                                         student.progress = 100/student.lessons_count*student.check 
                                     }  
                                     else{ 
-                                        console.log('')
+
                                         // setCheck(0)
                                         // studentCheck = 0
                                         // student.check = 0
@@ -291,12 +291,10 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
             }
            );  
 
-        console.log('closerLesson', closerLesson)
-        console.log('try', teacherStudents['data'])
+
         setStudents(teacherStudents['data'])
         setDataLoaded(true) 
-        console.log('programs', programs)
-        console.log('students', students) 
+
                 // setCheckIsLoaded(true)
       }
 
@@ -356,7 +354,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     }
 
     const startLessonLinkStudent = async (translationLink) => {
-      console.log('proverkha1')
+
       const role = 'student'
       const redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}`
           
@@ -369,7 +367,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
         while (roomKey.length < 12) {
             roomKey += alphabet[Math.floor(Math.random() * alphabet.length)];
         }
-        console.log(roomKey); 
+
         if (closerLesson.personal_time){
             let data = {
                 lessonId: closerLesson.id,
@@ -382,7 +380,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
               data: data,
             })
               .then(function (res) {
-                 console.log('DATA', data)
+
                  startLessonLink(roomKey) 
               })
               .catch((err) => {
@@ -399,7 +397,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
               data: data,
             })
               .then(function (res) {
-                 console.log('DATA', data)
+
                  startLessonLink(roomKey)
               })
               .catch((err) => {
@@ -409,13 +407,13 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     }
 
     const startNewLessonStudent = async () => {
-      console.log('proverkha2')
+
       let alphabet = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789";
       let roomKey = "";
       while (roomKey.length < 12) {
           roomKey += alphabet[Math.floor(Math.random() * alphabet.length)];
       }
-      console.log(roomKey); 
+
       if (closerLesson.personal_time){
           let data = {
               lessonId: closerLesson.id,
@@ -428,7 +426,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
             data: data,
           })
             .then(function (res) {
-               console.log('DATA', data)
+
                startLessonLink(roomKey) 
             })
             .catch((err) => {
@@ -445,7 +443,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
             data: data,
           })
             .then(function (res) {
-               console.log('DATA', data)
+
                startLessonLink(roomKey)
             })
             .catch((err) => {
@@ -475,7 +473,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     //STUDENT
     const [data2Loaded, setData2Loaded] = useState(false)
     const fetchData = async () => {
-      console.log(nickname, courseUrl, "nickname, courseUrl");
+
       const response = await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${nickname}&course_url=${courseUrl}`).then(async (res) => {
         await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${courseUrl}&program_id=${res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(res => {
           setLessons(res.data);
@@ -503,7 +501,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
                 // let dateStr = new Date(lesson.start_time);
                 let closerDate
                 let diff = 604800000  
-                console.log('currentDate', Date.parse(new Date(lessonFactDate)) - Date.parse(new Date()))
+
                 if (Date.parse(new Date(lessonFactDate)) > Date.parse(new Date()) && (Date.parse(new Date(lessonFactDate) - Date.parse(new Date())) < diff) && (Date.parse(new Date(lessonFactDate)) < Date.parse(new Date(closerLesson.fact_date))) && (closerLesson)){
                     console.log('check', 1)
                     diff = Date.parse(new Date()) - Date.parse(new Date(lesson.fact_date)) 
@@ -513,7 +511,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
                     // setCloserLesson(lesson) 
                   }
       })
-      console.log('CloserLesson', closerLesson)  
+
     };
 
     useEffect(() => {
@@ -522,10 +520,10 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
       }
     }, [data2Loaded]);
     useEffect(() => {
-      console.log("lessonslessonslessonslessons", lessons);
+
     }, [lessons])
     useEffect(() => {
-      console.log("closerLessoncloserLessoncloserLessoncloserLesson", closerLesson);
+
     }, [closerLesson])
     // useEffect(() => {
     //   if ((prevCountRefHours.current * 60 + prevCountRefMinutes.current) * 60 + prevCountRefSeconds.current < 3600) {
@@ -538,10 +536,9 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
       const interval = setInterval(() => {
         if ((prevCountRefHours.current * 60 + prevCountRefMinutes.current) * 60 + prevCountRefSeconds.current < 3600) {
           setShowTimer(true)
-          console.log("showTimer");
-          console.log("timerIsTrue", (prevCountRefHours.current * 60 + prevCountRefMinutes.current) * 60 + prevCountRefSeconds.current < 3600);
+          
         } else {
-          console.log("timerIsFalse");
+
         }
       }, 2000);
       return () => clearInterval(interval);

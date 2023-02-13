@@ -7,7 +7,7 @@ import EditStudentStatus from "../EditStudentStatus/EditStudentStatus";
 import axios from "axios";
 import globals from "../../globals";
 
-const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentForModal, programs }) => {
+const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentForModal, programs, route }) => {
   const router = useRouter();
   const [showSetting, setShowSetting] = useState(false);
 
@@ -17,7 +17,7 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
   const [studentPrograms, setStudentPrograms] = useState();
 
   const personalLink = async (studentId, prigramId) => {
-    const redirectUrl = `${encodeURIComponent(props.url)}/homeworks?programId=${encodeURIComponent(prigramId)}&studentId=${encodeURIComponent(studentId)}`
+    const redirectUrl = `${route}/homeworks?programId=${encodeURIComponent(prigramId)}&studentId=${encodeURIComponent(studentId)}`
     
     await router.push(redirectUrl)  
 
@@ -73,6 +73,14 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
 
   console.log(student);
 
+  const padWithZeros = (id, length) => id.toString().padStart(length, '0');
+
+  const optimizedId = (student) => {
+    if (!student) return '';
+    const id = padWithZeros(student.student_id, 7);
+    return id;
+  }
+
   return <div className={styles.student}>
     <span className={styles.sCourse}>
       {student?.course_title} ({student?.program_title})
@@ -95,7 +103,7 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
             {student?.surname} {student?.name} {student?.patronymic}
           </span>
           <span className={styles.id}>
-            id: {student?.student_id}
+            {optimizedId(student)}
             {/* {"0".repeat(7 - String(student?.student_id).length) + student?.student_id} */}
             {/* {"0".repeat(7 - String(student?.student_id).length) +
               student?.student_id} */}

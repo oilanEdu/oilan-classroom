@@ -200,6 +200,7 @@
 
 .sCourseHead, .sFullnameHead, .sComplietedLessonsHead, .sNextLessonHead {
 	position: relative;
+	width: 20%
 }
 
 .pNumberHead::after, 

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import globals from "../../globals";
 import { useRouter } from 'next/router';
-import styles from './RegisterForm.module.css'
+import styles from './RegisterForm.module.css';
+import CaptchaComponent from "../Captcha/Captcha";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -15,28 +16,113 @@ const RegisterForm = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (role && name && surname && phone && email && login && password){
-      try {
-        const data = { role, name, surname, phone, email, login, password };
+  const [captchaText, setCaptchaText] = useState("");
+  const [captchaCheck, setCaptchaCheck] = useState(false);
+  const [insertCaptchaText, setInsertCaptchaText] = useState('Введите текст с картинки')
+  const [showCaptcha, setShowCaptcha] = useState(false)
 
-        const response = await axios.post(`${globals.productionServerDomain}/register`, data);
-        console.log('proshlo', response)
-        alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
-        router.push(`/cabinet/${res.data.role}/${res.data.login}`);
-        // Обработайте ответ и перенаправьте пользователя на нужную страницу.
-      } catch (error) {
-        if (error.response.status === 400) {
-            setErrorMessage(error.response.data.message);
-          }
-        console.log('ne proshlo', error)
+  const [randomizedCaptchaId, setRandomizedCaptchaId] = useState()
+  const [randomizedCaptchaData, setRandomizedCaptchaData] = useState()
+
+  const [proccessOfCaptcha, setProccessOfCaptcha] = useState(0)
+  const [proccessOfCaptchaUrl, setProccessOfCaptchaUrl] = useState('https://realibi.kz/file/633881.png')
+  const handlerOfProccessOfCaptcha = (value) => {
+    if (value === 0) {
+      setProccessOfCaptchaUrl('https://realibi.kz/file/633881.png');
+    } else
+    if (value === 1) {
+      setProccessOfCaptchaUrl('https://realibi.kz/file/499291.png');
+    } else{
+    setProccessOfCaptchaUrl('https://realibi.kz/file/98680.png');}
+  }
+  useEffect(()=> {
+    loadCaptcha()
+    
+    console.log("proccessOfCaptchaUrl", proccessOfCaptchaUrl)
+  }, [])
+  useEffect(() => {
+    loadCaptchaWithId()
+  }, [randomizedCaptchaId])
+  
+  const loadCaptchaWithId = async () => {
+    let data = randomizedCaptchaId
+    let captcha2 = await axios.post(`${globals.productionServerDomain}/getCaptchaWithId/` + data)
+    console.log("captcha2", captcha2['data'])
+    setRandomizedCaptchaData(captcha2['data'])
+  }
+const loadCaptcha = async () => {
+    let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
+    let getAllCaptchaId = await axios.get(`${globals.productionServerDomain}/getAllCaptchaId`)
+    console.log("getAllCaptchaId", getAllCaptchaId['data'])
+    let getAllCaptchaIdRandom = Math.floor(Math.random() * getAllCaptchaId['data'].length)
+    console.log("getAllCaptchaIdRandom", getAllCaptchaIdRandom)
+    
+    setRandomizedCaptchaId(getAllCaptchaIdRandom)
+    // console.log('CAPTCHA', captcha)
+    const captchaFin = captcha['data'][0]
+    // console.log('CAPTCHA2', captchaFin)
+  }
+
+  const anotherImage = async () => {
+    let getAllCaptchaId = await axios.get(`${globals.productionServerDomain}/getAllCaptchaId`)
+    console.log("getAllCaptchaId", getAllCaptchaId['data'])
+    let getAllCaptchaIdRandom = Math.floor(Math.random() * getAllCaptchaId['data'].length)
+    setRandomizedCaptchaId(getAllCaptchaIdRandom)
+  }
+
+  const handleSubmit = async (event) => {
+    // event.preventDefault();
+    let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
+    const captchaFin = captcha['data'][0]
+    loadCaptcha()
+    console.log('CAPTCHI',captchaFin.text,captchaText)
+    if (randomizedCaptchaData[0]?.text == captchaText) {
+      handlerOfProccessOfCaptcha(3)
+      setProccessOfCaptcha(3)
+      
+      setShowCaptcha(false);
+      setCaptchaText("");
+      // setCheck(false);
+      loadCaptcha();
+      setCaptchaCheck(false);
+      setProccessOfCaptcha(0);
+      setProccessOfCaptchaUrl("https://realibi.kz/file/633881.png");
+
+      if (role && name && surname && phone && email && login && password){
+        try {
+          const data = { role, name, surname, phone, email, login, password };
+
+          const response = await axios.post(`${globals.productionServerDomain}/register`, data);
+          console.log('proshlo', response)
+          setErrorMessage('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!');
+          alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
+          router.push(`/cabinet/${res.data.role}/${res.data.login}`);
+          // Обработайте ответ и перенаправьте пользователя на нужную страницу.
+        } catch (error) {
+          if (error.response.status === 400) {
+              setErrorMessage(error.response.data.message);
+            }
+          console.log('ne proshlo', error)
+        }
+      } else {
+        setErrorMessage("Введены не все данные");
       }
     } else {
-      setErrorMessage("Введены не все данные");
+      setInsertCaptchaText('Неверный ввод текста с картинки!')
+      setProccessOfCaptcha(1)
+      handlerOfProccessOfCaptcha(1)
+      console.log("proccessOfCaptchaUrl", proccessOfCaptchaUrl);
     }
   };
 
+  const buttonActivateCapt = () => {
+    if (role && name && surname && phone && email && login && password) {
+      setShowCaptcha(true)
+      setErrorMessage("");
+    } else {
+      setErrorMessage("Введены не все данные");
+    }
+  }
   return (
     <div className={styles.welcome_section}>
       <h2 className={styles.welcome_header}>Рады начать сотрудничать с Вами!</h2>
@@ -113,11 +199,29 @@ const RegisterForm = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
+        <CaptchaComponent
+          insertCaptchaText={insertCaptchaText}
+          setCaptchaText={setCaptchaText}
+          sendApplication={handleSubmit}
+          setRole={setRole}
+          setName={setName}
+          setSurname={setSurname}
+          setPhone={setPhone}
+          setEmail={setEmail}
+          setLogin={setLogin}
+          setPassword={setPassword}
+          setErrorMessage={setErrorMessage}
+          showCaptcha={showCaptcha}
+          captchaImage={randomizedCaptchaData?.[0]?.link}
+          anotherImage={anotherImage}
+          proccessOfCaptchaUrl={proccessOfCaptchaUrl}
+          proccessOfCaptcha={proccessOfCaptcha}
+        />
         <p className={styles.error_message}>{errorMessage}</p>
-        <div className={styles.form_submit_button}>
-          <button className={styles.submit_button} type="submit">Зарегистрироваться как {role == 'student'?'студент':role == 'teacher'?'преподаватель':'...'}</button>
+        
+      </form><div className={styles.form_submit_button}>
+          <button className={styles.submit_button} onClick={() => {buttonActivateCapt()}}>Зарегистрироваться как {role == 'student'?'студент':role == 'teacher'?'преподаватель':'...'}</button>
         </div>
-      </form>
     </div>
   );
 };

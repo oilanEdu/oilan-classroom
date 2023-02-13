@@ -83,8 +83,8 @@ export default function NewCourse({ show, setShow, teacher }) {
       description,
       fullPrice,
       monthlyPrice,
-      startDate,
-      endDate,
+      startDate: new Date(),
+      endDate: new Date(),
       program,
       courseUrl,
       translationLink,
@@ -141,7 +141,7 @@ export default function NewCourse({ show, setShow, teacher }) {
                 type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}></textarea><br/>
-              Стоимость курса: <input
+              {/*Стоимость курса: <input
                 type="number"
                 value={fullPrice}
                 onChange={(e) => setFullPrice(e.target.value)}
@@ -168,17 +168,17 @@ export default function NewCourse({ show, setShow, teacher }) {
               Программа: <textarea
                 type="text"
                 value={program}
-                onChange={(e) => setProgram(e.target.value)}></textarea><br/>
+                onChange={(e) => setProgram(e.target.value)}></textarea><br/>*/}
               URL: <input
                 type="text"
                 value={courseUrl}
                 onChange={(e) => setCourseUrl(e.target.value)}
               /><br/>
-              Ссылка на трансляцию: <input
+              {/*Ссылка на трансляцию: <input
                 type="text"
                 value={translationLink}
                 onChange={(e) => setTranslationLink(e.target.value)}
-              /><br/>
+              /><br/>*/}
               {/* Преподаватель: <select
                 onChange={(e) => setTeacherId(e.target.value)}
                 value={teacherId}>

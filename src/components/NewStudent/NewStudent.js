@@ -96,6 +96,9 @@ export default function NewStudent({ show, setShow, programs } ) {
   };
 
   const createStudentAndProgram = async () => {
+    let result = await axios.post(`${globals.productionServerDomain}/getCourseByProgramId`, { programId: lessonProgramId });
+    console.log('result', result.data.url)
+    let courseURL = result.data.url
     const data = {
       studentSurname,
       studentName,
@@ -113,14 +116,13 @@ export default function NewStudent({ show, setShow, programs } ) {
     })
       .then(function (res) {
         console.log(res);
-        alert("Студент успешно создан");
+        alert("Студент успешно создан. Скопируйте ссылку для доступа студента в личный кабинет и отправьте ученику: oilan-classroom.com/cabinet/student/" + nickname + "/course/" + courseURL);
         window.location.reload();
-      })
+    })
       .catch((err) => {
-        alert("Произошла ошибка");
-      });
+      alert("Произошла ошибка");
+    });
   };
-
   console.log(courseId);
 
   return (

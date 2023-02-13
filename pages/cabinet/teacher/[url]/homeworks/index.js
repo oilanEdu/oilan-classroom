@@ -57,17 +57,23 @@ function Homeworks(props) {
     let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`,  dataStudents)
     setTeacher(getTeacherByUrl['data'][0])
     setStudents(teacherStudents['data'])
+    console.log(students)
   }
 
   const loadPrograms = async (studentId) => {
-    const studentPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + studentId)
-    setPrograms(studentPrograms['data'])
-    if (studentPrograms['data'].length == 1) {
-      studentPrograms['data'].forEach(program => {
-        setSelectedProgramId(program.id)
-      })
-      loadStudentLessons(studentId, studentPrograms['data'][0].id)
+    let studentPrograms;
+    if (studentId) {
+      studentPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + studentId);
+    } else if (selectedStudentId) {
+      studentPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + selectedStudentId);
+    } else {
+      studentPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + students[0]?.student_id);
     }
+    
+    setPrograms(studentPrograms['data']);
+    console.log(studentPrograms['data'])
+    console.log(studentId, studentPrograms['data'][0].id)
+    loadStudentLessons(studentId, studentPrograms['data'][0].program_id);
   }
     
   const reloadButton = async () => {
@@ -109,42 +115,6 @@ function Homeworks(props) {
         alert("Произошла ошибка");
       });
   }
-
-    // const getLessonExercises = async (selectedLesson) => {
-    //     let exer_number = 0
-    //     let lessonExercises = axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + selectedLesson).then(res => {
-    //         res.data.forEach(exercise => {
-    //             let studentId = selectedStudentId
-    //             let exerciseId = exercise.id
-    //             let data = {
-    //               studentId,
-    //               exerciseId
-    //             };
-    //             console.log('data',data)
-    //             let exerciseAnswer = axios({ 
-    //               method: "post",
-    //               url: `${globals.productionServerDomain}/getAnswersByStudExId`,
-    //               data: data,
-    //             })
-    //               .then(function (res) {
-    //                 if (res.data[0]){
-    //                     console.log('EXE', res.data[0].status)
-    //                     exercise.answer_status = res.data[0].status
-    //                 }else{
-    //                     console.log('ответов нет')
-    //                 }
-    //               })
-    //               .catch((err) => {
-    //                 alert("Произошла ошибка");
-    //               });
-    //             exer_number += 1
-    //             exercise.exer_number = exer_number
-    //         })
-    //         setExercises(res.data)
-    //         console.log('exercises', exercises)
-    //     }
-    //     )
-    // }
 
   const getAnswer = async (studentId, exerciseId) => {
     const data = {

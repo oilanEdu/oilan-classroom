@@ -82,7 +82,7 @@ function TeacherCabinet(props) {
     const isInMainPage = true;
     
     const updateTimer = () => {
-        const future = Date.parse(closerLesson.personal_time);
+        const future = Date.parse(closerLesson?.personal_time);
         const now = new Date();
         const diff = future - now;
         
@@ -142,6 +142,7 @@ function TeacherCabinet(props) {
 
     useEffect(() => {
         loadTeacherData()
+        console.log('router', router)
     }, []) 
     
     setInterval(() => {updateTimer()}, 1000);  
@@ -184,6 +185,7 @@ function TeacherCabinet(props) {
           const allStudents = await axios.post(`${globals.productionServerDomain}/getAllStudents/` + course.id)
           course.all_students = allStudents.data[0].all_students;
           const passedStudents = await axios.post(`${globals.productionServerDomain}/getPassedStudents/` + course.id)
+          console.log('passedStudents', passedStudents, router)
           course.passed_students = passedStudents.data[0].passed_students;
         }); 
         let teacherPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByTeacherId/` + teacherIdLocal)
@@ -458,6 +460,25 @@ function TeacherCabinet(props) {
       };}
     console.log(programs);
 
+    const getCorrectDeclension = (num) => {
+        if (num % 10 === 1 && num % 100 !== 11) {
+            return "курс";
+        } else if ([2, 3, 4].includes(num % 10) && ![12, 13, 14].includes(num % 100)) {
+            return "курса";
+        } else {
+            return "курсов";
+        }
+    };
+
+    const getCorrectDeclensionP = (num) => {
+        if (num % 10 === 1 && num % 100 !== 11) {
+            return "программа";
+        } else if ([2, 3, 4].includes(num % 10) && ![12, 13, 14].includes(num % 100)) {
+            return "программы";
+        } else {
+            return "программ";
+        }
+    };
 
     const [width, setWidth] = useState();
     const [height, setHeight] = useState();
@@ -553,13 +574,13 @@ function TeacherCabinet(props) {
             </div>
 
             <div className={styles.programsBlock}>
-              <h1>ПРОГРАММЫ ДЛЯ СТУДЕНТОВ</h1>
+              <h1>ОБРАЗОВАТЕЛЬНЫЕ КУРСЫ</h1>
               <div className={styles.programsHeader}>
                 <span
                   className={classnames(styles.pNumber, styles.pNumberHead)}
 
                 >
-                  <input type="checkbox" checked={currentCourse === 0 ? true : false} onChange={() => setCurrentCourse(0)}/>
+                  <input style={{marginRight: '5px'}} type="checkbox" checked={currentCourse === 0 ? true : false} onChange={() => setCurrentCourse(0)}/>
                   №
                 </span>
                 <span
@@ -611,7 +632,7 @@ function TeacherCabinet(props) {
                   }
               <div className={styles.addProgramContainer}>
                 <div className={styles.moreCourses}>
-                  <p>{showAllCourses ? "" : `+ еще ${courses.length - 1} курса`}</p>
+                  <p>{showAllCourses ? "" : `+ еще ${courses.length - 1} ${getCorrectDeclension(courses.length - 1)}`}</p>
                   <button className={showAllCourses ? styles.settingTitleShow : styles.settingTitleHide} onClick={() => setShowAllCourses(!showAllCourses)}></button>
                 </div>
               
@@ -679,7 +700,7 @@ function TeacherCabinet(props) {
               
               <div className={styles.addProgramContainer}>
                 <div className={styles.morePrograms}>
-                  <p>{showAllPrograms ? "" : `+ еще ${programs.length - 1} курса`}</p>
+                  <p>{showAllPrograms ? "" : `+ еще ${programs.length - 1} ${getCorrectDeclensionP(programs.length - 1)}`}</p>
                   <button className={showAllPrograms ? styles.settingTitleShow : styles.settingTitleHide} onClick={() => setShowAllPrograms(!showAllPrograms)}></button>
                 </div>
                 <button
@@ -790,6 +811,7 @@ function TeacherCabinet(props) {
                     setShowModalLesson={setShowModalLesson} 
                     setStudentForModal={setStudentForModal} 
                     programs={programs}
+                    route={router.query.url}
                   />
                 )) 
                 : <StudentItem 
@@ -798,6 +820,7 @@ function TeacherCabinet(props) {
                     setShowModalLesson={setShowModalLesson} 
                     setStudentForModal={setStudentForModal} 
                     programs={programs}
+                    route={router.query.url}
                   />
                 }
               {students.length <= 0 ? (

@@ -385,7 +385,7 @@ function EditProgram(props) {
     console.log(lessons);
     console.log(exercises);
     if (typeof localStorage !== "undefined") {
-    return (localStorage && teacher.url == localStorage.login?
+    return (localStorage && teacher?.url == localStorage.login?
         <>
             <div className={styles.mainWrapperOfEditProgram} 
             // style={{backgroundColor: "#f1faff", width: "    100vw", padding: "20px 20px 0 20px"}}

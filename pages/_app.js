@@ -23,6 +23,7 @@ function MyApp({ Component, pageProps }) {
       <link rel="icon" href="https://realibi.kz/file/963267.png" />
       <meta name="description" content="знакомство с английским языком; лучшие преподаватели; от уровня A1 до уровня C1; подготовка к сдаче IELTS и TOEFL" />
       <meta property="og:title" content="курсы английского онлайн" />
+      <meta name="yandex-verification" content="96e78ecdd587114e" />
       <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

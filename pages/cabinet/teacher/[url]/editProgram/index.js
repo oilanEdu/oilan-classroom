@@ -127,7 +127,8 @@ function EditProgram(props) {
           data: data,
         })
           .then(function (res) {
-            alert("Программа успешно изменена"); 
+            alert("Программа успешно изменена");
+            window.location.reload()
           })
           .catch((err) => {
             alert("Произошла ошибка"); 
@@ -147,7 +148,7 @@ function EditProgram(props) {
           lessonOrder,
           lessonCourseId,
           lessonTesis,
-          lessonStartTime,
+          lessonStartTime: new Date(),
           lessonProgramId,
         };
         console.log(data)
@@ -413,11 +414,11 @@ function EditProgram(props) {
                                       )
                                     )}
                             </select>
-                            <button
+                            {/*<button
                                 className={styles.reloadButton}
                                 onClick={() => {
                                     loadProgramData()
-                            }}>&#128472;</button>
+                            }}>&#128472;</button>*/}
                         </span>
                         <h2>Название программы</h2> 
                         <input
@@ -436,6 +437,7 @@ function EditProgram(props) {
                             onClick={() =>{
                                 updateProgram(programId, programTitle, selectedCourseId)
                                 loadProgramData()
+                                setProgramTitle(programTitle)
                                 setPrimeInfoEdited(false)
                             }}>Сохранить</button> 
                     </div>
@@ -463,6 +465,8 @@ function EditProgram(props) {
                                         onClick={() => {
                                             setSelectedLesson(lesson)
                                             setSelectedExercise('')
+                                            setExerciseText('')
+                                            setExerciseAnswer('')
                                             setLessonTitle(lesson.title)
                                             setLessonTesis(lesson.tesis)
                                             setLessonDate(lesson.start_time)
@@ -498,10 +502,11 @@ function EditProgram(props) {
                                     type="text" 
                                     value={lessonTitle}
                                     placeholder="Текст"
+                                    disabled={!lessonTitle}
                                     onChange={(e) => setLessonTitle(e.target.value)}
                                 />    
                             </div>
-                            <div className={styles.inputBlock}>
+                            {/*<div className={styles.inputBlock}>
                                 <span>Дата занятия</span>   
                                 <input
                                     className={styles.lessonDate}
@@ -512,7 +517,7 @@ function EditProgram(props) {
                                         }
                                     }
                                 />
-                            </div>
+                            </div>*/}
                         </div>
                         <div className={styles.lessonInfoSecondRow}> 
                             <span>Содержание урока</span>
@@ -521,6 +526,7 @@ function EditProgram(props) {
                                 type="text"
                                 value={lessonTesis} 
                                 placeholder="Текст"
+                                disabled={!lessonTesis}
                                 onChange={(e) => setLessonTesis(e.target.value)}>
                             </textarea>
                         </div>
@@ -530,6 +536,7 @@ function EditProgram(props) {
                                 className={styles.saveButton}
                                 onClick={() => {
                                     updateLesson(selectedLesson.id, lessonTitle, lessonDate, lessonTesis)
+                                    loadProgramData()
                                 }}
                             >Сохранить</button>
                         </div>
@@ -613,6 +620,7 @@ function EditProgram(props) {
                                 className={styles.exerciseText}
                                 type="text"
                                 value={exerciseText}
+                                disabled={!exerciseText}
                                 placeholder="Условие задачи или пример..."
                                 onChange={(e) => setExerciseText(e.target.value)}>
                             </textarea>
@@ -624,6 +632,7 @@ function EditProgram(props) {
                                     type="text"
                                     value={exerciseAnswer}
                                     placeholder="Ответ"
+                                    disabled={!exerciseAnswer}
                                     onChange={(e) => setExerciseAnswer(e.target.value)}
                                 />
                             </div>
@@ -641,6 +650,7 @@ function EditProgram(props) {
                                         await setLessonDate(selectedLesson.start_time)
                                         await loadLessonExercises(selectedLesson)
                                         await loadLessonExercises(selectedLesson)
+                                        loadProgramData()
                                     }}
                                 >Сохранить</button> 
                             </div>

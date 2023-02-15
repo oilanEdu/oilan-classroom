@@ -97,7 +97,7 @@ export default function HeaderTeacher(props) {
 
   console.log(props.teacher);
   return (
-    <div id={"header"} className={styles.whiteHeader}>
+    <><div id={"header"} className={styles.whiteHeader}>
       {/*<YMInitializer accounts={[78186067]} options={{webvisor: true, defer: true}} version="2" />*/}
       <ModalWindow
         show={show}
@@ -187,22 +187,20 @@ export default function HeaderTeacher(props) {
         <div 
           className={styles.contact} 
           onClick={() => setMenuVisible(!menuVisible)}
-          style={{
-            background: props.teacher.avatar !== null ? "url(" + props.teacher.avatar + ") no-repeat" : "url(https://realibi.kz/file/142617.png) no-repeat",
-            backgroundSize: props.teacher.avatar !== null ? "50px" : "40px",
-            backgroundPosition: props.teacher.avatar !== null ? "0 50%" : "0 50%"
-          }}
         >
-          <b className={styles.contactName}>
-            {props.teacher?.name} {props.teacher?.surname}
-          </b>
-          <span style={{fontFamily: 'Noto Sans Regular'}}>Преподаватель</span>
-          {menuVisible && (
-            <ul className={`menu ${menuVisible ? "menu-active" : ""}`}>
-              <li className={styles.li}>Профиль</li>
-              <li className={styles.li} onClick={handleLogout}>Выйти</li>
-            </ul>
-          )}
+          <div 
+            className={styles.contactImage}
+            style={{
+              backgroundImage: props.teacher?.avatar !== null ? "url(" + props.teacher?.avatar + ")" : "url(https://realibi.kz/file/142617.png)",
+            }}
+          />
+          <div className={styles.contactDetails}>
+            <b className={styles.contactName}>
+              {props.teacher?.name} {props.teacher?.surname}
+            </b>
+            <span className={styles.contactRole}>Преподаватель</span>
+          </div>
+          
         </div>
         <div
           onClick={() => {
@@ -294,7 +292,16 @@ export default function HeaderTeacher(props) {
           </ul>
         </div>
       ) : null}
+    <div className={styles.dropMenu}>
+      {menuVisible && (
+        <ul className={classnames(styles.menu, {[styles.menuActive]: menuVisible})}>
+          <li className={styles.li}>Профиль</li>
+          <li className={styles.li} onClick={handleLogout}>Выйти</li>
+        </ul>
+      )}
     </div>
+    </div>
+    </>
   );
 }
 

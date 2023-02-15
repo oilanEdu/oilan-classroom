@@ -4,6 +4,7 @@ import styles from "./ProgramItem.module.css";
 import { Image } from "react-bootstrap";
 import axios from "axios";
 import globals from "../../../src/globals";
+import ClickAwayListener from '@mui/base/ClickAwayListener';
 
 const ProgramItem = ({program, url, index}) => {
 
@@ -26,7 +27,12 @@ const ProgramItem = ({program, url, index}) => {
     location.reload();
   }
   const [showSetting, setShowSetting] = useState(false)
-  return <div className={styles.program}>
+  const handleClickAway = () => {
+    setShowSetting(false);
+  };
+
+  return <ClickAwayListener onClickAway={handleClickAway}>
+  <div className={styles.program}>
   <span className={styles.pNumber}>№ {index + 1}</span>
   <span className={styles.pCourse}>{program?.course_title}</span>
   <span className={styles.pProgram}>
@@ -81,6 +87,7 @@ const ProgramItem = ({program, url, index}) => {
     
   </span>
 </div>
+</ClickAwayListener>
 };
 
 export default ProgramItem;

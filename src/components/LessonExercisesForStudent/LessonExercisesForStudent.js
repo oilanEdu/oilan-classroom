@@ -8,7 +8,7 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
   const [ answer, setAnswer ] = useState('')
   const [ editMode, setEditMode ] = useState(false)
   const [ teacherComments, setTeacherComments ] = useState([])
-  const [ symbols, setSymbols ] = useState(250);
+  const [ symbols, setSymbols ] = useState(1500);
   const [ exerciseText, setExerciseText ] = useState([])
   function linkify(text) {
     var url_pattern = /(https?:\/\/\S+)/g;
@@ -125,13 +125,13 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
 
   const onKeyDownHandler = (e) => {
     if (e.keyCode === 8) {
-      if (symbols === 250) {
+      if (symbols === 1500) {
 
       } else if (answer.length >= 0 || answer !== "") {
         setSymbols(symbols + 1)
       }
     } else {
-      if (answer.length < 250 && symbols !== 0) {
+      if (answer.length < 1500 && symbols !== 0) {
         setSymbols(symbols - 1)
       }
     }
@@ -211,7 +211,7 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
                 placeholder="Ответ"
                 value={answer}
                 onChange={e => {
-                  if (symbols !== 0 && answer.length <= 250) {
+                  if (symbols !== 0 && answer.length <= 1500) {
                     setAnswer(e.target.value)
                     console.log(answer)
                   }
@@ -266,7 +266,7 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
                         placeholder="Ответ"
                         value={answer}
                         onChange={e => {
-                          if (symbols !== 0 && answer.length <= 250) {
+                          if (symbols !== 0 && answer.length <= 1500) {
                             setAnswer(e.target.value)
                             console.log(answer)
                           }
@@ -353,7 +353,7 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
               placeholder="Ответ"
               value={answer}
               onChange={e => {
-                if (symbols !== 0 && answer.length <= 250) {
+                if (symbols !== 0 && answer.length <= 1500) {
                   setAnswer(e.target.value)
                   console.log(answer)
                 }
@@ -405,7 +405,7 @@ const LessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, 
                       placeholder="Ответ"
                       value={answer}
                       onChange={e => {
-                        if (symbols !== 0 && answer.length <= 250) {
+                        if (symbols !== 0 && answer.length <= 1500) {
                           setAnswer(e.target.value)
                           console.log(answer)
                         }

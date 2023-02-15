@@ -109,19 +109,18 @@ export default function NewStudent({ show, setShow, programs } ) {
 
     console.log(data);
 
-    await axios({
-      method: "post",
-      url: `${globals.productionServerDomain}/createStudentAndProgram`,
-      data: data,
-    })
-      .then(function (res) {
-        console.log(res);
-        alert("Студент успешно создан. Скопируйте ссылку для доступа студента в личный кабинет и отправьте ученику: oilan-classroom.com/cabinet/student/" + nickname + "/course/" + courseURL);
-        window.location.reload();
-    })
-      .catch((err) => {
-      alert("Произошла ошибка");
-    });
+    try {
+      const response = await axios.post(`${globals.productionServerDomain}/createStudentAndProgram`, data);
+      console.log(response);
+      alert("Студент успешно создан. Скопируйте ссылку для доступа студента в личный кабинет и отправьте ученику: oilan-classroom.com/cabinet/student/" + nickname + "/course/" + courseURL);
+      window.location.reload();
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        alert(error.response.data);
+      } else {
+        alert("Произошла ошибка");
+      }
+    }
   };
   console.log(courseId);
 
@@ -163,7 +162,7 @@ export default function NewStudent({ show, setShow, programs } ) {
                     value={studentPatronymic}
                     onChange={(e) => setStudentPatronymic(e.target.value)}
                   /><br/>
-              Никнейм: <input
+              Логин: <input
                     type="text"
                     value={nickname}
                     onChange={(e) => setNickname(e.target.value)}

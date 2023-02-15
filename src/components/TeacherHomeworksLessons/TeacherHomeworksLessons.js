@@ -12,7 +12,7 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
   const [isLoaded, setIsLoaded] = useState(false)
   const [isLoaded2, setIsLoaded2] = useState(false)
   const [numberOfEx, setNumberOfEx] = useState(0)
-  const [ symbols, setSymbols ] = useState(250)
+  const [ symbols, setSymbols ] = useState(1500)
 
   useEffect(() => {
     console.log(exercises2, "exercises2");
@@ -41,12 +41,12 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
 
   const onKeyDownHandler = (e) => {
     if (e.keyCode === 8) {
-      if (symbols === 250) {} 
+      if (symbols === 1500) {} 
       else if (teacherComment?.length >= 0 || teacherComment !== "") {
         setSymbols(symbols + 1)
       }
     } else {
-      if (teacherComment?.length < 250 && symbols !== 0) {
+      if (teacherComment?.length < 1500 && symbols !== 0) {
         setSymbols(symbols - 1)
       }
     }

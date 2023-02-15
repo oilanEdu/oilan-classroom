@@ -95,6 +95,7 @@ export default function HeaderTeacher(props) {
     console.log("pathname = " + window.location.pathname);
   }, []);
 
+  console.log(props.teacher);
   return (
     <div id={"header"} className={styles.whiteHeader}>
       {/*<YMInitializer accounts={[78186067]} options={{webvisor: true, defer: true}} version="2" />*/}
@@ -183,7 +184,15 @@ export default function HeaderTeacher(props) {
             </li>
           </ul>
         </div>
-        <div className={styles.contact} onClick={() => setMenuVisible(!menuVisible)}>
+        <div 
+          className={styles.contact} 
+          onClick={() => setMenuVisible(!menuVisible)}
+          style={{
+            background: props.teacher.avatar !== null ? "url(" + props.teacher.avatar + ") no-repeat" : "url(https://realibi.kz/file/142617.png) no-repeat",
+            backgroundSize: props.teacher.avatar !== null ? "50px" : "40px",
+            backgroundPosition: props.teacher.avatar !== null ? "0 50%" : "0 50%"
+          }}
+        >
           <b className={styles.contactName}>
             {props.teacher?.name} {props.teacher?.surname}
           </b>

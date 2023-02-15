@@ -94,7 +94,7 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
       <div className={styles.studentCage}>
         <span>
           <Image
-            src="https://realibi.kz/file/142617.png"
+            src={student?.img !== null ? student?.img : "https://realibi.kz/file/142617.png"}
             style={{ marginRight: "8px", width: "40px" }}
           />
         </span>

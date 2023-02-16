@@ -44,15 +44,20 @@ const getToken = async (user_id, role, teacher, idOfNewRoom) => {
   //
 
   //
-  const response = await fetch(`${endPoint}api/token`, {
-    method: "POST",
-    body: JSON.stringify({
-      user_id,
-      role: role, //host, teacher, guest, student
-      type: "app",
-      room_id: idOfNewRoom
-    })
-  });
+  let response
+  try {
+     response = await fetch(`${endPoint}api/token`, {
+      method: "POST",
+      body: JSON.stringify({
+        user_id,
+        role: role, //host, teacher, guest, student
+        type: "app",
+        room_id: idOfNewRoom
+      })
+    }); 
+  } catch (error) {
+    console.log(error, "token error");
+  }
   const { token } = await response.json();
   return token;
 };
@@ -359,7 +364,7 @@ const Lesson = (props) => {
     } catch (error) {
       console.error(error);
     }
-    const token = await getToken(userName, role, teacher.teacher_id);
+    const token = await getToken(userName, role, teacher.teacher_id, idOfNewRoom);
     const userName = (role == "teacher")
                     ? teacher?.name
                     : student?.name 

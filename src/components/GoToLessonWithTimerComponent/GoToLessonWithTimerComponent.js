@@ -207,14 +207,16 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
         let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
         setTeacher(getTeacherByUrl['data'][0])
         setPrograms(teacherPrograms['data'])
+        let lessonsOfAllStudents = []
         teacherStudents['data'].forEach(async student => {
 
         let diff = 604800000*7
-            loadStudentLessons(student.student_id, student.program_id) 
+            // loadStudentLessons(student.student_id, student.program_id) 
             let answersCount = 0 
             let studentCheck = 0
             let studentLessons = await axios.post(`${globals.productionServerDomain}/getStudentLessonsByProgramId/`, {studentId: student.student_id, programId: student.program_id}).then(res => {
                 let lessons = res.data
+                lessonsOfAllStudents.push(...lessons);
                 // nearestDate(res.data, Date.now())
                 // setLessons(lessons => [...lessons, ...res.data])
                 res.data.forEach(async lesson => { 
@@ -288,9 +290,10 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
                     })
                 })   
             })
+            setLessons(lessonsOfAllStudents)
             }
            );  
-
+        
 
         setStudents(teacherStudents['data'])
         setDataLoaded(true) 
@@ -538,7 +541,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
           setShowTimer(true)
           
         } else {
-
+          
         }
       }, 2000);
       return () => clearInterval(interval);

@@ -10,7 +10,7 @@ const joinRoom = ({ handleSubmit, userName, roomName, token, setToken, setIdOfNe
 
   // const [token, setToken] = useState('')
   useEffect(() => {
-    if (token != undefined) {
+    if (token.length > 5) {
       createRoom() 
     }
   }, [token])
@@ -21,7 +21,7 @@ const joinRoom = ({ handleSubmit, userName, roomName, token, setToken, setIdOfNe
   }, [idOfNewRoom])
 
   const getToken = async () => {
-        jwt.sign(
+        await jwt.sign(
             {
                 access_key: app_access_key,
                 type: 'management',

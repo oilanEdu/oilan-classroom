@@ -17,7 +17,7 @@ const CourseItem = ({course, url, index, onCheck, checked}) => {
 
     await axios({
       method: "delete",
-      url: `${globals.productionServerDomain}/deleteProgram`,
+      url: `${globals.productionServerDomain}/deleteCourse`,
       data: data,
     })
       .then(function (res) {

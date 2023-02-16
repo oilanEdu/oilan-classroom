@@ -78,38 +78,39 @@ export default function NewCourse({ show, setShow, teacher }) {
   },[])
 
   const createCourse = async () => {
-  const data = {
-    title,
-    description,
-    fullPrice,
-    monthlyPrice,
-    startDate: new Date(),
-    endDate: new Date(),
-    program,
-    courseUrl,
-    translationLink,
-    teacherId: teacher?.id,
-    courseCategory,
+    const data = {
+      title,
+      description,
+      fullPrice,
+      monthlyPrice,
+      startDate: new Date(),
+      endDate: new Date(),
+      program,
+      courseUrl,
+      translationLink,
+      teacherId: teacher?.id,
+      courseCategory,
+    };
+
+    console.log(data);
+
+    try {
+      const res = await axios.post(`${globals.productionServerDomain}/createCourse`, data);
+
+      if (res.status === 201) {
+        alert("Курс успешно создан");
+        window.location.reload()
+      } else {
+        alert("Произошла ошибка");
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        alert(error.response.data);
+      } else {
+        alert("Произошла ошибка");
+      }
+    }
   };
-
-  console.log(data);
-
-  try {
-    const res = await axios.post(`${globals.productionServerDomain}/createCourse`, data);
-
-    if (res.status === 201) {
-      alert("Курс успешно создан");
-    } else {
-      alert("Произошла ошибка");
-    }
-  } catch (error) {
-    if (error.response && error.response.status === 400) {
-      alert(error.response.data);
-    } else {
-      alert("Произошла ошибка");
-    }
-  }
-};
 
   return (
     <div 

@@ -87,6 +87,10 @@ function TeacherCabinet(props) {
 
     const [currentCourse, setCurrentCourse] = useState(0);
 
+    const [studentUrl, setStudentUrl] = useState("");
+
+    console.log(studentUrl);
+
     useEffect(() => {
       console.log(closerLesson, "closerLesson");
       if (closerLesson != undefined && students != undefined) {

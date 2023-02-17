@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  background: none;
+  border: none;
+  font-size: 30px;
+  margin-left: 10px;
+}
+
+.url_input {
+  display: none;
+}
+
+.url {
+  font-size: 20px;
+  margin: 0 !important;
+  cursor: pointer;
+}
+
+.url:hover {
+  text-decoration: underline;
+  color: #007aff;
+}

@@ -30,13 +30,14 @@
   line-height: 150%;
   color: #0f376e !important;
   margin: 0;
-  /* background: url(https://realibi.kz/file/618464.png) no-repeat;
+  background: url(https://realibi.kz/file/618464.png) no-repeat;
   background-position: 80% 60%;
-  background-size: 12px; */
+  background-size: 12px;
   /* padding: 0 121px 0 0; */
 }
 
 .setting {
+	width: 20%;
   position: relative;
   background: #fff;
   padding: 10px 0px;
@@ -51,9 +52,9 @@
   line-height: 150%;
   color: #0f376e !important;
   margin: 0;
-  /* background: url(https://realibi.kz/file/635945.png) no-repeat;
+  background: url(https://realibi.kz/file/635945.png) no-repeat;
   background-position: 80% 50%;
-  background-size: 12px; */
+  background-size: 12px;
   /* padding: 0 121px 0 0; */
 }
 

@@ -15,6 +15,7 @@ const RegisterForm = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const [captchaText, setCaptchaText] = useState("");
   const [captchaCheck, setCaptchaCheck] = useState(false);
@@ -89,21 +90,28 @@ const loadCaptcha = async () => {
       setProccessOfCaptchaUrl("https://realibi.kz/file/633881.png");
 
       if (role && name && surname && phone && email && login && password){
-        try {
+        // try {
           const data = { role, name, surname, phone, email, login, password };
 
-          const response = await axios.post(`${globals.productionServerDomain}/register`, data);
-          console.log('proshlo', response)
-          setErrorMessage('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!');
-          alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
-          router.push(`/cabinet/${res.data.role}/${res.data.login}`);
-          // Обработайте ответ и перенаправьте пользователя на нужную страницу.
-        } catch (error) {
-          if (error.response.status === 400) {
+          await axios.post(`${globals.productionServerDomain}/register`, data).then((res) => {
+            console.log('proshlo', res);
+            // setErrorMessage('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!');
+            alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
+            router.push(`/cabinet/${res.data.role}/${res.data.login}`);
+          }).catch((error) => {
+            if (error.response.status === 400) {
               setErrorMessage(error.response.data.message);
             }
-          console.log('ne proshlo', error)
-        }
+            console.log('ne proshlo', error)
+          });
+          
+          setErrorMessage('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!');
+            alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
+            router.push(`/cabinet/${role}/${login}`);
+          // Обработайте ответ и перенаправьте пользователя на нужную страницу.
+        // } catch (error) {
+          
+        // }
       } else {
         setErrorMessage("Введены не все данные");
       }
@@ -123,6 +131,8 @@ const loadCaptcha = async () => {
       setErrorMessage("Введены не все данные");
     }
   }
+
+  console.log(errorMessage);
   return (
     <div className={styles.welcome_section}>
       <h2 className={styles.welcome_header}>Рады начать сотрудничать с Вами!</h2>

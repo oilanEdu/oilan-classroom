@@ -86,6 +86,8 @@ function Homeworks(props) {
       programId
     };
 
+    console.log(data);
+
     await axios({
       method: "post",
       url: `${globals.productionServerDomain}/getStudentLessonsByProgramId`,
@@ -94,7 +96,7 @@ function Homeworks(props) {
       .then(function (res) {
         let lessons = res.data
         let lesson_number = 0
-        res.data.forEach(lesson => {
+        lessons.forEach(lesson => {
           lesson_number += 1
           lesson.lesson_number = lesson_number 
           if (lesson.personal_time){
@@ -109,7 +111,7 @@ function Homeworks(props) {
           lesson.out_hours = curr_hours
           lesson.out_minutes = curr_minutes
         })
-        setLessons(res.data)
+        setLessons(lessons)
       })
       .catch((err) => {
         alert("Произошла ошибка");
@@ -134,6 +136,7 @@ function Homeworks(props) {
       });
   }
 
+  console.log(programs);
   const updateAnswerStatus = async (id, status) => {
     const data = {
       id,
@@ -236,7 +239,7 @@ function Homeworks(props) {
                       onClick={async (e) => {
                         setSelectedProgramId(program.id)
                         setSelectedProgram(`${program.course_title} (${program.title})`)
-                        loadStudentLessons(selectedStudentId, program.id)
+                        loadStudentLessons(selectedStudentId, program.program_id)
                         setProgramSelectShow(!programSelectShow)
                       }}
                       className={styles.select_student_option}

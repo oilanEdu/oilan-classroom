@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Image } from "react-bootstrap";
 import globals from "../../globals";
 import ProgramStatus from "../ProgramStatus/ProgramStatus";
+import CopyLink from "../CopyLink/CopyLink";
 
 const axios = require("axios").default;
 
@@ -170,7 +171,10 @@ export default function EditStudentStatus({ show, setShow, student, programs } )
                           )
                         )}
                     </select><br/>
+              <p>Ссылка на личный кабинет студента: </p>
+              <CopyLink url={"oilan-classroom.com/cabinet/student/" + student?.nickname + "/course/" + student?.course_url}/>
               <button 
+                className={styles.save_button}
                 onClick={() => {
                   newProgramForStudent();
                   setShow(false);

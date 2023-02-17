@@ -2,10 +2,12 @@ import styles from "./NewStudent.module.css";
 import React, { useState, useEffect } from "react";
 import { Image } from "react-bootstrap";
 import globals from "../../globals";
+import ModalSuccess from "../ModalSuccess/ModalSuccess";
+import CopyLink from "../CopyLink/CopyLink";
 
 const axios = require("axios").default;
 
-export default function NewStudent({ show, setShow, programs } ) {
+export default function NewStudent({ show, setShow, programs, setStudentUrl } ) {
   const [showCreateStudent, setShowCreateStudent] = useState(false)
 
   const [studentSurname, setStudentSurname] = useState("");
@@ -22,6 +24,9 @@ export default function NewStudent({ show, setShow, programs } ) {
   const [roles, setRoles] = useState([])
   const [lessonProgramId, setLessonProgramId] = useState(0);
   const [courseId, setCourseId] = useState()
+
+  const [showSucces, setShowSuccess] = useState(false);
+  const [courseUrl, setCourseUrl] = useState("");
 
   const getTeachers = async () => {
     let result = await axios.get(`${globals.productionServerDomain}/getTeachers`)
@@ -99,6 +104,7 @@ export default function NewStudent({ show, setShow, programs } ) {
     let result = await axios.post(`${globals.productionServerDomain}/getCourseByProgramId`, { programId: lessonProgramId });
     console.log('result', result.data.url)
     let courseURL = result.data.url
+    setCourseUrl(result.data.url);
     const data = {
       studentSurname,
       studentName,
@@ -109,22 +115,34 @@ export default function NewStudent({ show, setShow, programs } ) {
 
     console.log(data);
 
-    try {
-      const response = await axios.post(`${globals.productionServerDomain}/createStudentAndProgram`, data);
-      console.log(response);
-      alert("Студент успешно создан. Скопируйте ссылку для доступа студента в личный кабинет и отправьте ученику: oilan-classroom.com/cabinet/student/" + nickname + "/course/" + courseURL);
-      window.location.reload();
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        alert(error.response.data);
-      } else {
-        alert("Произошла ошибка");
-      }
-    }
+    await axios({
+      method: "post",
+      url: `${globals.productionServerDomain}/createStudentAndProgram`,
+      data: data,
+    })
+      .then(function (res) {
+        console.log(res);
+        setShowSuccess(true);
+        setStudentUrl("oilan-classroom.com/cabinet/student/" + nickname + "/course/" + courseUrl)
+    })
+      .catch((err) => {
+      alert("Произошла ошибка");
+    });
   };
   console.log(courseId);
 
   return (
+    <>
+    <ModalSuccess 
+        show={showSucces} 
+        onClickNext={() => {
+          setShowSuccess(false);
+          window.location.reload();
+        }} 
+        headText={"Студент успешно создан."}
+        text={"Скопируйте ссылку для доступа студента в личный кабинет и отправьте ученику: "}
+        link={<CopyLink url={"oilan-classroom.com/cabinet/student/" + nickname + "/course/" + courseUrl}/>}
+      />
     <div 
       className={styles.modal}
       style={{
@@ -192,5 +210,6 @@ export default function NewStudent({ show, setShow, programs } ) {
         </div>
       </div>
     </div>
+    </>
   );
 }

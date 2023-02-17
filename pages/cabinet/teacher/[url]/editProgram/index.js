@@ -27,6 +27,8 @@ function EditProgram(props) {
   const [lastLessonOrder, setLastLessonOrder] = useState(0)
   const [teacher, setTeacher] = useState()
   const [primeInfoEdited, setPrimeInfoEdited] = useState(false)
+  const [firstLessPress, setFirstLessPress] = useState(false)
+  const [firstExerPress, setFirstExerPress] = useState(false)
 
   let dateStr = new Date(lessonDate);
   let curr_date = dateStr.getDate();
@@ -464,6 +466,7 @@ function EditProgram(props) {
                                                 }
                                         onClick={() => {
                                             setSelectedLesson(lesson)
+                                            setFirstLessPress(true)
                                             setSelectedExercise('')
                                             setExerciseText('')
                                             setExerciseAnswer('')
@@ -502,7 +505,7 @@ function EditProgram(props) {
                                     type="text" 
                                     value={lessonTitle}
                                     placeholder="Текст"
-                                    disabled={!lessonTitle}
+                                    disabled={!firstLessPress}
                                     onChange={(e) => setLessonTitle(e.target.value)}
                                 />    
                             </div>
@@ -526,7 +529,7 @@ function EditProgram(props) {
                                 type="text"
                                 value={lessonTesis} 
                                 placeholder="Текст"
-                                disabled={!lessonTesis}
+                                disabled={!firstLessPress}
                                 onChange={(e) => setLessonTesis(e.target.value)}>
                             </textarea>
                         </div>
@@ -567,7 +570,7 @@ function EditProgram(props) {
                                             await setSelectedExercise(exercise)
                                             await setExerciseText(exercise.text)
                                             await setExerciseAnswer(exercise.correct_answer)
-
+                                            await setFirstExerPress(true)
                                             await loadLessonExercises(selectedLesson) 
                                             // await setSelectedLesson(lesson)
                                             await setLessonTitle(selectedLesson.title)
@@ -620,7 +623,7 @@ function EditProgram(props) {
                                 className={styles.exerciseText}
                                 type="text"
                                 value={exerciseText}
-                                disabled={!exerciseText}
+                                disabled={!firstExerPress}
                                 placeholder="Условие задачи или пример..."
                                 onChange={(e) => setExerciseText(e.target.value)}>
                             </textarea>
@@ -632,7 +635,7 @@ function EditProgram(props) {
                                     type="text"
                                     value={exerciseAnswer}
                                     placeholder="Ответ"
-                                    disabled={!exerciseAnswer}
+                                    disabled={!firstExerPress}
                                     onChange={(e) => setExerciseAnswer(e.target.value)}
                                 />
                             </div>

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import jwt from 'jsonwebtoken';
 import uuid4 from 'uuid4';
 import axios from 'axios';
+import globals from "../../../src/globals";
+import axios from "axios";
 
 const joinRoom = ({ handleSubmit, userName, roomName, token, setToken, setIdOfNewRoom, idOfNewRoom }) => {
   console.log('USER!!!', userName);

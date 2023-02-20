@@ -71,6 +71,35 @@ const loadCaptcha = async () => {
     setRandomizedCaptchaId(getAllCaptchaIdRandom)
   }
 
+  const loginHandler = async (role, login, password) => {
+    await axios({
+      method: 'post',
+      url: `${globals.productionServerDomain}/auth`,
+      data: { role, login, password },
+      headers: {
+        'Authorization': `Bearer ${globals.localStorageKeys.authToken}`
+      }
+    })
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('login', res.data.login);
+        localStorage.setItem('role', res.data.role);
+        console.log(localStorage)
+        if (role == 'admin'){
+          router.push(`/cabinet/admin`);
+        } else {
+          router.push(`/cabinet/${res.data.role}/${res.data.login}`);
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          setErrorMessage("Неверный логин или пароль");
+        }
+        console.error(err);
+      });
+  };
+
   const handleSubmit = async (event) => {
     // event.preventDefault();
     let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
@@ -90,28 +119,27 @@ const loadCaptcha = async () => {
       setProccessOfCaptchaUrl("https://realibi.kz/file/633881.png");
 
       if (role && name && surname && phone && email && login && password){
-        // try {
-          const data = { role, name, surname, phone, email, login, password };
+        const data = { 
+          role, 
+          name, 
+          surname, 
+          phone, 
+          email, 
+          login, 
+          password 
+        };
 
-          await axios.post(`${globals.productionServerDomain}/register`, data).then((res) => {
-            console.log('proshlo', res);
-            // setErrorMessage('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!');
-            alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
-            router.push(`/cabinet/${res.data.role}/${res.data.login}`);
-          }).catch((error) => {
-            if (error.response.status === 400) {
-              setErrorMessage(error.response.data.message);
-            }
-            console.log('ne proshlo', error)
-          });
-          
-          setErrorMessage('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!');
-            alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
-            router.push(`/cabinet/${role}/${login}`);
-          // Обработайте ответ и перенаправьте пользователя на нужную страницу.
-        // } catch (error) {
-          
-        // }
+        await axios.post(`${globals.productionServerDomain}/register`, data).then((res) => {
+          console.log('proshlo', res);
+          // setErrorMessage('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!');
+          alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
+          loginHandler(role, login, password)
+        }).catch((error) => {
+          if (error.response.status === 400) {
+            setErrorMessage(error.response.data.message);
+          }
+          console.log('ne proshlo', error)
+        });
       } else {
         setErrorMessage("Введены не все данные");
       }

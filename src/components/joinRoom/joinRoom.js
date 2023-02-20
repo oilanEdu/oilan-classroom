@@ -21,13 +21,16 @@ const joinRoom = ({ handleSubmit, userName, roomName, token, setToken, setIdOfNe
   }, [idOfNewRoom])
 
   const getToken = async () => {
+        let serverTime = await axios.get(`${globals.productionServerDomain}/getServerTime`)
+        // console.log(new Date(serverTime.data), "serverTime");
+        // console.log(new Date(), "computer time");
         await jwt.sign(
             {
                 access_key: app_access_key,
                 type: 'management',
                 version: 2,
-                iat: Math.floor(Date.now() / 1000),
-                nbf: Math.floor(Date.now() / 1000)
+                iat: Math.floor(new Date(serverTime.data).getTime() / 1000),
+                nbf: Math.floor(new Date(serverTime.data).getTime() / 1000)
             },
             app_secret,
             {

@@ -199,6 +199,10 @@ function TeacherCabinet(props) {
     }
     
     const loadTeacherData = async () => {
+        let serverTime = await axios.get(`${globals.productionServerDomain}/getServerTime`)
+        console.log(new Date(serverTime.data).getTime(), "serverTime");
+        console.log(new Date().getTime(), "computer time");
+
         setStudentsList(currentPosts) 
         let data = props.url 
         let getTeacherByUrl = await axios.post(`${globals.productionServerDomain}/getTeacherByUrl/` + data)

@@ -7,7 +7,7 @@ import CopyLink from "../CopyLink/CopyLink";
 
 const axios = require("axios").default;
 
-export default function NewStudent({ show, setShow, programs, setStudentUrl } ) {
+export default function NewStudent({ show, setShow, programs } ) {
   const [showCreateStudent, setShowCreateStudent] = useState(false)
 
   const [studentSurname, setStudentSurname] = useState("");
@@ -80,26 +80,6 @@ export default function NewStudent({ show, setShow, programs, setStudentUrl } ) 
     getRoles()
   },[])
 
-  const createSCM = async () => {
-    const data = {
-      SCMStudentId,
-      SCMCourseId,
-      SCMProgramId,
-    };
-
-    await axios({
-      method: "post",
-      url: `${globals.productionServerDomain}/createSCM`,
-      data: data,
-    })
-      .then(function (res) {
-        alert("Связь успешно назначена");
-      })
-      .catch((err) => {
-        alert("Произошла ошибка");
-      });
-  };
-
   const createStudentAndProgram = async () => {
     let result = await axios.post(`${globals.productionServerDomain}/getCourseByProgramId`, { programId: lessonProgramId });
     console.log('result', result.data.url)
@@ -123,11 +103,10 @@ export default function NewStudent({ show, setShow, programs, setStudentUrl } ) 
       .then(function (res) {
         console.log(res);
         setShowSuccess(true);
-        setStudentUrl("oilan-classroom.com/cabinet/student/" + nickname + "/course/" + courseUrl)
-    })
+      })
       .catch((err) => {
-      alert("Произошла ошибка");
-    });
+        alert("Произошла ошибка");
+      });
   };
   console.log(courseId);
 

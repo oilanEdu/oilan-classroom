@@ -312,7 +312,7 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
                           onClick={async() => {
                             await saveLessonDateAndTime(dateAndTimeMerger, lesson.id, lesson.course_id, lesson.student_id)
                             setShowInputsOfDate(false) 
-                            await loadStudentLessons(selectedStudentId, selectedProgramId) 
+                            // await loadStudentLessons(selectedStudentId, selectedProgramId) 
                           //   setIsDateAndTimeChanged(lesson.id)
                             //просто рандомное что то отправляю
                           }}>✓</button>
@@ -526,7 +526,7 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
                         onClick={async() => {
                           await saveLessonDateAndTime(dateAndTimeMerger, lesson.id, lesson.course_id, lesson.student_id)
                           setShowInputsOfDate(false)  
-                          await loadStudentLessons(selectedStudentId, selectedProgramId) 
+                          // await loadStudentLessons(selectedStudentId, selectedProgramId) 
                         //   setIsDateAndTimeChanged(lesson.id)
                           //просто рандомное что то отправляю
                         }}>✓</button>

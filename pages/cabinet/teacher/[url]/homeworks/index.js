@@ -104,7 +104,7 @@ function Homeworks(props) {
           } else {
             lesson.fact_time = lesson.start_time
           }
-          let strDate = new Date(lesson.personal_time)
+          let strDate = new Date(lesson.fact_time)
           let curr_hours = strDate.getHours();
           let curr_minutes = strDate.getMinutes(); 
           lesson.out_date = new Date(strDate).toLocaleDateString() 
@@ -275,6 +275,8 @@ function Homeworks(props) {
                   selectedExerciseCorrectAnswer={selectedExerciseCorrectAnswer} 
                   updateAnswerStatus={updateAnswerStatus} 
                   updateAnswerComment={updateAnswerComment}
+                  loadStudentLessons={loadStudentLessons}
+                  selectedProgramId={selectedProgramId}
                 />
               ))} </> 
               : ''

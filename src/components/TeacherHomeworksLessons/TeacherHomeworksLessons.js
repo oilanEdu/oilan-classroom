@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import axios from "axios";
 import globals from "../../globals";
 
-const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, answer, setShowCheck, setSelectedExerciseId, setAnswer, setSelectedExerciseNumber, setSelectedExerciseText, setSelectedExerciseCorrectAnswer, getAnswer, selectedStudentId, selectedExerciseNumber, selectedExerciseText, selectedExerciseCorrectAnswer, updateAnswerStatus, updateAnswerComment, setIsDateAndTimeChanged}) => {
+const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, answer, setShowCheck, setSelectedExerciseId, setAnswer, setSelectedExerciseNumber, setSelectedExerciseText, setSelectedExerciseCorrectAnswer, getAnswer, selectedStudentId, selectedExerciseNumber, selectedExerciseText, selectedExerciseCorrectAnswer, updateAnswerStatus, updateAnswerComment, setIsDateAndTimeChanged, loadStudentLessons, selectedProgramId}) => {
   const [exercises, setExercises] = useState([])
   const [teacherComment, setTeacherComment] = useState('')
   const [exercises2, setExercises2] = useState([])
@@ -311,7 +311,8 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
                           <button className={styles.correctButton} 
                           onClick={async() => {
                             await saveLessonDateAndTime(dateAndTimeMerger, lesson.id, lesson.course_id, lesson.student_id)
-                            setShowInputsOfDate(false)  
+                            setShowInputsOfDate(false) 
+                            await loadStudentLessons(selectedStudentId, selectedProgramId) 
                           //   setIsDateAndTimeChanged(lesson.id)
                             //просто рандомное что то отправляю
                           }}>✓</button>
@@ -525,6 +526,7 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
                         onClick={async() => {
                           await saveLessonDateAndTime(dateAndTimeMerger, lesson.id, lesson.course_id, lesson.student_id)
                           setShowInputsOfDate(false)  
+                          await loadStudentLessons(selectedStudentId, selectedProgramId) 
                         //   setIsDateAndTimeChanged(lesson.id)
                           //просто рандомное что то отправляю
                         }}>✓</button>

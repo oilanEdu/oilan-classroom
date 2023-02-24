@@ -611,6 +611,15 @@
     text-align: center;
 	}
 
+	.not_in_lk {
+		cursor: pointer;
+		color: #007AFF;
+	}
+
+	.not_in_lk:hover {
+		text-decoration: underline;
+	}
+
   @media screen and (max-width: 1000px) {
 	.cantainer {
 		padding: 0 40px;

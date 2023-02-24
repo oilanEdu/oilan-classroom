@@ -522,7 +522,7 @@ function TeacherCabinet(props) {
     }, []);
 
     if (typeof localStorage !== "undefined" && localStorage.getItem('login') !== null) {
-    return (localStorage && teacher.url === localStorage.login ?
+    return (localStorage && teacher.url === localStorage.getItem('login') ?
       <>
         {showModalLesson ? (
           <>
@@ -905,10 +905,13 @@ function TeacherCabinet(props) {
       >
         <Header white={true}/>
           <div className={styles.not_in}>
-            У вас нет доступа к данной странице. Перейти в
-            <Link href={`https://www.oilan-classroom.com/cabinet/${localStorage.role}/${localStorage.login}`}>
+            <span>У вас нет доступа к данной странице. Перейти в</span>
+            <span className={styles.not_in_lk} onClick={async () => {
+              await router.push(`/cabinet/${localStorage.role}/${localStorage.login}`)
+              await window.location.reload()
+            }}>
               <a> Личный кабинет</a>
-            </Link>
+            </span>
           </div>
         <Footer />
       </div>
@@ -922,7 +925,7 @@ function TeacherCabinet(props) {
         >
           <Header white={true}/>
             <div className={styles.not_in}>
-                Вы не авторизованы, пройдите на страницу 
+                <span>Вы не авторизованы, пройдите на страницу </span>
                 <Link href={'https://www.oilan-classroom.com/auth'}>
                   <a> авторизации</a>
                 </Link>

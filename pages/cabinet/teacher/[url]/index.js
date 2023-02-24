@@ -18,6 +18,7 @@ import CourseItem from "../../../../src/components/CourseItem/CourseItem";
 import NewCourse from "../../../../src/components/NewCourse/NewCourse";
 import NewStudent from "../../../../src/components/NewStudent/NewStudent";
 import StudentItem from "../../../../src/components/StudentItem/StudentItem";
+import Header from "../../../../src/components/Header/Header";
 
 function TeacherCabinet(props) {
     const [teacher, setTeacher] = useState([])
@@ -25,9 +26,6 @@ function TeacherCabinet(props) {
     const [students, setStudents] = useState([])
     const [check, setCheck] = useState(0) 
     const [closerLesson, setCloserLesson] = useState([]) 
-    useEffect(() => {
-      console.log(closerLesson, "closerLesson");
-    }, [closerLesson])
     const [days, setDays] = useState('');
     const [hours, setHours] = useState(0);
     const [minutes, setMinutes] = useState(0);
@@ -86,10 +84,6 @@ function TeacherCabinet(props) {
     const [addStudentModalShow, setAddStudentModalShow] = useState(false);
 
     const [currentCourse, setCurrentCourse] = useState(0);
-
-    const [studentUrl, setStudentUrl] = useState("");
-
-    console.log(studentUrl);
 
     useEffect(() => {
       console.log(closerLesson, "closerLesson");
@@ -467,18 +461,11 @@ function TeacherCabinet(props) {
     }
 
     console.log(courses);
+    console.log(currentPosts);
 
-    const ultimateSortDate = async (day, hours) => {
-      setSortMode(true)
-      currentPosts.sort(byFieldDate(day, hours)); 
-      loadTeacherData()
-  }
 
     function byField(field) {
-      return (a, b) => {
-        console.log(a[field], b[field]);
-        a[field] > b[field] ? 1 : -1
-      };
+      return (a, b) => a[field] > b[field] ? 1 : -1;
     }
 
     function byFieldDate(day, hours) {
@@ -524,7 +511,7 @@ function TeacherCabinet(props) {
     useEffect(() => {
       console.log(width, "width");
     }, [width])
-  
+
     useEffect(() => {
       function handleResize() {
         setWidth(window.innerWidth);
@@ -533,8 +520,9 @@ function TeacherCabinet(props) {
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
     }, []);
-    if (typeof localStorage !== "undefined") {
-    return (localStorage && teacher.url == localStorage.login ?
+
+    if (typeof localStorage !== "undefined" && localStorage.getItem('login') !== null) {
+    return (localStorage && teacher.url === localStorage.login ?
       <>
         {showModalLesson ? (
           <>
@@ -907,8 +895,41 @@ function TeacherCabinet(props) {
 
           <Footer />
         </div>
-        </>:<></>
-    )} else {return <></>}
+      </>
+      : <div 
+        style={{
+          backgroundColor: "#f1faff",
+          overflowX: "auto"
+        }}
+      >
+        <Header white={true}/>
+          <div className={styles.not_in}>
+            У вас нет доступа к данной странице. Перейти в
+            <Link href={`https://www.oilan-classroom.com/cabinet/${localStorage.role}/${localStorage.login}`}>
+              <a> Личный кабинет</a>
+            </Link>
+          </div>
+        <Footer />
+      </div>
+    )} else {
+      return ( 
+        <div 
+          style={{
+            backgroundColor: "#f1faff",
+            overflowX: "auto"
+          }}
+        >
+          <Header white={true}/>
+            <div className={styles.not_in}>
+                Вы не авторизованы, пройдите на страницу 
+                <Link href={'https://www.oilan-classroom.com/auth'}>
+                  <a> авторизации</a>
+                </Link>
+            </div>
+          <Footer />
+        </div>
+      )
+    }
 }
 
 

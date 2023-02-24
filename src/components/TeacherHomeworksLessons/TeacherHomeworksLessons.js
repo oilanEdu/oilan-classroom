@@ -13,6 +13,8 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
   const [isLoaded2, setIsLoaded2] = useState(false)
   const [numberOfEx, setNumberOfEx] = useState(0)
   const [ symbols, setSymbols ] = useState(1500)
+  const [ active, setActive ] = useState(0);
+  const openExer = e => setActive(+e.target.dataset.index);
 
   useEffect(() => {
     console.log(exercises2, "exercises2");
@@ -23,7 +25,29 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
       setShowCheck(lesson.id)
       clickOnPlusHandler()
     }
-  }, [])
+  }, []);
+
+  const [ exerciseText, setExerciseText ] = useState([])
+  function linkify(text) {
+    var url_pattern = /(https?:\/\/\S+)/g;
+    let test = text?.split(url_pattern)
+
+    console.log(test, "splitter");
+    setExerciseText(test)
+  }
+
+  console.log(active);
+
+  const ExerciseText = (props) => {
+    return <>
+    {props.exerciseText?.map((el, index) => index % 2 === 0 ? el : <a href={el}>{el}</a>)}
+    </>
+  }
+
+  useEffect(() => {
+    linkify(exercises2[active]?.text)
+  }, [active])
+
   useEffect(() => {
     setExercises2(exercises)
     console.log("isLoaded", isLoaded);
@@ -250,6 +274,8 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
         return () => window.removeEventListener('resize', handleResize);
       }, []);
 
+      console.log(lesson);
+
     return <> 
     {width <= 480 ? '' : 
           <div className={styles.lesson}>
@@ -308,7 +334,7 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
               </div>
               <div 
                   className={classnames(styles.plusButton, (showCheck === lesson.id) ? styles.minus : styles.plus)}
-                  onClick={async() => {
+                  onClick={async(e) => {
                       await getLessonExercises2(lesson.id)
                       // await getLessonExercises3(lesson.id)
                       await getLessonExercises4(lesson.id)
@@ -326,7 +352,7 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
           >
               <div className={styles.bricksRow}>
                   <span> {exercises2.length > 0 ? "Задание" : ""}</span>
-                  {numberOfEx == exercises2.length ? <>                {exercises2.map(exercise => (
+                  {numberOfEx == exercises2.length ? <>                {exercises2.map((exercise, i )=> (
                       <div style={exercise.id == selectedExerciseId?{display:'flex', padding: '2px', border: '3px solid #007AFF', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}:{display:'flex', padding: '2px', border: '3px solid white', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}}>
                           <div 
                               // className={exercise.answer_status?exercise.answer_status == 'not verified'?styles.exerBrickWhite:exercise.answer_status == 'correct'?styles.exerBrickGreen:styles.exerBrickRed:styles.exerBrickWhite}
@@ -338,14 +364,16 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
                                           : exercise.answer_status == 'correct'
                                           ? styles.exerBrickGreen
                                           : styles.exerBrickRed}
-                              onClick={async () => {
+                              onClick={async (e) => {
                                   await getAnswer(selectedStudentId, exercise.id)
                                   setSelectedExerciseId(exercise.id)
                                   setSelectedExerciseNumber(exercise.exer_number)
                                   setSelectedExerciseText(exercise.text)
                                   setSelectedExerciseCorrectAnswer(exercise.correct_answer)
+                                  openExer(e);
                                   
                               }}
+                              data-index={i}
                           >
                               {exercise.exer_number}
                           </div>
@@ -356,10 +384,10 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
   
               {(selectedExerciseId > 0)&&
               <div className={styles.answerBlock}>
-                  <span className={styles.exerciseText}>{selectedExerciseNumber}) {selectedExerciseText}</span>
+                  <span className={styles.exerciseText}>{selectedExerciseNumber}) <ExerciseText exerciseText={exerciseText}/></span>
                   <div className={styles.checkRow}>
                       <span className={styles.studentsAnswer}>
-                          {answer?'Ответ студента: ' + answer.text:<i>(студент еще не дал ответа на текущее задание)</i>}
+                          {answer?'Ответ студента: ' + answer.text :<i>(студент еще не дал ответа на текущее задание)</i>}
                       </span>    
                       <button 
                           style={answer?{display: 'flex'}:{display: 'none'}} 

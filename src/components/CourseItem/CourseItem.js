@@ -35,7 +35,7 @@ const CourseItem = ({course, url, index, onCheck, checked}) => {
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <div className={styles.program}>
-        <span className={styles.pNumber}><input type="checkbox" checked={checked} onChange={onCheck} />№ {index + 1}</span>
+        <span className={styles.pNumber}><input type="checkbox" checked={checked} onChange={onCheck} style={{marginRight: "5px"}} />№ {index + 1}</span>
         <span className={styles.pCourse}>{course?.title}</span>
         <span className={styles.pProgram}>
           {course?.program_count}

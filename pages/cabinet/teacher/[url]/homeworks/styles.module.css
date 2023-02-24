@@ -359,6 +359,7 @@ text-align: center;
 	color: #1E2432;
 	margin-bottom: 20px;
 	display: flex;
+	flex-direction: column;
 }
 
 .studentsAnswer{

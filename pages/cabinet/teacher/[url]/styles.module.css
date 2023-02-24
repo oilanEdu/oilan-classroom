@@ -605,6 +605,12 @@
 	  text-decoration-line: underline;
   }
 
+	.not_in {
+		margin: 100px;
+    font-size: 22px;
+    text-align: center;
+	}
+
   @media screen and (max-width: 1000px) {
 	.cantainer {
 		padding: 0 40px;

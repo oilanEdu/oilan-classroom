@@ -155,17 +155,21 @@ function DateAndTimePickerForLesson(props) {
       setErrorOfDateOfGoingLesson(false)
       return false; // если ни одна дата не отличается на один час, вернуть false
     }
-    const mergedArr = props.lessons2.reduce((acc, curr) => {
-      const matchingObj = acc.find(obj => obj.id === curr.id);
-      if (matchingObj) {
-        Object.assign(matchingObj, curr);
-      } else {
-        acc.push(curr);
-      }
-      return acc;
-    }, [props.allStudentsLessons]);
+    // const mergedArr = props.lessons2.reduce((acc, curr) => {
+    //   const matchingObj = acc.find(obj => obj.id === curr.id);
+    //   if (matchingObj) {
+    //     Object.assign(matchingObj, curr);
+    //   } else {
+    //     acc.push(curr);
+    //   }
+    //   return acc;
+    // }, [props.allStudentsLessons]);
+    const mergedArr = props.allStudentsLessons.concat(props.lessons2);
     // console.log(mergedArr, "mergedArr");
     compareDates(props.lesson.personal_time, mergedArr)
+    mergedArr
+    props.allStudentsLessons
+    // debugger
   }, [props.lessons2])
 
   useEffect(() => {

@@ -3,13 +3,15 @@
 font-size: 16px;
 line-height: 150%;
 margin: 0;
+min-width: fit-content;
 }
 
 .wrapper {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    /* align-items: center; */
+    align-items: baseline;
 }
 
 .inputs {
@@ -23,13 +25,41 @@ padding: 10px;
 }
 
 .inputsWrapper {
-    display: flex;
+    /* display: flex;
 gap: 20px;
-flex-direction: row;
+flex-direction: row; */
+
+/* display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 0px;
+grid-column-gap: 20px;
+justify-items: start; */
+
+    display: flex;
+    /* display: grid; */
+    /* grid-template-columns: 1fr 1fr; */
+    /* column-gap: 20px; */
+    grid-gap: 0px;
+    gap: 20px;
+    grid-column-gap: 20px;
+    justify-items: start;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
+@media screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+    .inputsWrapper {
+        justify-content: flex-start
+    }
+}
 @media screen and (max-width: 480px) {
     .wrapper {
         flex-direction: column;
+    }
+    .inputsWrapper {
+        justify-content: flex-start
     }
 }

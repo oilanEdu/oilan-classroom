@@ -167,16 +167,17 @@ function ModalForLessonConfiguration(props) {
             onChange={async (e) => {
               setStudentProgramUpcoming(e.target.value);
               // loadLessonsByProgram(e.target.value)
-
+ 
               setSaveIsClicked(!saveIsClicked)
               await props.updateStudentProgram( 
                 props.student.student_id,
                 props.student.course_id,
                 e.target.value
               );
-              await props.loadTeacherData();
+              // await props.loadTeacherData();
               await loadStudentLessons(props?.student?.student_id, e.target.value)
-              window.location.reload()
+              await props.loadTeacherData()
+              // window.location.reload()
               // this.forceUpdate();
             }}
             value={studentProgramUpcoming}
@@ -199,7 +200,7 @@ function ModalForLessonConfiguration(props) {
           <div className={styles.innerWrapper}>
             <div className={styles.timetablesWrapper}>
             {lessons2?.map(lesson => 
-                <DateAndTimePickerForLesson lessons2={lessons2} setLessons2={setLessons2} lesson={lesson} lesson_id={lesson.id} lesson_order={lesson.lesson_order} student={props.student} saveLessonDateAndTime={saveLessonDateAndTime} saveIsClicked={saveIsClicked}/> 
+                <DateAndTimePickerForLesson allStudentsLessons={props.allStudentsLessons} lessons2={lessons2} setLessons2={setLessons2} lesson={lesson} lesson_id={lesson.id} lesson_order={lesson.lesson_order} student={props.student} saveLessonDateAndTime={saveLessonDateAndTime} saveIsClicked={saveIsClicked}/> 
           )} 
             </div>
           <div className={styles.buttonWrapper}>

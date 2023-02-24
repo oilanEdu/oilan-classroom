@@ -138,6 +138,28 @@
         border-radius: 32px;
   }
 
+  @media screen and (max-width: 768px) {
+    .title {
+        text-align: start;
+        padding-left: 20px;
+    }
+    .modalWrapper {
+        width: 100%;
+    }
+    .close {
+        right: 7px;
+        top: 47px;
+    }
+    .innerWrapper {
+        padding: 0 20px;
+    }
+    .save {
+        width: 100%;
+    }
+    .buttonWrapper {
+        justify-content: center;
+    }
+  }
   @media screen and (max-width: 480px) {
     .title {
         text-align: start;

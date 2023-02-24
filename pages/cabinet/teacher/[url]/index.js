@@ -533,6 +533,7 @@ function TeacherCabinet(props) {
               updateStudentProgram={updateStudentProgram}
               loadTeacherData={loadTeacherData}
               programs={programs}
+              allStudentsLessons={allStudentsLessons}
             />
           </>
         ) : (

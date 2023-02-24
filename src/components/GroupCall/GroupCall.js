@@ -21,9 +21,14 @@ const GroupCall = (props) => {
   return (
     <>
       {!groupCallActive && localStream && callState !== callStates.CALL_IN_PROGRESS &&
-        <GroupCallButton onClickHandler={createRoom} label='Create room' />}
-      {groupCallActive && <GroupCallRoom role={props.role} {...props} />}
-      {groupCallActive && <GroupCallButton onClickHandler={leaveRoom} label='Leave room' />}
+        //<GroupCallButton onClickHandler={createRoom} label='Create room' />
+        <></>
+      }
+      {groupCallActive && <GroupCallRoom role={props.role} username={props.username} goMeet={props.goMeet} setGoMeet={props.setGoMeet} check={props.check} setCheck={props.setCheck} {...props} />}
+      {groupCallActive && 
+        //<GroupCallButton onClickHandler={leaveRoom} label='Leave room' />
+        <></>
+      }
     </>
   );
 };

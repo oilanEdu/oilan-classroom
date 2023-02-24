@@ -1,0 +1,78 @@
+.buttonContainer {
+  display: flex;
+  margin-bottom: 20px;
+  flex-direction: row;
+}
+
+.icon {
+  width: 25px;
+  height: 25px;
+  fill: #e6e5e8;
+}
+
+.button {
+  margin-right: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #2D3440;
+  border-radius: 12px;
+}
+
+.audioButton {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #2D3440;
+  border-radius: 12px;
+}
+
+.videoButton {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #2D3440;
+  border-radius: 12px;
+}
+
+.shareButton {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #2D3440;
+  border-radius: 12px;
+}
+
+.leftRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 50%;
+}
+
+.rightRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 50%;
+}

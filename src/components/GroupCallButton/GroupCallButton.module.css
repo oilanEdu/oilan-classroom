@@ -18,3 +18,25 @@
   background-color: #8706f0;
   opacity: 0.5;
 }
+
+.leaveRoomButton{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  /* width: 143px; */
+  width: 48px;
+  height: 48px;
+  background: #CC525F;
+  border-radius: 12px;
+  font-family: 'Noto Sans Medium';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.98);
+  border: none;
+}

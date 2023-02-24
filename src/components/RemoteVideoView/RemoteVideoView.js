@@ -1,15 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-
-const styles = {
-  videoContainer: {
-    width: '100%',
-    height: '100%'
-  },
-  videoElement: {
-    width: '100%',
-    height: '100%'
-  }
-};
+import styles from "./RemoteVideoView.module.css";
 
 const RemoteVideoView = props => {
   const { remoteStream } = props;
@@ -19,6 +9,8 @@ const RemoteVideoView = props => {
   
   useEffect(() => {
     setStream(remoteStream);
+    
+    console.log('PROPS', remoteStream.getAudioTracks())
   }, [remoteStream]);
 
   useEffect(() => {
@@ -33,9 +25,11 @@ const RemoteVideoView = props => {
   }, [remoteStream]);
 
   return (
-    <div style={styles.videoContainer}>
-      RemoteVideoView {props.role}
-      <video style={styles.videoElement} ref={remoteVideoRef} autoPlay srcObject={stream}/>
+    <div className={styles.videoContainer}>
+      <video className={styles.videoElement} ref={remoteVideoRef} autoPlay srcObject={stream}/>
+      <div className={styles.infoRow}>
+        <div className={styles.litera}>{stream.id.slice(0, 10)}</div>
+      </div>
     </div>
   );
 };

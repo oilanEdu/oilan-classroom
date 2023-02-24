@@ -29,9 +29,10 @@ const Index = () => {
 	const [room, setRoom] = useState(null)
 	const [role, setRole] = useState(null)
 	const [needRoom, setNeedRoom] = useState(true)
+	const [goMeet, setGoMeet] = useState(false)
 
 	useEffect(() => {
-		console.log(localStorage)
+		console.log('localStorage', localStorage)
 	   	setRoom(router.query.room)
 	   	setRole(router.query.role)
 	   	console.log('check', check)
@@ -43,13 +44,13 @@ const Index = () => {
 	useEffect(() => {
       (async () => {
       	if (!teacher || !student) {
-	    let data = room;
-	    console.log(room);
-	    let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data);
-	    setStudent(getStudentByLessonKey['data'][0]);
-	    setSelectedStudentId(student?.student_id);
-	    let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data);
-	    setTeacher(getTeacherByLessonKey['data'][0]);
+		    let data = room;
+		    console.log(room);
+		    let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data);
+		    setStudent(getStudentByLessonKey['data'][0]);
+		    setSelectedStudentId(student?.student_id);
+		    let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data);
+		    setTeacher(getTeacherByLessonKey['data'][0]);
         }
       })();
     }, [teacher, student]);
@@ -156,6 +157,7 @@ const Index = () => {
 				}
 			}
 		})	
+		setGoMeet(true)
 	}
 
 	const createRoom = (groupCallRooms) => {
@@ -168,6 +170,7 @@ const Index = () => {
       			setNeedRoom(false);
     		} 
   		}
+  		setGoMeet(true)
 	}
 	function Dashboard2(props) {
 		const username = useSelector(state => state.dashboard.username);
@@ -178,6 +181,7 @@ const Index = () => {
 			window.location.reload() 
 		} 
 		useEffect(() => {
+			console.log('PROPSMAION', props)
 			webRTCHandler.getLocalStream();
 			webRTCGroupHandler.connectWithMyPeer();
 			roomExists = groupCallRooms.some(roomy => roomy.hostName === (role === 'student' ? teacher?.name : student?.name));
@@ -185,35 +189,50 @@ const Index = () => {
 		}, [groupCallRooms, roomExists]); 
 
 		return (
-			<div className={styles['dashboard_container']}>
-				<div className={styles['dashboard_left_section']}>
-					<div className={styles['dashboard_content_container']}>
-						<select>
-						{groupCallRooms?.map(rm => {return(<option>{rm.hostName}</option>)})}
-						</select>
-						<button onClick={() => {
-							if (!roomExists){
-								createRoom(groupCallRooms)
-							} 
-							if (roomExists) {
-								joinRoom(groupCallRooms)
-							}
-						}}>go</button>
-						<DirectCall role={role} />
-						<GroupCall role={role}/>
-						{callState !== callStates.CALL_IN_PROGRESS && (
-							<DashboardInformation username={username} />
-						)}
-					</div>
-					<div className={styles['dashboard_rooms_container']}>
-						<GroupCallRoomsList />
-					</div>
-				</div>
-				<div className={styles['dashboard_right_section']}>
-					<ActiveUsersList />
-				</div>
-				<button onClick={() => {leaveClick()}}>Leave</button>
-			</div>
+			<>
+				{goMeet?
+					<>
+						<div className={styles.dashboard_container}>
+							<div className={styles.dashboard_left_section}>
+								<div className={styles.dashboard_content_container}>
+									<DirectCall role={role} />
+									<GroupCall role={role} username={username} check={check} setCheck={setCheck} goMeet={goMeet} setGoMeet={setGoMeet}/>
+									{callState !== callStates.CALL_IN_PROGRESS && (
+										//<DashboardInformation username={username} />
+										<></>
+									)}
+								</div>
+								{/*<div className={styles['dashboard_rooms_container']}>
+									<GroupCallRoomsList />
+								</div>*/}
+							</div>
+							{/*<div className={styles['dashboard_right_section']}>
+								<ActiveUsersList />
+							</div>
+							<button onClick={() => {leaveClick()}}>Leave</button>*/}
+						</div>
+					</>:
+					<>
+						<img src="https://realibi.kz/file/756332.png" style={{width: "80%", marginLeft: '10%'}} />
+						<div className={styles.joinButtonBlock}>
+							<button 
+								className={styles.joinButton}
+								onClick={() => {
+									if (!roomExists){
+										createRoom(groupCallRooms)
+									} 
+									if (roomExists) {
+										joinRoom(groupCallRooms)
+										setGoMeet(true)
+									}
+							}}>
+								Перейти к занятию
+							</button>
+						</div>
+					</>
+				}
+			</>
+					
 		);
 	}
 

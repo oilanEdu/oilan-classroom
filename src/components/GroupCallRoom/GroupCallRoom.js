@@ -3,6 +3,7 @@ import ConversationButtons from '../ConversationButtons/ConversationButtons';
 import styles from './GroupCallRoom.module.css';
 import GroupCallVideo from './GroupCallVideo';
 import RemoteVideoView from './../RemoteVideoView/RemoteVideoView';
+import LocalVideoView from './../LocalVideoView/LocalVideoView';
 import { setLocalMicrophoneEnabled, setLocalCameraEnabled, setLocalStream, setCallState, callStates, setCallingDialogVisible, setCallerUsername, setCallRejected, setRemoteStream, setScreenSharingActive, resetCallDataState, setMessage } from '../../store/actions/callActions';
 import { connect } from 'react-redux';
 
@@ -21,15 +22,16 @@ const GroupCallRoom = (props) => {
 
 
   const { groupCallStreams } = props;
+  console.log('groupCallStreams', props)
 
   return (
-    <div className='group_call_room_container'>
-      <span className='group_call_title'>Group Call</span>
-      <div className='group_call_videos_container'>
+    <div className={styles.group_call_room_container}>
+      <div className={styles.group_call_videos_container}>
+        <LocalVideoView localStream={localStream} />
         {
           groupCallStreams.map(stream => {
             return <>
-              <RemoteVideoView role={props.role} key={stream.id} remoteStream={stream} />
+              <RemoteVideoView role={props.role} username={props.username} key={stream.id} remoteStream={stream} />
               
             </>
           })

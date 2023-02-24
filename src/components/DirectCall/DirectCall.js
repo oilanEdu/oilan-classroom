@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import LocalVideoView from '../LocalVideoView/LocalVideoView';
+import BigVideo from '../BigVideo/BigVideo';
 import RemoteVideoView from '../RemoteVideoView/RemoteVideoView';
 import CallRejectedDialog from '../CallRejectedDialog/CallRejectedDialog';
 import IncomingCallDialog from '../IncomingCallDialog/IncomingCallDialog';
@@ -26,7 +26,7 @@ const DirectCall = (props) => {
 
   return (
     <>
-      <LocalVideoView localStream={localStream} />
+      <BigVideo localStream={localStream} />
       {remoteStream && callState === callStates.CALL_IN_PROGRESS && <RemoteVideoView role={props.role} remoteStream={remoteStream} />}
       {callRejected.rejected && <CallRejectedDialog
         reason={callRejected.reason}

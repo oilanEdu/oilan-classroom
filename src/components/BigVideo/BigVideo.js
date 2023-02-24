@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
-import styles from "./LocalVideoView.module.css";
+import styles from "./BigVideo.module.css";
 
-const LocalVideoView = props => {
+const BigVideo = props => {
   const { localStream } = props;
   const localVideoRef = useRef();
 
@@ -20,11 +20,8 @@ const LocalVideoView = props => {
   return (
     <div className={styles.videoContainer}>
       <video className={styles.videoElement} ref={localVideoRef} autoPlay muted />
-      <div className={styles.infoRow}>
-        <div className={styles.litera}>{localStream?.id.slice(0, 10)}</div>
-      </div>
     </div>
   );
 };
 
-export default LocalVideoView;
+export default BigVideo;

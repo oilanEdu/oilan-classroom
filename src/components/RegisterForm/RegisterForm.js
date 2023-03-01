@@ -4,9 +4,13 @@ import globals from "../../globals";
 import { useRouter } from 'next/router';
 import styles from './RegisterForm.module.css';
 import CaptchaComponent from "../Captcha/Captcha";
+import { Link } from 'react-router-dom';
+import { useClipboard } from 'use-clipboard-copy';
+const generator = require('generate-password');
 
 const RegisterForm = () => {
   const router = useRouter();
+  const clipboard = useClipboard();
   const [role, setRole] = useState('teacher');
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
@@ -27,6 +31,34 @@ const RegisterForm = () => {
 
   const [proccessOfCaptcha, setProccessOfCaptcha] = useState(0)
   const [proccessOfCaptchaUrl, setProccessOfCaptchaUrl] = useState('https://realibi.kz/file/633881.png')
+
+  const [showPassData, setShowPassData] = useState(false);
+  const [generatePass, setGeneratePass] = useState("");
+  const [showGenetarePass, setShowGeneratePass] = useState(false);
+
+  const generatePassHandler = (e) => {
+    e.preventDefault()
+    setShowGeneratePass(true);
+    setGeneratePass(generator.generate({
+      length: 12,
+	    numbers: true,
+      symbols: true,
+    }))
+  }
+ 
+  const checkPassword = (password) => {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/;
+    if(!regex.test(password)) {
+      return false;
+    }
+
+    if(password.length < 8) {
+      return false;
+    }
+
+    return true;
+  }
+  
   const handlerOfProccessOfCaptcha = (value) => {
     if (value === 0) {
       setProccessOfCaptchaUrl('https://realibi.kz/file/633881.png');
@@ -119,27 +151,32 @@ const loadCaptcha = async () => {
       setProccessOfCaptchaUrl("https://realibi.kz/file/633881.png");
 
       if (role && name && surname && phone && email && login && password){
-        const data = { 
-          role, 
-          name, 
-          surname, 
-          phone, 
-          email, 
-          login, 
-          password 
-        };
+        if (checkPassword(password)) {
+          const data = { 
+            role, 
+            name, 
+            surname, 
+            phone, 
+            email, 
+            login, 
+            password 
+          };
+  
+          await axios.post(`${globals.productionServerDomain}/register`, data).then((res) => {
+            console.log('proshlo', res);
+            // setErrorMessage('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!');
+            alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
+            loginHandler(role, login, password)
+          }).catch((error) => {
+            if (error.response.status === 400) {
+              setErrorMessage(error.response.data.message);
+            }
+            console.log('ne proshlo', error)
+          });
+        } else {
+          setErrorMessage("Ваш пароль небезопасен")
+        }
 
-        await axios.post(`${globals.productionServerDomain}/register`, data).then((res) => {
-          console.log('proshlo', res);
-          // setErrorMessage('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!');
-          alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
-          loginHandler(role, login, password)
-        }).catch((error) => {
-          if (error.response.status === 400) {
-            setErrorMessage(error.response.data.message);
-          }
-          console.log('ne proshlo', error)
-        });
       } else {
         setErrorMessage("Введены не все данные");
       }
@@ -163,7 +200,7 @@ const loadCaptcha = async () => {
   console.log(errorMessage);
   return (
     <div className={styles.welcome_section}>
-      <h2 className={styles.welcome_header}>Рады начать сотрудничать с Вами!</h2>
+      <h2 className={styles.welcome_header}>Рады сотрудничать с Вами!</h2>
       <h3 className={styles.enter_data_header}>Введите данные для регистрации</h3>
       <div className={styles.role_radio_section}>
         <div className={styles.role_radio}>
@@ -188,7 +225,7 @@ const loadCaptcha = async () => {
           <label htmlFor="teacher_radio">Я учитель</label>
         </div>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.form_container}>
         <div className={styles.form_input}>
           <input
             type="text"
@@ -216,7 +253,7 @@ const loadCaptcha = async () => {
         <div className={styles.form_input}>
           <input
             type="email"
-            placeholder="Почта"
+            placeholder="Email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
@@ -224,19 +261,60 @@ const loadCaptcha = async () => {
         <div className={styles.form_input}>
           <input
             type="login"
-            placeholder="Логин"
+            placeholder="Логин на латинице"
             value={login}
             onChange={(event) => setLogin(event.target.value)}
           />
         </div>
         <div className={styles.form_input}>
+          <div className={styles.pass_data} style={{display: showPassData ? "block" : "none"}}>
+            <p className={styles.pass_data_head}>Для защиты ваших данных придумайте безопасный пароль. </p>
+            <p className={styles.pass_data_head}>Он должен содержать:</p>
+            <p className={styles.pass_data_text}>8 и более символов</p>
+            <p className={styles.pass_data_text}>латинские буквы</p>
+            <p className={styles.pass_data_text}>цифры</p>
+            <p className={styles.pass_data_text}>знаки пунктуации (!”$%/:’@[]^_)</p>
+            <button 
+              onClick={(e) => generatePassHandler(e)}
+              className={styles.generate_pass}
+            >
+              Сгенерировать пароль
+            </button>
+            <div className={styles.generate_pass_text} style={{display: showGenetarePass ? "block" : "none"}}>
+            {generatePass}
+              <input className={styles.url_input} ref={clipboard.target} value={generatePass} readOnly />
+              <span 
+                className={styles.generate_pass_copy} 
+                onClick={clipboard.copy}
+              ></span>
+            </div>
+            <div className={styles.pass_data_left}></div>
+          </div>
           <input
             type="password"
             placeholder="Пароль"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
+          <span onClick={() => setShowPassData(!showPassData)} className={styles.password_cr}></span>
         </div>
+        <div className={styles.form_input}>
+          <button 
+            onClick={(e) => generatePassHandler(e)}
+            className={styles.generate_pass}
+          >
+            Сгенерировать пароль
+          </button>
+          <div className={styles.generate_pass_text} style={{display: showGenetarePass ? "block" : "none"}}>
+            {generatePass}
+            <input className={styles.url_input} ref={clipboard.target} value={generatePass} readOnly />
+            <span 
+              className={styles.generate_pass_copy} 
+              onClick={clipboard.copy}
+            ></span>
+          </div>
+        </div>
+        
         <CaptchaComponent
           insertCaptchaText={insertCaptchaText}
           setCaptchaText={setCaptchaText}
@@ -255,11 +333,22 @@ const loadCaptcha = async () => {
           proccessOfCaptchaUrl={proccessOfCaptchaUrl}
           proccessOfCaptcha={proccessOfCaptcha}
         />
-        <p className={styles.error_message}>{errorMessage}</p>
+        <p 
+          style={{display: errorMessage === "" ? "none" : "inline-block"}}  
+          className={styles.error_message}
+        >
+          {errorMessage}
+        </p>
         
-      </form><div className={styles.form_submit_button}>
-          <button className={styles.submit_button} onClick={() => {buttonActivateCapt()}}>Зарегистрироваться как {role == 'student'?'студент':role == 'teacher'?'преподаватель':'...'}</button>
-        </div>
+      </form>
+      <div className={styles.form_submit_button}>
+        <button 
+          className={styles.submit_button} 
+          onClick={() => {buttonActivateCapt()}}
+        >
+          Зарегистрироваться как {role == 'student'?'студент':role == 'teacher'?'преподаватель':'...'}
+        </button>
+      </div>
     </div>
   );
 };

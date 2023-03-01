@@ -1,3 +1,28 @@
+@font-face {
+  font-family: "Noto Sans Regular";
+  src: url("../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Medium";
+  src: url("../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Bold";
+  src: url("../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Regular";
+  src: url("../../public/fonts/Muller/MullerRegular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Medium";
+  src: url("../../public/fonts/Muller/MullerMedium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Bold";
+  src: url("../../public/fonts/Muller/MullerBold.ttf") format("truetype");
+}
+
 .container {
   background-color: #f1faff;
   width: 100%;
@@ -12,7 +37,7 @@
   flex-direction: column;;
   align-items: center;
   justify-content: center;
-  width: 30%;
+  width: 695px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 4px 1px rgb(0 0 0 / 20%);
@@ -22,22 +47,23 @@
 
 .buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   padding: 0;
-  margin-bottom: 15px;
+  margin-top: 30px;
 }
 
 .button {
-  width: 50%;
+  width: 28%;
   padding: 0;
   background-color: white;
   border: none;
 }
 
 .active {
-  background-color: #007aff;
-  color: white;
+  background-color: #fff;
+  color: #007aff;
+  text-transform: uppercase;
   transition: .3s;
   padding: 15px 10px;
   text-align: center;
@@ -46,8 +72,10 @@
 
 .leftButton{
   border-radius: 10px 0 0 0;
+  text-transform: uppercase;
 }
 
 .rightButton{
   border-radius: 0 10px 0 0;
+  text-transform: uppercase;
 }

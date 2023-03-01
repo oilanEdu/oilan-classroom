@@ -22,6 +22,7 @@
     "entities": "^4.4.0",
     "follow-redirects": "^1.15.2",
     "freeice": "^2.2.2",
+    "generate-password": "^1.7.0",
     "jquery": "^3.6.1",
     "jsdom": "^20.0.0",
     "jsonwebtoken": "^8.5.1",

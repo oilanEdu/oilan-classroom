@@ -1,17 +1,32 @@
 .container {
   display: flex;
   align-items: center;
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .button {
-  background: none;
+  background: url(https://realibi.kz/file/401602.png) no-repeat;
+  background-size: contain;
+  width: 15px;
+  display: block;
+  position: absolute;
+  height: 16px;
+  top: 13px;
+  right: 10px;
+  cursor: pointer;
   border: none;
-  font-size: 30px;
-  margin-left: 10px;
 }
 
 .url_input {
-  display: none;
+  padding: 10px;
+  padding-right: 30px;
+  padding-right: 30px;
+  border: 1px solid #C5DFFF;
+  border-radius: 3px;
+  width: 100%;
+  color: rgba(97, 119, 175, 0.6);
 }
 
 .url {

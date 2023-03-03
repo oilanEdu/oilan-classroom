@@ -16,6 +16,9 @@ export default function NewCourse({ show, setShow, teacher }) {
   const [courseUrl, setCourseUrl] = useState("");
   const [translationLink, setTranslationLink] = useState("");
   const [courseCategory, setCourseCategory] = useState(0);
+  const [showLogData, setShowLogData] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [teachers, setTeachers] = useState([])
   const [categories, setCategories] = useState([])
@@ -94,21 +97,33 @@ export default function NewCourse({ show, setShow, teacher }) {
 
     console.log(data);
 
-    try {
-      const res = await axios.post(`${globals.productionServerDomain}/createCourse`, data);
+    if (title !== "" && courseUrl !== "" && courseCategory !== 0) {
 
-      if (res.status === 201) {
-        alert("Курс успешно создан");
-        window.location.reload()
+      const url = await axios.post(`${globals.productionServerDomain}/getCourseUrl`, {url: courseUrl});
+
+      if (url.data.length === 0) {
+        try {
+          const res = await axios.post(`${globals.productionServerDomain}/createCourse`, data);
+
+          if (res.status === 201) {
+            alert("Курс успешно создан");
+            setShow(false);
+            window.location.reload()
+          } else {
+            alert("Произошла ошибка");
+          }
+        } catch (error) {
+          if (error.response && error.response.status === 400) {
+            alert(error.response.data);
+          } else {
+            alert("Произошла ошибка");
+          }
+        }
       } else {
-        alert("Произошла ошибка");
+        setErrorMessage("Эта ссылка занята, придумайте другую")
       }
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        alert(error.response.data);
-      } else {
-        alert("Произошла ошибка");
-      }
+    } else {
+      setErrorMessage("Заполните поля, обязательные для заполнения")
     }
   };
 
@@ -118,93 +133,93 @@ export default function NewCourse({ show, setShow, teacher }) {
       style={{
         // display: show ? "block" : "none"
         transform: `translate(${show ? "-50%, -50%" : "-50%, -100%"})`,
-        top: show ? "55%" : "0%",
+        top: show ? "50%" : "0%",
         opacity: show ? 1 : 0
       }}
       
     >
       <div className={styles.detailInfo}>
-        <div className={styles.detailInfoHeader}>
-          <p>Добавить курс</p>
-          <p 
-            className={styles.close}
-            onClick={() => setShow(!show)}
-          >
-            X
-          </p>
-        </div>
+        <p 
+          className={styles.close}
+          onClick={() => setShow(!show)}
+        >
+          X
+        </p>
         <div className={styles.showDetailInfoContain}>
+          <div className={styles.detailInfoHeader}>
+            <p>Добавить курс на платформу</p>
+            {/* <span>Если студент <span style={{color: "#212AFB"}}>уже проходил обучение на платформе</span> на другом курсе, регистрация не требуется - чтобы добавить его на курс, достаточно его личного логина</span> */}
+          </div>
           <div className={styles.dataBlock}>
             <div className={styles.formBlock}>
-              Название курса: <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              /><br/>
-              Описание курса: <textarea
-                type="text"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}></textarea><br/>
-              {/*Стоимость курса: <input
-                type="number"
-                value={fullPrice}
-                onChange={(e) => setFullPrice(e.target.value)}
-              /><br/>
-              Стоимость одного месяца: <input
-                type="number"
-                value={monthlyPrice}
-                onChange={(e) => setMonthlyPrice(e.target.value)}
-              /><br/>
-              Дата начала: <input 
-                type="date"
-                // value="2022-10-20"
-                min="2022-01-01" 
-                max="2025-12-31"
-                onChange={(e) => setStartDate(e.target.value)}
-              /><br/>
-              Дата окончания: <input 
-                type="date"
-                // value="2022-10-20"
-                min="2022-01-01" 
-                max="2025-12-31"
-                onChange={(e) => setEndDate(e.target.value)}
-              /><br/>
-              Программа: <textarea
-                type="text"
-                value={program}
-                onChange={(e) => setProgram(e.target.value)}></textarea><br/>*/}
-              URL: <input
-                type="text"
-                value={courseUrl}
-                onChange={(e) => setCourseUrl(e.target.value)}
-              /><br/>
-              {/*Ссылка на трансляцию: <input
-                type="text"
-                value={translationLink}
-                onChange={(e) => setTranslationLink(e.target.value)}
-              /><br/>*/}
-              {/* Преподаватель: <select
-                onChange={(e) => setTeacherId(e.target.value)}
-                value={teacherId}>
-                  <option value="0" disabled>Выберите преподавателя</option>
-                  {teachers.map(teacher => (
-                    <option value={teacher.id}>{teacher.surname} {teacher.name} {teacher.patronymic}</option>
-                    ))}
-                </select><br/> */}
-              Направление: <select
-                onChange={(e) => setCourseCategory(e.target.value)}
-                value={courseCategory}>
+              <div className={styles.input_container}>
+                <input
+                  type="text"
+                  value={title}
+                  placeholder="Название курса"
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <span>*</span>
+              </div>
+              <br/>
+              <div className={styles.input_container}>
+                <textarea
+                  type="text"
+                  value={description}
+                  placeholder="Описание курса"
+                  onChange={(e) => setDescription(e.target.value)}>
+                </textarea>
+              </div>
+              <br/>
+              <div className={styles.url_input}>
+                <div className={styles.pass_data} style={{display: showLogData ? "block" : "none"}}>
+                  <p className={styles.pass_data_head}>Для защиты данных наши условия для ссылки. </p>
+                  <p className={styles.pass_data_head}>Он должен содержать:</p>
+                  <p className={styles.pass_data_text}>8 и более символов</p>
+                  <p className={styles.pass_data_text}>латинские буквы</p>
+                  <p className={styles.pass_data_text}>цифры</p>
+                  <p className={styles.pass_data_text}>знаки пунктуации (!”$%/:’@[]^_)</p>
+                  <div className={styles.pass_data_left}></div>
+                </div>
+                <div className={styles.input_container}>
+                  <input
+                    type="text"
+                    value={courseUrl}
+                    placeholder="Короткая ссылка латиницей"
+                    onChange={(e) => setCourseUrl(e.target.value)}
+                  />
+                  <span>*</span>
+                </div>
+                
+                <span>Используется в адресной строке. Пример: oilan-classroom.com/короткая ссылка</span>
+                <span onClick={() => setShowLogData(!showLogData)} className={styles.login_cr}></span>
+              </div>
+              <div className={styles.input_container}>
+                <select
+                  onChange={(e) => setCourseCategory(e.target.value)}
+                  value={courseCategory}
+                >
                   <option value="0" disabled>Выберите направление</option>
                   {categories.map(category => (
                     <option value={category.id}>{category.name}</option>
-                    ))}
-                </select><br/>
+                  ))}
+                </select>
+                <span>*</span>
+              </div>
+              <span 
+                style={{display: errorMessage === "" ? "none" : "inline-block"}}  
+                className={styles.error_message}
+              >
+                {errorMessage}
+              </span>
+              <span style={{color: "#3B3B3BC9"}}>
+                Звездочками отмечены поля, обязательные для заполнения
+              </span>
               <button 
                 onClick={() => {
                   createCourse();
-                  setShow(false);
                 }}
-              >Создать</button>
+              >Добавить</button>
             </div>
           </div>
         </div>

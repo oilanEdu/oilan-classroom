@@ -1,8 +1,6 @@
 import styles from "./NewStudent.module.css";
 import React, { useState, useEffect } from "react";
-import { Image } from "react-bootstrap";
 import globals from "../../globals";
-import ModalSuccess from "../ModalSuccess/ModalSuccess";
 import CopyLink from "../CopyLink/CopyLink";
 
 const axios = require("axios").default;
@@ -25,8 +23,11 @@ export default function NewStudent({ show, setShow, programs } ) {
   const [lessonProgramId, setLessonProgramId] = useState(0);
   const [courseId, setCourseId] = useState()
 
-  const [showSucces, setShowSuccess] = useState(false);
   const [courseUrl, setCourseUrl] = useState("");
+  const [showLogData, setShowLogData] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [succesMessage, setSuccesMessage] = useState("");
 
   const getTeachers = async () => {
     let result = await axios.get(`${globals.productionServerDomain}/getTeachers`)
@@ -93,102 +94,173 @@ export default function NewStudent({ show, setShow, programs } ) {
       programId: lessonProgramId
     };
 
+    const dataAddProgram = {
+      nickname,
+      programId: lessonProgramId
+    };
+
     console.log(data);
 
-    await axios({
-      method: "post",
-      url: `${globals.productionServerDomain}/createStudentAndProgram`,
-      data: data,
-    })
-      .then(function (res) {
-        console.log(res);
-        setShowSuccess(true);
+    if (studentSurname !== "" && studentName !== "" && nickname !== "" && lessonProgramId !== 0) {
+
+      await axios({
+        method: "post",
+        url: `${globals.productionServerDomain}/createStudentAndProgram`,
+        data: data,
       })
-      .catch((err) => {
-        alert("Произошла ошибка");
-      });
+        .then(function (res) {
+          console.log(res);
+          setSuccesMessage("Учетная запись студента успешно создана!");
+          setErrorMessage("");
+        })
+        .catch((err) => {
+          console.log(err);
+          setErrorMessage(err.response.data)
+        });
+    } else if (studentSurname === "" && studentName === "" && nickname !== "" && lessonProgramId !== 0) {
+      await axios({
+        method: "post",
+        url: `${globals.productionServerDomain}/addStudentProgram`,
+        data: dataAddProgram,
+      })
+        .then(function (res) {
+          console.log(res);
+          setSuccesMessage("Студент успешно добавлен в программу!");
+          setErrorMessage("");
+        })
+        .catch((err) => {
+          console.log(err);
+          setErrorMessage(err.response.data)
+        });
+    } else {
+      setErrorMessage("Заполните поля, обязательные для заполнения")
+    }
   };
   console.log(courseId);
 
   return (
     <>
-    <ModalSuccess 
-        show={showSucces} 
-        onClickNext={() => {
-          setShowSuccess(false);
-          window.location.reload();
-        }} 
-        headText={"Студент успешно создан."}
-        text={"Скопируйте ссылку для доступа студента в личный кабинет и отправьте ученику: "}
-        link={<CopyLink url={"oilan-classroom.com/cabinet/student/" + nickname + "/course/" + courseUrl}/>}
-      />
-    <div 
-      className={styles.modal}
-      style={{
-        // display: show ? "block" : "none"
-        transform: `translate(${show ? "-50%, -50%" : "-50%, -100%"})`,
-        top: show ? "55%" : "0%",
-        opacity: show ? 1 : 0
-      }}
-    >
-      <div className={styles.detailInfo}>
-        <div className={styles.detailInfoHeader}>
-          <p>Создать студента</p>
+      <div 
+        className={styles.modal}
+        style={{
+          transform: `translate(${show ? "-50%, -50%" : "-50%, -100%"})`,
+          top: show ? "50%" : "0%",
+          opacity: show ? 1 : 0
+        }}
+      >
+        <div className={styles.detailInfo}>
           <p 
             className={styles.close}
             onClick={() => setShow(!show)}
           >
             X
           </p>
-        </div>
-        <div className={styles.showDetailInfoContain}>
-          <div className={styles.dataBlock}>
-            <div className={styles.formBlock}>
-              Фамилия: <input
+          <div className={styles.showDetailInfoContain}>
+            <div className={styles.detailInfoHeader}>
+              <p>Создать студента</p>
+              <span>Если студент <span style={{color: "#212AFB"}}>уже проходил обучение на платформе</span> на другом курсе, регистрация не требуется - чтобы добавить его на курс, достаточно его личного логина</span>
+            </div>
+            <div className={styles.dataBlock}>
+              <div className={styles.formBlock}>
+                <div className={styles.input_container}>
+                  <input
+                    className={styles.input_block}
                     type="text"
-                    value={studentSurname}
-                    onChange={(e) => setStudentSurname(e.target.value)}
-                  /><br/>
-              Имя: <input
-                    type="text"
+                    placeholder="Имя"
                     value={studentName}
                     onChange={(e) => setStudentName(e.target.value)}
-                  /><br/>
-              Отчество: <input
+                  />
+                  <span>*</span>
+                </div>
+                <div className={styles.input_container}>
+                  <input
+                    className={styles.input_block}
                     type="text"
+                    placeholder="Отчество"
                     value={studentPatronymic}
                     onChange={(e) => setStudentPatronymic(e.target.value)}
-                  /><br/>
-              Логин: <input
+                  />
+                </div> 
+                <div className={styles.input_container}>
+                  <input
+                    className={styles.input_block}
                     type="text"
-                    value={nickname}
-                    onChange={(e) => setNickname(e.target.value)}
-                  /><br/>
-               Программа: <select
+                    value={studentSurname}
+                    placeholder="Фамилия"
+                    onChange={(e) => setStudentSurname(e.target.value)}
+                  />
+                  <span>*</span>
+                </div> 
+                <div className={styles.url_input}>
+                  <div className={styles.pass_data} style={{display: showLogData ? "block" : "none"}}>
+                    <p className={styles.pass_data_head}>Для защиты данных наши условия для логина </p>
+                    <p className={styles.pass_data_head}>Он должен содержать:</p>
+                    <p className={styles.pass_data_text}>8 и более символов</p>
+                    <p className={styles.pass_data_text}>латинские буквы</p>
+                    <p className={styles.pass_data_text}>цифры</p>
+                    <p className={styles.pass_data_text}>знаки пунктуации (!”$%/:’@[]^_)</p>
+                    <div className={styles.pass_data_left}></div>
+                  </div>
+                  <div className={styles.input_container}>
+                    <input
+                      className={styles.input_block}
+                      type="text"
+                      placeholder="Логин для входа в систему"
+                      value={nickname}
+                      onChange={(e) => setNickname(e.target.value)}
+                    />
+                    <span>*</span>
+                  </div> 
+                  <span onClick={() => setShowLogData(!showLogData)} className={styles.login_cr}></span>
+                </div>
+                <div className={styles.input_container}>
+                  <select
+                    className={styles.input_block}
                     onChange={(e) => {
                       setLessonProgramId(e.target.value)
                       console.log(e);
                     }}
-                    value={lessonProgramId}>
-                      <option value="0" disabled>Выберите программу</option>
-                      {programs.map(program =>(
-                        <option value={program.id}>{program.title}</option>
-                          )
-                        )}
-                    </select><br/>
-              <button 
-                onClick={() => {
-                  createStudentAndProgram();
-                  setShow(false);
-                }}
-              >
-                Создать
-              </button>
+                    value={lessonProgramId}
+                  >
+                    <option value="0" disabled>Выберите программу</option>
+                    {programs.map(program =>(
+                      <option value={program.id}>{program.title}</option>
+                    ))}
+                  </select>
+                  <span>*</span>
+                </div> 
+                <span 
+                  style={{display: errorMessage === "" ? "none" : "inline-block"}}  
+                  className={styles.error_message}
+                >
+                  {errorMessage}
+                </span>
+                <span style={{color: "#3B3B3BC9"}}>
+                  Звездочками отмечены поля, обязательные для заполнения
+                </span>
+                <button 
+                  className={styles.form_button}
+                  onClick={() => {
+                    createStudentAndProgram();
+                  }}
+                >
+                  Создать
+                </button>
+                <span 
+                  style={{display: succesMessage === "" ? "none" : "inline-block"}}  
+                  className={styles.success_message}
+                >
+                  {succesMessage}
+                </span>
+                <CopyLink succesMessage={succesMessage} url={"oilan-classroom.com/cabinet/student/" + nickname + "/program/" + lessonProgramId}/>
+                <span style={{color: "#3B3B3BC9", display: succesMessage === "" ? "none" : "inline-block"}}>
+                Поделитесь со студентом ссылкой на его личный кабинет
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 }

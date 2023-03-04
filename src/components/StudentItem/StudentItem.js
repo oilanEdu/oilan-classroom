@@ -10,6 +10,7 @@ import globals from "../../globals";
 const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentForModal, programs, route }) => {
   const router = useRouter();
   const [showSetting, setShowSetting] = useState(false);
+  const [formattedTime, setFormattedTime] = useState() 
 
   const [showModalData, setShowModalData] = useState(false);
   const [showModalStatus, setShowModalStatus] = useState(false);
@@ -26,12 +27,18 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
   const getProgramsByStudentId = async () => {
     let result = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + student?.student_id)
     setStudentPrograms(result.data);
-      console.log(studentPrograms)
-  }
+      console.log(studentPrograms, "getProgramsByStudentId")
+  } 
 
-  useEffect(() => {
+  useEffect(() => { 
     getProgramsByStudentId();
+    console.log(student.closer_date, "student.closer_date");
   }, []);
+  useEffect(() => {
+    if (studentPrograms != undefined) {
+      getShiftedTime(student.closer_date_witout_local , studentPrograms[0].lesson_duration) 
+    }
+  }, [studentPrograms])
 
   const deleteProgram = async (studentId, programId) => {
     const data = {
@@ -79,6 +86,31 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
     if (!student) return '';
     const id = padWithZeros(student.student_id, 7);
     return id;
+  }
+
+  function getShiftedTime(date, minutes) {
+    console.log("getShiftedTime", date, minutes);
+    if (date != undefined) {
+      // Вычисляем количество миллисекунд, соответствующее указанному количеству минут
+      const millisecondsShift = minutes * 60 * 1000;
+      
+      // Вычисляем новое время, сдвинутое на указанное количество минут
+      const dateOfPersonalTime = new Date(date)
+      const shiftedTime = new Date(dateOfPersonalTime.getTime() + millisecondsShift);
+      
+      // Получаем часы и минуты из нового времени
+      const hours = shiftedTime.getHours();
+      const minutesFormatted = shiftedTime.getMinutes() < 10 ? `0${shiftedTime.getMinutes()}` : shiftedTime.getMinutes();
+      
+      // Форматируем часы и минуты в строку в формате "hh:mm"
+      const formattedTime = `${hours < 10 ? '0' : ''}${hours}:${minutesFormatted}`;
+      
+      // Возвращаем отформатированную строку
+      setFormattedTime(formattedTime)
+    } else {
+      setFormattedTime("Следующее занятие не запланировано")
+    }
+    return formattedTime;
   }
 
   return <div className={styles.student}>
@@ -138,15 +170,7 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
               ? "0" + student?.curr_minutes
               : student?.curr_minutes}
             -
-            {student?.curr_hours == 23
-              ? "00"
-              : student?.curr_hours + 1 < 10
-              ? "0" + (student?.curr_hours + 1)
-              : student?.curr_hours + 1}
-            :
-            {student?.curr_minutes < 10
-              ? "0" + student.curr_minutes
-              : student.curr_minutes}
+            {formattedTime}
           </>
         ) : (
           "Следующее занятие не запланировано"

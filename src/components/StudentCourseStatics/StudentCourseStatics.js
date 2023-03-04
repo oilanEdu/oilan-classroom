@@ -228,6 +228,21 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
       return () => window.removeEventListener('resize', handleResize);
     }, []);
   
+    const [coursesOfStudent, setCoursesOfStudent] = useState([])
+    const getStudentCoursesAndPrograms = async () => {
+      const response = await axios.get(`${globals.productionServerDomain}/getAllCoursesAndProgramsOfStudent?studentId=${student[0].id}`)
+      const data = {
+          courseId: response.data[0].course_id
+        }
+      let result = await axios.post(`${globals.productionServerDomain}/getCourseById`, data)
+      setCoursesOfStudent(result.data)
+  }
+  useEffect(() => {
+      if (student != undefined) {
+          getStudentCoursesAndPrograms()
+      }
+  }, [student])
+
   return <div className={styles.container}>     
     <GoToLessonWithTimerComponent isTeacher={false} url={student[0].nickname} nickname={nickname} courseUrl={courseUrl}/>
     <div className={styles.course_container}>

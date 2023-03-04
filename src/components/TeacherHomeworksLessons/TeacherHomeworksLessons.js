@@ -276,6 +276,49 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
 
       console.log(lesson);
 
+      //<< HH:MM
+      const [studentPrograms, setStudentPrograms] = useState()
+      const getProgramsByStudentId = async () => {
+        let result = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + lesson?.student_id)
+        setStudentPrograms(result.data);
+          // console.log(studentPrograms, "getProgramsByStudentId")
+      }
+      useEffect(() => { 
+        getProgramsByStudentId();
+        // console.log(student.closer_date, "student.closer_date");
+      }, []);
+      const [formattedTime, setFormattedTime] = useState() 
+      function getShiftedTime(date, minutes) {
+        console.log("getShiftedTime", date, minutes);
+        if (date != undefined) {
+          // Вычисляем количество миллисекунд, соответствующее указанному количеству минут
+          const millisecondsShift = minutes * 60 * 1000;
+          
+          // Вычисляем новое время, сдвинутое на указанное количество минут
+          const dateOfPersonalTime = new Date(date)
+          const shiftedTime = new Date(dateOfPersonalTime.getTime() + millisecondsShift);
+          
+          // Получаем часы и минуты из нового времени
+          const hours = shiftedTime.getHours();
+          const minutesFormatted = shiftedTime.getMinutes() < 10 ? `0${shiftedTime.getMinutes()}` : shiftedTime.getMinutes();
+          
+          // Форматируем часы и минуты в строку в формате "hh:mm"
+          const formattedTime = `${hours < 10 ? '0' : ''}${hours}:${minutesFormatted}`;
+          
+          // Возвращаем отформатированную строку
+          setFormattedTime(formattedTime)
+        } else {
+          setFormattedTime("Следующее занятие не запланировано")
+        }
+        return formattedTime;
+      }
+      useEffect(() => {
+        if (studentPrograms != undefined) {
+          getShiftedTime(lesson.personal_time ? lesson.personal_time : lesson.start_time , studentPrograms[0].lesson_duration) 
+        }
+      }, [studentPrograms])
+      //HH:MM >>
+
     return <> 
     {width <= 480 ? '' : 
           <div className={styles.lesson}>
@@ -285,7 +328,7 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
                   {showInputsOfDate ? '' : <span className={styles.lessonDatetime}>
                       <span onClick={() => {setShowInputsOfDate(true)}}>{lesson.out_date}</span>
                       <span onClick={() => {setShowInputsOfDate(true)}}>
-                          {lesson.out_hours>9?lesson.out_hours:'0'+lesson.out_hours}:{lesson.out_minutes>9?lesson.out_minutes:'0'+lesson.out_minutes}-{(lesson.out_hours == 23)?'00':lesson.out_hours>9?lesson.out_hours + 1:'0'+(lesson.out_hours+1)}:{lesson.out_minutes>9?lesson.out_minutes:'0'+lesson.out_minutes}
+                          {lesson.out_hours>9?lesson.out_hours:'0'+lesson.out_hours}:{lesson.out_minutes>9?lesson.out_minutes:'0'+lesson.out_minutes}-{formattedTime}
                           <Image 
                               src='https://realibi.kz/file/109637.png'
                               style={{marginLeft: '8px'}}
@@ -499,7 +542,7 @@ const TeacherHomeworksLessons = ({index, lesson, showCheck, selectedExerciseId, 
           {showInputsOfDate ? '' : <span className={styles.lessonDatetime}>
                     <span onClick={() => {setShowInputsOfDate(true)}}>{lesson.out_date}</span>
                     <span onClick={() => {setShowInputsOfDate(true)}}>
-                        {lesson.out_hours>9?lesson.out_hours:'0'+lesson.out_hours}:{lesson.out_minutes>9?lesson.out_minutes:'0'+lesson.out_minutes}-{(lesson.out_hours == 23)?'00':lesson.out_hours>9?lesson.out_hours + 1:'0'+(lesson.out_hours+1)}:{lesson.out_minutes>9?lesson.out_minutes:'0'+lesson.out_minutes}
+                        {lesson.out_hours>9?lesson.out_hours:'0'+lesson.out_hours}:{lesson.out_minutes>9?lesson.out_minutes:'0'+lesson.out_minutes}-{(lesson.out_hours == 23)?'00':lesson.out_hours>9?lesson.out_hours + 1:'0'+(lesson.out_hours+1)}:{formattedTime}
                         <Image 
                             src='https://realibi.kz/file/109637.png'
                             style={{marginLeft: '8px'}}

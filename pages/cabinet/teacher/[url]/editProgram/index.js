@@ -29,6 +29,8 @@ function EditProgram(props) {
   const [primeInfoEdited, setPrimeInfoEdited] = useState(false)
   const [firstLessPress, setFirstLessPress] = useState(false)
   const [firstExerPress, setFirstExerPress] = useState(false)
+  const [selectedDuration, setSelectedDuration] = useState(program.lesson_duration)
+  const [duration, setDuration] = useState()
 
   let dateStr = new Date(lessonDate);
   let curr_date = dateStr.getDate();
@@ -70,7 +72,7 @@ function EditProgram(props) {
     const loadProgramData = async () => {
         let getProgramInfo = await axios.post(`${globals.productionServerDomain}/getCurrentProgram/` + programId) 
         setProgram(getProgramInfo['data'][0]) 
-        console.log(program)
+        console.log(program, "getProgramInfo") 
         setSelectedCourseId(getProgramInfo['data'][0].course_id)
         setProgramTitle(getProgramInfo['data'][0].title)
         let getTeacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + getProgramInfo['data'][0].teacher_id).then(res => {
@@ -136,6 +138,29 @@ function EditProgram(props) {
             alert("Произошла ошибка"); 
           });
     }
+
+    const updateProgramDuration = async (programId, duration) => {
+      // if (courseId == 0){
+      //     courseId = program.course_id 
+      // }
+      const data = {
+        programId,
+        duration
+      };  
+
+      await axios({
+        method: "put",
+        url: `${globals.productionServerDomain}/updateProgramDuration`,
+        data: data,
+      })
+        .then(function (res) {
+          // alert("Программа успешно изменена");
+          window.location.reload()
+        })
+        .catch((err) => {
+          alert("Произошла ошибка"); 
+        });
+  }
 
     const createEmptyLesson = async () => {
         const lessonTitle = 'Текст'
@@ -433,11 +458,41 @@ function EditProgram(props) {
                                 setPrimeInfoEdited(true)
                             }}
                           />
+                        <h2>Длительность уроков</h2> 
+                        <select
+                        className={styles.courseSelect}
+                        onChange={(e) => {
+                          setSelectedDuration(e.target.value)
+                          setPrimeInfoEdited(true)
+                         } 
+                        } 
+                        value={selectedDuration?selectedDuration:0}
+                        >
+                          <option value="0" disabled>
+                            {program.lesson_duration}  минут
+                          </option>
+                          <option value="20">
+                            20 минут
+                          </option>
+                          <option value="30">
+                            30 минут
+                          </option>
+                          <option value="45">
+                            45 минут
+                          </option>
+                          <option value="60">
+                            60 минут
+                          </option>
+                          <option value="90">
+                            90 минут
+                          </option>
+                        </select>
                         <button
                             style={primeInfoEdited?{display: 'flex'}:{display: 'none'}}
                             className={styles.saveButton}
                             onClick={() =>{
                                 updateProgram(programId, programTitle, selectedCourseId)
+                                updateProgramDuration(programId, selectedDuration)
                                 loadProgramData()
                                 setProgramTitle(programTitle)
                                 setPrimeInfoEdited(false)

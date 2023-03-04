@@ -17,6 +17,7 @@ const joinRoom = ({ handleSubmit, userName, roomName, token, setToken, setIdOfNe
   }, [token])
   useEffect(() => {
     if (idOfNewRoom != undefined) {
+      // debugger
       handleSubmit(userName);
     }
   }, [idOfNewRoom])
@@ -47,6 +48,7 @@ const joinRoom = ({ handleSubmit, userName, roomName, token, setToken, setIdOfNe
   }
 
   const createRoom = async () => {
+    // debugger
     console.log('111 IN JOIN ROOM', roomName)
     console.log("111 token", token);
     try {

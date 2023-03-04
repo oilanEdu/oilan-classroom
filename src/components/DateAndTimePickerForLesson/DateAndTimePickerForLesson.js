@@ -137,21 +137,22 @@ function DateAndTimePickerForLesson(props) {
 
     // allStudentsLessons
     //В качестве определения ошибки тут будет setErrorOfDateOfGoingLesson, в итоге будет два условия для выявления ошибки, при выполнении хоть одной из них - выявлять ошибку.
-    function compareDates(date, datesArray) {
+    async function compareDates(date, datesArray) {
       const oneHourInMs = 60 * 60 * 1000; // один час в миллисекундах
-    
+      let durationOfLesson = await getProgramsByStudentId()
+      let durationOfLessonInMs = durationOfLesson * 60 * 1000
       for (let i = 0; i < datesArray.length; i++) {
         const differenceInMs = Math.abs(new Date(date).getTime() - new Date(datesArray[i].personal_time).getTime()); // разница в миллисекундах между двумя датами
         const test1 = new Date(date).getTime()
         const test2 = new Date(datesArray[i].personal_time).getTime()
-        if ((differenceInMs < oneHourInMs && differenceInMs != 0 && datesArray[i].id != props.lesson_id) || (differenceInMs === 0 && datesArray[i].id != props.lesson_id)) {
-          debugger
+        if ((differenceInMs < durationOfLessonInMs && differenceInMs != 0 && datesArray[i].id != props.lesson_id) || (differenceInMs === 0 && datesArray[i].id != props.lesson_id)) {
+          // debugger
           setErrorOfDateOfGoingLesson(true)
           setErrorOfDateOfGoingLessonLesson(datesArray[i])
           return true; // если разница в один час, вернуть true
         }
       }
-      debugger
+      // debugger
       setErrorOfDateOfGoingLesson(false)
       return false; // если ни одна дата не отличается на один час, вернуть false
     }
@@ -171,6 +172,50 @@ function DateAndTimePickerForLesson(props) {
     props.allStudentsLessons
     // debugger
   }, [props.lessons2])
+
+
+  //<< ФОРМАТИРОВАННОЕ HH:MM
+  // const [formattedTime, setFormattedTime] = useState()
+  // function getShiftedTime(date, minutes) {
+  //   console.log("getShiftedTime", date, minutes);
+  //   if (date != undefined) {
+  //     // Вычисляем количество миллисекунд, соответствующее указанному количеству минут
+  //     const millisecondsShift = minutes * 60 * 1000;
+      
+  //     // Вычисляем новое время, сдвинутое на указанное количество минут
+  //     const dateOfPersonalTime = new Date(date)
+  //     const shiftedTime = new Date(dateOfPersonalTime.getTime() + millisecondsShift);
+      
+  //     // Получаем часы и минуты из нового времени
+  //     const hours = shiftedTime.getHours();
+  //     const minutesFormatted = shiftedTime.getMinutes() < 10 ? `0${shiftedTime.getMinutes()}` : shiftedTime.getMinutes();
+      
+  //     // Форматируем часы и минуты в строку в формате "hh:mm"
+  //     const formattedTime = `${hours < 10 ? '0' : ''}${hours}:${minutesFormatted}`;
+      
+  //     // Возвращаем отформатированную строку
+  //     setFormattedTime(formattedTime)
+  //   } else {
+  //     setFormattedTime("Следующее занятие не запланировано")
+  //   }
+  //   return formattedTime;
+  // }
+  // useEffect(() => {
+  //   if (studentPrograms != undefined) {
+  //     getShiftedTime(props.student.closer_date_witout_local , studentPrograms[0].lesson_duration) 
+  //   }
+  // }, [studentPrograms])
+  const [studentPrograms, setStudentPrograms] = useState();
+  const getProgramsByStudentId = async () => {
+    let result = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + props.student?.student_id)
+    setStudentPrograms(result.data);
+    console.log(studentPrograms, "getProgramsByStudentId")
+    return result.data[0].lesson_duration
+  } 
+  useEffect(() => {
+    getProgramsByStudentId()
+  }, [])
+  //ФОРМАТИРОВАННОЕ HH:MM >>
 
   useEffect(() => {
     if (errorOfDateOfGoingLessonLesson.student_id != undefined) {

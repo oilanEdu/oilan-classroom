@@ -36,22 +36,33 @@ function TeacherCabinet(props) {
     const [allStudentsLessons, setAllStudentsLessons] = useState([])
     useEffect(() => {
       if (allStudentsLessons != undefined && dataLoaded === true) {
-        console.log(allStudentsLessons, "lessonsOfAllStudents");
-        // var lessonsFuture = allStudentsLessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0)) 
-        // var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.personal_time).getTime()));
-        // var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
-        // var idx = withoutNan.indexOf(Math.min(...withoutNan)); 
-        let lessonsOfFuture = allStudentsLessons.filter(el => new Date(el.personal_time).getTime() - new Date().getTime() > 0)
-        const dateDiffs = lessonsOfFuture.map((date) => Math.abs(new Date().getTime() - new Date(date.personal_time).getTime()));
-        const closestDateIndex = dateDiffs.indexOf(Math.min(...dateDiffs));
-        const closestDate = lessonsOfFuture[closestDateIndex];
-
-        let lessonIsGoingHandler = allStudentsLessons.find(el => new Date(el.personal_time).getTime() - new Date().getTime() >= -3600000 && new Date(el.personal_time).getTime() - new Date().getTime() < 0)    
-        let test = lessonIsGoingHandler ? lessonIsGoingHandler : closestDate
-        setCloserLesson(test)
-        // let test2 = allStudentsLessons.map(el => new Date(el.personal_time).getTime() - new Date().getTime()  ) 
+        console.log(allStudentsLessons, "lessonsOfAllStudents");  
+        async function test() {
+          // var lessonsFuture = allStudentsLessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0)) 
+          // var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.personal_time).getTime()));
+          // var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
+          // var idx = withoutNan.indexOf(Math.min(...withoutNan)); 
+          let lessonsOfFuture = allStudentsLessons.filter(el => new Date(el.personal_time ? el.personal_time : el.start_time).getTime() - new Date().getTime() > 0)
+          const dateDiffs = lessonsOfFuture.map((date) => Math.abs(new Date().getTime() - new Date(date.personal_time ? date.personal_time : date.start_time).getTime()));
+          const closestDateIndex = dateDiffs.indexOf(Math.min(...dateDiffs));
+          const closestDate = lessonsOfFuture[closestDateIndex];     
+          // let durationOfLesson = await getProgramsByStudentId(closestDate)
+          // let durationOfLessonInMs = durationOfLesson * 60 * 1000
+          let lessonIsGoingHandler = allStudentsLessons.find(el => new Date(el.personal_time ? el.personal_time : el.start_time).getTime() - new Date().getTime() >= -(programs.find(el2 => el.program_id === el2.id).lesson_duration * 60 * 1000) && new Date(el.personal_time ? el.personal_time : el.start_time).getTime() - new Date().getTime() < 0)    
+          let test = lessonIsGoingHandler ? lessonIsGoingHandler : closestDate
+          setCloserLesson(test)
+          // let test2 = allStudentsLessons.map(el => new Date(el.personal_time).getTime() - new Date().getTime()  ) 
+        }
+        test()
       }  
-    }, [allStudentsLessons])
+    }, [allStudentsLessons, dataLoaded])
+
+    const getProgramsByStudentId = async (value) => { 
+      let result = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + value?.student_id)
+      // setStudentPrograms(result.data);
+      // console.log(studentPrograms, "getProgramsByStudentId")
+      return result.data[0].lesson_duration
+    } 
     
     const [emptyProgramCourseId, setEmptyProgramCourseId] = useState(0)
     const [emptyProgramTeacherId, setEmptyProgramTeacherId] = useState(0)
@@ -193,6 +204,7 @@ function TeacherCabinet(props) {
     }
     
     const loadTeacherData = async () => {
+        setDataLoaded(false)
         let serverTime = await axios.get(`${globals.productionServerDomain}/getServerTime`)
         console.log(new Date(serverTime.data).getTime(), "serverTime");
         console.log(new Date().getTime(), "computer time");
@@ -246,7 +258,8 @@ function TeacherCabinet(props) {
             let studentCheck = 0
             let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${student.course_url}&program_id=${student.program_id}&student_id=${student.student_id}`).then(async res => {
                 let lessons = res.data
-                lessonsOfAllStudents.push(...lessons);
+                console.log(lessons, "lessonsOfAllStudents"); 
+                lessonsOfAllStudents.push(...lessons); 
                 await res.data.forEach(async lesson => {
                     if (+lesson.all_exer !== 0 && +lesson.all_exer === +lesson.done_exer) {
                         studentCheck += 1
@@ -319,21 +332,23 @@ function TeacherCabinet(props) {
                         }
                     })
                 })   
-                var lessonsFuture = lessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0)) 
-                var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.personal_time).getTime()));
+                var lessonsFuture = lessons.filter(el => (new Date() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() < 0)) 
+                var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
                 var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
                 var idx = withoutNan.indexOf(Math.min(...withoutNan)); 
                 if (lessonsFuture[idx] != undefined) {
-                  let curr_hours = new Date(lessonsFuture[idx]?.personal_time).getHours();
-                  let curr_minutes = new Date(lessonsFuture[idx]?.personal_time).getMinutes();
-                  student.closer_date = new Date(lessonsFuture[idx]?.personal_time).toLocaleDateString()
-                  student.curr_hours = curr_hours 
-                  student.curr_minutes = curr_minutes 
-                  student.lesson_date = new Date(lessonsFuture[idx]?.personal_time).toLocaleDateString() 
+                  let curr_hours = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getHours();
+                  let curr_minutes = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getMinutes();
+                  student.closer_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString()
+                  student.closer_date_witout_local = lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time
+                  student.curr_hours = curr_hours  
+                  student.curr_minutes = curr_minutes  
+                  student.lesson_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString() 
                 } else {
                   let curr_hours = undefined
-                  let curr_minutes = undefined
+                  let curr_minutes = undefined  
                   student.closer_date = undefined
+                  student.closer_date_witout_local = undefined
                   student.curr_hours = undefined
                   student.curr_minutes = undefined
                   student.lesson_date = undefined
@@ -343,8 +358,10 @@ function TeacherCabinet(props) {
                 // let lessonIsGoingHandler = lessons.find(el => new Date().getTime() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() <= 3600000)
                  
                 // setCloserLesson(lessonIsGoingHandler ? lessonIsGoingHandler : lessonsFuture[idx]) 
-            })
-            setAllStudentsLessons(lessonsOfAllStudents)
+            }) 
+            // console.log(lessonsOfAllStudents, "lessonsOfAllStudents");
+            let test = lessonsOfAllStudents
+            setAllStudentsLessons(test)
             }
            );
         if (!studentsLoaded) {
@@ -861,7 +878,7 @@ function TeacherCabinet(props) {
                   {students.length > 0 &&
                       (showAllStudents 
                         ? (sortMode ? studentsList : currentPosts).map((student) => (
-                             <StudentItem 
+                             <StudentItem  
                               student={student} 
                               showModalLesson={showModalLesson} 
                               setShowModalLesson={setShowModalLesson} 

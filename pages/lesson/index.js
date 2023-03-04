@@ -729,6 +729,8 @@ const Lesson = (props) => {
                       <button
                         className={styles.leaveRoomButton}
                         onClick={() => {
+                            setToken('')
+                            setIdOfNewRoom(undefined)
                             leaveRoom()
                           }}
                       >
@@ -868,6 +870,8 @@ const Lesson = (props) => {
                       <button
                         className={styles.leaveRoomButton}
                         onClick={() => {
+                            setIdOfNewRoom(undefined)
+                            setToken('')
                             leaveRoom()
                           }}
                       >

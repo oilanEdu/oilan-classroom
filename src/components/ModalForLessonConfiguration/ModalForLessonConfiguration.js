@@ -24,31 +24,48 @@ function ModalForLessonConfiguration(props) {
   }, [lessonsUpcoming])
 
   const saveLessonDateAndTime = async (dateAndTimeMerger, lesson_id, course_id, student_id) => {
-    const dataForGetSchedule = {
-      lesson_id, 
-      course_id,
-      student_id 
-    };  
-    console.log("dataForGetSchedule", dataForGetSchedule)
-    let schedule = await axios({
-      method: "post",
-      url: `${globals.productionServerDomain}/getScheduleByLessonIdAndCourseIdAndStudentId`,
-      data: dataForGetSchedule,
-    }).then(function (res) {
-        let scheduleRes = res.data
-        console.log("scheduleRes", scheduleRes);
-        if (scheduleRes.length > 0) {
-          return scheduleRes
-        }
-      })
-      .catch((err) => {
-        alert("Произошла ошибка");
-      });
-    console.log(schedule, "schedule1") 
-    if (schedule != undefined) {
-      if (schedule.some(el => el.lesson_id == lesson_id) && schedule.some(el => el.course_id == course_id) && schedule.some(el => el.student_id == student_id)) {
-        console.log("isscheduleRIGHT is RIGHT")
-        const dataForUpdateSchedule = {
+    if (dateAndTimeMerger.length > 10) {
+      const dataForGetSchedule = {
+        lesson_id, 
+        course_id,
+        student_id 
+      };  
+      console.log("dataForGetSchedule", dataForGetSchedule)
+      let schedule = await axios({
+        method: "post",
+        url: `${globals.productionServerDomain}/getScheduleByLessonIdAndCourseIdAndStudentId`,
+        data: dataForGetSchedule,
+      }).then(function (res) {
+          let scheduleRes = res.data
+          console.log("scheduleRes", scheduleRes);
+          if (scheduleRes.length > 0) {
+            return scheduleRes
+          }
+        })
+        .catch((err) => {
+          alert("Произошла ошибка");
+        });
+      console.log(schedule, "schedule1") 
+      if (schedule != undefined) {
+        if (schedule.some(el => el.lesson_id == lesson_id) && schedule.some(el => el.course_id == course_id) && schedule.some(el => el.student_id == student_id)) {
+          console.log("isscheduleRIGHT is RIGHT")
+          const dataForUpdateSchedule = {
+            dateAndTimeMerger,
+            lesson_id, 
+            course_id,
+            student_id 
+          }; 
+          // console.log("dataForGetSchedule", dataForGetSchedule)
+          let schedule = await axios({
+            method: "put",
+            url: `${globals.productionServerDomain}/updateSchedule`,
+            data: dataForUpdateSchedule,
+          })  
+        }    
+      } 
+       else {
+        console.log("isscheduleRIGHT is NOT RIGHT");
+        const dataForCreateSchedule = {
           dateAndTimeMerger,
           lesson_id, 
           course_id,
@@ -56,27 +73,12 @@ function ModalForLessonConfiguration(props) {
         }; 
         // console.log("dataForGetSchedule", dataForGetSchedule)
         let schedule = await axios({
-          method: "put",
-          url: `${globals.productionServerDomain}/updateSchedule`,
-          data: dataForUpdateSchedule,
-        })  
-      }    
-    } 
-     else {
-      console.log("isscheduleRIGHT is NOT RIGHT");
-      const dataForCreateSchedule = {
-        dateAndTimeMerger,
-        lesson_id, 
-        course_id,
-        student_id 
-      }; 
-      // console.log("dataForGetSchedule", dataForGetSchedule)
-      let schedule = await axios({
-        method: "post",
-        url: `${globals.productionServerDomain}/createSchedule`,
-        data: dataForCreateSchedule,
-      })
-    } 
+          method: "post",
+          url: `${globals.productionServerDomain}/createSchedule`,
+          data: dataForCreateSchedule,
+        })
+      }  
+    }
   } 
  
   const loadStudentLessons = async (studentId, programId) => {

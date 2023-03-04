@@ -246,7 +246,13 @@ export default function HeaderStudent(props) {
           {/* <span>Баланс - {balance * 10}</span> */}
           {menuVisible && (
             <ul className={`menu ${menuVisible ? "menu-active" : ""}`}>
-              <li className={styles.li}>Профиль</li>
+              <Link
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/profile`}
+                target="_blank"
+
+              >
+                <li className={styles.li}>Профиль</li>
+              </Link>
               <li className={styles.li} onClick={handleLogout}>Выйти</li>
             </ul>
           )}

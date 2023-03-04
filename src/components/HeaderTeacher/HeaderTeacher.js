@@ -312,7 +312,13 @@ export default function HeaderTeacher(props) {
     <div className={styles.dropMenu}>
       {menuVisible && (
         <ul className={classnames(styles.menu, {[styles.menuActive]: menuVisible})}>
+          <Link
+            href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/profile`}
+            target="_blank"
+
+          >
           <li className={styles.li}>Профиль</li>
+          </Link>
           <li className={styles.li} onClick={handleLogout}>Выйти</li>
         </ul>
       )}

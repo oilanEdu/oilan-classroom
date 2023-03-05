@@ -15,10 +15,10 @@ let socket;
 
 export const connectWithWebSocket = () => {
   socket = socketClient(SERVER);
-  console.log('socket', socket)
+  // console.log('socket', socket)
   socket.on('connection', () => {
     console.log('succesfully connected with wss server');
-    console.log(socket);
+    // console.log(socket);
   });
 
   socket.on('broadcast', (data) => {
@@ -61,8 +61,12 @@ export const connectWithWebSocket = () => {
   });
 };
 
+export const sendMessage = (type, data) => {
+  socket.emit(type, data);
+};
+
 export const registerNewUser = (username) => {
-  console.log('userName', username)
+  // console.log('userName', username)
   socket.emit('register-new-user', {
     username: username,
     socketId: socket.id

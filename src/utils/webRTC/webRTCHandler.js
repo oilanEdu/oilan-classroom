@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import store from '../../store/store';
 import { setLocalStream, setCallState, callStates, setCallingDialogVisible, setCallerUsername, setCallRejected, setRemoteStream, setScreenSharingActive, resetCallDataState, setMessage } from '../../store/actions/callActions';
 import * as wss from '../wssConnection/wssConnection';
@@ -38,6 +39,7 @@ export const getLocalStream = async () => {
         cameraStream = stream;
         audioStream = new MediaStream();
         stream.getAudioTracks().forEach(track => audioStream.addTrack(track));
+        wss.sendMessage('CAMERA_ON', connectedUserSocketId); // <-- Add this line
       } catch (err) {
         console.log('error occured when trying to get an access to get local camera stream');
         console.log(err);
@@ -60,6 +62,7 @@ export const getLocalStream = async () => {
         audioStream.getTracks().forEach(track => combinedStream.addTrack(track));
         videoStream.getTracks().forEach(track => combinedStream.addTrack(track));
         screenSharingStream = combinedStream;
+        wss.sendMessage('SCREEN_SHARING_ON', connectedUserSocketId); // <-- Add this line
       } catch (err) {
         console.log('error occured when trying to get an access to get local screen sharing stream');
         console.log(err);
@@ -71,6 +74,19 @@ export const getLocalStream = async () => {
     createPeerConnection();
   }
 };
+
+// export const getLocalStream = () => {
+//   navigator.mediaDevices.getUserMedia(defaultConstrains)
+//     .then(stream => {
+//       store.dispatch(setLocalStream(stream));
+//       store.dispatch(setCallState(callStates.CALL_AVAILABLE));
+//       createPeerConnection();
+//     })
+//     .catch(err => {
+//       console.log('error occured when trying to get an access to get local stream');
+//       console.log(err);
+//     });
+// };
 
 const createPeerConnection = () => {
   if (peerConnection) {
@@ -228,9 +244,64 @@ export const checkIfCallIsPossible = () => {
   }
 };
 
+// export const switchForScreenSharingStream = async () => {
+//   if (!store.getState().call.screenSharingActive) {
+//     try {
+//       screenSharingStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+//       store.dispatch(setScreenSharingActive(true));
+//       const senders = peerConnection.getSenders();
+//       const sender = senders.find(sender => sender.track.kind === screenSharingStream.getVideoTracks()[0].kind);
+//       sender.replaceTrack(screenSharingStream.getVideoTracks()[0]);
+//     } catch (err) {
+//       console.error('error occured when trying to get screen sharing stream', err);
+//     }
+//   } else {
+//     const localStream = store.getState().call.localStream;
+//     const senders = peerConnection.getSenders();
+//     const sender = senders.find(sender => sender.track.kind === localStream.getVideoTracks()[0].kind);
+//     sender.replaceTrack(localStream.getVideoTracks()[0]);
+//     store.dispatch(setScreenSharingActive(false));
+//     screenSharingStream.getTracks().forEach(track => track.stop());
+//   }
+// };
+
+// export const switchForScreenSharingStream = async () => {
+//   store.dispatch(setScreenSharingActive(!store.getState().call.screenSharingActive));
+//   getLocalStream();
+// };
+
 export const switchForScreenSharingStream = async () => {
-  store.dispatch(setScreenSharingActive(!store.getState().call.screenSharingActive));
-  getLocalStream();
+  const screenSharingActive = store.getState().call.screenSharingActive;
+  const localStream = store.getState().call.localStream;
+  const audioTrack = localStream.getAudioTracks()[0];
+  const videoTrack = screenSharingActive
+    ? screenSharingStream.getVideoTracks()[0]
+    : localStream.getVideoTracks()[0]; 
+
+  try {
+    if (!screenSharingActive) {
+      // Switch to screen sharing
+      screenSharingStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+      audioTrack && screenSharingStream.addTrack(audioTrack);
+      store.dispatch(setScreenSharingActive(true));
+      getLocalStream();
+    } else {
+      // Switch back to camera
+      const senders = peerConnection.getSenders();
+      const sender = senders.find(sender => sender.track.kind === videoTrack.kind);
+      sender.replaceTrack(localStream.getVideoTracks()[0]);
+      store.dispatch(setScreenSharingActive(false));
+      screenSharingStream.getTracks().forEach(track => track.stop());
+      getLocalStream();
+    }
+
+    const senders = peerConnection.getSenders();
+    const sender = senders.find(sender => sender.track.kind === videoTrack.kind);
+    sender.replaceTrack(videoTrack);
+
+  } catch (err) {
+    console.error('error occured when trying to switch stream', err);
+  }
 };
 
 export const handleUserHangedUp = () => {

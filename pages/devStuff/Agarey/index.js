@@ -30,22 +30,24 @@ const Index = () => {
 	const [role, setRole] = useState(null)
 	const [needRoom, setNeedRoom] = useState(true)
 	const [goMeet, setGoMeet] = useState(false)
+	const [actualRoom, setActualRoom] = useState('')
 
 	useEffect(() => {
-		console.log('localStorage', localStorage)
+		// console.log('localStorage', localStorage)
+		console.log('actualRoom', actualRoom)
 	   	setRoom(router.query.room)
 	   	setRole(router.query.role)
-	   	console.log('check', check)
-	}, [router.query]);
+	   	// console.log('check', check)
+	}, [router.query, actualRoom]);
 
-	console.log('router', room) 
-	console.log('role', role)
+	// console.log('router', room) 
+	// console.log('role', role)
 
 	useEffect(() => {
       (async () => {
       	if (!teacher || !student) {
 		    let data = room;
-		    console.log(room);
+		    // console.log(room);
 		    let getStudentByLessonKey = await axios.post(`${globals.productionServerDomain}/getStudentByLessonKey/` + data);
 		    setStudent(getStudentByLessonKey['data'][0]);
 		    setSelectedStudentId(student?.student_id);
@@ -60,15 +62,14 @@ const Index = () => {
 	  const dispatch = useDispatch();
 	  const router = useRouter();
 	  const handleSubmitButtonPressed = () => {
-	  	console.log('status', check)
+	  	// console.log('status', check)
 	  	connectWithWebSocket()
 	  	if (!room || !student || username || !role || !teacher){
 	  		registerNewUser(username);
 	    	dispatch(setUsername(username));
 	  	} else {
-	  		registerNewUser((role == 'teacher')?teacher?.name:student?.name);
-	  		(role == 'teacher')?registerNewUser('2'):null
-	    	dispatch(setUsername((role == 'teacher')?teacher?.name:student?.name));
+	  		registerNewUser((role == 'teacher')?teacher?.url:student?.nickname);
+	    	dispatch(setUsername((role == 'teacher')?teacher?.url:student?.nickname));
 	  	}
 	  };
 
@@ -145,15 +146,18 @@ const Index = () => {
 
 	const joinRoom = (groupCallRooms) => {
 		groupCallRooms?.forEach(roomy => {
-			if (roomy.hostName == student?.name || roomy.hostName == teacher?.name){
+			// console.log('roomy', roomy)
+			if (roomy.hostName == student?.nickname || roomy.hostName == teacher?.url){
 				setNeedRoom(false)
 				if (role == 'student'){
-					const roomy = groupCallRooms.find(roomy => roomy.hostName === teacher?.name);
+					const roomy = groupCallRooms.find(roomy => roomy.hostName === teacher?.url);
 					webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId);
+					setActualRoom(roomy)
 				}
 				if (role == 'teacher'){
-					const roomy = groupCallRooms.find(roomy => roomy.hostName === student?.name);
+					const roomy = groupCallRooms.find(roomy => roomy.hostName === student?.nickname);
 					webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId);
+					setActualRoom(roomy)
 				}
 			}
 		})	
@@ -161,11 +165,13 @@ const Index = () => {
 	}
 
 	const createRoom = (groupCallRooms) => {
-		const roomExists = groupCallRooms.some(roomy => roomy.hostName === (role === 'student' ? teacher?.name : student?.name));
+		const roomExists = groupCallRooms.some(roomy => roomy.hostName === (role === 'student' ? teacher?.url : student?.nickname));
   		if (roomExists) {
+  			console('roomExists', roomExists)
     		setNeedRoom(false)
   		} else {
     		if (needRoom) {
+    			console.log('needRoom', needRoom)
       			webRTCGroupCallHandler.createNewGroupCall();
       			setNeedRoom(false);
     		} 
@@ -176,17 +182,17 @@ const Index = () => {
 		const username = useSelector(state => state.dashboard.username);
 		const callState = useSelector(state => state.call.callState);
 		const groupCallRooms = useSelector(state => state.dashboard.groupCallRooms);
+		const activeUsers = useSelector(state => state.dashboard.activeUsers);
 		let roomExists
 		const leaveClick = () => {
-			window.location.reload() 
+			window.location.reload()
 		} 
 		useEffect(() => {
-			console.log('PROPSMAION', props)
 			webRTCHandler.getLocalStream();
 			webRTCGroupHandler.connectWithMyPeer();
-			roomExists = groupCallRooms.some(roomy => roomy.hostName === (role === 'student' ? teacher?.name : student?.name));
-			console.log('groupCallRooms', groupCallRooms)
-		}, [groupCallRooms, roomExists]); 
+			roomExists = groupCallRooms.some(roomy => roomy.hostName === (role === 'student' ? teacher?.url : student?.nickname));
+			// console.log('groupCallRooms', groupCallRooms)
+		}, [groupCallRooms, roomExists, webRTCHandler]);
 
 		return (
 			<>
@@ -195,8 +201,8 @@ const Index = () => {
 						<div className={styles.dashboard_container}>
 							<div className={styles.dashboard_left_section}>
 								<div className={styles.dashboard_content_container}>
-									<DirectCall role={role} />
-									<GroupCall role={role} username={username} check={check} setCheck={setCheck} goMeet={goMeet} setGoMeet={setGoMeet}/>
+									{/*<DirectCall role={role}/>*/}
+									<GroupCall role={role} groupCallRooms={groupCallRooms} activeUsers={activeUsers} username={username} check={check} setCheck={setCheck} goMeet={goMeet} setGoMeet={setGoMeet}/>
 									{callState !== callStates.CALL_IN_PROGRESS && (
 										//<DashboardInformation username={username} />
 										<></>

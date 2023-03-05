@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import styles from './ActiveUsersList.module.css';
 
 const ActiveUsersList = ({ activeUsers, callState }) => {
+
   return (
     <div className='active_user_list_container'>
       {activeUsers.map((activeUser) =>

@@ -16,9 +16,9 @@ export const connectWithMyPeer = () => {
       port: '3031',
       path: '/peerjs',
     });
-    console.log('myPeer', myPeer)
-    console.log('window', window)
-    console.log('window.navigator', window.navigator)
+    // console.log('myPeer', myPeer)
+    // console.log('window', window)
+    // console.log('window.navigator', window.navigator)
     myPeer.on('open', (id) => {
     console.log('succesfully connected with peer server');
     myPeerId = id;
@@ -51,7 +51,7 @@ export const createNewGroupCall = () => {
 export const joinGroupCall = (hostSocketId, roomId) => {
   const localStream = store.getState().call.localStream;
   groupCallRoomId = roomId;
-  console.log('test', myPeerId, hostSocketId, roomId, localStream.id)
+  // console.log('test', myPeerId, hostSocketId, roomId, localStream.id)
   wss.userWantsToJoinGroupCall({
     peerId: myPeerId,
     hostSocketId,

@@ -1,10 +1,10 @@
 import React from 'react';
-//import { MdCallEnd, MdMic, MdMicOff, MdVideocam, MdVideocamOff, MdVideoLabel, MdCamera } from 'react-icons/md';
 import ConversationButton from './ConversationButton';
 import GroupCallButton from './../GroupCallButton/GroupCallButton';
 import { switchForScreenSharingStream, hangUp } from '../../../src/utils/webRTC/webRTCHandler';
 import * as webRTCGroupCallHandler from '../../../src/utils/webRTC/webRTCGroupCallHandler';
 import styles from './ConversationButtons.module.css';
+import { setScreenSharingActive } from '../../../src/store/actions/callActions';
 
 const ConversationButtons = (props) => {
   const {
@@ -14,13 +14,13 @@ const ConversationButtons = (props) => {
     setCameraEnabled,
     setMicrophoneEnabled,
     screenSharingActive,
+    setSharing,
     groupCall,
     setCheck,
     goMeet,
     setGoMeet
   } = props;
-  console.log('BUTTON PROPS', props)
-  // console.log('remoteStream1', remoteStream1)
+  
   const handleMicButtonPressed = () => {
     const micEnabled = localMicrophoneEnabled;
     localStream.getAudioTracks()[0].enabled = !micEnabled;

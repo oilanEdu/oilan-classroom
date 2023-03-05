@@ -83,7 +83,7 @@ export default function NewCourse({ show, setShow, teacher }) {
   const createCourse = async () => {
     const data = {
       title,
-      description,
+      description: 'Учебная программа',
       fullPrice,
       monthlyPrice,
       startDate: new Date(),
@@ -162,7 +162,7 @@ export default function NewCourse({ show, setShow, teacher }) {
                 <span>*</span>
               </div>
               <br/>
-              <div className={styles.input_container}>
+              {/*<div className={styles.input_container}>
                 <textarea
                   type="text"
                   value={description}
@@ -170,7 +170,7 @@ export default function NewCourse({ show, setShow, teacher }) {
                   onChange={(e) => setDescription(e.target.value)}>
                 </textarea>
               </div>
-              <br/>
+              <br/>*/}
               <div className={styles.url_input}>
                 <div className={styles.pass_data} style={{display: showLogData ? "block" : "none"}}>
                   <p className={styles.pass_data_head}>Для защиты данных наши условия для ссылки. </p>
@@ -191,7 +191,7 @@ export default function NewCourse({ show, setShow, teacher }) {
                   <span>*</span>
                 </div>
                 
-                <span>Используется в адресной строке. Пример: oilan-classroom.com/короткая ссылка</span>
+                <span>Используется в адресной строке. Пример: oilan-classroom.com/[короткая_ссылка]</span>
                 <span onClick={() => setShowLogData(!showLogData)} className={styles.login_cr}></span>
               </div>
               <div className={styles.input_container}>

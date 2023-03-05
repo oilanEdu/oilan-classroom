@@ -7,7 +7,7 @@ const LocalVideoView = props => {
 
   useEffect(() => {
     if (localStream) {
-      console.log('localStream', localStream)
+      // console.log('localStream', localStream)
       const localVideo = localVideoRef.current;
       localVideo.srcObject = localStream;
 

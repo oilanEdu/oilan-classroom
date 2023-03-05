@@ -5,17 +5,21 @@ const RemoteVideoView = props => {
   const { remoteStream } = props;
   const remoteVideoRef = useRef();
   const [stream, setStream] = useState(remoteStream);
-  console.log('remoteStream in RemoteVideoView', remoteStream)
+  
   
   useEffect(() => {
     setStream(remoteStream);
-    
-    console.log('PROPS', remoteStream.getAudioTracks())
-  }, [remoteStream]);
+    // console.log('PROPS', props)
+    // console.log('remoteStream', remoteStream)
+    // console.log('stream', stream)
+    // console.log('remoteStream.getTracks()', remoteStream.getTracks())
+    // console.log('remoteStream.getAudioTracks()[0].enabled', remoteStream.getAudioTracks()[0].enabled) 
+  }, []);
 
   useEffect(() => {
     if (remoteStream) {
       const remoteVideo = remoteVideoRef.current;
+
       remoteVideo.srcObject = stream;
 
       remoteVideo.onloadedmetadata = () => {

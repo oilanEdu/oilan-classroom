@@ -8,7 +8,6 @@ import { setLocalMicrophoneEnabled, setLocalCameraEnabled, setLocalStream, setCa
 import { connect } from 'react-redux';
 
 const GroupCallRoom = (props) => {
-  console.log('PROPS', props)
   const {
     localStream,
     callState,
@@ -22,7 +21,6 @@ const GroupCallRoom = (props) => {
 
 
   const { groupCallStreams } = props;
-  console.log('groupCallStreams', props)
 
   return (
     <div className={styles.group_call_room_container}>
@@ -31,7 +29,7 @@ const GroupCallRoom = (props) => {
         {
           groupCallStreams.map(stream => {
             return <>
-              <RemoteVideoView role={props.role} username={props.username} key={stream.id} remoteStream={stream} />
+              {stream && <RemoteVideoView role={props.role} username={props.username} key={stream.id} remoteStream={stream} />}
               
             </>
           })

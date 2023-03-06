@@ -26,6 +26,7 @@ padding-bottom: 40px;
 } */
 
 .modal {
+  max-height: 95vh;
     overflow: scroll;
     position: fixed;
     z-index: 500;

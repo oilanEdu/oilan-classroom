@@ -298,7 +298,7 @@ export default function NewStudent({ show, setShow, programs } ) {
                 >
                   {succesMessage}
                 </span>
-                <CopyLink succesMessage={succesMessage} url={"oilan-classroom.com/cabinet/student/" + nickname + "/program/" + lessonProgramId}/>
+                <CopyLink succesMessage={succesMessage} url={"oilan-classroom.com/cabinet/student/" + nickname + "/course/" + courseUrl + "?program=" + lessonProgramId}/>
                 <span style={{color: "#3B3B3BC9", display: succesMessage === "" ? "none" : "inline-block"}}>
                 Поделитесь со студентом ссылкой на его личный кабинет
                 </span>

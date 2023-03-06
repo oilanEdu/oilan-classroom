@@ -142,6 +142,40 @@ padding-bottom: 40px;
   border-radius: 3px;
 }
 
+.generate_pass {
+  border: none;
+  background: none;
+  color: #184A7A;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+.generate_pass_text {
+  padding: 10px;
+  border: 1px solid rgba(151, 151, 151, 0.8);
+  border-radius: 3px;
+  width: 70%;
+  text-align: start;
+  position: relative;
+}
+
+.generate_pass_copy {
+  background: url(https://realibi.kz/file/401602.png) no-repeat;
+  background-size: contain;
+  width: 15px;
+  display: block;
+  position: absolute;
+  height: 16px;
+  top: 13px;
+  right: 10px;
+  cursor: pointer;
+}
+
+
+.copy_input {
+  display: none;
+}
+
 .pass_data_left {
   width: 0;
   height: 0;
@@ -176,6 +210,12 @@ padding-bottom: 40px;
   border: 1px solid #C5DFFF;
   border-radius: 3px; 
   color: rgba(97, 119, 175, 0.6);
+}
+
+.form_input {
+  position: relative;
+  text-align: start;
+  margin-bottom: 10px;
 }
 
 .input_container {

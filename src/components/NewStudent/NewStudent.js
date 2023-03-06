@@ -2,11 +2,14 @@ import styles from "./NewStudent.module.css";
 import React, { useState, useEffect } from "react";
 import globals from "../../globals";
 import CopyLink from "../CopyLink/CopyLink";
+import { useClipboard } from 'use-clipboard-copy';
+const generator = require('generate-password');
 
 const axios = require("axios").default;
 
 export default function NewStudent({ show, setShow, programs } ) {
   const [showCreateStudent, setShowCreateStudent] = useState(false)
+  const clipboard = useClipboard();
 
   const [studentSurname, setStudentSurname] = useState("");
   const [studentName, setStudentName] = useState("");
@@ -28,6 +31,19 @@ export default function NewStudent({ show, setShow, programs } ) {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [succesMessage, setSuccesMessage] = useState("");
+
+  const [showGenetarePass, setShowGeneratePass] = useState(false);
+  const [generatePass, setGeneratePass] = useState("");
+
+  const generatePassHandler = (e) => {
+    e.preventDefault()
+    setShowGeneratePass(true);
+    setGeneratePass(generator.generate({
+      length: 12,
+	    numbers: true,
+      symbols: true,
+    }))
+  }
 
   const getTeachers = async () => {
     let result = await axios.get(`${globals.productionServerDomain}/getTeachers`)
@@ -199,6 +215,20 @@ export default function NewStudent({ show, setShow, programs } ) {
                     <p className={styles.pass_data_text}>латинские буквы</p>
                     <p className={styles.pass_data_text}>цифры</p>
                     <p className={styles.pass_data_text}>знаки пунктуации (!”$%/:’@[]^_)</p>
+                    {/* <button 
+                      onClick={(e) => generatePassHandler(e)}
+                      className={styles.generate_pass}
+                    >
+                      Сгенерировать логин
+                    </button>
+                    <div className={styles.generate_pass_text} style={{display: showGenetarePass ? "block" : "none"}}>
+                    {generatePass}
+                      <input className={styles.url_input} ref={clipboard.target} value={generatePass} readOnly />
+                      <span 
+                        className={styles.generate_pass_copy} 
+                        onClick={clipboard.copy}
+                      ></span>
+                    </div> */}
                     <div className={styles.pass_data_left}></div>
                   </div>
                   <div className={styles.input_container}>
@@ -213,6 +243,22 @@ export default function NewStudent({ show, setShow, programs } ) {
                   </div> 
                   <span onClick={() => setShowLogData(!showLogData)} className={styles.login_cr}></span>
                 </div>
+                <div className={styles.form_input}>
+                    <button 
+                      onClick={(e) => generatePassHandler(e)}
+                      className={styles.generate_pass}
+                    >
+                      Сгенерировать логин
+                    </button>
+                    <div className={styles.generate_pass_text} style={{display: showGenetarePass ? "block" : "none"}}>
+                      {generatePass}
+                      <input className={styles.copy_input} ref={clipboard.target} value={generatePass} readOnly />
+                      <span 
+                        className={styles.generate_pass_copy} 
+                        onClick={clipboard.copy}
+                      ></span>
+                    </div>
+                  </div>
                 <div className={styles.input_container}>
                   <select
                     className={styles.input_block}

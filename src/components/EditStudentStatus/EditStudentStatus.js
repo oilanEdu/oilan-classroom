@@ -7,8 +7,7 @@ import CopyLink from "../CopyLink/CopyLink";
 
 const axios = require("axios").default;
 
-export default function EditStudentStatus({ show, setShow, student, programs } ) {
-  const [showCreateStudent, setShowCreateStudent] = useState(false)
+export default function EditStudentStatus({ studentId, allStudentsLessons, show, setShow, student, programs } ) {
   console.log(student);
 
   const [studentSurname, setStudentSurname] = useState(student?.surname);
@@ -24,7 +23,8 @@ export default function EditStudentStatus({ show, setShow, student, programs } )
   const [students, setStudents] = useState([])
   const [roles, setRoles] = useState([])
   const [lessonProgramId, setLessonProgramId] = useState(0);
-  const [studentPrograms, setStudentPrograms] = useState([])
+  const [studentPrograms, setStudentPrograms] = useState([]);
+  const [editShow, setEditShow] = useState(false);
 
   const getTeachers = async () => {
     let result = await axios.get(`${globals.productionServerDomain}/getTeachers`)
@@ -82,7 +82,7 @@ export default function EditStudentStatus({ show, setShow, student, programs } )
     getLessons()
     getStudents()
     getRoles()
-  },[])
+  }, [])
 
   useEffect(() => {
     getProgramsByStudentId();
@@ -92,10 +92,10 @@ export default function EditStudentStatus({ show, setShow, student, programs } )
 
   const updateStudentData = async() => { 
     const data = {
-      name: studentName, 
-      surname: studentSurname, 
+      name: studentName,
+      surname: studentSurname,
       patronymic: studentPatronymic,
-      nickname, 
+      nickname,
       id: student.student_id
     }; 
 
@@ -113,11 +113,9 @@ export default function EditStudentStatus({ show, setShow, student, programs } )
       });
   };
 
-  console.log(student);
-
   const newProgramForStudent = async () => {
     const data = {
-      studentId: student.student_id, 
+      nickname: student.nickname, 
       courseId: student.course_id,
       programId: lessonProgramId
     };
@@ -148,40 +146,67 @@ export default function EditStudentStatus({ show, setShow, student, programs } )
     >
       <div className={styles.detailInfo}>
         <div className={styles.detailInfoHeader}>
-          <p>Изменение программ студента</p>
-          <p 
-            className={styles.close}
-            onClick={() => setShow(!show)}
-          >
-            X
-          </p>
+          <p>Профиль студента</p>
+          <div className={styles.detailInfoHeader_right}>
+            <span className={styles.profile_edit} onClick={() => setEditShow(!editShow)}></span>
+            <p 
+              className={styles.close}
+              onClick={() => setShow(!show)}
+            >
+              X
+            </p>
+          </div>
+          
         </div>
+        <div className={styles.profile}>
+          <div className={styles.profile_info} style={{display: !editShow ? "flex" : "none"}}>
+            <span>{studentName} {studentSurname} {studentPatronymic}</span>
+            <p>{studentId} | <span>{nickname}</span></p>
+          </div>
+          <div className={styles.profile_edit_container} style={{display: editShow ? "flex" : "none"}}>
+            <input value={studentName} onChange={(e) => setStudentName(e.target.value)} placeholder="Имя" />
+            <input value={studentSurname} onChange={(e) => setStudentSurname(e.target.value)} placeholder="Фамилия" />
+            <input value={studentPatronymic} onChange={(e) => setStudentPatronymic(e.target.value)} placeholder="Отчество" />
+            <input value={nickname} onChange={() => setNickname} placeholder="Никнейм" />
+            <button
+              onClick={() => {
+                updateStudentData();
+                setEditShow(!editShow);
+              }}
+            >Изменить</button>
+          </div>
+          <div className={styles.profile_message}>
+            <span>Здесь вы можете редактировать личные данные студента, добавлять уроки и программы</span>
+          </div>
+        </div>
+        
         <div className={styles.showDetailInfoContain}>
           <div className={styles.dataBlock}>
             <div className={styles.formBlock}>
               {studentPrograms?.map((program, index) => {
-                return <ProgramStatus index={index} program={program} studentPrograms={studentPrograms} setStudentPrograms={setStudentPrograms} />
+                return <ProgramStatus allStudentsLessons={allStudentsLessons} student={student} index={index} program={program} />
               })}
-              <p>Назначить студенту новую программу: </p><select
-                    onChange={(e) => setLessonProgramId(e.target.value)}
-                    value={lessonProgramId}>
-                      <option value="0" disabled>Выберите программу</option>
-                      {programs.map(program =>(
-                        <option value={program.id}>{program.title}</option>
-                          )
-                        )}
-                    </select><br/>
-              <p>Ссылка на личный кабинет студента: </p>
-              <CopyLink url={"oilan-classroom.com/cabinet/student/" + student?.nickname + "/course/" + student?.course_url}/>
-              <button 
-                className={styles.save_button}
-                onClick={() => {
-                  newProgramForStudent();
-                  setShow(false);
-                }}
-              >
-                Сохранить
-              </button>
+              <p className={styles.formBlock_text}>Назначить студенту новую программу: </p>
+              <div className={styles.new_program}>
+                <select
+                  onChange={(e) => setLessonProgramId(e.target.value)}
+                  value={lessonProgramId}
+                >
+                  <option value="0" disabled>Выберите программу</option>
+                  {programs.map(program =>(
+                    <option value={program.id}>{program.title}</option>
+                  ))}
+                </select><br/>
+                <button 
+                  className={styles.save_button}
+                  onClick={() => {
+                    newProgramForStudent();
+                    setShow(false);
+                  }}
+                >
+                  Ok
+                </button>
+              </div>
             </div>
           </div>
         </div>

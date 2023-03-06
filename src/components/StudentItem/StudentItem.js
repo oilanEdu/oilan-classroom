@@ -6,8 +6,9 @@ import EditStudentData from "../EditStudentData/EditStudentData";
 import EditStudentStatus from "../EditStudentStatus/EditStudentStatus";
 import axios from "axios";
 import globals from "../../globals";
+import ModalForLessonConfiguration from "../ModalForLessonConfiguration/ModalForLessonConfiguration";
 
-const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentForModal, programs, route }) => {
+const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentForModal, programs, route, updateStudentProgram, loadTeacherData, allStudentsLessons }) => {
   const router = useRouter();
   const [showSetting, setShowSetting] = useState(false);
   const [formattedTime, setFormattedTime] = useState() 
@@ -88,6 +89,7 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
     return id;
   }
 
+  console.log(studentPrograms);
   function getShiftedTime(date, minutes) {
     console.log("getShiftedTime", date, minutes);
     if (date != undefined) {
@@ -182,7 +184,7 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
       onClick={() => setShowSetting(!showSetting)}
     >
       <p className={showSetting ? styles.settingTitleShow : styles.settingTitleHide}>
-        Редактировать
+        Настройки
       </p>
       <div 
         className={styles.editSetData}
@@ -194,13 +196,16 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
             // setShowModalLesson(!showModalLesson);
             // setStudentForModal(student);
             setShowModalData(!showModalData)
+            setShowModalStatus(!showModalStatus);
+            setShowModalLesson(!showModalLesson);
+            setStudentForModal(student);
           }}
         >
-          Личные данные
+          Редактировать
         </span>
         {/* <div className={styles.sConfigureGear}></div> */}
       </div>
-      <div 
+      {/* <div 
         className={styles.editSetProg}
         style={{display: showSetting ? "block" : "none"}}
       >
@@ -213,14 +218,12 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
         >
           Статус/программа
         </span>
-        {/* <div className={styles.sConfigureGear}></div> */}
-      </div>
-      <div 
+      </div> */}
+      {/* <div 
         className={styles.editSetSh}
         style={{display: showSetting ? "block" : "none"}}
       >
         <span
-          // className={styles.sConfigure}
           onClick={() => {
             setShowModalLesson(!showModalLesson);
             setStudentForModal(student);
@@ -228,8 +231,7 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
         >
           Расписание
         </span>
-        {/* <div className={styles.sConfigureGear}></div> */}
-      </div>
+      </div> */}
       <div 
         className={styles.deleteSet}
         style={{display: showSetting ? "block" : "none"}}
@@ -249,20 +251,7 @@ const StudentItem = ({ student, showModalLesson, setShowModalLesson, setStudentF
         </span>
       </div>
     </div>
-    {/* <div className={styles.sConfigureWrapper}>
-      <span
-        className={styles.sConfigure}
-        onClick={() => {
-          setShowModalLesson(!showModalLesson);
-          setStudentForModal(student);
-        }}
-      >
-        Редактировать
-      </span>
-      <div className={styles.sConfigureGear}></div>
-    </div> */}
-    <EditStudentData student={student} show={showModalData} setShow={setShowModalData} />
-    <EditStudentStatus programs={programs} student={student} show={showModalStatus} setShow={setShowModalStatus} />
+    <EditStudentStatus studentId={optimizedId(student)} allStudentsLessons={allStudentsLessons} programs={programs} student={student} show={showModalStatus} setShow={setShowModalStatus} />
   </div>
 };
 

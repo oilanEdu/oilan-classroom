@@ -179,15 +179,6 @@ export default function EditStudentData({ show, setShow, student } ) {
                     required
                     onChange={(e) => setNickname(e.target.value)}
                   /><br/>
-               {/* Программа: <select
-                    onChange={(e) => setLessonProgramId(e.target.value)}
-                    value={lessonProgramId}>
-                      <option value="0" disabled>Выберите программу</option>
-                      {programs.map(program =>(
-                        <option value={program.id}>{program.title}</option>
-                          )
-                        )}
-                    </select><br/> */}
               <button 
                 onClick={() => {
                   updateStudentData();

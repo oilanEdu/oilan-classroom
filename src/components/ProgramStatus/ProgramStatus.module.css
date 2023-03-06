@@ -1,0 +1,29 @@
+.program_contain {
+  margin-bottom: 70px;
+}
+
+.timetablesWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+}
+
+.title {
+  font-size: 20px;
+  color: #005C9F;
+}
+
+.program_title {
+  color: #00CD21;
+  font-style: italic;
+}
+
+.check_end {
+  text-align: end;
+  color: #626262
+}
+
+.check_end input {
+  margin-left: 10px;
+}

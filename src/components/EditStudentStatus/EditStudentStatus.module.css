@@ -26,7 +26,7 @@ padding-bottom: 40px;
 } */
 
 .modal {
-  /* height: 90vh; */
+  max-height: 90vh;
   overflow: scroll;
   position: fixed;
   z-index: 500;
@@ -71,12 +71,91 @@ padding-bottom: 40px;
   display: flex;
   /*align-items: center;*/
   text-transform: uppercase;
-  color: #1E2432;
+  color: #3666B0;
   margin: 0px;
+}
+
+.profile {
+  display: flex;
+  justify-content: space-between;
+}
+.profile_info {
+  background: url(https://realibi.kz/file/251011.png) no-repeat;
+  background-size: 50px;
+  background-position: 0 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 40px;
+  padding-left: 60px;
+}
+
+.profile_info span {
+  font-size: 20px;
+  color: #1F1F1FE8;
+  padding: 0;
+}
+
+.profile_info p {
+  font-size: 15px;
+  color: #3666B0;
+  margin: 0;
+}
+
+
+.detailInfoHeader_right {
+  display: flex;
+}
+
+.profile_edit {
+  background: url(https://realibi.kz/file/616612.png) no-repeat;
+  display: inline-block;
+  width: 20px;
+  background-size: 18px;
+  background-position: 0 50%;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.profile_info p span {
+  font-size: 15px;
+  color: #30253566;
+}
+
+.profile_message {
+  width: 40%;
+  text-align: start;
+  margin-right: 20px;
+}
+
+.profile_message span {
+  font-size: 10px;
+  color: #3B3B3BC9;
 }
 
 .detailInfoContain{
   display: none;
+}
+
+.profile_edit_container {
+  flex-direction: column;
+  margin-left: 40px;
+  width: 40%;
+}
+
+.profile_edit_container input {
+  padding: 10px;
+  border: 1px solid #C5DFFF;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.profile_edit_container button {
+  background: #3666B0;
+  border: 1px solid #C5DFFF;
+  border-radius: 3px;
+  color: #fff;
+  padding: 8px;
 }
 
 .showDetailInfoContain{
@@ -96,7 +175,7 @@ padding-bottom: 40px;
 }
 
 .dataBlock{
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 100%;
   border-radius: 16px;
   display: flex;
@@ -106,38 +185,45 @@ padding-bottom: 40px;
 }
 
 .formBlock{
-  /*border: 1px solid black;*/
-  /* width: 40%; */
   display: flex;
   flex-direction: column;
   justify-content: start;
   text-align: start;
 }
 
-.formBlock div {
+/* .formBlock div {
   margin-bottom: 40px;
-}
+} */
 
 .formBlock select {
   margin: 20px 0;
   padding: 10px;
 }
 
-.formBlock p {
+.formBlock_text {
   font-weight: 700;
   font-size: 20px;
   margin: 0;
+  color: #005C9F;
+}
+
+.new_program {
+  display: flex;
+  align-items: center;
 }
 
 .save_button {
   height: 48px;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 22px;
-  color: #FFFFFF;
-  background: rgba(0, 122, 255, 1);
-  border-radius: 8px;
-  border: none;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    background: #ffffff;
+    border-radius: 8px;
+    color: #3666B0;
+    padding: 0px 20px;
+    margin-left: 20px;
+    border: none;
+    border: 2px solid #3666B0;
 }
 
 .close {

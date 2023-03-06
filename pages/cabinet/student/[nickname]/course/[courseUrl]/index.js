@@ -12,11 +12,14 @@ const StudentCourse = (props) => {
   const router = useRouter();
   const [courseUrl, setCourseUrl] = useState(router.query.courseUrl);
   const [nickname, setNickname] = useState(router.query.nickname);
+  const [programId, setProgramId] = useState(router.query.program);
   const [dataLoaded, setDataLoaded] = useState(false)
   const [ student, setStudent ] = useState([]);
   const [ lesson, setLesson ] = useState('');
   const [ lessons, setLessons ] = useState([]);
   const [ scores, setScores ] = useState([]);
+
+  console.log(router);
 
   const isInMainPage = true
 
@@ -26,7 +29,7 @@ const StudentCourse = (props) => {
       console.log(res.data);
       console.log(res.data[0] !== undefined);
       if (res.data.length !== 0) {
-        await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${courseUrl}&program_id=${res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(res => {
+        await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${courseUrl}&program_id=${programId ==! undefined ? programId : res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(res => {
           setLesson(res.data[0]);
           setLessons(res.data);
           setDataLoaded(true)
@@ -77,7 +80,8 @@ StudentCourse.getInitialProps = async (ctx) => {
     if(ctx.query.courseUrl !== undefined && ctx.query.nickname !== undefined) {
         return {
             courseUrl: ctx.query.courseUrl,
-            nickname: ctx.query.nickname
+            nickname: ctx.query.nickname,
+            program: ctx.query.program
         }
     }else{
         return {};

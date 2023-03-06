@@ -541,22 +541,6 @@ function TeacherCabinet(props) {
     if (typeof localStorage !== "undefined" && localStorage.getItem('login') !== null) {
     return (localStorage && teacher.url === localStorage.getItem('login') ?
       <>
-        {showModalLesson ? (
-          <>
-            <ModalForLessonConfiguration
-              showModalLesson={showModalLesson}
-              setShowModalLesson={setShowModalLesson}
-              student={studentForModal}
-              updateStudentProgram={updateStudentProgram}
-              loadTeacherData={loadTeacherData}
-              programs={programs}
-              allStudentsLessons={allStudentsLessons}
-            />
-          </>
-        ) : (
-          ""
-        )}
-
         <div style={{ backgroundColor: "#f1faff" }}>
           <HeaderTeacher
             white={true}
@@ -885,6 +869,9 @@ function TeacherCabinet(props) {
                               setStudentForModal={setStudentForModal} 
                               programs={programs}
                               route={router.query.url}
+                              updateStudentProgram={updateStudentProgram}
+                              loadTeacherData={loadTeacherData}
+                              allStudentsLessons={allStudentsLessons}
                             />
                           )) 
                         : <StudentItem 
@@ -894,6 +881,9 @@ function TeacherCabinet(props) {
                             setStudentForModal={setStudentForModal} 
                             programs={programs}
                             route={router.query.url}
+                            updateStudentProgram={updateStudentProgram}
+                            loadTeacherData={loadTeacherData}
+                            allStudentsLessons={allStudentsLessons}
                           />
                       )
                     }

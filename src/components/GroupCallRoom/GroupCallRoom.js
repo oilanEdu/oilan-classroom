@@ -35,7 +35,7 @@ const GroupCallRoom = (props) => {
           })
         }
       </div>
-      <ConversationButtons {...props} />
+      <ConversationButtons role={props.role} {...props} />
     </div>
   );
 };

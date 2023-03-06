@@ -18,7 +18,8 @@ const ConversationButtons = (props) => {
     groupCall,
     setCheck,
     goMeet,
-    setGoMeet
+    setGoMeet, 
+    role
   } = props;
   
   const handleMicButtonPressed = () => {
@@ -83,6 +84,7 @@ const ConversationButtons = (props) => {
             </span>
           </button>
         </ConversationButton>
+        {role == 'teacher'?<>
         <ConversationButton onClickHandler={handleScreenSharingButtonPressed}>
           <button
             className={styles.shareButton}
@@ -99,7 +101,7 @@ const ConversationButtons = (props) => {
             >
             </span>
           </button>
-        </ConversationButton>
+        </ConversationButton></>:<></>}
       </div>
       <div className={styles.rightRow}>
         <GroupCallButton onClickHandler={leaveRoom} label='Leave room' />

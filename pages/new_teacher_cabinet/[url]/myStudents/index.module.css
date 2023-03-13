@@ -1,0 +1,65 @@
+.students_head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.my_students {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.student_item {
+  display: flex;
+  justify-content: space-between;
+  background: #eeeeee;
+  margin: 5px;
+}
+
+.sortOptions {
+	flex-direction: column;
+	margin-bottom: 30px;
+	position: absolute;
+	width: 100%;
+	z-index: 9;
+}
+
+.sortContainer {
+	position: relative;
+	cursor: pointer;
+}
+
+.sortTitle {
+	width: 285px;
+  border: 1px solid #A2A7B2;
+  padding: 15px 40px;
+  background: url(https://realibi.kz/file/523525.png) no-repeat #fff;
+  background-position: 10px 50%;
+  background-size: 20px;
+  border-radius: 8px;
+}
+
+.sortHide {
+	background: url(https://realibi.kz/file/618464.png) no-repeat;
+  background-position: right 50%;
+  background-size: 12px;
+  padding: 0 121px 0 0;
+}
+
+.sortShow {
+	background: url(https://realibi.kz/file/635945.png) no-repeat;
+  background-position: right 50%;
+  background-size: 12px;
+  padding: 0 121px 0 0;
+}
+
+.sortOptions span {
+	padding: 15px;
+	background: #fff;
+	border-bottom: 1px solid #8E8E93;
+	cursor: pointer;
+}
+
+.sortOptions span:hover {
+	background: #f1faff;
+	cursor: pointer;
+}

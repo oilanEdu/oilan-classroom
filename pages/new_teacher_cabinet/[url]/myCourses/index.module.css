@@ -1,0 +1,13 @@
+.mainRow{
+	display: flex;
+	flex-direction: row;
+}
+
+.courseRow{
+	display: flex;
+	flex-direction: row;
+}
+
+.courseRow span{
+	border: 1px solid black;
+}

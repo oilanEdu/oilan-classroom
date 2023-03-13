@@ -1,0 +1,389 @@
+@font-face {
+  font-family: "Rubik Regular";
+  src: url("../../../public/fonts/Rubik/Rubik-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Rubik Medium";
+  src: url("../../../public/fonts/Rubik/Rubik-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Rubik Bold";
+  src: url("../../../public/fonts/Rubik/Rubik-Bold.ttf") format("truetype");
+}
+.outerContainer {
+
+}
+
+.menu-active {
+  display: block;
+}
+
+.dropMenu{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  width: 100%
+}
+
+.meni {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  z-index: 1;
+  display: none;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  min-width: 140px;
+}
+
+.li {
+  list-style-type: none;
+  display: block;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'Noto Sans Regular';
+  font-size: 14px;
+  color: #212121;
+}
+
+.li:hover {
+  background-color: lightgray;
+}
+
+.desktopHeader {
+  width: 100%;
+  display: flex;
+  height: auto;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+}
+.menuButtonBody {
+  display: none;
+}
+.header {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  color: black;
+  /* background: linear-gradient(90deg, #7365C6 1.99%, #6657BF 46.33%, #412FAE 98.22%);*/
+  z-index: auto;
+  padding-left: 5%;
+  padding-right: 5%;
+  position: sticky;
+  top: 0;
+}
+.whiteHeader {
+  padding: 0 120px;
+  margin: 0 auto;
+  width: 1440px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f1faff;
+  z-index: 6;
+  padding-left: 5%;
+  padding-right: 5%;
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+  order: 1;
+  height: auto;
+  width: auto;
+  display: flex;
+}
+.searchBlock {
+  order: 2;
+  display: flex;
+}
+.searchInput {
+  border-radius: 10px 0 0 10px;
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  width: 300px;
+}
+.searchInput:focus {
+  outline: none;
+}
+.searchIconBody {
+  padding: 5px;
+  border-radius: 0 10px 10px 0;
+  background-color: #6d8bfa;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+.searchIcon {
+  height: 24px;
+}
+.menu {
+  display: flex;
+  z-index: 3;
+  order: 2;
+  height: auto;
+  align-content: center;
+  align-items: center;
+}
+
+.menu_ul {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: auto;
+  order: 2;
+  list-style: none;
+  font-size: 18px;
+  margin: 0;
+}
+
+.menu_ul li a {
+  font-family: "Noto Sans Medium";
+  cursor: pointer;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: auto;
+  margin: 20px;
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.menu_ul li a:hover {
+  /* text-decoration: none; */
+  text-decoration-line: underline;
+  cursor: pointer;
+}
+.link > a {
+  color: white;
+  font-family: "Rubik Medium";
+  cursor: pointer;
+  text-decoration: none;
+}
+.contact {
+  display: flex;
+  align-items: center;
+  order: 3;
+  padding-left: 20px;
+  cursor: pointer;
+}
+
+.contactImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin-right: 20px;
+}
+
+.contactDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactName {
+  font-family: 'Noto Sans Bold';
+  font-size: 16px;
+}
+
+.contactRole {
+  font-family: 'Noto Sans Regular';
+  font-size: 14px;
+  color: #757575;
+}
+
+.link{
+    color: black;
+    text-decoration: none;
+    font-family: "Rubik Regular";
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+}
+.phone {
+    background: url("https://realibi.kz/file/520994.png") no-repeat;
+    background-size: 24px 24px;
+    background-position: 0 50%;
+    padding: 3px;
+    padding-left: 30px;
+}
+.mobileMenu {
+  display: none;
+}
+.svg > * {
+  transition: 0.3s;
+}
+.svg:hover path {
+  transition: 0.3s;
+  fill: rgba(246, 137, 57, 1);
+}
+.svg:hover rect {
+  transition: 0.3s;
+  fill: rgba(246, 137, 57, 1);
+}
+.svg:hover circle {
+  transition: 0.3s;
+  fill: rgba(246, 137, 57, 1);
+}
+/* .svg:hover {
+} */
+
+.studentCard {
+  display: flex;
+  align-items: center;
+}
+.studentAvatar {
+  height: 42px;
+  width: 42px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.studentInfo {
+  display: flex;
+  flex-direction: column;
+}
+.contactName {
+  font-family: 'Noto Sans Bold';
+  font-size: 16px;
+}
+.exitBtn {
+  font-size: 14px;
+  font-family: "Rubik Medium";
+}
+.exitBtn:hover {
+  text-decoration: underline;
+}
+@media screen and (max-width: 1440px) {
+  .whiteHeader {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .header {
+    width: 100%;
+    display: flex;
+    z-index: 7;
+  }
+  .whiteHeader {
+    width: 100%;
+    display: flex;
+    z-index: 7;
+  }
+  .logo {
+    order: 1;
+    width: auto;
+    margin: 10px 0px;
+  }
+  .menu {
+    display: none;
+  }
+  .searchBlock {
+    order: 2;
+  }
+  .menuButtonBody {
+    order: 3;
+    display: flex;
+    align-items: center;
+  }
+  .menuButtonBody span {
+    display: none;
+  }
+  .mobileMenu {
+    transition: 0.5s;
+    display: block;
+    width: 100%;
+  }
+  .menu_ul {
+    padding: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .menu_ul li a {
+    font-size: 16px;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  .svg {
+    height: 40px;
+    width: 85px;
+  }
+}
+@media screen and (max-width: 761px) {
+  .header {
+    width: 100%;
+    display: flex;
+    z-index: 7;
+  }
+  .whiteHeader {
+    width: 100%;
+    display: flex;
+    z-index: 7;
+  }
+  .logo {
+    order: 3;
+    width: auto;
+    margin: 10px 0px;
+  }
+  .menu {
+    display: none;
+  }
+  .contact{
+    display: none;
+  }
+  .searchBlock {
+    order: 2;
+  }
+  .searchInput {
+    width: 100px;
+  }
+  .menuButtonBody {
+    order: 1;
+    display: flex;
+    align-items: center;
+  }
+  .mobileMenu {
+    transition: 0.5s;
+    display: block;
+    width: 100%;
+  }
+  .menu_ul {
+    padding: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .menu_ul li a {
+    font-size: 16px;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  .svg {
+    height: 40px;
+    width: 85px;
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  .logo {
+    order: 1;
+    width: 100px;
+    margin: 10px 0px;
+    display: block;
+  }
+}

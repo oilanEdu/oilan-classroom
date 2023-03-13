@@ -231,17 +231,27 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
     const [coursesOfStudent, setCoursesOfStudent] = useState([])
     const getStudentCoursesAndPrograms = async () => {
       const response = await axios.get(`${globals.productionServerDomain}/getAllCoursesAndProgramsOfStudent?studentId=${student[0].id}`)
-      const data = {
-          courseId: response.data[0].course_id
+      const allCoursesOfStudent = response.data
+      let massiveOfUrls = []
+      for (let index = 0; index < allCoursesOfStudent.length; index++) {
+        const element = allCoursesOfStudent[index];
+        const data = {
+          courseId: element.course_id
         }
-      let result = await axios.post(`${globals.productionServerDomain}/getCourseById`, data)
-      setCoursesOfStudent(result.data)
+        let result = await axios.post(`${globals.productionServerDomain}/getCourseById`, data)
+        massiveOfUrls.push({url: result.data[0].url, programId: element.program_id})
+      } 
+      massiveOfUrls
+      // massiveOfUrls.filter((item, index) => item === index);
+      // let test2 = [...new Set(massiveOfUrls)]
+      setCoursesOfStudent(massiveOfUrls)  
   }
   useEffect(() => {
       if (student != undefined) {
           getStudentCoursesAndPrograms()
       }
   }, [student])
+  // url={"oilan-classroom.com/cabinet/student/" + student?.nickname + "/course/" + program.course_url + "?program=" + program.program_id}
 
   return <div className={styles.container}>     
     <GoToLessonWithTimerComponent isTeacher={false} url={student[0].nickname} nickname={nickname} courseUrl={courseUrl}/>
@@ -331,6 +341,14 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
         </div>
       </div>
     </div>
+    {/* <div>
+        <h3>Ваши программы</h3>
+        <div className={styles.linksToOtherPrograms}>
+        {coursesOfStudent.map(el => <a href={"https://oilan-classroom.com/cabinet/student/" + student[0].nickname + "/course/" + el.url + "?program=" + el.programId}>
+          {"https://oilan-classroom.com/cabinet/student/" + student[0].nickname + "/course/" + el.url + "?program=" + el.programId}
+        </a>)}
+      </div>
+      </div> */}
   </div> 
 };
 

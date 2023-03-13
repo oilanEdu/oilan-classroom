@@ -8,6 +8,14 @@
 	flex-direction: row;
 }
 
-.courseRow span{
+.courseTitle {
 	border: 1px solid black;
+}
+.coursePrograms {
+	border: 1px solid black;
+}
+.courseButtons {
+	border: 1px solid black;
+	display: flex;
+	flex-direction: column;
 }

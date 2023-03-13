@@ -11,6 +11,8 @@ const myCourses = () => {
   const [teacher, setTeacher] = useState([])
   const [baseDataLoaded, setBaseDataLoaded] = useState(false)
   const [courses, setCourses] = useState([]);
+  const [programs, setPrograms] = useState([])
+  const [showAllPrograms, setShowAllPrograms] = useState(false);
 
   const isInMainPage = true;
 
@@ -33,6 +35,9 @@ const myCourses = () => {
     let teacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + teacherIdLocal)
     console.log('teacherCourses', teacherCourses)
     setCourses(teacherCourses['data'])
+    let teacherPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByTeacherId/` + teacherIdLocal)
+    console.log('teacherPrograms', teacherPrograms)
+    setPrograms(teacherPrograms['data'])
   }
 
   return <>
@@ -50,12 +55,33 @@ const myCourses = () => {
             <span>Мои курсы</span>
             <button>Создать курс</button>
           </div>
-          {courses.map(course => (
-            <div className={styles.courseRow}>
-              <span>{course.title}</span>
-              
-            </div>
-            ))}
+          {courses.map(course => {
+            const relevantPrograms = programs.filter(program => program.course_id === course.id);
+            const visiblePrograms = showAllPrograms ? relevantPrograms : relevantPrograms.slice(0, 2);
+
+            return (
+              <div className={styles.courseRow} key={course.id}>
+                <span className={styles.courseTitle}>{course.title}</span>
+                <div className={styles.coursePrograms}>
+                  <p>Предмет: {course.category_name}</p>
+                  <p>Программа: 
+                    {visiblePrograms.length > 0 ? visiblePrograms.map((program, index) => (
+                      <span key={program.id}>{program.title}{index !== visiblePrograms.length - 1 ? ', ' : ''}</span>
+                    )) : <span>отсутствует</span>}
+                    {relevantPrograms.length > 2 && (
+                      <span onClick={() => setShowAllPrograms(!showAllPrograms)}>
+                        {showAllPrograms ? '...' : `и еще ${relevantPrograms.length - 2}`}
+                      </span>
+                    )}
+                  </p>
+                </div>
+                <div className={styles.courseButtons}>
+                  <button>Перейти к программам</button>
+                  <button>Редактировать информацию</button>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </>
         :

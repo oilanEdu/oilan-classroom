@@ -1,9 +1,9 @@
-.mainRow{
+.mainRow {
 	display: flex;
 	flex-direction: row;
 }
 
-.courseRow{
+.courseRow {
 	display: flex;
 	flex-direction: row;
 }
@@ -11,9 +11,11 @@
 .courseTitle {
 	border: 1px solid black;
 }
+
 .coursePrograms {
 	border: 1px solid black;
 }
+
 .courseButtons {
 	border: 1px solid black;
 	display: flex;

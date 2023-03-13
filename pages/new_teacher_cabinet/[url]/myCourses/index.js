@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import styles from './index.module.css'
 import globals from "../../../../src/globals";
@@ -27,7 +27,7 @@ const myCourses = () => {
   }, [teacherUrl, teacher]);
 
   const loadBaseData = async () => {
-    let data = teacherUrl 
+    let data = teacherUrl
     let getTeacherByUrl = await axios.post(`${globals.productionServerDomain}/getTeacherByUrl/` + data)
     const teacherIdLocal = getTeacherByUrl['data'][0]?.id
     console.log('teacherIdLocal', teacherIdLocal)
@@ -41,56 +41,56 @@ const myCourses = () => {
   }
 
   return <>
-  <div className={styles.container}>
-    <HeaderTeacher
-      white={true}
-      url={teacherUrl}
-      teacher={teacher}
-      isInMainPage={isInMainPage}
-    />
-    {courses?
-      <>
-        <div className={styles.myCourses}>
-          <div className={styles.mainRow}>
-            <span>Мои курсы</span>
-            <button>Создать курс</button>
-          </div>
-          {courses.map(course => {
-            const relevantPrograms = programs.filter(program => program.course_id === course.id);
-            const visiblePrograms = showAllPrograms ? relevantPrograms : relevantPrograms.slice(0, 2);
+    <div className={styles.container}>
+      <HeaderTeacher
+        white={true}
+        url={teacherUrl}
+        teacher={teacher}
+        isInMainPage={isInMainPage}
+      />
+      {courses ?
+        <>
+          <div className={styles.myCourses}>
+            <div className={styles.mainRow}>
+              <span>Мои курсы</span>
+              <button>Создать курс</button>
+            </div>
+            {courses.map(course => {
+              const relevantPrograms = programs.filter(program => program.course_id === course.id);
+              const visiblePrograms = showAllPrograms ? relevantPrograms : relevantPrograms.slice(0, 2);
 
-            return (
-              <div className={styles.courseRow} key={course.id}>
-                <span className={styles.courseTitle}>{course.title}</span>
-                <div className={styles.coursePrograms}>
-                  <p>Предмет: {course.category_name}</p>
-                  <p>Программа: 
-                    {visiblePrograms.length > 0 ? visiblePrograms.map((program, index) => (
-                      <span key={program.id}>{program.title}{index !== visiblePrograms.length - 1 ? ', ' : ''}</span>
-                    )) : <span>отсутствует</span>}
-                    {relevantPrograms.length > 2 && (
-                      <span onClick={() => setShowAllPrograms(!showAllPrograms)}>
-                        {showAllPrograms ? '...' : `и еще ${relevantPrograms.length - 2}`}
-                      </span>
-                    )}
-                  </p>
+              return (
+                <div className={styles.courseRow} key={course.id}>
+                  <span className={styles.courseTitle}>{course.title}</span>
+                  <div className={styles.coursePrograms}>
+                    <p>Предмет: {course.category_name}</p>
+                    <p>Программа:
+                      {visiblePrograms.length > 0 ? visiblePrograms.map((program, index) => (
+                        <span key={program.id}>{program.title}{index !== visiblePrograms.length - 1 ? ', ' : ''}</span>
+                      )) : <span>отсутствует</span>}
+                      {relevantPrograms.length > 2 && (
+                        <span onClick={() => setShowAllPrograms(!showAllPrograms)}>
+                          {showAllPrograms ? '...' : `и еще ${relevantPrograms.length - 2}`}
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                  <div className={styles.courseButtons}>
+                    <button>Перейти к программам моих лучших в мире занятий</button>
+                    <button>Редактировать информацию</button>
+                  </div>
                 </div>
-                <div className={styles.courseButtons}>
-                  <button>Перейти к программам</button>
-                  <button>Редактировать информацию</button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </>
+              );
+            })}
+          </div>
+        </>
         :
-      <>
-        <div className={styles.noCourses}>
-          А курсов то и нет!
-        </div>
-      </>}
-  </div>
+        <>
+          <div className={styles.noCourses}>
+            А курсов то и нет!
+          </div>
+        </>}
+    </div>
   </>;
 };
 

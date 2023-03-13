@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import ConversationButtons from '../ConversationButtons/ConversationButtons';
 import styles from './GroupCallRoom.module.css';
 import GroupCallVideo from './GroupCallVideo';
@@ -16,20 +16,31 @@ const GroupCallRoom = (props) => {
     callRejected,
     hideCallRejectedDialog,
     setDirectCallMessage,
-    message
+    message, 
+    role, 
+    teacher, 
+    student
   } = props;
 
 
   const { groupCallStreams } = props;
 
+  const activeStreams = useMemo(() => {
+    return groupCallStreams.filter(stream => stream && callState);
+  }, [groupCallStreams, callState]); 
+
+  useEffect(() => {
+    console.log('activeStreams', activeStreams)
+  }, [activeStreams]);
+
   return (
     <div className={styles.group_call_room_container}>
       <div className={styles.group_call_videos_container}>
-        <LocalVideoView localStream={localStream} />
+        <LocalVideoView role={role} teacher={teacher} student={student} localStream={localStream} />
         {
-          groupCallStreams.map(stream => {
+          activeStreams.map(stream => {
             return <>
-              {stream && <RemoteVideoView role={props.role} username={props.username} key={stream.id} remoteStream={stream} />}
+              {stream && callState && <RemoteVideoView role={role} teacher={teacher} student={student} username={props.username} key={stream.id} remoteStream={stream} />}
               
             </>
           })

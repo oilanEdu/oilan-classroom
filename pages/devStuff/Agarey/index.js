@@ -189,7 +189,7 @@ const Index = () => {
 		} 
 		useEffect(() => {
 			webRTCHandler.getLocalStream();
-			webRTCGroupHandler.connectWithMyPeer();
+			webRTCGroupHandler.connectWithMyPeer(username);
 			roomExists = groupCallRooms.some(roomy => roomy.hostName === (role === 'student' ? teacher?.url : student?.nickname));
 			// console.log('groupCallRooms', groupCallRooms)
 		}, [groupCallRooms, roomExists, webRTCHandler]);
@@ -202,7 +202,7 @@ const Index = () => {
 							<div className={styles.dashboard_left_section}>
 								<div className={styles.dashboard_content_container}>
 									{/*<DirectCall role={role}/>*/}
-									<GroupCall role={role} groupCallRooms={groupCallRooms} activeUsers={activeUsers} username={username} check={check} setCheck={setCheck} goMeet={goMeet} setGoMeet={setGoMeet}/>
+									<GroupCall role={role} teacher={teacher} student={student} groupCallRooms={groupCallRooms} activeUsers={activeUsers} username={username} check={check} setCheck={setCheck} goMeet={goMeet} setGoMeet={setGoMeet}/>
 									{callState !== callStates.CALL_IN_PROGRESS && (
 										//<DashboardInformation username={username} />
 										<></>

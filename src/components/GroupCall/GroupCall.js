@@ -7,7 +7,7 @@ import * as webRTCGroupCallHandler from '../../../src/utils/webRTC/webRTCGroupCa
 import GroupCallRoom from '../GroupCallRoom/GroupCallRoom';
 
 const GroupCall = (props) => {
-  console.log('GroupCall props', props)
+  // console.log('GroupCall props', props)
 
   // eslint-disable-next-line
   const { callState, localStream, groupCallActive, groupCallStreams } = props;
@@ -15,9 +15,9 @@ const GroupCall = (props) => {
   useEffect(() => {
     groupCallStreams.map(stream => {
       x = stream.getAudioTracks()[0].enabled 
-      console.log('GroupCall groupCallStream', stream)
-      console.log('GroupCall groupCallStream.getTracks()', stream.getTracks())
-      console.log('GroupCall groupCallStream.getTracks()[0].enabled', stream.getAudioTracks()[0].enabled) 
+      // console.log('GroupCall groupCallStream', stream)
+      // console.log('GroupCall groupCallStream.getTracks()', stream.getTracks())
+      // console.log('GroupCall groupCallStream.getTracks()[0].enabled', stream.getAudioTracks()[0].enabled) 
     }) 
   }, [groupCallStreams]);
   const createRoom = () => {
@@ -35,7 +35,7 @@ const GroupCall = (props) => {
         //<GroupCallButton onClickHandler={createRoom} label='Create room' />
         <></>
       }
-      {groupCallActive && <GroupCallRoom role={props.role} username={props.username} goMeet={props.goMeet} setGoMeet={props.setGoMeet} check={props.check} setCheck={props.setCheck} {...props} />}
+      {groupCallActive && <GroupCallRoom role={props.role} teacher={props.teacher} student={props.student} username={props.username} goMeet={props.goMeet} setGoMeet={props.setGoMeet} check={props.check} setCheck={props.setCheck} {...props} />}
       {groupCallActive && 
         //<GroupCallButton onClickHandler={leaveRoom} label='Leave room' />
         <></>

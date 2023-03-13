@@ -2,13 +2,17 @@ import * as wss from '../wssConnection/wssConnection';
 import { connectWithWebSocket } from '../wssConnection/wssConnection';
 import store from '../../store/store';
 import { setGroupCallActive, setCallState, callStates, setGroupCallIncomingStreams, clearGroupCallData } from '../../store/actions/callActions';
+import React, { useState, useMemo, useEffect } from 'react';
 
 let myPeer;
 let myPeerId;
 let groupCallRoomId;
 let groupCallHost = false;
+let username
 
-export const connectWithMyPeer = () => {
+export const connectWithMyPeer = (user) => {
+  console.log('connectWithMyPeer', user)
+  username = user
   if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
     const {Peer} = require('peerjs');
     myPeer = new Peer(undefined, {
@@ -28,8 +32,9 @@ export const connectWithMyPeer = () => {
     call.answer(store.getState().call.localStream);
     call.on('stream', incomingStream => {
       const streams = store.getState().call.groupCallStreams;
+      console.log('streams', streams)
       const stream = streams.find(stream => stream.id === incomingStream.id);
-
+      incomingStream.username = username
       if (!stream) {
         addVideoStream(incomingStream);
       }
@@ -48,11 +53,12 @@ export const createNewGroupCall = () => {
   store.dispatch(setCallState(callStates.CALL_IN_PROGRESS));
 };
 
-export const joinGroupCall = (hostSocketId, roomId) => {
+export const joinGroupCall = (hostSocketId, roomId, user) => {
   const localStream = store.getState().call.localStream;
+  localStream.username = user;
   groupCallRoomId = roomId;
-  // console.log('test', myPeerId, hostSocketId, roomId, localStream.id)
   wss.userWantsToJoinGroupCall({
+    username: user,
     peerId: myPeerId,
     hostSocketId,
     roomId,
@@ -65,13 +71,15 @@ export const joinGroupCall = (hostSocketId, roomId) => {
 
 export const connectToNewUser = (data) => {
   const localStream = store.getState().call.localStream;
+  localStream.username = username; // add username property to the localStream object
   if (myPeer) {
-  const call = myPeer.call(data.peerId, localStream);
+    const call = myPeer.call(data.peerId, localStream);
 
     call.on('stream', (incomingStream) => {
       const streams = store.getState().call.groupCallStreams;
+      console.log('streams2', streams)
       const stream = streams.find(stream => stream.id === incomingStream.id);
-
+      incomingStream.username = incomingStream.peerId === myPeerId ? username : incomingStream.username;
       if (!stream) {
         addVideoStream(incomingStream);
       }
@@ -87,7 +95,7 @@ export const leaveGroupCall = () => {
       peerId: myPeerId
     });
   } else {
-    wss.userLeftGroupCall({
+    wss.userLeftGroupCall({ 
       streamId: store.getState().call.localStream.id,
       roomId: groupCallRoomId
     });
@@ -103,6 +111,7 @@ export const clearGroupData = () => {
   connectWithMyPeer();
 
   const localStream = store.getState().call.localStream;
+  localStream.username = username
   localStream.getVideoTracks()[0].enabled = true;
   if (localStream.getAudioTracks()){
     localStream.getAudioTracks()[0].enabled = true;

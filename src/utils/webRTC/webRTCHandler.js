@@ -279,7 +279,7 @@ export const switchForScreenSharingStream = async () => {
     : localStream.getVideoTracks()[0]; 
 
   try {
-    if (!screenSharingActive) {
+    if (!screenSharingActive || !store.getState().call.screenSharingActive) {
       // Switch to screen sharing
       screenSharingStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
       audioTrack && screenSharingStream.addTrack(audioTrack);
@@ -288,6 +288,7 @@ export const switchForScreenSharingStream = async () => {
     } else {
       // Switch back to camera
       const senders = peerConnection.getSenders();
+      // console.log('senders', senders)
       const sender = senders.find(sender => sender.track.kind === videoTrack.kind);
       sender.replaceTrack(localStream.getVideoTracks()[0]);
       store.dispatch(setScreenSharingActive(false));
@@ -296,6 +297,7 @@ export const switchForScreenSharingStream = async () => {
     }
 
     const senders = peerConnection.getSenders();
+    // console.log('senders', senders)
     const sender = senders.find(sender => sender.track.kind === videoTrack.kind);
     sender.replaceTrack(videoTrack);
 

@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import styles from "./RemoteVideoView.module.css";
 
 const RemoteVideoView = props => {
-  const { remoteStream } = props;
+  const { remoteStream, teacher, student, role } = props;
   const remoteVideoRef = useRef();
   const [stream, setStream] = useState(remoteStream);
   
@@ -17,7 +17,24 @@ const RemoteVideoView = props => {
   }, []);
 
   useEffect(() => {
-    if (remoteStream) {
+    if (stream) {
+      console.log('Remote video stream changed');
+      const videoTrack = stream.getVideoTracks()[0];
+      console.log('Video track enabled:', videoTrack.enabled);
+
+      videoTrack.onmute = () => {
+        console.log('Remote video track muted');
+      };
+
+      videoTrack.onunmute = () => {
+        console.log('Remote video track unmuted');
+      };
+    }
+  }, [stream]);
+
+  useEffect(() => {
+    // console.log('RVV', teacher, student)
+    if (stream) {
       const remoteVideo = remoteVideoRef.current;
 
       remoteVideo.srcObject = stream;
@@ -26,13 +43,14 @@ const RemoteVideoView = props => {
         remoteVideo.play();
       };
     }
-  }, [remoteStream]);
+  }, [stream]);
 
   return (
     <div className={styles.videoContainer}>
       <video className={styles.videoElement} ref={remoteVideoRef} autoPlay srcObject={stream}/>
       <div className={styles.infoRow}>
-        <div className={styles.litera}>{stream.id.slice(0, 10)}</div>
+        {/*<div className={styles.litera}>{stream.id.slice(0, 10)}</div>*/}
+        {props.role == 'teacher' ? <div className={styles.litera}>{student?.name}</div> : <div className={styles.litera}>{teacher?.name}</div>}
       </div>
     </div>
   );

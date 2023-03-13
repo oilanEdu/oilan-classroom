@@ -88,6 +88,7 @@ const myStudents = () => {
                 if ((Date.parse(dateStr) > Date.parse(new Date())) && (Date.parse(dateStr) - Date.parse(new Date()) < diff)){ 
                   // debugger
                     closerDate = lessonDate
+                    let closerLesson
                     if (closerLesson){
                         if (closerDate < new Date(closerLesson.fact_time).toLocaleDateString()){
                             // setCloserLesson(lesson)
@@ -278,7 +279,7 @@ function byField(field) {
                                 ? "0" + student?.curr_minutes
                                 : student?.curr_minutes}
                               -
-                              {formattedTime}
+                              {/*formattedTime*/}
                             </>
                           ) : (
                             "Не запланировано"

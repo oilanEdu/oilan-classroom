@@ -50,38 +50,43 @@ const myCourses = () => {
       />
       {courses ?
         <>
-          <div className={styles.myCourses}>
+          <div className={styles.wrapperAll}>
             <div className={styles.mainRow}>
-              <span>Мои курсы</span>
+              <h1>Мои курсы</h1>
               <button>Создать курс</button>
             </div>
-            {courses.map(course => {
-              const relevantPrograms = programs.filter(program => program.course_id === course.id);
-              const visiblePrograms = showAllPrograms ? relevantPrograms : relevantPrograms.slice(0, 2);
+            <div className={styles.courseWrapper}>
+              {courses.map(course => {
+                const relevantPrograms = programs.filter(program => program.course_id === course.id);
+                const visiblePrograms = showAllPrograms ? relevantPrograms : relevantPrograms.slice(0, 2);
 
-              return (
-                <div className={styles.courseRow} key={course.id}>
-                  <span className={styles.courseTitle}>{course.title}</span>
-                  <div className={styles.coursePrograms}>
-                    <p>Предмет: {course.category_name}</p>
-                    <p>Программа:
-                      {visiblePrograms.length > 0 ? visiblePrograms.map((program, index) => (
-                        <span key={program.id}>{program.title}{index !== visiblePrograms.length - 1 ? ', ' : ''}</span>
-                      )) : <span>отсутствует</span>}
-                      {relevantPrograms.length > 2 && (
-                        <span onClick={() => setShowAllPrograms(!showAllPrograms)}>
-                          {showAllPrograms ? '...' : `и еще ${relevantPrograms.length - 2}`}
-                        </span>
-                      )}
-                    </p>
+                return (
+                  <div className={styles.uploadedCoursesWrapper} key={course.id}>
+                    <div className={styles.courseRow}>
+                      <span className={styles.courseTitle}>{course.title}</span>
+                      <hr />
+                      <div className={styles.coursePrograms}>
+                        <p>Предмет: {course.category_name}</p>
+                        <p>Программа:
+                          {visiblePrograms.length > 0 ? visiblePrograms.map((program, index) => (
+                            <span key={program.id}>{program.title}{index !== visiblePrograms.length - 1 ? ', ' : ''}</span>
+                          )) : <span>отсутствует</span>}
+                          {relevantPrograms.length > 2 && (
+                            <span className={styles.clickProgramm} onClick={() => setShowAllPrograms(!showAllPrograms)}>
+                              {showAllPrograms ? '...' : ` и еще ${relevantPrograms.length - 2}`}
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                    <div className={styles.courseButtons}>
+                      <button>Перейти к занятиям</button>
+                      <span>Редактировать информацию</span>
+                    </div>
                   </div>
-                  <div className={styles.courseButtons}>
-                    <button>Перейти к программам моих лучших в мире занятий</button>
-                    <button>Редактировать информацию</button>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </>
         :

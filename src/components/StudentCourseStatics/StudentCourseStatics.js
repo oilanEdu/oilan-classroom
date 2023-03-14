@@ -7,7 +7,7 @@ import { PieChart, Pie, Sector, Cell } from "recharts";
 import GoToLessonWithTimer from "../GoToLessonWithTimer/GoToLessonWithTimer";
 import GoToLessonWithTimerComponent from "../GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 
-const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, courseId, courseUrl}) => {
+const StudentCourseStatic = ({programDesc, student, lesson, lessons, scores, nickname, courseId, courseUrl}) => {
   // console.log('stat data', student, lesson, lessons, scores)
   const [days, setDays] = useState('');
   const [hours, setHours] = useState(0);
@@ -249,7 +249,7 @@ const StudentCourseStatic = ({student, lesson, lessons, scores, nickname, course
       <div className={styles.course_container_1}>
         <p>Онлайн-курс</p>
         <h2>{student[0]?.title}</h2>
-        <p>{student[0]?.description}</p>
+        <p>{programDesc}</p>
 
         <h2>Преподаватель курса</h2>
         

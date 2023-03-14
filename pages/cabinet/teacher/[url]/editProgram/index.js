@@ -17,6 +17,8 @@ function EditProgram(props) {
   const [exercises, setExercises] = useState([])
   const [selectedCourseId, setSelectedCourseId] = useState(0)
   const [programTitle, setProgramTitle] = useState(program.title)
+  const [programDesc, setProgramDesc] = useState()
+
   const [selectedLesson, setSelectedLesson] = useState([])
   const [selectedExercise, setSelectedExercise] = useState([])
   const [lessonTitle, setLessonTitle] = useState('')
@@ -31,6 +33,16 @@ function EditProgram(props) {
   const [firstExerPress, setFirstExerPress] = useState(false)
   const [selectedDuration, setSelectedDuration] = useState(program.lesson_duration)
   const [duration, setDuration] = useState()
+
+  console.log(programDesc);
+
+  useEffect(() => {
+    if (program.description) {
+      setProgramDesc(program.description)
+    } else {
+      setProgramDesc(program.course_description)
+    }
+  }, [program])
 
   let dateStr = new Date(lessonDate);
   let curr_date = dateStr.getDate();
@@ -122,6 +134,7 @@ function EditProgram(props) {
         const data = {
           programId,
           programTitle,
+          programDesc,
           courseId
         }; 
 
@@ -455,6 +468,17 @@ function EditProgram(props) {
                             placeholder={program.title?program.title:'Текст'}
                             onChange={(e) => {
                                 setProgramTitle(e.target.value)
+                                setPrimeInfoEdited(true)
+                            }}
+                          />
+                        <h2>Описание программы</h2> 
+                        <textarea
+                            type="text"
+                            className={styles.programTitle}
+                            value={programDesc}
+                            placeholder={program.description?program.description:program.course_description}
+                            onChange={(e) => {
+                                setProgramDesc(e.target.value)
                                 setPrimeInfoEdited(true)
                             }}
                           />

@@ -98,18 +98,11 @@ const SignupForm = () => {
       data: { role, relogin, email, code },
     })
       .then((res) => {
-        console.log(res);
-        // localStorage.setItem('token', res.data.token);
-        // localStorage.setItem('login', res.data.login);
-        // localStorage.setItem('role', res.data.role);
-        // console.log(localStorage)
         showRestoreHandle();
         setCodeFormShow(!codeFormShow);
       })
       .catch((err) => {
-        if (err.response.status === 401) {
-          setErrorMessageRestore("Такого пользователя не существует");
-        }
+        setErrorMessageRestore(err.response.data);
         console.error(err);
       });
   }

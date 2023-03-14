@@ -1,0 +1,256 @@
+@font-face {
+  font-family: "Noto Sans";
+  src: url("../../../public/fonts/noto/NotoSans-Regular.ttf") format("truetype");
+}
+@font-face {
+font-family: "Muller Regular";
+src: url("../../../public/fonts/Muller/MullerRegular.ttf") format("truetype");
+}
+@font-face {
+font-family: "Muller Medium";
+src: url("../../../public/fonts/Muller/MullerMedium.ttf") format("truetype");
+}
+@font-face {
+font-family: "Muller Bold";
+src: url("../../../public/fonts/Muller/MullerBold.ttf") format("truetype");
+}
+
+/* .container{
+background-color: #f1faff;
+width: 100%;
+padding-top: 40px;
+padding-left: 5%;
+padding-right: 5%;
+padding-bottom: 40px;
+
+} */
+
+.modal {
+    overflow: scroll;
+    position: fixed;
+    z-index: 500;
+    width: 448px;
+    background: #FFFFFF;
+    border: 1px solid #C5DFFF;
+    border-radius: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
+    left: 50%;
+    margin-right: -50%;
+}
+.modal::-webkit-scrollbar {
+  display: none;
+}
+
+.detailInfo{
+  background: #FFFFFF;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.detailInfoHeader{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  justify-content: space-between;
+}
+
+.detailInfoHeader p {
+  font-family: 'Muller Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  /*line-height: 150%;*/
+  display: flex;
+  /*align-items: center;*/
+  text-transform: uppercase;
+  color: #3666B0;
+  margin: 0px;
+}
+
+.detailInfoHeader span {
+  font-size: 12px;
+}
+
+.detailInfoContain{
+  display: none;
+}
+
+.showDetailInfoContain{
+  display: flex;
+  padding: 15px 60px 60px;
+  font-family: 'Noto Sans';
+  flex-direction: column;
+  text-align: start;
+}
+
+.showButton{
+  cursor: pointer;
+}
+
+.showButton img {
+  width: 23px;
+  height: 23px;
+  object-fit: contain;
+}
+
+.dataBlock{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.formBlock{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: start;
+}
+
+.url_input {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.login_cr {
+  background: url(https://realibi.kz/file/358554.png) no-repeat;
+  background-position: 98%;
+  background-size: 24px;
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  right: 8px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.pass_data {
+  position: absolute;
+  left: 65px;
+  bottom: 110px;
+  z-index: 1;
+  width: 288px;
+  background: #fafafa;
+  text-align: start;
+  padding: 20px;
+  box-shadow: 4px 0px 4px #DBE8F5;
+  border-radius: 3px;
+}
+
+.pass_data_left {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 20px 30px 0 20px;
+  border-color: #fafafa transparent transparent transparent;
+  position: absolute;
+  bottom: -20px;
+  right: 16px;
+}
+
+.pass_data_head {
+  font-family: "Noto Sans Medium";
+  font-size: 14px;
+}
+
+.pass_data_text {
+  font-size: 12px;
+  font-family: "Noto Sans Regular";
+  background: url("https://realibi.kz/file/102414.png") no-repeat 0 50%;
+  background-size: 8px;
+  padding-left: 13px;
+}
+
+.formBlock span{
+ font-size: 12px;
+ margin-bottom: 15px;
+}
+
+.formBlock input, .formBlock textarea, .formBlock select {
+  padding: 10px;
+  border: 1px solid #C5DFFF;
+  border-radius: 3px; 
+  color: rgba(97, 119, 175, 0.6);
+}
+
+.input_container {
+  position: relative;
+}
+
+.input_container input, .input_container textarea, .input_container select {
+  width: 100%;
+}
+
+.input_container span {
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  right: -22px;
+  translate: -50% -50%;
+  margin: 0;
+  color: #3666B0;
+}
+
+.error_message {
+  color: #FF858B;
+  display: inline-block;
+  background: url("https://realibi.kz/file/776633.png") no-repeat 0px 50%;
+  background-size: 17px;
+  padding: 10px 20px;
+}
+
+.formBlock button {
+  height: 48px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: #FFFFFF;
+  background: #3666B0;
+  border: 1px solid #C5DFFF;
+  border-radius: 3px;
+  border: none;
+}
+
+.close {
+  cursor: pointer;
+  margin-top: 20px;
+  display: flex;
+  margin-right: 20px;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 1280px) {
+  .container{
+    margin: 40px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .showDetailInfoContain {
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+}
+
+@media screen and (max-width: 500px) {
+.container{
+  margin: 20px;
+}
+}
+
+@media screen and (max-width: 390px) {
+.detailInfoHeader p {
+  font-size: 14px;
+}
+.showDetailInfoContain {
+  padding: 15px;
+}
+}

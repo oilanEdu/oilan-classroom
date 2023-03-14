@@ -5,8 +5,9 @@ import { Image } from "react-bootstrap";
 import axios from "axios";
 import globals from "../../globals";
 import ClickAwayListener from '@mui/base/ClickAwayListener';
+import EditCourse from "../EditCourse/EditCourse";
 
-const CourseItem = ({course, url, index, onCheck, checked}) => {
+const CourseItem = ({teacher, course, url, index, onCheck, checked}) => {
   useEffect(() => {
     console.log('CourseItem', course)
   }, [course]);
@@ -32,6 +33,9 @@ const CourseItem = ({course, url, index, onCheck, checked}) => {
   const handleClickAway = () => {
     setShowSetting(false);
   };
+
+  const [showEditModal, setShowEditModal] = useState(false);
+
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <div className={styles.program}>
@@ -58,16 +62,17 @@ const CourseItem = ({course, url, index, onCheck, checked}) => {
               className={styles.editSet}
               style={{display: showSetting ? "block" : "none"}}
             >
-              <Link
-                href={`${encodeURIComponent(
-                  url
-                )}/editCourse/?courseId=${encodeURIComponent(
-                  course?.id
-                )}`}
-                target="_blank"
+              <div
+                // href={`${encodeURIComponent(
+                //   url
+                // )}/editCourse/?courseId=${encodeURIComponent(
+                //   course?.id
+                // )}`}
+                // target="_blank"
+                onClick={() => setShowEditModal(!showEditModal)}
               >
                 Редактировать
-              </Link>
+              </div>
             </div>
           
             {/* <Image
@@ -83,6 +88,7 @@ const CourseItem = ({course, url, index, onCheck, checked}) => {
             </div>
           </div>
         </span>
+        <EditCourse teacher={teacher} course={course} show={showEditModal} setShow={setShowEditModal} />
       </div>
     </ClickAwayListener>
   );

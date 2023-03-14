@@ -169,15 +169,17 @@ const AddNewStudent = () => {
                 <div className={styles.formBlock}>
                   <div className={styles.input_container}>
                     <p>Пол</p>
-                    <div className="wrapper_box">
-                      <label>
-                        <input type="checkbox" name="languages" checked={gender === "male" ? true : false} onChange={() => setGender("male")} />
-                        Мужской
-                      </label>
-                      <label>
-                        <input type="checkbox" checked={gender === "female" ? true : false} onChange={() => setGender("female")} />
-                        Женский
-                      </label>
+                    <div className={styles.wrapper_box}>
+                      <div className={styles.wrapperLabel}>
+                        <input className={styles.custom_checkbox} id='male' type="checkbox" name="languages" checked={gender === "male" ? true : false} onChange={() => setGender("male")} />
+                        <label htmlFor="male">Мужской</label>
+                        {/* <span>Мужской</span> */}
+                      </div>
+                      <div className={styles.wrapperLabel}>
+                        <input className={styles.custom_checkbox} id='female' type="checkbox" checked={gender === "female" ? true : false} onChange={() => setGender("female")} />
+                        <label htmlFor="female">Женский</label>
+                        {/* <span>Женский</span> */}
+                      </div>
                     </div>
                   </div>
                   <div className={styles.input_container}>
@@ -258,7 +260,7 @@ const AddNewStudent = () => {
                     />
                   </div>
                   <span
-                    style={{ display: errorMessage === "" ? "none" : "inline-block" }}
+                    style={{ display: errorMessage === "" ? "none" : "flex" }}
                     className={styles.error_message}
                   >
                     {errorMessage}

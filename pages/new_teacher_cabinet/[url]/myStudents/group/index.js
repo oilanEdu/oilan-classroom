@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import styles from './index.module.css'
-import globals from "../../../../src/globals";
+import globals from "../../../../../src/globals";
 import axios from "axios";
-import HeaderTeacher from "../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
+import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import { ClickAwayListener } from "@mui/base";
+import Link from "next/link";
 
-const myStudents = () => {
+const Group = () => {
   const router = useRouter();
   const teacherUrl = router.query.url
   const [teacher, setTeacher] = useState([])
@@ -54,12 +55,11 @@ const myStudents = () => {
     const teacherIdLocal = getTeacherByUrl['data'][0]?.id
     let lessonsOfAllStudents = []
     const dataStudents = {
-      id: teacherIdLocal,
-      sort: sortType
+      id: teacherIdLocal
     }
-    let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
-    let teacherGroups = await axios.post(`${globals.productionServerDomain}/getGroupsByTeacherId/`, dataStudents)
-    await teacherStudents['data'].forEach(async student => {
+    // let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
+    let teacherGroups = await axios.post(`${globals.productionServerDomain}/getStudentsGroupsByTeacherId/`, dataStudents)
+    await teacherGroups['data'].forEach(async student => {
       // debugger
       student.check = 0
       let diff = 604800000 * 7
@@ -169,19 +169,13 @@ const myStudents = () => {
     }
     );
 
-    setStudents(teacherStudents['data'])
+    setStudents(teacherGroups['data'])
     setGroups(teacherGroups['data'])
-    console.log(teacherStudents['data']);
+    console.log(teacherGroups['data']);
   }
 
   useEffect(() => {
-    // if (!baseDataLoaded || !teacher) {
-    // loadBaseData()
-    // setBaseDataLoaded(true)
     loadTeacherData();
-    // }
-    console.log('teacherUrl', teacherUrl)
-    // console.log('teacher', teacher)
 
   }, [teacherUrl]);
 
@@ -218,15 +212,14 @@ const myStudents = () => {
       />
       <div className={styles.contentWrapper}>
         <div className={styles.groupClicker}>
-          <span onClick={() => setIsStudents(true)}>Студенты</span>
+          <span onClick={() => router.push(`/new_teacher_cabinet/${encodeURIComponent(teacherUrl)}/myStudents`)}>Студенты</span>
           <span onClick={() => setIsStudents(false)}>Группы</span>
         </div>
         <div>
-          {isStudents
-            ? <div>
+          <div>
               <div className={styles.students_head}>
-                <h4>Список студентов</h4>
-                <button>Создать студента</button>
+                <h4>{groups[0]?.title}</h4>
+                <button>Редактировать</button>
                 <ClickAwayListener onClickAway={() => setShowSort(false)}>
                   <div className={styles.sortContainer}>
                     <div
@@ -304,92 +297,10 @@ const myStudents = () => {
                 : <></>
               }
             </div>
-            : <div>
-              <div className={styles.students_head}>
-                <h4>Список групп</h4>
-                <button onClick={() => router.push(`/new_teacher_cabinet/${encodeURIComponent(teacherUrl)}/myStudents/new_group`)}>Создать группу</button>
-                <ClickAwayListener onClickAway={() => setShowSort(false)}>
-                  <div className={styles.sortContainer}>
-                    <div
-                      onClick={() => setShowSort(!showSort)}
-                      className={styles.sortTitle}
-                    >
-                      <span
-                        className={showSort ? styles.sortShow : styles.sortHide}
-                      >
-                        Сортировать
-                      </span>
-                    </div>
-                    <div
-                      className={styles.sortOptions}
-                      style={{ display: showSort ? "flex" : "none" }}
-                    >
-                      <span onClick={() => ultimateSort("lesson_date")}>
-                        Следующие занятие
-                      </span>
-                      <span onClick={() => ultimateSort("surname")}>
-                        По алфавиту
-                      </span>
-                      <span onClick={() => ultimateSort("course_title")}>
-                        По курсам
-                      </span>
-                      <span onClick={() => ultimateSort("program_title")}>
-                        По программам
-                      </span>
-                    </div>
-                  </div>
-                </ClickAwayListener>
-              </div>
-
-              {groups
-                ? <div className={styles.my_students}>
-                  {groups.map(group => (
-                    <div className={styles.student_item}>
-                      <div className={styles.student_name_wrapper}>
-                        <div className={styles.student__name}>
-                          <div className={styles.student_image}>
-                            <img src="https://realibi.kz/file/185698.svg" alt="" />
-                          </div>
-                          <span>{group.title}</span>
-                        </div>
-                      </div>
-                      <div className={styles.student_item__info_wrapper}>
-                        <p>Курс: {group?.course_title} </p>
-                        <p>Программа: {group?.program_title}</p>
-                        <p>
-                          Следующий урок:
-                          <span>
-                            {group?.curr_hours != undefined ? (
-                              <>
-                                {group?.curr_hours < 10
-                                  ? "0" + group?.curr_hours
-                                  : group?.curr_hours}
-                                :
-                                {group.curr_minutes < 10
-                                  ? "0" + group?.curr_minutes
-                                  : group?.curr_minutes}
-                                -
-                                {/*formattedTime*/}
-                              </>
-                            ) : (
-                              "Не запланировано"
-                            )}
-                          </span>
-                        </p>
-                      </div>
-                      <div className={styles.student_btn_obman}><span></span></div>
-                      <div onClick={() => router.push(`/new_teacher_cabinet/${encodeURIComponent(teacherUrl)}/myStudents/group`)} className={styles.student_btn}><img src="https://realibi.kz/file/897616.svg" alt="" /></div>
-                    </div>
-                  ))}
-                </div>
-                : <></>
-              }
-            </div>
-          }
         </div>
       </div>
     </div>
   </>;
 };
 
-export default myStudents;
+export default Group;

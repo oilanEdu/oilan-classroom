@@ -114,6 +114,12 @@
   font-size: 48px;
 }
 
+.linksToOtherPrograms {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
 @media (max-width: 1000px) {
   .container {
     padding: 40px 40px;

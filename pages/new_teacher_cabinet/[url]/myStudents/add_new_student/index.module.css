@@ -1,0 +1,111 @@
+@font-face {
+    font-family: "Gotham Regular";
+    src: url('../../../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
+}
+
+@font-face {
+    font-family: 'Gotham Medium';
+    src: url('../../../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+    font-family: 'Gotham Light';
+    src: url('../../../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+    font-family: 'Gotham Bold';
+    src: url('../../../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+
+.container {
+    padding: 0 100px;
+    background: #FBFDFF;
+}
+
+.contentWrapper {
+    padding: 60px 0;
+}
+
+.detailInfoHeader {
+    font-size: 45px;
+    font-family: 'Gotham Medium';
+    color: #2E8CF2;
+}
+
+.input_container p {
+    font-family: 'Gotham Regular';
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.input_container {
+    margin: 15px 0;
+}
+
+.input_container input {
+    width: 40%;
+    outline: none;
+    background: #FFFFFF;
+    border: 0.5px solid #A3CEFD;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: 'Gotham Regular';
+}
+
+.input_container .wrapper_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 30%;
+}
+
+.input_container input:focus {
+    border: 0.5px solid #2E8CF2;
+}
+
+.input_container select {
+    width: 40%;
+    outline: none;
+    background: #FFFFFF;
+    border: 0.5px solid #A3CEFD;
+    border-radius: 5px;
+    padding: 10px 40px 10px 20px;
+    font-family: 'Gotham Regular';
+}
+
+.input_container textarea {
+    width: 40%;
+    height: 100px;
+    outline: none;
+    background: #FFFFFF;
+    border: 0.5px solid #A3CEFD;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: 'Gotham Regular';
+    resize: none;
+}
+
+.form_button {
+    background: #2E8CF2;
+    border-radius: 6px;
+    color: white;
+    width: auto;
+    padding: 15px 30px;
+    outline: none;
+    border: none;
+
+}
+
+.form_button:hover {
+    transition: all 0.1s linear;
+    background: #2b7ed6;
+}
+
+@media screen and (max-width: 1450px) {
+    .detailInfoHeader {
+        font-size: 30px;
+        font-family: 'Gotham Medium';
+    }
+}

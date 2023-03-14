@@ -152,6 +152,12 @@ const ProgramStatus = ({student, index, program, allStudentsLessons}) => {
           /> 
         )} 
       </div>
+      <button
+        onClick={() => {
+          setSaveIsClicked(!saveIsClicked)
+        }}
+        className={styles.saveScheduleButton}
+      >Сохранить</button>
     </div>
     <div className={styles.check_end}>
       <label>

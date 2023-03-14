@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import styles from './index.module.css'
 import globals from "../../../../../src/globals";
@@ -34,7 +34,7 @@ const AddNewStudent = () => {
   const [succesMessage, setSuccesMessage] = useState("");
 
   const loadBaseData = async () => {
-    let data = teacherUrl 
+    let data = teacherUrl
     let getTeacherByUrl = await axios.post(`${globals.productionServerDomain}/getTeacherByUrl/` + data)
     const teacherIdLocal = getTeacherByUrl['data'][0]?.id
     console.log('teacherIdLocal', teacherIdLocal)
@@ -43,44 +43,44 @@ const AddNewStudent = () => {
 
   const getTeachers = async () => {
     let result = await axios.get(`${globals.productionServerDomain}/getTeachers`)
-      setTeachers(result.data);
-      console.log(teachers)
+    setTeachers(result.data);
+    console.log(teachers)
   }
 
   const getCategories = async () => {
     let result = await axios.get(`${globals.productionServerDomain}/getCategories`)
-      setCategories(result.data);
-      console.log(categories)
+    setCategories(result.data);
+    console.log(categories)
   }
 
   const getCourses = async () => {
     let result = await axios.get(`${globals.productionServerDomain}/getCourses`)
-      setCourses(result.data);
-      console.log(courses)
+    setCourses(result.data);
+    console.log(courses)
   }
 
   const getPrograms = async () => {
     let result = await axios.get(`${globals.productionServerDomain}/getPrograms`)
-      setProgramsAll(result.data);
-      console.log(programsAll)
+    setProgramsAll(result.data);
+    console.log(programsAll)
   }
 
   const getLessons = async () => {
     let result = await axios.get(`${globals.productionServerDomain}/getLessons`)
-      setLessons(result.data);
-      console.log(lessons)
+    setLessons(result.data);
+    console.log(lessons)
   }
 
   const getStudents = async () => {
     let result = await axios.get(`${globals.productionServerDomain}/getStudents`)
-      setStudents(result.data);
-      console.log(students)
+    setStudents(result.data);
+    console.log(students)
   }
 
   const getRoles = async () => {
     let result = await axios.get(`${globals.productionServerDomain}/getRoles`)
-      setRoles(result.data);
-      console.log(roles)
+    setRoles(result.data);
+    console.log(roles)
   }
 
   useEffect(() => {
@@ -92,7 +92,7 @@ const AddNewStudent = () => {
     getLessons()
     getStudents()
     getRoles()
-  },[])
+  }, [])
 
   const createStudentAndProgram = async () => {
     let result = await axios.post(`${globals.productionServerDomain}/getCourseByProgramId`, { programId: lessonProgramId });
@@ -159,7 +159,7 @@ const AddNewStudent = () => {
           teacher={teacher}
           isInMainPage={isInMainPage}
         />
-        <div>
+        <div className={styles.contentWrapper}>
           <div className={styles.detailInfo}>
             <div className={styles.showDetailInfoContain}>
               <div className={styles.detailInfoHeader}>
@@ -169,14 +169,16 @@ const AddNewStudent = () => {
                 <div className={styles.formBlock}>
                   <div className={styles.input_container}>
                     <p>Пол</p>
-                    <label>
-                      <input type="checkbox" name="languages" checked={gender === "male" ? true : false} onChange={() => setGender("male")}/>
-                      Мужской
-                    </label>
-                    <label>
-                      <input type="checkbox" checked={gender === "female" ? true : false} onChange={() => setGender("female")}/>
-                      Женский
-                    </label>
+                    <div className="wrapper_box">
+                      <label>
+                        <input type="checkbox" name="languages" checked={gender === "male" ? true : false} onChange={() => setGender("male")} />
+                        Мужской
+                      </label>
+                      <label>
+                        <input type="checkbox" checked={gender === "female" ? true : false} onChange={() => setGender("female")} />
+                        Женский
+                      </label>
+                    </div>
                   </div>
                   <div className={styles.input_container}>
                     <p>Имя</p>
@@ -195,7 +197,7 @@ const AddNewStudent = () => {
                       value={studentPatronymic}
                       onChange={(e) => setStudentPatronymic(e.target.value)}
                     />
-                  </div> 
+                  </div>
                   <div className={styles.input_container}>
                     <p>Фамилия</p>
                     <input
@@ -204,7 +206,7 @@ const AddNewStudent = () => {
                       value={studentSurname}
                       onChange={(e) => setStudentSurname(e.target.value)}
                     />
-                  </div> 
+                  </div>
                   <div className={styles.url_input}>
                     <div className={styles.input_container}>
                       <p>Логин</p>
@@ -214,7 +216,7 @@ const AddNewStudent = () => {
                         value={nickname}
                         onChange={(e) => setNickname(e.target.value)}
                       />
-                    </div> 
+                    </div>
                     <span onClick={() => setShowLogData(!showLogData)} className={styles.login_cr}></span>
                   </div>
                   <div className={styles.input_container}>
@@ -228,11 +230,11 @@ const AddNewStudent = () => {
                       value={courseId}
                     >
                       <option value="0" disabled>Выберите курс</option>
-                      {courses.map(course =>(
+                      {courses.map(course => (
                         <option value={course.id}>{course.title}</option>
                       ))}
                     </select>
-                  </div> 
+                  </div>
                   <div className={styles.input_container}>
                     <p>Программа</p>
                     <select
@@ -244,25 +246,24 @@ const AddNewStudent = () => {
                       value={lessonProgramId}
                     >
                       <option value="0" disabled>Выберите программу</option>
-                      {programsAll.map(program =>(
+                      {programsAll.map(program => (
                         <option value={program.id}>{program.title}</option>
                       ))}
                     </select>
-                  </div> 
+                  </div>
 
                   <div className={styles.input_container}>
                     <p>Ссылка для студента</p>
-                    <input 
-                      value={ nickname !== "" && courseId !== 0 && lessonProgramId !== 0 ? "oilan-classroom.com/cabinet/student/" + nickname + "/course/" + courseUrl + "?program=" + lessonProgramId : "Ссылка будет создана после указания всех полей"}
+                    <textarea value={nickname !== "" && courseId !== 0 && lessonProgramId !== 0 ? "oilan-classroom.com/cabinet/student/" + nickname + "/course/" + courseUrl + "?program=" + lessonProgramId : "Ссылка будет создана после указания всех полей"}
                     />
-                  </div> 
-                  <span 
-                    style={{display: errorMessage === "" ? "none" : "inline-block"}}  
+                  </div>
+                  <span
+                    style={{ display: errorMessage === "" ? "none" : "inline-block" }}
                     className={styles.error_message}
                   >
                     {errorMessage}
                   </span>
-                  <button 
+                  <button
                     className={styles.form_button}
                     onClick={() => {
                       createStudentAndProgram();
@@ -270,8 +271,8 @@ const AddNewStudent = () => {
                   >
                     Добавить студента
                   </button>
-                  <span 
-                    style={{display: succesMessage === "" ? "none" : "inline-block"}}  
+                  <span
+                    style={{ display: succesMessage === "" ? "none" : "inline-block" }}
                     className={styles.success_message}
                   >
                     {succesMessage}

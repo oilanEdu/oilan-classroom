@@ -23,6 +23,7 @@ const myCourses = () => {
     }
     console.log('teacherUrl', teacherUrl)
     console.log('teacher', teacher)
+    console.log('courses', courses)
 
   }, [teacherUrl, teacher]);
 
@@ -48,7 +49,7 @@ const myCourses = () => {
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
-      {courses ?
+      {courses.length > 0 ?
         <>
           <div className={styles.wrapperAll}>
             <div className={styles.mainRow}>
@@ -80,7 +81,7 @@ const myCourses = () => {
                       </div>
                     </div>
                     <div className={styles.courseButtons}>
-                      <button>Перейти к занятиям</button>
+                      <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/myPrograms?course=${course.id}`)}>Перейти к программам</button>
                       <span>Редактировать информацию</span>
                     </div>
                   </div>

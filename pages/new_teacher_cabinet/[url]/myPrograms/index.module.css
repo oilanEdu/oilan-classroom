@@ -1,0 +1,42 @@
+.titleRow {
+	display: flex;
+	flex-direction: column;
+}
+
+.mainRow {
+	display: flex;
+	flex-direction: row;
+}
+
+.programWrapper {
+	display: flex;
+	flex-direction: column;
+}
+
+.programRow {
+	display: flex;
+	flex-direction: row;
+}
+
+.programTitle {
+	display: flex;
+	border: 1px solid black;
+}
+
+.programSchedule {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+}
+
+.programStatistics {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+}
+
+.programButtons {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+}

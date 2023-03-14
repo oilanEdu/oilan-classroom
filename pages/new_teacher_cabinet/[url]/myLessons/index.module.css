@@ -1,0 +1,36 @@
+.titleRow {
+	display: flex;
+	flex-direction: column;
+}
+
+.mainRow {
+	display: flex;
+	flex-direction: row;
+}
+
+.lessonWrapper {
+	display: flex;
+	flex-direction: column;
+}
+
+.lessonRow {
+	display: flex;
+	flex-direction: row;
+}
+
+.lessonTitle {
+	display: flex;
+	border: 1px solid black;
+}
+
+.lessonDesc {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+}
+
+.lessonButtons {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+}

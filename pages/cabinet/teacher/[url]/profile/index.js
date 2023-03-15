@@ -5,6 +5,7 @@ import Footer from "../../../../../src/components/Footer/Footer";
 import HeaderTeacher from "../../../../../src/components/HeaderTeacher/HeaderTeacher";
 import globals from "../../../../../src/globals";
 import styles from './styles.module.css'
+import { Image } from "react-bootstrap";
 ///getTeacherByUrl/:url
 // фамилия имя отчество, почта, телефон, пароль, о себе, навыки, опыт работы, никнеймн-логин лучше логин
 function TeacherProfile(props) {
@@ -174,6 +175,7 @@ function TeacherProfile(props) {
                     </div>
                     <div className={styles.programBlock}>
                         <h2>Фото профиля</h2> 
+                        <Image src={teacher.avatar} />
                         <form onSubmit={handleSubmit}>
                             <input type="file" name="file" onChange={(event) => setFiles(event.target.files)} />
                             <input type="submit" value="Upload" />

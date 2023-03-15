@@ -4,6 +4,7 @@ import styles from './index.module.css'
 import globals from "../../../../src/globals";
 import axios from "axios";
 import HeaderTeacher from "../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
+import { Image } from "react-bootstrap";
 
 const myCourses = () => {
   const router = useRouter();
@@ -54,7 +55,7 @@ const myCourses = () => {
           <div className={styles.wrapperAll}>
             <div className={styles.mainRow}>
               <h1>Мои курсы</h1>
-              <button>Создать курс</button>
+              <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/createCourse`)}>Создать курс</button>
             </div>
             <div className={styles.courseWrapper}>
               {courses.map(course => {
@@ -93,7 +94,10 @@ const myCourses = () => {
         :
         <>
           <div className={styles.noCourses}>
-            А курсов то и нет!
+            <Image style={{width: '300px'}} src='https://realibi.kz/file/296080.png'/>
+            <h1>У вас еще нет созданных курсов</h1>
+            <p>Для того, чтобы вести уроки на платформе, вам необходимо выбрать предмет, по которому будете обучать</p>
+            <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/createCourse`)}>Создать курс</button>
           </div>
         </>}
     </div>

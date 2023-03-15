@@ -57,25 +57,34 @@ const myPrograms = () => {
           <h1>{program?.title}</h1>
           <button>Создать урок</button>
         </div>
-        <div className={styles.lessonWrapper}>
-          {lessons.map(lesson => (
-            <div className={styles.lessons_uploaded}>
-              <div className={styles.lessonRow}>
-                <div className={styles.lessonTitle}>
-                  Урок {lesson.lesson_order}: {lesson.lesson_title}
+        {lessons.length > 0 ?
+          <>
+            <div className={styles.lessonWrapper}>
+              {lessons.map(lesson => (
+                <div className={styles.lessons_uploaded}>
+                  <div className={styles.lessonRow}>
+                    <div className={styles.lessonTitle}>
+                      Урок {lesson.lesson_order}: {lesson.title}
+                    </div>
+                    <div className={styles.lessonDesc}>
+                      <p>{lesson.tesis}</p>
+                    </div>
+                  </div>
+                  <div className={styles.lessonButtons}>
+                    <button>
+                      Редактировать
+                    </button>
+                  </div>
                 </div>
-                <div className={styles.lessonDesc}>
-                  <p>{lesson.tesis}</p>
-                </div>
-              </div>
-              <div className={styles.lessonButtons}>
-                <button>
-                  Редактировать
-                </button>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+          :
+          <>
+            <h1>Список уроков</h1>
+            <p>Вы еще не добавили уроки к вашим занятиям</p>
+          </>
+        }
       </div>
     </div>
   </>;

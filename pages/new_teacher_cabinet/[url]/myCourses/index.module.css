@@ -147,6 +147,11 @@
 	color: #2E8CF2;
 }
 
+.noCourses {
+	display: flex;
+	flex-direction: column;
+}
+
 
 @media screen and (max-width:1450px) {
 	.mainRow h1 {

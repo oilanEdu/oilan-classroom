@@ -1,0 +1,13 @@
+.stepOne {
+	display: flex;
+	flex-direction: column;
+}
+
+.stepTwo {
+	display: flex;
+	flex-direction: column;
+}
+
+.modal {
+	flex-direction: column;
+}

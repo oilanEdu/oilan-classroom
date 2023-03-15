@@ -28,7 +28,8 @@
   padding: 60px 0;
 }
 
-.groupClicker span:nth-child(1), .groupClicker a {
+.groupClicker span:nth-child(1),
+.groupClicker a {
   display: block;
   padding: 5px 10px;
   background: #2E8CF2;
@@ -38,13 +39,14 @@
   text-decoration: none;
 }
 
-.groupClicker span, .groupClicker a {
+.groupClicker span,
+.groupClicker a {
   display: block;
   padding: 5px 10px;
   font-family: 'Gotham Regular';
   border-radius: 2px;
   font-size: 13px;
-  
+
 }
 
 .groupClicker {
@@ -265,4 +267,75 @@
   }
 
 
+}
+
+@media screen and (max-width:575px) {
+  .students_head h4 {
+    font-size: 20px;
+    margin: 0;
+    width: 100%;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .student_item {
+    width: 100%;
+  }
+
+  .student__name {
+    width: 100%;
+    font-size: 13px;
+    padding: 0;
+  }
+
+  .students_head {
+    flex-wrap: wrap;
+  }
+
+  .students_head button {
+    margin: 15px 0;
+    margin-right: 15px;
+    font-size: 12px;
+  }
+
+  .sortTitle {
+    font-size: 12px;
+    width: 172px
+  }
+
+  .sortHide {
+    padding: 0 60px 0 0;
+  }
+
+  .student_image img {
+    width: 30px;
+  }
+
+  .student_item__info_wrapper {
+    padding: 10px 0;
+  }
+
+  .student_item__info_wrapper p {
+    font-size: 10px;
+    width: 100%;
+  }
+
+  .student_item__info_wrapper {
+    width: 40%;
+  }
+
+  .my_students {
+    margin-top: 30px;
+  }
+
+  .student_name_wrapper {
+    width: 43%;
+  }
+
+  .student_btn_obman {
+    align-self: flex-end;
+    justify-self: flex-end;
+  }
 }

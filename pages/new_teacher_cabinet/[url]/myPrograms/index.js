@@ -49,38 +49,42 @@ const myPrograms = () => {
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
-      <div className={styles.titleRow}>
-        <div className={styles.courseTitle}>
-          {course?.title}
+      <div className={styles.wrapperAll}>
+        <div className={styles.titleRow}>
+          <div className={styles.courseTitle}>
+            {course?.title}
+          </div>
+          <div className={styles.mainRow}>
+            <h1>Мои программы</h1>
+            <button>Создать программу</button>
+          </div>
         </div>
-        <div className={styles.mainRow}>
-          <h1>Мои программы</h1>
-          <button>Создать программу</button>
+        <div className={styles.programWrapper}>
+          {programs.map(program => (
+            <div className={styles.programms_uploaded}>
+              <div className={styles.programRow}>
+                <div className={styles.programTitle}>
+                  {program.title}
+                </div>
+                <div className={styles.programSchedule}>
+                  <p>Расписание: индивидуально</p>
+                  <p>Время занятий: индивидуально</p>
+                </div>
+                <div className={styles.programStatistics}>
+                  <p>Всего уроков: {program.lessons_count}</p>
+                  <p>Всего учеников: {program.students_count}</p>
+                  <p>Формат: {program.type == 'individual' ? 'индивидуальная' : 'групповая'}</p>
+                </div>
+              </div>
+              <div className={styles.programButtons}>
+                <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/myLessons?program=${program.id}`)}>
+                  Перейти к урокам
+                </button>
+                <span>Редактировать информацию</span>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-      <div className={styles.programWrapper}>
-        {programs.map(program => (
-          <div className={styles.programRow}>
-            <div className={styles.programTitle}>
-              {program.title}
-            </div>
-            <div className={styles.programSchedule}>
-              <p>Расписание: индивидуально</p>
-              <p>Время занятий: индивидуально</p>
-            </div>
-            <div className={styles.programStatistics}>
-              <p>Всего уроков: {program.lessons_count}</p>
-              <p>Всего учеников: {program.students_count}</p>
-              <p>Формат: {program.type == 'individual'?'индивидуальная':'групповая'}</p>
-            </div>
-            <div className={styles.programButtons}>
-              <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/myLessons?program=${program.id}`)}>
-                Перейти к урокам
-              </button>
-              <span>Редактировать информацию</span>
-            </div>
-          </div>    
-        ))}
       </div>
     </div>
   </>;

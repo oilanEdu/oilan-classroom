@@ -49,29 +49,33 @@ const myPrograms = () => {
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
-      <div className={styles.titleRow}>
-        {program?.course_title}
-      </div>
-      <div className={styles.mainRow}>
+      <div className={styles.wrapperAll}>
+        <div className={styles.titleRow}>
+          {program?.course_title}
+        </div>
+        <div className={styles.mainRow}>
           <h1>{program?.title}</h1>
           <button>Создать урок</button>
         </div>
-      <div className={styles.lessonWrapper}>
-        {lessons.map(lesson => (
-          <div className={styles.lessonRow}>
-            <div className={styles.lessonTitle}>
-              Урок {lesson.lesson_order}: {lesson.lesson_title}
+        <div className={styles.lessonWrapper}>
+          {lessons.map(lesson => (
+            <div className={styles.lessons_uploaded}>
+              <div className={styles.lessonRow}>
+                <div className={styles.lessonTitle}>
+                  Урок {lesson.lesson_order}: {lesson.lesson_title}
+                </div>
+                <div className={styles.lessonDesc}>
+                  <p>{lesson.tesis}</p>
+                </div>
+              </div>
+              <div className={styles.lessonButtons}>
+                <button>
+                  Редактировать
+                </button>
+              </div>
             </div>
-            <div className={styles.lessonDesc}>
-              <p>{lesson.tesis}</p>
-            </div>
-            <div className={styles.lessonButtons}>
-              <button>
-                Редактировать
-              </button>
-            </div>
-          </div>    
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </>;

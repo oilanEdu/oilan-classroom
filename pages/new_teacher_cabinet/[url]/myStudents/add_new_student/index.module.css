@@ -28,7 +28,7 @@
     padding: 60px 0;
 }
 
-.detailInfoHeader {
+.detailInfoHeader p {
     font-size: 45px;
     font-family: 'Gotham Medium';
     color: #2E8CF2;
@@ -174,12 +174,31 @@
 
 
 @media screen and (max-width:575px) {
-    .input_container input {
-        width: 90%
+
+    .input_container input,
+    .input_container select,
+    .input_container textarea {
+        width: 100%;
     }
 
     .container {
         padding: 0 20px;
+        width: 100%;
+    }
+
+    .contentWrapper {
+        padding: 30px 0;
+    }
+
+    .wrapper_box {
+        width: 100% !important;
+    }
+
+    .detailInfoHeader p {
+        font-size: 20px;
+    }
+
+    .form_button {
         width: 100%;
     }
 

@@ -34,7 +34,7 @@ const AddNewGroup = () => {
         if (student.id === id) {
           setStudentsByGroupInfo(Array.from(new Set([...studentsByGroupInfo, student])));
         }
-      }) 
+      })
     })
   }
 
@@ -124,7 +124,7 @@ const AddNewGroup = () => {
       })
         .then(function (res) {
           console.log(res.data.id);
-          
+
           studentsByGroup.forEach(async student => {
             const data = {
               groupId: res.data.id,
@@ -241,10 +241,16 @@ const AddNewGroup = () => {
                     {succesMessage}
                   </span>
                 </div>
-                <div>
+                <div className={styles.addedStudents}>
                   <p>Добавленные студенты</p>
                   {studentsByGroupInfo.map((stud) => (
-                    <p>{stud.surname} {stud.name}</p>
+                    <div className={styles.wrapper_students}>
+                      <div className={styles.student_info}>
+                        <img src="https://realibi.kz/file/185698.svg" alt="" />
+                        <p>{stud.surname} {stud.name}</p>
+                      </div>
+                      <img className={styles.student_delete} src="https://realibi.kz/file/775192.svg" alt="" />
+                    </div>
                   ))}
                 </div>
               </div>

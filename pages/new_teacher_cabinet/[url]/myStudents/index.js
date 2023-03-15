@@ -348,7 +348,7 @@ const myStudents = () => {
                       <div className={styles.student_name_wrapper}>
                         <div className={styles.student__name}>
                           <div className={styles.student_image}>
-                            <img src="https://realibi.kz/file/185698.svg" alt="" />
+                            <img src="https://realibi.kz/file/293737.svg" alt="" />
                           </div>
                           <span>{group.title}</span>
                         </div>

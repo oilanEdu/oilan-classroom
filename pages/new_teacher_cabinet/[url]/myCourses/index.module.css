@@ -148,7 +148,7 @@
 }
 
 
-@media screen and (max-width:1425px) {
+@media screen and (max-width:1450px) {
 	.mainRow h1 {
 		font-size: 30px;
 	}
@@ -163,10 +163,11 @@
 
 	.courseTitle {
 		font-size: 18px;
+		width: 40%;
 	}
 
 	.courseButtons button {
-		width: 200px;
+		width: 230px;
 		padding: 15px 20px;
 		font-size: 15px;
 	}
@@ -179,11 +180,16 @@
 	}
 
 	.courseButtons {
-		align-items: center
+		align-items: center;
+		margin-left: 30px
 	}
 
 	.coursePrograms p {
 		font-size: 14px;
+	}
+
+	.coursePrograms {
+		width: 60%;
 	}
 
 	.uploadedCoursesWrapper {
@@ -193,7 +199,50 @@
 }
 
 @media screen and (max-width: 575px) {
+	.mainRow h1 {
+		font-size: 20px;
+		margin: 0;
+	}
+
 	.container {
 		padding: 0 20px;
+	}
+
+	.uploadedCoursesWrapper {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 30px;
+	}
+
+	.wrapperAll {
+		padding: 0;
+	}
+
+	.courseTitle {
+		font-size: 16px;
+	}
+
+	.coursePrograms p {
+		font-size: 14px;
+	}
+
+	.courseButtons button {
+		width: 100%;
+	}
+
+	.courseButtons {
+		width: 100%;
+		margin-left: 0;
+	}
+
+	.mainRow {
+		width: 100%;
+		display: flex;
+		align-items: center
+	}
+
+	.mainRow button {
+		font-size: 12px;
 	}
 }

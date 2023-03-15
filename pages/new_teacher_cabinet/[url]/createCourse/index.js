@@ -51,7 +51,7 @@ const createCourse = () => {
     } else if (step === 2 && programTitle && programType) {
       setViewMidal(true)
       createNewCourse()
-      
+
     }
   }
 
@@ -104,12 +104,12 @@ const createCourse = () => {
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
-      <div className={styles.modal} style={viewModal?{display: 'flex'}:{display: 'none'}}>
+      <div className={styles.modal} style={viewModal ? { display: 'flex' } : { display: 'none' }}>
         <h1>Поздравляем, вы создали новый курс</h1>
         <p>Теперь вам нужно добавить уроки к программе занятий и вы можете приступать к обучению</p>
-        <div>
+        <div className={styles.modal_button__wrapper}>
           <button>Добавить уроки</button>
-          <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/myCourses`)}>Спасибо, позже</button>
+          <span onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/myCourses`)}>Спасибо, позже</span>
         </div>
       </div>
       <div className={styles.createCourse}>
@@ -117,17 +117,26 @@ const createCourse = () => {
           <>
             <div className={styles.stepOne}>
               <h1>Создание курса</h1>
-              <p>Выберите предмет</p>
-              <select value={subject} onChange={(e) => setSubject(e.target.value)}>
-                {courseCategories.map(category => (
-                  <option value={category.id}>{category.name}</option>
-                ))}
-              </select>
-              <p>Название курса</p>
-              <input placeholder="пр. Математика для 9 класса" onChange={(e) => setTitle(e.target.value)} />
-              <p>Описание курса</p>
-              <textarea placeholder="пр. Проходим логарифмы и первообразные" onChange={(e) => setDescription(e.target.value)}></textarea>
-              <button onClick={() => {handleSubmit()}}>Продолжить</button>
+              <div className={styles.contentWrapper}>
+                <div className={styles.input_container}>
+                  <p>Выберите предмет</p>
+                  <select value={subject} onChange={(e) => setSubject(e.target.value)}>
+                    {courseCategories.map(category => (
+                      <option value={category.id}>{category.name}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className={styles.input_container}>
+                  <p>Название курса</p>
+                  <input placeholder="пр. Математика для 9 класса" onChange={(e) => setTitle(e.target.value)} />
+                </div>
+                <div className={styles.input_container}>
+                  <p>Описание курса</p>
+                  <textarea placeholder="пр. Проходим логарифмы и первообразные" onChange={(e) => setDescription(e.target.value)}></textarea>
+
+                </div>
+                <button className={styles.form_button} onClick={() => { handleSubmit() }}>Продолжить</button>
+              </div>
             </div>
           </>
         )}
@@ -135,48 +144,68 @@ const createCourse = () => {
           <>
             <div className={styles.stepTwo}>
               <h1>Добавление программы занятий</h1>
-              <p>Название программы</p>
-              <input placeholder="Для Алишера 9 класс" onChange={(e) => setProgramTitle(e.target.value)} />
-              <p>Выберите формат</p>
-              <div>
-                <label>
-                  <input
-                    type="radio"
-                    name="programType"
-                    value="group"
-                    checked={programType === 'group'}
-                    onChange={(e) => setProgramType(e.target.value)}
-                  />
-                  Групповая
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="programType"
-                    value="individual"
-                    checked={programType === 'individual'}
-                    onChange={(e) => setProgramType(e.target.value)}
-                  />
-                  Индивидуальная
-                </label>
+              <div className={styles.contentWrapper}>
+                <div className={styles.input_container}>
+                  <p>Название программы</p>
+                  <input placeholder="Для Алишера 9 класс" onChange={(e) => setProgramTitle(e.target.value)} />
+                </div>
+                <div className={styles.input_container}>
+                  <p>Выберите формат</p>
+                  <div className={styles.radio_wrapper}>
+                    <div className={styles.wrapperLabel}>
+                      <input
+                        className={styles.custom_radio}
+                        id='group'
+                        type="radio"
+                        name="programType"
+                        value="group"
+                        checked={programType === 'group'}
+                        onChange={(e) => setProgramType(e.target.value)}
+                      />
+                      <label htmlFor="group">Групповая</label>
+                    </div>
+                    <div className={styles.wrapperLabel}>
+                      <input
+                        className={styles.custom_radio}
+                        id='individual'
+                        type="radio"
+                        name="programType"
+                        value="individual"
+                        checked={programType === 'individual'}
+                        onChange={(e) => setProgramType(e.target.value)}
+                      />
+                      <label htmlFor="individual"> Индивидуальная </label>
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.input_container}>
+                  <p>Количество занятий в неделю</p>
+                  <div className={styles.input_with_checkbox}>
+                    <select value="1">
+                      <option value="1">{programLessCount}</option>
+                    </select>
+                    <div className={styles.wrapperLabelCheckbox}>
+                      <input className={styles.custom_checkbox} id="skip_1" type="checkbox" />
+                      <label htmlFor="skip_1">Пропустить</label>
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.input_container}>
+                  <p>Расписание занятий</p>
+                  <div className={styles.input_with_checkbox}>
+                    <input placeholder={programSchedule} />
+                    <div className={styles.wrapperLabelCheckbox}>
+                      <input className={styles.custom_checkbox} id="skip_2" type="checkbox" />
+                      <label htmlFor="skip_2">Пропустить</label>
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.input_container}>
+                  <p>Время занятий</p>
+                  <input placeholder={programLessTime} />
+                </div>
+                <button className={styles.form_button} onClick={() => { handleSubmit() }}>Создать курс</button>
               </div>
-              <p>Количество занятий в неделю</p>
-              <div>
-                <select value="1">
-                  <option value="1">{programLessCount}</option>
-                </select>
-                <input type="checkbox" />
-                <span>Пропустить</span>
-              </div>
-              <p>Расписание занятий</p>
-              <div>
-                <input placeholder={programSchedule} />
-                <input type="checkbox" />
-                <span>Пропустить</span>
-              </div>
-              <p>Время занятий</p>
-              <input placeholder={programLessTime} />
-              <button onClick={() => {handleSubmit()}}>Создать курс</button>
             </div>
           </>
         )}

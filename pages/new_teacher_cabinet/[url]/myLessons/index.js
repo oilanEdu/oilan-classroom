@@ -55,7 +55,7 @@ const myPrograms = () => {
         </div>
         <div className={styles.mainRow}>
           <h1>{program?.title}</h1>
-          <button>Создать урок</button>
+          <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/createLesson?program=${programId}`)}>Создать урок</button>
         </div>
         {lessons.length > 0 ?
           <>

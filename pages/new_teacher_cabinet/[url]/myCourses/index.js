@@ -83,7 +83,7 @@ const myCourses = () => {
                     </div>
                     <div className={styles.courseButtons}>
                       <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/myPrograms?course=${course.id}`)}>Перейти к программам</button>
-                      <span>Редактировать информацию</span>
+                      <span onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/editCourse?course=${course.id}`)}>Редактировать информацию</span>
                     </div>
                   </div>
                 );

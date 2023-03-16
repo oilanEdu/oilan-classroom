@@ -1,0 +1,23 @@
+.exerItem {
+	display: flex;
+	max-width: 70px;
+}
+
+.exerRow {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.inputsRow {
+	display: flex;
+	flex-direction: column;
+}
+
+.selectedExer {
+	background-color: green;
+}
+
+.notSelectedExer {
+	background-color: gray;
+}

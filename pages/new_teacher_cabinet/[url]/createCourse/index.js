@@ -16,6 +16,7 @@ const createCourse = () => {
   const [subject, setSubject] = useState(1)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [program, setProgram] = useState()
   const [programTitle, setProgramTitle] = useState('')
   const [programType, setProgramType] = useState('individual')
   const [programLessCount, setProgramLessCount] = useState('1 занятие')
@@ -87,6 +88,7 @@ const createCourse = () => {
     axios.post(`${globals.productionServerDomain}/createCourseAndProgram/`, courseData)
       .then(response => {
         console.log(response.data);
+        setProgram(response.data.programId)
         // handle success
       })
       .catch(error => {
@@ -108,7 +110,7 @@ const createCourse = () => {
         <h1>Поздравляем, вы создали новый курс</h1>
         <p>Теперь вам нужно добавить уроки к программе занятий и вы можете приступать к обучению</p>
         <div className={styles.modal_button__wrapper}>
-          <button>Добавить уроки</button>
+          <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/createLesson?program=${program}`)}>Добавить уроки</button>
           <span onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/myCourses`)}>Спасибо, позже</span>
         </div>
       </div>

@@ -1,0 +1,8 @@
+.contentContainer {
+	display: flex;
+	flex-direction: column;
+}
+
+.modal {
+	flex-direction: column;
+}

@@ -1,0 +1,56 @@
+.title {
+    font-weight: 400;
+font-size: 16px;
+line-height: 150%;
+margin: 0;
+min-width: fit-content;
+}
+
+.lessonInfo {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    justify-items: stretch;
+    align-items: baseline;
+}
+
+.inputs {
+    width: 130px;
+    height: 48px;
+
+    background: #FFFFFF;
+    border: 1px solid #A2A7B2;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.inputsWrapper {
+    display: flex;
+    grid-gap: 0px;
+    gap: 20px;
+    grid-column-gap: 20px;
+    justify-items: start;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+@media screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+    .inputsWrapper {
+        justify-content: flex-start
+    }
+}
+@media screen and (max-width: 480px) {
+    .wrapper {
+        flex-direction: column;
+    }
+    .inputsWrapper {
+        justify-content: flex-start
+    }
+}

@@ -1,0 +1,12 @@
+.menu {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu_tabs {
+  display: flex;
+}
+
+.menu_tabs p {
+  margin-right: 10px;
+}

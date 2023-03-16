@@ -1,0 +1,30 @@
+.container {
+  margin: 20px;
+}
+
+.lesson, .lesson_info {
+  display: flex;
+}
+
+.detail_info {
+  flex-direction: column;
+}
+
+.answer_block {
+  display: flex;
+  flex-direction: column;
+}
+
+.student_answer {
+  display: flex;
+  flex-direction: column;
+}
+
+.student_answer_text {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment_block {
+  flex-direction: column;
+}

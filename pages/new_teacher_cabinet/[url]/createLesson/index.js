@@ -152,7 +152,6 @@ const createLesson = () => {
               <p>Правильный ответ на задание</p>
               <textarea disabled={selectedExercise == null} value={exercises[selectedExercise]?.answer} onChange={handleAnswerChange} placeholder='пр. 5 - A, D, B;'></textarea>
             </div>           
-            <button onClick={() => {console.log('exercises', exercises)}}>Deselect</button>
           </div>
           <button onClick={() => {handleSubmit()}}>Создать урок</button>
         </div>

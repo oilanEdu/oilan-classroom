@@ -1,0 +1,15 @@
+.answerColumn {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+}
+
+.answerRow {
+	display: flex;
+	flex-direction: row;
+	border: 1px solid black;
+}
+
+.green {
+	background-color: green;
+}

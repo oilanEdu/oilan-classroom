@@ -12,11 +12,11 @@ import GoToLessonWithTimerComponent from "../GoToLessonWithTimerComponent/GoToLe
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 
 function HomeworksByTeacher(props) {
-	
+	console.log('HomeworksByTeacher', props)
 	const router = useRouter()
 	const teacherUrl = router.query.url
-  const studentId = router.query.studentId
-  const programId = router.query.programId
+  const studentId = router.query.studentId?router.query.studentId:props.student.student_id
+  const programId = router.query.programId?router.query.programId:props.program
   const [teacher, setTeacher] = useState([])
   const [students, setStudents] = useState([])
   const [selectedStudentId, setSelectedStudentId] = useState(studentId)
@@ -187,7 +187,7 @@ function HomeworksByTeacher(props) {
       <div style={{backgroundColor: "#f1faff", width: "100vw", overflowX: "hidden"}}>
         <div className={styles.cantainer}>
       		<div className={styles.selectBlock}>
-            <h1>Домашние задания</h1>
+            <h1>{router.query.studentId?'Домашние задания':null}</h1>
           </div>
           <div className={styles.lessons}>
             {lessons.length > 0 
@@ -220,7 +220,6 @@ function HomeworksByTeacher(props) {
             }
         </div>
       </div>            	
-      <Footer />
       </div>
     </>
   //   :<></>

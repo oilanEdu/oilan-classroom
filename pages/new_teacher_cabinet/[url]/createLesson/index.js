@@ -14,7 +14,7 @@ const createLesson = () => {
   const [teacher, setTeacher] = useState([])
   const [program, setProgram] = useState([])
   const [baseDataLoaded, setBaseDataLoaded] = useState(false)
-  const [exercises, setExercises] = useState([{description: '', answer: ''}]);
+  const [exercises, setExercises] = useState([{ description: '', answer: '' }]);
   const [selectedExercise, setSelectedExercise] = useState(0);
   const [lessonTitle, setLessonTitle] = useState('')
   const [lessonDesc, setLessonDesc] = useState('')
@@ -126,14 +126,20 @@ const createLesson = () => {
       />
       <div className={styles.createLesson}>
         <div className={styles.contentContainer}>
-          <p>{program?.title}</p>
-          <h1>Создание урока</h1>
+          <div className={styles.lesson_head}>
+            <p>{program?.title}</p>
+            <h1>Создание урока</h1>
+          </div>
           <div>
             <div className={styles.lessonData}>
-              <p>Название урока</p>
-              <input onChange={(e) => setLessonTitle(e.target.value)} placeholder='пр. Логарифмы'/>
-              <p>Описание урока</p>
-              <textarea onChange={(e) => setLessonDesc(e.target.value)} placeholder='пр. Проходим логарифмы и кайфуем от жизни полным ходом'></textarea>
+              <div className={styles.input_container}>
+                <p>Название урока</p>
+                <input onChange={(e) => setLessonTitle(e.target.value)} placeholder='пр. Логарифмы' />
+              </div>
+              <div className={styles.input_container}>
+                <p>Описание урока</p>
+                <textarea onChange={(e) => setLessonDesc(e.target.value)} placeholder='пр. Проходим логарифмы и кайфуем от жизни полным ходом'></textarea>
+              </div>
             </div>
             <div className={styles.exerRow}>
               {exercises.map((exercise, index) => (
@@ -143,17 +149,22 @@ const createLesson = () => {
                   </button>
                 </div>
               ))}
-              <button onClick={addExercise}>+</button>
-              <button onClick={() => removeExercise(selectedExercise)}>-</button>
+              <div className={styles.btn_add_wrapper}>
+                <button onClick={addExercise}>+</button>
+                <button onClick={() => removeExercise(selectedExercise)}>-</button>
+              </div>
             </div>
             <div className={styles.inputsRow}>
-              <p>Описание домашнего задания</p>
-              <textarea disabled={selectedExercise == null} value={exercises[selectedExercise]?.description} onChange={handleDescriptionChange} placeholder='пр. в учебнике на странице 52 сделать задание 5, 6, 7А'></textarea>
-              <p>Правильный ответ на задание</p>
-              <textarea disabled={selectedExercise == null} value={exercises[selectedExercise]?.answer} onChange={handleAnswerChange} placeholder='пр. 5 - A, D, B;'></textarea>
-            </div>           
+              <div className={styles.input_container}>
+                <p>Описание домашнего задания</p>
+                <textarea disabled={selectedExercise == null} value={exercises[selectedExercise]?.description} onChange={handleDescriptionChange} placeholder='пр. в учебнике на странице 52 сделать задание 5, 6, 7А'></textarea>
+              </div>
+              <div className={styles.input_container}>
+                <p>Правильный ответ на задание</p>
+                <textarea disabled={selectedExercise == null} value={exercises[selectedExercise]?.answer} onChange={handleAnswerChange} placeholder='пр. 5 - A, D, B;'></textarea>
+              </div></div>
           </div>
-          <button onClick={() => {handleSubmit()}}>Создать урок</button>
+          <button className={styles.form_button} onClick={() => { handleSubmit() }}>Создать урок</button>
         </div>
       </div>
     </div>

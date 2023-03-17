@@ -71,7 +71,7 @@ const myPrograms = () => {
                     </div>
                   </div>
                   <div className={styles.lessonButtons}>
-                    <button>
+                    <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/editLesson?lesson=${lesson?.id}`)}>
                       Редактировать
                     </button>
                   </div>

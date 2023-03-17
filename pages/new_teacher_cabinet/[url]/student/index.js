@@ -274,8 +274,8 @@ export default function Student({ programs } ) {
           </div>
           <div className={styles.profile_info}>
             <div>
-              <p>{student.name} {student.surname}</p>
-              <p>{student.nickname}</p>
+              <p>{student?.name} {student?.surname}</p>
+              <p>{student?.nickname}</p>
             </div>
             <div>
               <div>

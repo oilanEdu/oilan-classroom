@@ -80,7 +80,7 @@ const myPrograms = () => {
                 <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/myLessons?program=${program.id}`)}>
                   Перейти к урокам
                 </button>
-                <span>Редактировать информацию</span>
+                <span onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/editProgram?program=${program.id}`)}>Редактировать информацию</span>
               </div>
             </div>
           ))}

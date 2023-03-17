@@ -1,0 +1,149 @@
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.lessonData {
+	display: flex;
+	flex-direction: column;
+}
+
+.saveButton{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 18px 0px;
+	gap: 10px;
+	width: 260px;
+	height: 48px;
+	background: #007AFF;
+	border-radius: 8px;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 22px;
+	color: #FFFFFF;
+	border: none;
+}
+.lessonTitle{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 16px;
+	gap: 10px;
+	width: 320px;
+	height: 48px;
+	background: #FFFFFF;
+	border: 1px solid #A2A7B2;
+	border-radius: 4px;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+	margin-bottom: 20px;
+}
+.lessonContent{
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: flex-end;
+	padding: 10px 4px 4px 12px;
+	gap: 12px;
+	height: 136px;
+	background: #FFFFFF;
+	border: 1px solid #A2A7B2;
+	border-radius: 8px;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 22px;
+	margin-bottom: 20px;
+}
+.plusMinusButton{
+	width: 32px;
+	height: 32px;
+	background-color: #007AFF;
+	border-radius: 50%;
+	text-align: center;
+	align-items: center;
+	color: white;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 26px;
+	line-height: 22px;
+	padding: 4px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+.exerciseSelectBlock{
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 10px;
+	flex-wrap: wrap;
+	align-items: center;
+}
+.exerciseInfoFirstRow{
+	display: flex;
+	flex-direction: column;
+}
+
+.exerciseInfoFirstRow span{
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 20px;
+	color: #000000;
+	margin-bottom: 10px;
+}
+.exerciseText{
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: flex-end;
+	padding: 10px 4px 4px 12px;
+	gap: 12px;
+	height: 136px;
+	background: #FFFFFF;
+	border: 1px solid #A2A7B2;
+	border-radius: 8px;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 22px;
+	margin-bottom: 20px;
+}
+.exerciseInfoSecondRow{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.inputBlock{
+	display: flex;
+	flex-direction: column;
+}
+.exerciseAnswer{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 16px;
+	gap: 10px;
+	width: 320px;
+	height: 48px;
+	background: #FFFFFF;
+	border: 1px solid #A2A7B2;
+	border-radius: 8px;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+}

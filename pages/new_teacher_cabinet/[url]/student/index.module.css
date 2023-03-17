@@ -1,3 +1,55 @@
+@font-face {
+  font-family: "Gotham Regular";
+  src: url('../../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Medium';
+  src: url('../../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Light';
+  src: url('../../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Bold';
+  src: url('../../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+
+.container {
+  position: relative;
+  padding: 0 100px;
+  background: #FBFDFF;
+}
+
+.profile_header,
+.program_header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  align-items: center;
+}
+
+.profile_header button,
+.program_header button {
+  background: #2E8CF2;
+  border-radius: 5px;
+  color: white;
+  padding: 12px 30px;
+  outline: none;
+  border: none;
+  width: fit-content;
+}
+
+.program_header h3,
+.profile_header h3 {
+  font-family: 'Gotham Medium';
+  font-size: 45px;
+}
+
 .menu {
   display: flex;
   justify-content: space-between;
@@ -9,4 +61,35 @@
 
 .menu_tabs p {
   margin-right: 10px;
+}
+
+.detailInfo {
+  padding-top: 30px;
+}
+
+.NewDateAndTimePickerForLesson_wrapper {}
+
+.studentPrograms_wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.studentPrograms_wrapper input {
+  width: 40%;
+  outline: none;
+  background: #FFFFFF;
+  border: 0.5px solid #A3CEFD;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: 'Gotham Regular';
+  margin-top: 15px;
+}
+
+.studentPrograms_wrapper input:focus {
+  border: 0.5px solid #2E8CF2;
+}
+
+.lessonsWrapper {
+  margin-top: 30px;
 }

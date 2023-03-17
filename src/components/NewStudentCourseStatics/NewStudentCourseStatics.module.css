@@ -1,0 +1,172 @@
+@font-face {
+  font-family: "Noto Sans Regular";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Medium";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Bold";
+  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Regular";
+  src: url("../../../public/fonts/Muller/MullerRegular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Medium";
+  src: url("../../../public/fonts/Muller/MullerMedium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Muller Bold";
+  src: url("../../../public/fonts/Muller/MullerBold.ttf") format("truetype");
+}
+
+.container {
+  background-color: rgb(241, 250, 255);
+  padding: 40px 120px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.next_lesson {
+  position: relative;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+  border: 2px solid #F3F3F3;
+  margin-bottom: 40px;
+  border-radius: 16px;
+}
+
+.next_lesson img {
+  position: absolute;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  opacity: 0.04;
+}
+
+.next_lesson_content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.next_lesson_content p {
+  margin: 0;
+  font-size: 20px;
+  font-family: "Noto Sans Regular";
+}
+
+.next_lesson_content button {
+  color: #fff;
+  padding: 13px 60px;
+  background: #D8D8DC;
+  border-radius: 8px;
+  border: none;
+  font-family: "Noto Sans Bold";
+  font-size: 16px;
+}
+
+.course_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.course_container h2 {
+  text-transform: uppercase;
+  font-size: 24px;
+  font-family: "Muller Medium";
+}
+
+.course_container p {
+  font-size: 16px;
+  font-family: "Noto Sans Regular";
+}
+
+.goToLessonButton {
+  border: none;
+  font-family: "Noto Sans Bold";
+  background: #007AFF;
+  border-radius: 8px;
+  color: #fff;
+  padding: 13px 65px;
+  font-size: 16px;
+}
+.goToLessonButton:disabled {
+  border: none;
+  font-family: "Noto Sans Bold";
+	background: #D8D8DC;
+	color: #fff;
+  border-radius: 8px;
+  padding: 13px 65px;
+  font-size: 16px;
+}
+
+
+.pie_text {
+  text-transform: uppercase;
+  font-size: 20px;
+}
+
+.pie_text_score {
+  font-size: 48px;
+}
+
+.linksToOtherPrograms {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 1000px) {
+  .container {
+    padding: 40px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 40px 10px;
+  }
+  /* .course_container:first-child {
+    order: 2;
+  } */
+  .course_container_1 {
+    order: 2;
+  }
+  .course_container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 40px 10px;
+  }
+  /* .course_container:first-child {
+    order: 2;
+  } */
+  .course_container_1 {
+    order: 2;
+  }
+  .course_container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 40px 10px;
+  }
+  /* .course_container:first-child {
+    order: 2;
+  } */
+  .course_container_1 {
+    order: 2;
+  }
+  .course_container {
+    flex-direction: column;
+  }
+}

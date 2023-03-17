@@ -93,3 +93,42 @@
 .lessonsWrapper {
   margin-top: 30px;
 }
+
+.input_container p {
+	font-family: 'Gotham Regular';
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+.input_container {
+	margin-bottom: 20px;
+	/* width: 100%; */
+}
+
+
+.input_container input {
+	width: 40%;
+	outline: none;
+	background: #FFFFFF;
+	border: 0.5px solid #A3CEFD;
+	border-radius: 5px;
+	padding: 10px 20px;
+	font-family: 'Gotham Regular';
+}
+
+
+.input_container input:focus,
+.input_container textarea:focus,
+.input_container select:focus {
+	border: 0.5px solid #2E8CF2;
+}
+
+.input_container select {
+	width: 40%;
+	outline: none;
+	background: #FFFFFF;
+	border: 0.5px solid #A3CEFD;
+	border-radius: 5px;
+	padding: 12px 40px 12px 20px;
+	font-family: 'Gotham Regular';
+}

@@ -20,6 +20,7 @@ export default function Student({ programs }) {
   const [saveIsClicked, setSaveIsClicked] = useState(false)
   const [closerLesson, setCloserLesson] = useState([])
   const [editData, setEditData] = useState(false);
+  const [editProgramData, setEditProgramData] = useState()
 
   const [studentUrl, setStudentUrl] = useState(router.query.nick);
   const [student, setStudent] = useState([]);
@@ -32,10 +33,11 @@ export default function Student({ programs }) {
   const [studentPatronymic, setStudentPatronymic] = useState(student?.patronymic);
   const [nickname, setNickname] = useState(student?.nickname);
 
+  const [courseId, setCourseId] = useState(0);
   const [teachers, setTeachers] = useState([])
   const [categories, setCategories] = useState([])
   const [courses, setCourses] = useState([])
-  const [programsall, setProgramsall] = useState([])
+  const [programsAll, setProgramsAll] = useState([])
   const [lessons, setLessons] = useState([])
   const [students, setStudents] = useState([])
   const [roles, setRoles] = useState([])
@@ -43,6 +45,8 @@ export default function Student({ programs }) {
   const [studentPrograms, setStudentPrograms] = useState([]);
   const [editShow, setEditShow] = useState(false);
   const [allStudentsLessons, setAllStudentsLessons] = useState([])
+
+
   useEffect(() => {
     if (allStudentsLessons != undefined) {
       console.log(allStudentsLessons, "lessonsOfAllStudents");
@@ -79,17 +83,18 @@ export default function Student({ programs }) {
   }
 
   const getCourses = async () => {
-    let result = await axios.get(`${globals.productionServerDomain}/getCourses`)
+    console.log(teacher);
+    let result = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/${teacher?.id}`)
     setCourses(result.data);
     console.log(courses)
   }
 
   const getPrograms = async () => {
-    let result = await axios.get(`${globals.productionServerDomain}/getPrograms`)
-    setProgramsall(result.data);
-    console.log(programsall)
+    console.log(courseId);
+    let result = await axios.post(`${globals.productionServerDomain}/getProgramsByCourseId/${courseId}`)
+    setProgramsAll(result.data);
+    console.log(result.data);
   }
-
   const getLessons = async () => {
     await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${studentPrograms[0]?.course_url}&program_id=${studentPrograms[0]?.program_id}&student_id=${studentPrograms[0]?.student_id}`).then(res => {
       setLessons(res.data);
@@ -118,12 +123,19 @@ export default function Student({ programs }) {
   useEffect(() => {
     getTeachers()
     getCategories()
-    getCourses()
-    getPrograms()
     loadTeacherData()
     getStudents()
     getRoles()
   }, [])
+
+  useEffect(() => {
+    getPrograms();
+
+  }, [courseId]);
+  useEffect(() => {
+    getCourses();
+
+  }, [teacher]);
 
   const getStudent = async () => {
     console.log(studentUrl);
@@ -175,7 +187,7 @@ export default function Student({ programs }) {
   const newProgramForStudent = async () => {
     const data = {
       nickname: student.nickname,
-      courseId: student.course_id,
+      courseId: courseId,
       programId: lessonProgramId
     };
 
@@ -272,7 +284,17 @@ export default function Student({ programs }) {
         {tabNum === 0 && <div className={styles.profile}>
           <div className={styles.profile_header}>
             <h3>Общая информация</h3>
-            <button>Редактировать</button>
+            {editProgramData
+              ? <button
+                onClick={() => {
+                  newProgramForStudent()
+                  setEditProgramData(false)
+                }}
+              >
+                Сохранить
+              </button>
+              : <button onClick={() => setEditProgramData(true)}>Редактировать</button>
+            }
           </div>
           <div className={styles.profile_info}>
             <div>
@@ -280,17 +302,47 @@ export default function Student({ programs }) {
               <p>{student.nickname}</p>
             </div>
             <div>
-              <div>
+              <div className={styles.input_container}>
                 <p>Ссылка на личный кабинет</p>
-                <p>{"oilan-classroom.com/cabinet/student/" + student?.nickname + "/course/" + studentPrograms[0]?.course_url + "?program=" + studentPrograms[0]?.program_id}</p>
+                <input value={"oilan-classroom.com/cabinet/student/" + student?.nickname + "/course/" + studentPrograms[0]?.course_url + "?program=" + studentPrograms[0]?.program_id} />
               </div>
-              <div>
+              <div className={styles.input_container}>
                 <p>Курс</p>
-                <p>{studentPrograms[0]?.course_title}</p>
+                {editProgramData 
+                  ? <select
+                    className={styles.input_block}
+                    onChange={(e) => {
+                    setCourseId(e.target.value)
+                    console.log(e);
+                  }}
+                    value={courseId}
+                  >
+                    <option value="0" disabled>Выберите курс</option>
+                    {courses.map(course => (
+                      <option value={course.id}>{course.title}</option>
+                    ))}
+                  </select> 
+                  : <input value={studentPrograms[0]?.course_title} />
+                }  
               </div>
-              <div>
+              <div className={styles.input_container}>
                 <p>Программа</p>
-                <p>{studentPrograms[0]?.title}</p>
+                {editProgramData 
+                  ? <select
+                    className={styles.input_block}
+                    onChange={(e) => {
+                      setLessonProgramId(e.target.value)
+                      console.log(e);
+                    }}
+                    value={lessonProgramId}
+                  >
+                    <option value="0" disabled>Выберите программу</option>
+                    {programsAll.map(program => (
+                      <option value={program.id}>{program.title}</option>
+                    ))}
+                  </select>
+                  : <input value={studentPrograms[0]?.title} />
+                }  
               </div>
             </div>
             <div>
@@ -302,7 +354,7 @@ export default function Student({ programs }) {
                   <div>
                     <span className={+lesson.score > 0 ? styles.lesson_item_done : styles.lesson_item}>{lesson.lesson_order}</span>
                     <p className={styles.lesson_date}>{+lesson.score > 0 ? "Пройден" : lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}</p>
-                    <p>{new Date(lesson.start_time).getHours().toString().padStart(2, "0")}:{new Date(lesson.start_time).getMinutes().toString().padStart(2, "0")}-{(new Date(lesson.start_time).getHours() + 1).toString().padStart(2, "0")}:{new Date(lesson.start_time).getMinutes().toString().padStart(2, "0")} </p>
+                    <p>{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).getHours().toString().padStart(2, "0")}:{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).getMinutes().toString().padStart(2, "0")}-{(new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).getHours() + 1).toString().padStart(2, "0")}:{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).getMinutes().toString().padStart(2, "0")} </p>
                   </div>
                 </>
               })}

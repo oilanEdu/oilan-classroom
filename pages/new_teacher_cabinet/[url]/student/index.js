@@ -297,37 +297,42 @@ export default function Student({ programs }) {
             }
           </div>
           <div className={styles.profile_info}>
-            <div>
-              <p>{student?.name} {student?.surname}</p>
-              <p>{student?.nickname}</p>
+            <div className={styles.student_info__wrapper}>
+              <div className={styles.student__image}>
+                <img src="https://realibi.kz/file/185698.svg" alt="" />
+              </div>
+              <div className={styles.student__info}>
+                <p>{student?.name} {student?.surname}</p>
+                <p>{student?.nickname}</p>
+              </div>
             </div>
-            <div>
+            <div className={styles.input_wrapper}>
               <div className={styles.input_container}>
                 <p>Ссылка на личный кабинет</p>
                 <input value={"oilan-classroom.com/cabinet/student/" + student?.nickname + "/course/" + studentPrograms[0]?.course_url + "?program=" + studentPrograms[0]?.program_id} />
               </div>
               <div className={styles.input_container}>
                 <p>Курс</p>
-                {editProgramData 
+                {editProgramData
                   ? <select
                     className={styles.input_block}
                     onChange={(e) => {
-                    setCourseId(e.target.value)
-                    console.log(e);
-                  }}
+                      setCourseId(e.target.value)
+                      console.log(e);
+                    }}
                     value={courseId}
                   >
                     <option value="0" disabled>Выберите курс</option>
                     {courses.map(course => (
                       <option value={course.id}>{course.title}</option>
                     ))}
-                  </select> 
+                  </select>
                   : <input value={studentPrograms[0]?.course_title} />
-                }  
+                }
               </div>
               <div className={styles.input_container}>
                 <p>Программа</p>
-                {editProgramData 
+                {editProgramData
                   ? <select
                     className={styles.input_block}
                     onChange={(e) => {
@@ -342,22 +347,24 @@ export default function Student({ programs }) {
                     ))}
                   </select>
                   : <input value={studentPrograms[0]?.title} />
-                }  
+                }
               </div>
             </div>
-            <div>
-              <h5>Прохождение курса</h5>
-            </div>
-            <div>
-              {lessons.map(lesson => {
-                return <>
-                  <div>
-                    <span className={+lesson.score > 0 ? styles.lesson_item_done : styles.lesson_item}>{lesson.lesson_order}</span>
-                    <p className={styles.lesson_date}>{+lesson.score > 0 ? "Пройден" : lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}</p>
-                    <p>{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).getHours().toString().padStart(2, "0")}:{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).getMinutes().toString().padStart(2, "0")}-{(new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).getHours() + 1).toString().padStart(2, "0")}:{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).getMinutes().toString().padStart(2, "0")} </p>
-                  </div>
-                </>
-              })}
+            <div className={styles.course_success_wrapper}>
+              <div>
+                <h5>Прохождение курса</h5>
+              </div>
+              <div>
+                {lessons.map(lesson => {
+                  return <>
+                    <div>
+                      <span className={+lesson.score > 0 ? styles.lesson_item_done : styles.lesson_item}>{lesson.lesson_order}</span>
+                      <p className={styles.lesson_date}>{+lesson.score > 0 ? "Пройден" : lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}</p>
+                      <p>{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours().toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")}-{(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours() + 1).toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")} </p>
+                    </div>
+                  </>
+                })}
+              </div>
             </div>
           </div>
 
@@ -379,10 +386,8 @@ export default function Student({ programs }) {
             }
           </div>
           <div className={styles.studentPrograms_wrapper}>
-            <label>
-              Программа
-              <input value={studentPrograms[0]?.title} />
-            </label>
+            <span>Программа</span>
+            <input className={styles.input_programm} value={studentPrograms[0]?.title} />
             <div>
               <div className={styles.lessonsWrapper}>
                 <h6>Список уроков</h6>

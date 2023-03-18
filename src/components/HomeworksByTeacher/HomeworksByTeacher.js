@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import globals from "../../globals";
 import styles from "./HomeworksByTeacher.module.css";
 import axios from "axios";
@@ -12,11 +12,11 @@ import GoToLessonWithTimerComponent from "../GoToLessonWithTimerComponent/GoToLe
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 
 function HomeworksByTeacher(props) {
-	console.log('HomeworksByTeacher', props)
-	const router = useRouter()
-	const teacherUrl = router.query.url
-  const studentId = router.query.studentId?router.query.studentId:props.student.student_id
-  const programId = router.query.programId?router.query.programId:props.program
+  console.log('HomeworksByTeacher', props)
+  const router = useRouter()
+  const teacherUrl = router.query.url
+  const studentId = router.query.studentId ? router.query.studentId : props.student.student_id
+  const programId = router.query.programId ? router.query.programId : props.program
   const [teacher, setTeacher] = useState([])
   const [students, setStudents] = useState([])
   const [selectedStudentId, setSelectedStudentId] = useState(studentId)
@@ -44,17 +44,17 @@ function HomeworksByTeacher(props) {
     loadBaseData()
     loadPrograms(selectedStudentId)
     loadStudentLessons(selectedStudentId, selectedProgramId)
-  }, []) 
+  }, [])
 
   const loadBaseData = async () => {
-    let data = props.url 
+    let data = props.url
     let getTeacherByUrl = await axios.post(`${globals.productionServerDomain}/getTeacherByUrl/` + data)
     const teacherIdLocal = getTeacherByUrl['data'][0]?.id
     const dataStudents = {
       id: teacherIdLocal,
       sort: "oc_students.surname"
     }
-    let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`,  dataStudents)
+    let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
     setTeacher(getTeacherByUrl['data'][0])
     setStudents(teacherStudents['data'])
     console.log(students)
@@ -68,23 +68,23 @@ function HomeworksByTeacher(props) {
   const loadPrograms = async (studentId) => {
     let studentPrograms;
     // if (studentId) {
-      studentPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + props.student.id);
+    studentPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + props.student.id);
     // } else if (selectedStudentId) {
     //   studentPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + selectedStudentId);
     // } else {
     //   studentPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + students[0]?.student_id);
     // }
-    
+
     setPrograms(studentPrograms['data']);
     console.log(studentPrograms['data'])
     console.log(props.student.id, studentPrograms['data'][0].id)
     loadStudentLessons(props.student.id, studentPrograms['data'][0].program_id);
   }
-    
+
   const reloadButton = async () => {
     await loadPrograms(selectedStudentId);
   };
-    
+
   const loadStudentLessons = async (studentId, programId) => {
     const data = {
       studentId,
@@ -103,16 +103,16 @@ function HomeworksByTeacher(props) {
         let lesson_number = 0
         lessons.forEach(lesson => {
           lesson_number += 1
-          lesson.lesson_number = lesson_number 
-          if (lesson.personal_time){
+          lesson.lesson_number = lesson_number
+          if (lesson.personal_time) {
             lesson.fact_time = lesson.personal_time
           } else {
             lesson.fact_time = lesson.start_time
           }
           let strDate = new Date(lesson.fact_time)
           let curr_hours = strDate.getHours();
-          let curr_minutes = strDate.getMinutes(); 
-          lesson.out_date = new Date(strDate).toLocaleDateString() 
+          let curr_minutes = strDate.getMinutes();
+          lesson.out_date = new Date(strDate).toLocaleDateString()
           lesson.out_hours = curr_hours
           lesson.out_minutes = curr_minutes
         })
@@ -146,92 +146,92 @@ function HomeworksByTeacher(props) {
   const updateAnswerStatus = async (id, status, mark) => {
     const data = {
       id,
-      status, 
+      status,
       mark
-    }; 
+    };
     await axios({
       method: "put",
       url: `${globals.productionServerDomain}/updateAnswerStatus`,
       data: data,
     })
       .then(function (res) {
-        alert("Отметка о выполнении изменена"); 
+        alert("Отметка о выполнении изменена");
       })
       .catch((err) => {
-        alert("Произошла ошибка"); 
-          });
-    }
+        alert("Произошла ошибка");
+      });
+  }
 
-    const updateAnswerComment = async (studentId, exerciseId, text, date) => {
-        const data = {
-          studentId, 
-          exerciseId, 
-          text,
-          date
-        }; 
+  const updateAnswerComment = async (studentId, exerciseId, text, date) => {
+    const data = {
+      studentId,
+      exerciseId,
+      text,
+      date
+    };
 
-        await axios({
-          method: "post",
-          url: `${globals.productionServerDomain}/createTeacherComment`,
-          data: data,
-        })
-          .then(function (res) {
-        alert("Комментарий отправлен"); 
+    await axios({
+      method: "post",
+      url: `${globals.productionServerDomain}/createTeacherComment`,
+      data: data,
+    })
+      .then(function (res) {
+        alert("Комментарий отправлен");
       })
       .catch((err) => {
-        alert("Произошла ошибка"); 
+        alert("Произошла ошибка");
       });
   }
   // if (typeof localStorage !== "undefined") {
-	return <>
-      <div style={{backgroundColor: "#f1faff", width: "100vw", overflowX: "hidden"}}>
-        <div className={styles.cantainer}>
-      		<div className={styles.selectBlock}>
-            <h1>{router.query.studentId?'Домашние задания':null}</h1>
-          </div>
-          <div className={styles.lessons}>
-            {lessons.length > 0 
-              ? <> {lessons.map((lesson, index) => (
-                <NewTeacherHomeworksLessons 
-                  index={index}
-                  lesson={lesson} 
-                  showCheck={showCheck} 
-                  selectedExerciseId={selectedExerciseId} 
-                  answer={answer} 
-                  student={props.student}
-                  setShowCheck={setShowCheck} 
-                  setSelectedExerciseId={setSelectedExerciseId} 
-                  setAnswer={setAnswer} 
-                  setSelectedExerciseNumber={setSelectedExerciseNumber} 
-                  setSelectedExerciseText={setSelectedExerciseText} 
-                  setSelectedExerciseCorrectAnswer={setSelectedExerciseCorrectAnswer} 
-                  getAnswer={getAnswer} 
-                  selectedStudentId={selectedStudentId} 
-                  selectedExerciseNumber={selectedExerciseNumber} 
-                  selectedExerciseText={selectedExerciseText} 
-                  selectedExerciseCorrectAnswer={selectedExerciseCorrectAnswer} 
-                  updateAnswerStatus={updateAnswerStatus} 
-                  updateAnswerComment={updateAnswerComment}
-                  loadStudentLessons={loadStudentLessons}
-                  selectedProgramId={selectedProgramId}
-                />
-              ))} </> 
-              : ''
-            }
+  return <>
+    <div className={styles.wrapperHomework}>
+      <div className={styles.cantainer}>
+        <div className={styles.selectBlock}>
+          <h1>{router.query.studentId ? 'Домашние задания' : null}</h1>
         </div>
-      </div>            	
+        <div className={styles.lessons}>
+          {lessons.length > 0
+            ? <> {lessons.map((lesson, index) => (
+              <NewTeacherHomeworksLessons
+                index={index}
+                lesson={lesson}
+                showCheck={showCheck}
+                selectedExerciseId={selectedExerciseId}
+                answer={answer}
+                student={props.student}
+                setShowCheck={setShowCheck}
+                setSelectedExerciseId={setSelectedExerciseId}
+                setAnswer={setAnswer}
+                setSelectedExerciseNumber={setSelectedExerciseNumber}
+                setSelectedExerciseText={setSelectedExerciseText}
+                setSelectedExerciseCorrectAnswer={setSelectedExerciseCorrectAnswer}
+                getAnswer={getAnswer}
+                selectedStudentId={selectedStudentId}
+                selectedExerciseNumber={selectedExerciseNumber}
+                selectedExerciseText={selectedExerciseText}
+                selectedExerciseCorrectAnswer={selectedExerciseCorrectAnswer}
+                updateAnswerStatus={updateAnswerStatus}
+                updateAnswerComment={updateAnswerComment}
+                loadStudentLessons={loadStudentLessons}
+                selectedProgramId={selectedProgramId}
+              />
+            ))} </>
+            : ''
+          }
+        </div>
       </div>
-    </>
+    </div>
+  </>
   //   :<></>
   // )} else {return <></>}
 }
 
 HomeworksByTeacher.getInitialProps = async (ctx) => {
-  if(ctx.query.url !== undefined) {
+  if (ctx.query.url !== undefined) {
     return {
       url: ctx.query.url,
     }
-  } else{
+  } else {
     return {};
   }
 }

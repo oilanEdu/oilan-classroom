@@ -1,3 +1,25 @@
+@font-face {
+    font-family: "Gotham Regular";
+    src: url('../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
+}
+
+@font-face {
+    font-family: 'Gotham Medium';
+    src: url('../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+    font-family: 'Gotham Light';
+    src: url('../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+    font-family: 'Gotham Bold';
+    src: url('../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+
+
 .calendar_wrapper {
     width: 488px;
     height: 432px;
@@ -15,21 +37,28 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 25px 25px 0 25px;
+    padding: 15px 25px 15px 25px;
+    background: #2E8CF2;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
 }
+
 .wrapper2_subTitle {
     font-weight: 500;
     font-size: 18.8235px;
     line-height: 47px;
-    color: #007AFF;
+    color: #2E8CF2;
     text-align: center;
     padding: 0 25px 0 25px;
 }
 
-.wrapper3  {
+.wrapper3 {
     /* flex: auto; */
-    color: #007AFF;
+    color: #fff;
     text-transform: capitalize;
+    font-family: 'Gotham Regular';
+    font-size: 25px;
+    margin: 0;
 }
 
 .wrapper4 {
@@ -39,15 +68,16 @@
     align-items: center;
     justify-content: center;
     padding: 1.5rem; */
-    background: url(https://realibi.kz/file/729907.png);
+    background: url(https://realibi.kz/file/375397.svg);
     background-repeat: no-repeat;
     width: 10px;
     height: 21px;
     border: none;
     background-size: contain;
 }
+
 .wrapper4_2 {
-    background: url(https://realibi.kz/file/646259.png);
+    background: url(https://realibi.kz/file/44642.svg);
     background-repeat: no-repeat;
     width: 10px;
     height: 21px;
@@ -71,6 +101,8 @@
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
     text-align: center;
+    margin-top: 15px;
+    font-family: 'Gotham Regular';
 }
 
 .wrapper7 {
@@ -82,18 +114,23 @@
 .col-start-2 {
     grid-column-start: 1;
 }
+
 .col-start-3 {
     grid-column-start: 2;
 }
+
 .col-start-4 {
     grid-column-start: 3;
 }
+
 .col-start-5 {
     grid-column-start: 4;
 }
+
 .col-start-6 {
     grid-column-start: 5;
 }
+
 .col-start-7 {
     grid-column-start: 6;
 }
@@ -102,9 +139,11 @@
     background: none;
     border: none;
 }
+
 .calendarDaySelected {
     color: white;
 }
+
 .countOfLessons {
     background-color: red;
     /* width: fit-content; */

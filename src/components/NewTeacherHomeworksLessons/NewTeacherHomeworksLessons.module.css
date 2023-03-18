@@ -31,11 +31,41 @@
 }
 
 .container {
-  margin: 20px;
+  margin-top: 20px;
+  box-shadow: 0px 0px 11px 3px #A3CEFD40;
+  padding: 25px 20px;
+  width: 80%;
+}
+
+.wrapperAll {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
 }
 
 .detail_info {
   flex-direction: column;
+  border-top: 0.5px solid #a3cefd83;
+  width: 100%;
+}
+
+.input_container p {
+  font-family: 'Gotham Regular';
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.input_container {
+  height: fit-content;
+  width: 40%;
+  outline: none;
+  background: #FFFFFF;
+  border: 0.5px solid #A3CEFD;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: 'Gotham Regular';
+  margin-top: 10px;
 }
 
 .answer_block {
@@ -59,15 +89,16 @@
 
 .lesson {
   display: flex;
-  width: 80%;
-  box-shadow: 0px 0px 11px 3px #A3CEFD40;
-  padding: 25px 20px;
+  width: 100%;
+  /* box-shadow: 0px 0px 11px 3px #A3CEFD40; */
+  /* padding: 25px 20px; */
 }
 
 .lesson_info {
   width: 100%;
   display: flex;
   align-items: center;
+  margin-top: 0;
 }
 
 .lesson_grade_wrapper p {
@@ -86,8 +117,11 @@
 .lesson_tesis {
   width: 55%;
   font-family: 'Gotham Regular';
-  border-left: 0.5px solid #2E8CF2;
-  /* height: 100%; */
+  border-left: 0.5px solid #a3cefd83;
+  border-right: 0.5px solid #a3cefd83;
+  display: flex;
+  align-items: center;
+  height: 75px;
 }
 
 .lesson_tesis span {
@@ -99,19 +133,17 @@
   font-family: 'Gotham Regular';
 }
 
-.plusButton {
-  background: red;
-}
 
 .lesson_grade {
   display: flex;
   display: block;
   padding: 10px 20px;
-  background: #2E8CF2;
-  color: white;
+  border: 1px solid #2E8CF2;
+  color: #000;
   align-self: flex-end;
   justify-self: flex-end;
-  border-radius: 4px
+  border-radius: 4px;
+  margin-left: 15px;
 }
 
 .plusButton {
@@ -141,7 +173,7 @@
   border: none;
   border-radius: 3px;
   width: fit-content;
-  background: #2E8CF2;
+  background: #A3CEFD;
   color: white;
   font-family: 'Gotham Regular';
   outline: none;
@@ -150,6 +182,7 @@
 .work_headline {
   font-size: 20px;
   font-family: 'Gotham Medium';
+  margin-top: 0;
 }
 
 .comment_block,
@@ -166,15 +199,23 @@
 }
 
 .grade_toMark span {
-  padding: 5px 20px;
-  background: #2E8CF2;
+  padding: 7px 20px;
+  background: #fff;
+  border: 1px solid #A3CEFD;
+  box-shadow: 0px 0px 11px 3px #A3CEFD33;
   color: #fff;
   margin-right: 10px;
-  border-radius: 3px
+  border-radius: 5px;
+  color: #000;
+  cursor: pointer;
+}
+
+.grade_toMark {
+  margin-top: 15px;
 }
 
 .teacherComment {
-  width: 30%;
+  width: 40%;
   height: 70px;
   outline: none;
   background: #FFFFFF;

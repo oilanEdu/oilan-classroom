@@ -1,95 +1,95 @@
 @font-face {
-  font-family: "Noto Sans Regular";
-  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
-}
-@font-face {
-  font-family: "Noto Sans Medium";
-  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
-}
-@font-face {
-  font-family: "Noto Sans Bold";
-  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
-}
-@font-face {
-  font-family: "Muller Regular";
-  src: url("../../../public/fonts/Muller/MullerRegular.ttf") format("truetype");
-}
-@font-face {
-  font-family: "Muller Medium";
-  src: url("../../../public/fonts/Muller/MullerMedium.ttf") format("truetype");
-}
-@font-face {
-  font-family: "Muller Bold";
-  src: url("../../../public/fonts/Muller/MullerBold.ttf") format("truetype");
+	font-family: "Gotham Regular";
+	src: url('../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
 }
 
-.cantainer{
+@font-face {
+	font-family: 'Gotham Medium';
+	src: url('../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Light';
+	src: url('../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Bold';
+	src: url('../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+
+.container {
+	position: relative;
+	padding: 0 100px;
+	background: #FBFDFF;
+}
+
+.cantainer {
 	margin-top: 40px;
-	max-width: 1440px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 15px;
+	margin-bottom: 15px;
 	display: flex;
 	flex-direction: column;
-	padding: 0 120px;
+	/* padding: 0 120px; */
 }
 
 .next_lesson {
-  position: relative;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
-  border: 2px solid #F3F3F3;
-  margin-bottom: 40px;
-  border-radius: 16px;
+	position: relative;
+	background: linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+	border: 2px solid #F3F3F3;
+	margin-bottom: 40px;
+	border-radius: 16px;
 }
 
 .next_lesson img {
-  position: absolute;
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  opacity: 0.04;
+	position: absolute;
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	opacity: 0.04;
 }
 
 .next_lesson_content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px;
 }
 
 .next_lesson_content p {
-  margin: 0;
-  font-size: 20px;
-  font-family: "Noto Sans Regular";
+	margin: 0;
+	font-size: 20px;
+	font-family: "Gotham Regular";
 }
 
 .next_lesson_content button {
-  color: #fff;
-  padding: 13px 60px;
-  background: #D8D8DC;
-  border-radius: 8px;
-  border: none;
-  font-family: "Noto Sans Bold";
-  font-size: 16px;
+	color: #fff;
+	padding: 13px 60px;
+	background: #D8D8DC;
+	border-radius: 8px;
+	border: none;
+	font-family: "Gotham Medium";
+	font-size: 16px;
 }
 
 
-.topBlock{
+.topBlock {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-start;
 }
 
-.greetings{
+.greetings {
 	display: flex;
 	width: 50%;
 	flex-direction: column;
+	margin-top: 60px;
 }
 
-.greetings span{
-	font-family: 'Noto Sans Regular';
+.greetings span {
+	font-family: 'Gotham Regular';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
@@ -97,8 +97,8 @@
 	color: #1E2432;
 }
 
-.greetings h1{
-    font-family: 'Muller Medium';
+.greetings h1 {
+	font-family: 'Gotham Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 24px;
@@ -107,8 +107,8 @@
 	color: #1E2432;
 }
 
-.greetings p{
-	font-family: 'Noto Sans Regular';
+.greetings p {
+	font-family: 'Gotham Regular';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
@@ -116,7 +116,7 @@
 	color: #1E2432;
 }
 
-.goToLessonButton{
+.goToLessonButton {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -125,16 +125,17 @@
 	gap: 10px;
 	width: 295px;
 	height: 48px;
-	background: #007AFF;
+	background: #2E8CF2;
 	border: none;
-	border-radius: 8px;
-	font-family: 'Noto Sans Medium';
+	border-radius: 4px;
+	font-family: 'Gotham Regular';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 16px;
 	line-height: 22px;
 	color: #FFFFFF;
 }
+
 .goToLessonButton:disabled {
 	background: #D8D8DC;
 	color: #fff;
@@ -148,29 +149,29 @@
 	height: 48px;
 	border: none;
 	border-radius: 8px;
-	font-family: 'Noto Sans Medium';
+	font-family: 'Gotham Regular';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 16px;
 	line-height: 22px;
 }
 
-.calendarBlock{
+.calendarBlock {
 	display: flex;
 	width: 50%;
 	flex-direction: row;
 	justify-content: end;
 }
 
-.programsBlock{
+.programsBlock {
 	margin-top: 80px;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 }
 
-.programsBlock h1{
-    font-family: 'Muller Medium';
+.programsBlock h1 {
+	font-family: 'Gotham Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 24px;
@@ -180,7 +181,7 @@
 	margin-bottom: 40px;
 }
 
-.programsHeader{
+.programsHeader {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -194,8 +195,8 @@
 	border-radius: 16px;
 }
 
-.programsHeader span{
-    font-family: 'Noto Sans Medium';
+.programsHeader span {
+	font-family: 'Gotham Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 16px;
@@ -204,7 +205,7 @@
 	padding: 5px;
 }
 
-.program{
+.program {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -218,8 +219,8 @@
 	border-radius: 16px;
 }
 
-.program span{
-  font-family: 'Noto Sans Medium';
+.program span {
+	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 16px;
@@ -228,7 +229,7 @@
 	padding: 5px;
 }
 
-.pNumber{
+.pNumber {
 	width: 5%;
 }
 
@@ -236,42 +237,42 @@
 	position: relative;
 }
 
-.pCourse{
+.pCourse {
 	width: 20%;
 }
 
-.pCourseHead{
+.pCourseHead {
 	position: relative;
 }
 
-.pProgram{
+.pProgram {
 	width: 25%;
 }
 
-.pProgramHead{
+.pProgramHead {
 	position: relative;
 }
 
-.pLessCount{
+.pLessCount {
 	width: 15%;
 }
 
-.pLessCountHead{
+.pLessCountHead {
 	position: relative;
 }
 
-.pDates{
+.pDates {
 	width: 20%;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 }
 
-.pDatesHead{
+.pDatesHead {
 	position: relative;
 }
 
-.pEdit{
+.pEdit {
 	padding-left: 10px;
 
 	width: 15%;
@@ -284,15 +285,15 @@
 	color: #007AFF !important;
 }
 
-.pEdit a{
+.pEdit a {
 	text-decoration-line: none;
 }
 
-.pEdit a:hover{
+.pEdit a:hover {
 	text-decoration-line: underline;
 }
 
-.pEditTitle{
+.pEditTitle {
 	padding-left: 10px;
 	width: 15%;
 	font-family: 'Noto Sans Medium';
@@ -304,7 +305,7 @@
 	text-decoration-line: none;
 }
 
-.addProgram{
+.addProgram {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -324,7 +325,7 @@
 	color: #FFFFFF;
 }
 
-.addProgramContainer{
+.addProgramContainer {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -342,15 +343,15 @@
 	width: 150px;
 }
 
-.studentsBlock{
+.studentsBlock {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	margin: 92px 0 60px;
 }
 
-.studentsBlock h1{
-    font-family: 'Muller Medium';
+.studentsBlock h1 {
+	font-family: 'Muller Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 24px;
@@ -360,7 +361,7 @@
 	margin-bottom: 40px;
 }
 
-.studentsHeader{
+.studentsHeader {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -374,7 +375,7 @@
 	border-radius: 16px;
 }
 
-.studentsHeader span{
+.studentsHeader span {
 	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
@@ -384,7 +385,7 @@
 	padding: 5px;
 }
 
-.student{
+.student {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -398,7 +399,7 @@
 	border-radius: 16px;
 }
 
-.student span{
+.student span {
 	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
@@ -408,47 +409,47 @@
 	padding: 5px;
 }
 
-.sCourse{
+.sCourse {
 	width: 20%;
 }
 
-.sFullname{
+.sFullname {
 	width: 20%;
 	display: flex;
 	flex-direction: row;
 }
 
-.sComplietedLessons{
+.sComplietedLessons {
 	width: 20%;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 }
 
-.sNextLesson{
+.sNextLesson {
 	width: 20%;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 }
 
-.sProgram{
+.sProgram {
 	width: 20%;
 }
 
-.studentCage{
+.studentCage {
 	display: flex;
 	flex-direction: row;
 	cursor: pointer;
 	align-items: center;
 }
 
-.idAndName{
+.idAndName {
 	display: flex;
 	flex-direction: column;
 }
 
-.name{
+.name {
 	font-family: 'Noto Sans Bold';
 	font-style: normal;
 	font-weight: 500;
@@ -457,7 +458,7 @@
 	color: #1E2432;
 }
 
-.id{
+.id {
 	font-family: 'Noto Sans Regular' !important;
 	font-style: normal;
 	font-weight: 400;
@@ -466,7 +467,7 @@
 	color: #191D23;
 }
 
-.progressLine{
+.progressLine {
 	display: flex;
 	height: 8px;
 	width: 150px;
@@ -475,20 +476,23 @@
 	margin-right: 12px;
 }
 
-.studentProgress{
+.studentProgress {
 	height: 8px;
 	background: #007AFF;
 	border-radius: 4px;
 }
 
-.sCourseHead, .sFullnameHead, .sComplietedLessonsHead, .sNextLessonHead {
+.sCourseHead,
+.sFullnameHead,
+.sComplietedLessonsHead,
+.sNextLessonHead {
 	position: relative;
 }
 
-.pNumberHead::after, 
-.pCourseHead::after, 
-.pDatesHead::after, 
-.pLessCountHead::after, 
+.pNumberHead::after,
+.pCourseHead::after,
+.pDatesHead::after,
+.pLessCountHead::after,
 .pProgramHead::after {
 	content: "";
 	border-right: 1px solid #D8D8DC;
@@ -509,7 +513,9 @@
 	top: -11px;
 }
 
-.sFullnameHead::after, .sComplietedLessonsHead::after, .sNextLessonHead::after {
+.sFullnameHead::after,
+.sComplietedLessonsHead::after,
+.sNextLessonHead::after {
 	content: "";
 	border-right: 1px solid #D8D8DC;
 	display: block;
@@ -539,26 +545,26 @@
 
 .sortTitle {
 	width: 285px;
-  border: 1px solid #A2A7B2;
-  padding: 15px 40px;
-  background: url(https://realibi.kz/file/523525.png) no-repeat #fff;
-  background-position: 10px 50%;
-  background-size: 20px;
-  border-radius: 8px;
+	border: 1px solid #A2A7B2;
+	padding: 15px 40px;
+	background: url(https://realibi.kz/file/523525.png) no-repeat #fff;
+	background-position: 10px 50%;
+	background-size: 20px;
+	border-radius: 8px;
 }
 
 .sortHide {
 	background: url(https://realibi.kz/file/618464.png) no-repeat;
-  background-position: right 50%;
-  background-size: 12px;
-  padding: 0 121px 0 0;
+	background-position: right 50%;
+	background-size: 12px;
+	padding: 0 121px 0 0;
 }
 
 .sortShow {
 	background: url(https://realibi.kz/file/635945.png) no-repeat;
-  background-position: right 50%;
-  background-size: 12px;
-  padding: 0 121px 0 0;
+	background-position: right 50%;
+	background-size: 12px;
+	padding: 0 121px 0 0;
 }
 
 .sortOptions span {
@@ -572,178 +578,204 @@
 	background: #f1faff;
 	cursor: pointer;
 }
-  .sConfigureWrapper {
-	  display: flex;
-	  flex-direction: row;
-	  align-items: center;
-	  width: 20%;
-  }
-  .sConfigureGear {
-	  background-image: url(https://realibi.kz/file/867377.png);
-	  width: 20px;
-	  height: 20px;
-	  background-size: cover;
-  }
-  
-  .sConfigure {
-	  cursor: pointer;
-  }
-  .sConfigure{
-	  padding-left: 10px;
-	  width: auto;
-	  font-family: 'Noto Sans Medium';
-	  font-style: normal;
-	  font-weight: 500;
-	  font-size: 16px;
-	  line-height: 150%;
-	  align-items: center;
-	  color: #007AFF !important;
-  }
-  .sConfigure {
-	  text-decoration-line: none;
-  }
-  .sConfigure:hover{
-	  text-decoration-line: underline;
-  }
 
-	.not_in {
-		margin: 100px;
-    font-size: 22px;
-    text-align: center;
-	}
+.sConfigureWrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 20%;
+}
 
-	.not_in_lk {
-		cursor: pointer;
-		color: #007AFF;
-	}
+.sConfigureGear {
+	background-image: url(https://realibi.kz/file/867377.png);
+	width: 20px;
+	height: 20px;
+	background-size: cover;
+}
 
-	.not_in_lk:hover {
-		text-decoration: underline;
-	}
+.sConfigure {
+	cursor: pointer;
+}
 
-  @media screen and (max-width: 1000px) {
+.sConfigure {
+	padding-left: 10px;
+	width: auto;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 150%;
+	align-items: center;
+	color: #007AFF !important;
+}
+
+.sConfigure {
+	text-decoration-line: none;
+}
+
+.sConfigure:hover {
+	text-decoration-line: underline;
+}
+
+.not_in {
+	margin: 100px;
+	font-size: 22px;
+	text-align: center;
+}
+
+.not_in_lk {
+	cursor: pointer;
+	color: #007AFF;
+}
+
+.not_in_lk:hover {
+	text-decoration: underline;
+}
+
+@media screen and (max-width: 1000px) {
 	.cantainer {
 		padding: 0 40px;
 	}
-  }
-  @media screen and (max-width: 768px) {
+}
+
+@media screen and (max-width: 768px) {
 	.cantainer {
 		padding: 0 10px;
 	}
+
 	.topBlock {
 		display: flex;
 		flex-direction: column-reverse;
 	}
+
 	.greetings {
 		width: 100%;
 		word-break: break-word;
 	}
+
 	.calendarBlock {
 		width: auto;
 	}
+
 	.programsBlock {
 		overflow-x: scroll;
 		width: auto;
 		align-items: flex-start
 	}
+
 	.programsHeader {
 		width: 1440px;
 	}
+
 	.program {
 		width: 1440px;
 	}
-	
+
 	.studentsBlock {
 		overflow-y: scroll;
 	}
+
 	.titleContainer {
 		width: 1440px;
 	}
+
 	.studentsHeader {
 		width: 1440px;
 	}
+
 	.student {
 		width: 1440px;
 	}
+
 	/* .calendarBlock {
 		order: 1;
 	} */
-} 
+}
 
 .settingTitleHide {
-  cursor: pointer;
-    font-family: 'Noto Sans Medium';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid;
-    line-height: 150%;
-    color: #0f376e !important;
-    margin: 0;
-    background: url(https://realibi.kz/file/618464.png) #fff no-repeat;
-    background-position: 50% 50%;
-    background-size: 15px;
+	cursor: pointer;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 20px;
+	padding: 10px;
+	border-radius: 6px;
+	border: 1px solid;
+	line-height: 150%;
+	color: #0f376e !important;
+	margin: 0;
+	background: url(https://realibi.kz/file/618464.png) #fff no-repeat;
+	background-position: 50% 50%;
+	background-size: 15px;
 }
 
 .settingTitleShow {
 	cursor: pointer;
-    font-family: 'Noto Sans Medium';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid;
-    line-height: 150%;
-    color: #0f376e !important;
-    margin: 0;
-    background: url(https://realibi.kz/file/635945.png) #fff no-repeat;
-    background-position: 50% 50%;
-    background-size: 15px;
+	font-family: 'Noto Sans Medium';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 20px;
+	padding: 10px;
+	border-radius: 6px;
+	border: 1px solid;
+	line-height: 150%;
+	color: #0f376e !important;
+	margin: 0;
+	background: url(https://realibi.kz/file/635945.png) #fff no-repeat;
+	background-position: 50% 50%;
+	background-size: 15px;
 }
 
 @media screen and (max-width: 480px) {
 	.cantainer {
 		padding: 0 10px;
 	}
+
 	.topBlock {
 		display: flex;
 		flex-direction: column-reverse;
 	}
+
 	.greetings {
 		width: 100%;
 		word-break: break-word;
 	}
+
 	.calendarBlock {
 		width: auto;
 	}
+
 	.programsBlock {
 		overflow-x: scroll;
 		width: auto;
 		align-items: flex-start
 	}
+
 	.programsHeader {
 		width: 1440px;
 	}
+
 	.program {
 		width: 1440px;
 	}
-	
+
 	.studentsBlock {
 		overflow-y: scroll;
 	}
+
 	.titleContainer {
 		width: 1440px;
 	}
+
 	.studentsHeader {
 		width: 1440px;
 	}
+
 	.student {
 		width: 1440px;
 	}
+
 	/* .calendarBlock {
 		order: 1;
 	} */
-} 
+}

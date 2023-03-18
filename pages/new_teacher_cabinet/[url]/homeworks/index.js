@@ -89,54 +89,58 @@ const homeworks = () => {
       />
       <div className={styles.wrapperAll}>
         <div><h1>Домашние задания</h1></div>
-        {answers.map((answer, index) => (
-        <>
-          <div className={styles.answerRow}>
-            <div className={styles.answerColumn}>
-              <p>{answer?.name} {answer?.surname}</p>
-              <p>Урок {answer?.lesson_orsder}: {answer?.lesson_title}</p>
-            </div>
-            <div className={styles.answerColumn}>
-              <p>Курс: {answer?.course_title}</p>
-              <p>Программа: {answer?.program_title}</p>
-              <p>Дата урока: {answer?.student_lesson_start_time?formatDate(answer?.student_lesson_start_time):answer?.lesson_start_time?formatDate(answer?.lesson_start_time):'не назначено'}</p>
-            </div>
-            <div className={styles.answerColumn}>
-              <p>{answer?.student_comment?'Ученик оставил комментарий к заданию':'Студент не оставил комментарий'}</p>
-            </div>
-            <div className={styles.answerColumn}>
-              <div className={answer?.total_obtained_mark ? styles.green : styles.white}>
-                {answer?.total_obtained_mark ? `Оценка - ${answer?.average_mark} (${answer?.percent_completed}%)` : 'Ждет проверки'}
-              </div>
-            </div>
-            <button onClick={() => toggleAnswer(index)}>{answer.isExpanded ? "-" : "+"}</button>
-          </div>
-          {answer.isExpanded && (
-            <div className={styles.answerText}>
-              {lessonData.map((LD, i) => {
-                return (
-                  <div key={i}>
-                    {(LD?.lesson_id == answer?.lesson_id && LD?.student_id == answer?.student_id)?
-                      <>
-                        {students.map(student => {
-                          console.log('student', student)
-                          return (
-                            <>
-                              //{student?.student_id == LD?.student_id?<HomeworksByTeacher student={student} program={answer?.program_id}/>:null}
-                            </>
-                          );
-                        })}
-                      </>
-                      :
-                      <></>
-                    }
+        <div className={styles.wrapperAnswers}>
+          {answers.map((answer, index) => (
+            <>
+              <div className={styles.wrapper_answersRow}>
+                <div className={styles.answerRow}>
+                  <div className={styles.lesson_title_wrapper}>
+                    <p>{answer?.name} {answer?.surname}</p>
+                    <p>Урок {answer?.lesson_orsder}: {answer?.lesson_title}</p>
                   </div>
-                )
-              })}
-            </div>
-          )}
-        </>
-        ))}
+                  <div className={styles.lesson_tesis}>
+                    <p>Курс: {answer?.course_title}</p>
+                    <p>Программа: {answer?.program_title}</p>
+                    <p>Дата урока: {answer?.student_lesson_start_time ? formatDate(answer?.student_lesson_start_time) : answer?.lesson_start_time ? formatDate(answer?.lesson_start_time) : 'не назначено'}</p>
+                  </div>
+                  <div className={styles.answer_comment}>
+                    <p>{answer?.student_comment ? 'Ученик оставил комментарий к заданию' : 'Студент не оставил комментарий'}</p>
+                  </div>
+                  <div className={styles.lesson_grade_wrapper}>
+                    <div className={answer?.total_obtained_mark ? styles.green : styles.white}>
+                      {answer?.total_obtained_mark ? `Оценка - ${answer?.average_mark} (${answer?.percent_completed}%)` : 'Ждет проверки'}
+                    </div>
+                  </div>
+                </div>
+                <button className={styles.plusButton} onClick={() => toggleAnswer(index)}>{answer.isExpanded ? "-" : "+"}</button>
+              </div>
+              {answer.isExpanded && (
+                <div className={styles.answerText}>
+                  {lessonData.map((LD, i) => {
+                    return (
+                      <div key={i}>
+                        {(LD?.lesson_id == answer?.lesson_id && LD?.student_id == answer?.student_id) ?
+                          <>
+                            {students.map(student => {
+                              console.log('student', student)
+                              return (
+                                <>
+                              //{student?.student_id == LD?.student_id ? <HomeworksByTeacher student={student} program={answer?.program_id} /> : null}
+                                </>
+                              );
+                            })}
+                          </>
+                          :
+                          <></>
+                        }
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+            </>
+          ))}
+        </div>
       </div>
     </div>
   </>;

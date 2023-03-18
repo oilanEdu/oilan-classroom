@@ -51,17 +51,17 @@ export default function Calendar2(props) {
   //   isSameDay(parseISO(meeting.startDatetime), selectedDay)
   // );
   let selectedDayMeetings2 = props?.lessons?.filter((lesson) =>
-  isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), today)
-).length;
-// let selectedDayMeetings3 = props?.lessons?.filter((lesson) =>
-//   isSameDay(parseISO(lesson.start_time), days.map(day => {
+    isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), today)
+  ).length;
+  // let selectedDayMeetings3 = props?.lessons?.filter((lesson) =>
+  //   isSameDay(parseISO(lesson.start_time), days.map(day => {
 
-//   }))
-// );
-// let selectedDayMeetings4 = days?.filter((day) =>
-//     props.lessons.map(lesson => {
-      
-//   }))
+  //   }))
+  // );
+  // let selectedDayMeetings4 = days?.filter((day) =>
+  //     props.lessons.map(lesson => {
+
+  //   }))
 
   useEffect(() => {
     console.log("selectedDayMeetings2", selectedDayMeetings2)
@@ -70,7 +70,7 @@ export default function Calendar2(props) {
     <div className={styles.calendar_wrapper}>
       <div className={styles.wrapper1}>
         <div className={styles.wrapper2}>
-        <button
+          <button
             type="button"
             onClick={previousMonth}
             className={styles.wrapper4}
@@ -92,7 +92,7 @@ export default function Calendar2(props) {
           </button>
         </div>
         <div className={styles.wrapper2_subTitle}>
-          Занятий на день - {selectedDayMeetings2}
+          {/* Занятий на день - {selectedDayMeetings2} */}
         </div>
         <div className={styles.wrapper6}>
           <div>Пн</div>
@@ -112,50 +112,50 @@ export default function Calendar2(props) {
                 dayIdx === 0 && colStartClasses[getDay(day)],
                 "py-1-5",
                 isEqual(day, selectedDay) && "selectedDay", //selected day
-                  !isEqual(day, selectedDay) && isToday(day) && "today", //today
-                  !isEqual(day, selectedDay) &&
-                    !isToday(day) &&
-                    isSameMonth(day, firstDayCurrentMonth) &&
-                    "text-gray-900", //everything that is not today
-                  !isEqual(day, selectedDay) &&
-                    !isToday(day) &&
-                    !isSameMonth(day, firstDayCurrentMonth) &&
-                    "text-gray-400",
-                  isEqual(day, selectedDay) && isToday(day) && "bg-red-500", //if selected day is today
-                  isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
-                  !isEqual(day, selectedDay) && "hover:bg-gray-200",
-                  (isEqual(day, selectedDay) || isToday(day)) &&
-                    "font-semibold", //today
-                  "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
+                !isEqual(day, selectedDay) && isToday(day) && "today", //today
+                !isEqual(day, selectedDay) &&
+                !isToday(day) &&
+                isSameMonth(day, firstDayCurrentMonth) &&
+                "text-gray-900", //everything that is not today
+                !isEqual(day, selectedDay) &&
+                !isToday(day) &&
+                !isSameMonth(day, firstDayCurrentMonth) &&
+                "text-gray-400",
+                isEqual(day, selectedDay) && isToday(day) && "bg-red-500", //if selected day is today
+                isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
+                !isEqual(day, selectedDay) && "hover:bg-gray-200",
+                (isEqual(day, selectedDay) || isToday(day)) &&
+                "font-semibold", //today
+                "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
               )}
             >
               <div>
-              {props?.lessons?.some((lesson) =>
+                {props?.lessons?.some((lesson) =>
                   isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day)
                 ) && <div className={styles.countOfLessons}>
-                        {props?.lessons?.filter((lesson2) =>
-                        isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day)).length}
-                     </div>}
+                    {props?.lessons?.filter((lesson2) =>
+                      isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day)).length}
+                  </div>}
               </div>
               <button
                 type="button"
-                
+
                 className={classNames(
                   isEqual(day, selectedDay) && "selectedDayNumber", //selected day
                   !isEqual(day, selectedDay) && isToday(day) && "todayNumber", //today
                   !isEqual(day, selectedDay) &&
-                    !isToday(day) &&
-                    isSameMonth(day, firstDayCurrentMonth) &&
-                    "text-gray-900", //everything that is not today
+                  !isToday(day) &&
+                  isSameMonth(day, firstDayCurrentMonth) &&
+                  "text-gray-900", //everything that is not today
                   !isEqual(day, selectedDay) &&
-                    !isToday(day) &&
-                    !isSameMonth(day, firstDayCurrentMonth) &&
-                    "text-gray-400",
+                  !isToday(day) &&
+                  !isSameMonth(day, firstDayCurrentMonth) &&
+                  "text-gray-400",
                   isEqual(day, selectedDay) && isToday(day) && "bg-red-500", //if selected day is today
                   isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
                   !isEqual(day, selectedDay) && "hover:bg-gray-200",
                   (isEqual(day, selectedDay) || isToday(day)) &&
-                    "font-semibold", //today
+                  "font-semibold", //today
                   styles.calendarDay
                 )}
               >
@@ -163,7 +163,7 @@ export default function Calendar2(props) {
                   {format(day, "d")}
                 </time>
               </button>
-{/* 
+              {/* 
               <div className="w-1 h-1 mx-auto mt-1">
                 {meetings.some((meeting) =>
                   isSameDay(parseISO(meeting.startDatetime), day)
@@ -203,7 +203,7 @@ export default function Calendar2(props) {
 //     </li>
 //   );
 // }
- 
+
 let colStartClasses = [
   "",
   "col-start-2",

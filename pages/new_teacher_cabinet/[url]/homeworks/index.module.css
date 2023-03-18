@@ -1,15 +1,123 @@
-.answerColumn {
+@font-face {
+	font-family: "Gotham Regular";
+	src: url('../../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Medium';
+	src: url('../../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Light';
+	src: url('../../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Bold';
+	src: url('../../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+.container {
+	position: relative;
+	padding: 0 100px;
+	background: #FBFDFF;
+
+}
+
+.wrapperAll {
+	padding-top: 60px;
+}
+
+.wrapperAll h1 {
+	font-size: 45px;
+	font-family: 'Gotham Medium';
+}
+
+.answer_comment,
+.lesson_tesis,
+.lesson_title_wrapper,
+.lesson_grade_wrapper {
 	display: flex;
 	flex-direction: column;
-	border: 1px solid black;
+	justify-content: center;
+	border-left: 0.5px solid #a3cefd83;
 }
+
+
+.lesson_tesis p,
+.lesson_grade_wrapper div,
+.answer_comment p {
+	font-family: 'Gotham Regular';
+	margin-bottom: 10px;
+	font-size: 14px;
+	margin-left: 15px;
+}
+
+.wrapper_answersRow {
+	display: flex;
+	align-items: center;
+}
+
+.lesson_tesis {
+	width: 40%;
+}
+
+.answer_comment {
+	width: 20%;
+}
+
+.lesson_grade_wrapper {
+	width: 20%;
+}
+
+.lesson_title_wrapper {
+	width: 25%;
+	font-family: 'Gotham Medium';
+	border: none;
+}
+
+.lesson_title_wrapper p {
+	font-size: 25px;
+	margin-bottom: 0px;
+}
+
+.lesson_title_wrapper p:nth-child(2) {
+	font-size: 18px;
+	color: #2e8df27e;
+}
+
+
 
 .answerRow {
 	display: flex;
 	flex-direction: row;
-	border: 1px solid black;
+	/* border: 1px solid black; */
+	margin-top: 20px;
+	box-shadow: 0px 0px 11px 3px #A3CEFD40;
+	padding: 25px 20px;
+	width: 90%;
+}
+
+.wrapperAnswers {
+	margin-top: 30px;
 }
 
 .green {
 	background-color: green;
+}
+
+.plusButton {
+	width: 75px;
+	height: 75px;
+	background: #2E8CF2;
+	color: #fff;
+	border-radius: 50%;
+	border: none;
+	margin-left: 15px;
+	font-size: 25px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

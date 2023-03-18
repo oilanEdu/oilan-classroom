@@ -455,7 +455,7 @@ function TeacherCabinet(props) {
   if (typeof localStorage !== "undefined" && localStorage.getItem('login') !== null) {
     return (localStorage && teacher.url === localStorage.getItem('login') ?
       <>
-        <div style={{ backgroundColor: "#f1faff" }}>
+        <div className={styles.container}>
           <HeaderTeacher
             white={true}
             url={props.url}

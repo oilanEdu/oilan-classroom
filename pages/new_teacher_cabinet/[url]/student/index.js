@@ -354,12 +354,14 @@ export default function Student({ programs }) {
               <div>
                 <h5>Прохождение курса</h5>
               </div>
-              <div>
+              <div className={styles.course_success}>
                 {lessons.map(lesson => {
                   return <>
-                    <div>
-                      <span className={+lesson.score > 0 ? styles.lesson_item_done : styles.lesson_item}>{lesson.lesson_order}</span>
-                      <p className={styles.lesson_date}>{+lesson.score > 0 ? "Пройден" : lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}</p>
+                    <div className={styles.lesson_complete_wrapper}>
+                      <div className={styles.lesson_complete}>
+                        <span className={+lesson.score > 0 ? styles.lesson_item_done : styles.lesson_item}>{lesson.lesson_order}</span>
+                        {/* <p className={styles.lesson_date}>{+lesson.score > 0 ? "Пройден" : lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}</p> */}
+                      </div>
                       <p>{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours().toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")}-{(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours() + 1).toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")} </p>
                     </div>
                   </>

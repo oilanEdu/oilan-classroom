@@ -166,7 +166,7 @@ const StudentCourseStatic = ({programDesc, student, lesson, lessons, scores, nic
         
     await router.push(redirectUrl)
   }
-  console.log(student);
+  // console.log(student);
   const startNewLesson = async () => {
         console.log('proverkha2')
         let alphabet = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789";
@@ -175,11 +175,11 @@ const StudentCourseStatic = ({programDesc, student, lesson, lessons, scores, nic
             roomKey += alphabet[Math.floor(Math.random() * alphabet.length)];
         }
         console.log(roomKey); 
-        if (closerLesson.personal_time){
+        if (closerLesson?.personal_time){
             let data = {
-                lessonId: closerLesson.id,
+                lessonId: closerLesson?.id,
                 lessonKey: roomKey,
-                studentId: closerLesson.student_id
+                studentId: closerLesson?.student_id
             }
             await axios({
               method: "put",
@@ -195,7 +195,7 @@ const StudentCourseStatic = ({programDesc, student, lesson, lessons, scores, nic
               });
         }else{
             let data = {
-                lessonId: closerLesson.id,
+                lessonId: closerLesson?.id,
                 lessonKey: roomKey
             }
             await axios({
@@ -270,8 +270,8 @@ const StudentCourseStatic = ({programDesc, student, lesson, lessons, scores, nic
           className={styles.goToLessonButton}
           disabled={disableButton}
           onClick={() => {
-            (closerLesson.personal_lesson_link || closerLesson.default_lesson_link)?
-              startLessonLink(closerLesson.personal_lesson_link?closerLesson.personal_lesson_link:closerLesson.default_lesson_link):
+            (closerLesson?.personal_lesson_link || closerLesson?.default_lesson_link)?
+              startLessonLink(closerLesson?.personal_lesson_link?closerLesson?.personal_lesson_link:closerLesson?.default_lesson_link):
               startNewLesson() 
           }}
           >Перейти к занятию</button>

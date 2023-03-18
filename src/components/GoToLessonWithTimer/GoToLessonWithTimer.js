@@ -17,7 +17,7 @@ function GoToLessonWithTimer({closerLesson, hours, minutes, seconds, isTeacher, 
     setHour(parseInt(hour1, 10))
     setMinute(parseInt(minute1, 10))
     setSecond(parseInt(second1, 10))
-    console.log(hour, "hour");
+    // console.log(hour, "hour");
   }, [seconds])
   return (
       <div className={styles.next_lesson}>

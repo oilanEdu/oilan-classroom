@@ -29,7 +29,7 @@ const StudentCourse = (props) => {
       console.log(res.data);
       console.log(res.data[0] !== undefined);
       if (res.data.length !== 0) {
-        await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${courseUrl}&program_id=${programId ==! undefined ? programId : res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(res => {
+        await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${courseUrl}&program_id=${programId ==! undefined ? programId : res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(res => {
           setLesson(res.data[0]);
           setLessons(res.data);
           setDataLoaded(true)

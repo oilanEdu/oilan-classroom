@@ -99,7 +99,7 @@ function TeacherCabinet(props) {
     useEffect(() => {
       console.log(closerLesson, "closerLesson");
       if (closerLesson != undefined && students != undefined) {
-        let closerStudentLocal = students.find(el => el.student_id === closerLesson.student_id)
+        let closerStudentLocal = students.find(el => el.student_id === closerLesson?.student_id)
         setCloserStudent(closerStudentLocal)
         console.log(closerStudentLocal, "closerStudentLocal", students, closerLesson);
       }
@@ -258,7 +258,7 @@ function TeacherCabinet(props) {
            if (!lessonsLoaded) {loadStudentLessons(student.student_id, student.program_id)}
            let answersCount = 0 
            let studentCheck = 0
-           let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${student.course_url}&program_id=${student.program_id}&student_id=${student.student_id}`)
+           let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${student.course_url}&program_id=${student.program_id}&student_id=${student.student_id}`)
                let lessons = studentLessons.data
                console.log(lessons, "lessonsOfAllStudents"); 
                lessonsOfAllStudents.push(...lessons); 
@@ -280,15 +280,18 @@ function TeacherCabinet(props) {
               }
               let dateStr = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time);
               let closerDate 
+              // console.log('setCloserLesson', lesson)
               if ((Date.parse(dateStr) > Date.parse(new Date())) && (Date.parse(dateStr) - Date.parse(new Date()) < diff)){ 
                 // debugger
                   closerDate = lessonDate
                   if (closerLesson){
-                      if (closerDate < new Date(closerLesson.fact_time).toLocaleDateString()){
+                      if (closerDate < new Date(closerLesson?.fact_time).toLocaleDateString()){
                           // setCloserLesson(lesson)
+                          // console.log('setCloserLesson', lesson)
                       }
                   }else{
                       // setCloserLesson(lesson)
+                      // console.log('setCloserLesson', lesson)
                   }
                   let curr_hours = dateStr.getHours();
                   let curr_minutes = dateStr.getMinutes();
@@ -624,11 +627,11 @@ function TeacherCabinet(props) {
         while (roomKey.length < 12) {
             roomKey += alphabet[Math.floor(Math.random() * alphabet.length)];
         }
-        if (closerLesson.personal_time){
+        if (closerLesson?.personal_time){
             let data = {
-                lessonId: closerLesson.id,
+                lessonId: closerLesson?.id,
                 lessonKey: roomKey,
-                studentId: closerLesson.student_id
+                studentId: closerLesson?.student_id
             }
             await axios({
               method: "put",
@@ -643,7 +646,7 @@ function TeacherCabinet(props) {
               });
         }else{
             let data = {
-                lessonId: closerLesson.id,
+                lessonId: closerLesson?.id,
                 lessonKey: roomKey
             }
             await axios({
@@ -666,8 +669,8 @@ function TeacherCabinet(props) {
         loadTeacherData()
     }
 
-    console.log(courses);
-    console.log(currentPosts);
+    // console.log(courses);
+    // console.log(currentPosts);
 
 
     function byField(field) {
@@ -690,7 +693,7 @@ function TeacherCabinet(props) {
         // console.log(a[field], b[field]);
         // a[field] > b[field] ? 1 : -1
       };}
-    console.log(programs);
+    // console.log(programs);
 
     const getCorrectDeclension = (num) => {
         if (num % 10 === 1 && num % 100 !== 11) {
@@ -715,7 +718,7 @@ function TeacherCabinet(props) {
     const [width, setWidth] = useState();
     const [height, setHeight] = useState();
     useEffect(() => {
-      console.log(width, "width");
+      // console.log(width, "width");
     }, [width])
 
     useEffect(() => {
@@ -752,7 +755,7 @@ function TeacherCabinet(props) {
                   запланированной программе и проверяйтя домашние задания
                   студентов.
                 </p>
-                {/* <p>Занятие №{closerLesson.lesson_number} {closerLesson.title}</p> */}
+                {/* <p>Занятие №{closerLesson?.lesson_number} {closerLesson?.title}</p> */}
                 <button
                   // onClick={() => {
                   //   closerLesson.personal_lesson_link ||
@@ -765,14 +768,15 @@ function TeacherCabinet(props) {
                   //     : startNewLesson();
                   // }}
                   className={styles.goToLessonButton}
-                  disabled={disableButton}
+                  // disabled={disableButton}
                   onClick={() => {
-                    closerLesson.personal_lesson_link ||
-                    closerLesson.default_lesson_link
+                    console.log('closerLesson', closerLesson)
+                    closerLesson?.personal_lesson_link ||
+                    closerLesson?.default_lesson_link
                     ? startLessonLink(
-                        closerLesson.personal_lesson_link
-                          ? closerLesson.personal_lesson_link
-                          : closerLesson.default_lesson_link
+                        closerLesson?.personal_lesson_link
+                          ? closerLesson?.personal_lesson_link
+                          : closerLesson?.default_lesson_link
                       )
                     : startNewLesson()
                   }}
@@ -781,7 +785,7 @@ function TeacherCabinet(props) {
                 </button>
                 {closerLesson !== undefined && students.length > 0 && closerStudent != undefined ? 
                 <>
-                  <p className={styles.closerLessonInfo}>Занятие №{closerLesson.lesson_order} Тема - {closerLesson.title}  </p>
+                  <p className={styles.closerLessonInfo}>Занятие №{closerLesson?.lesson_order} Тема - {closerLesson?.title}  </p>
                   <p className={styles.closerLessonInfo}>Студент - {closerStudent?.name} {closerStudent?.surname}</p>
                 </>
                 : ''}

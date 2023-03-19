@@ -237,3 +237,62 @@
   width: fit-content;
   margin-top: 15px;
 }
+
+@media screen and (max-width:575px) {
+  .lesson_info {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .lesson_title_wrapper,
+  .lesson_grade_wrapper,
+  .lesson_tesis {
+    width: 100%;
+    margin: 10px 0;
+    border-bottom: 0.5px solid #a3cefd83;
+    border-left: none;
+    border-right: none;
+  }
+
+  .lesson_title_wrapper span {
+    font-size: 18px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .lesson_grade {
+    margin-left: 0;
+  }
+
+  .lesson_grade_wrapper {
+    width: 60%;
+    align-self: flex-start;
+    justify-self: flex-start;
+  }
+
+  .lesson_tesis span {
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+
+  .lesson_tesis {
+    height: auto;
+  }
+
+  .input_container,
+  .teacherComment {
+    width: 100%;
+  }
+
+  .grade_toMark span {
+    padding: 7px 15px;
+  }
+
+  .grade_toMark {
+    flex-wrap: wrap;
+  }
+
+  .work_headline {
+    font-size: 16px;
+  }
+}

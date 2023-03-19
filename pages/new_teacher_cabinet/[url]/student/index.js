@@ -278,7 +278,7 @@ export default function Student({ programs }) {
             <p onClick={() => setTabNum(2)}>Домашние задания</p>
           </div>
           <div>
-            {tabNum === 0 && <p>Удалить студента</p>}
+            {tabNum === 0 && <p className={styles.studentDelete}>Удалить студента</p>}
           </div>
         </div>
         {tabNum === 0 && <div className={styles.profile}>

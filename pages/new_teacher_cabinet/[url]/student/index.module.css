@@ -118,7 +118,7 @@
   background: #FFFFFF;
   border: 0.5px solid #A3CEFD;
   border-radius: 5px;
-  padding: 15px 20px;
+  padding: 10px 20px;
   font-family: 'Gotham Regular';
   margin-top: 15px;
 }
@@ -201,5 +201,46 @@
 }
 
 .course_success_wrapper {
-  margin-top: 25px;
+  margin-top: 45px;
+}
+
+.studentDelete {
+  font-family: 'Gotham Regular';
+  color: #B63737;
+}
+
+.course_success_wrapper h5 {
+  font-family: 'Gotham Medium';
+}
+
+
+@media screen and (max-width:575px) {
+
+  .menu_tabs p,
+  .studentDelete {
+    font-size: 13px;
+  }
+
+  .menu {
+    flex-wrap: wrap;
+  }
+
+  .profile_header h3,
+  .program_header h3 {
+    font-size: 20px;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .input_container input,
+  .input_programm {
+    width: 100%;
+  }
+
+  .profile_header button,
+  .program_header button {
+    font-size: 12px;
+  }
 }

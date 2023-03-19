@@ -66,6 +66,7 @@
 .titleRow {
 	display: flex;
 	flex-direction: column;
+	cursor: pointer;
 }
 
 .lessons_uploaded {

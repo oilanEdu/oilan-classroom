@@ -50,7 +50,7 @@ const myPrograms = () => {
         isInMainPage={isInMainPage}
       />
       <div className={styles.wrapperAll}>
-        <div className={styles.titleRow}>
+        <div onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/myCourses`)} className={styles.titleRow}>
           {program?.course_title}
         </div>
         <div className={styles.mainRow}>

@@ -51,7 +51,7 @@ const myPrograms = () => {
       />
       <div className={styles.wrapperAll}>
         <div className={styles.titleRow}>
-          <div className={styles.courseTitle}>
+          <div onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/myCourses`)} className={styles.courseTitle}>
             {course?.title}
           </div>
           <div className={styles.mainRow}>

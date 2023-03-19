@@ -417,7 +417,7 @@ export default function Student({ programs }) {
 }
 
 Student.getInitialProps = async (ctx) => {
-  debugger
+  // debugger
   if (ctx.query.nick !== undefined) {
     return {
       nick: ctx.query.nick,

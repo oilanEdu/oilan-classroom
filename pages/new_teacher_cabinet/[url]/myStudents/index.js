@@ -226,7 +226,7 @@ const myStudents = () => {
             ? <div>
               <div className={styles.students_head}>
                 <h4>Список студентов</h4>
-                <button>Создать студента</button>
+                <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/myStudents/add_new_student`)}>Создать студента</button>
                 <ClickAwayListener onClickAway={() => setShowSort(false)}>
                   <div className={styles.sortContainer}>
                     <div
@@ -297,7 +297,7 @@ const myStudents = () => {
                         </p>
                       </div>
                       <div className={styles.student_btn_obman}><span></span></div>
-                      <div className={styles.student_btn}><img src="https://realibi.kz/file/897616.svg" alt="" /></div>
+                      <div className={styles.student_btn} onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/student?nick=${student?.nickname}`)}><img src="https://realibi.kz/file/897616.svg" alt="" /></div>
                     </div>
                   ))}
                 </div>

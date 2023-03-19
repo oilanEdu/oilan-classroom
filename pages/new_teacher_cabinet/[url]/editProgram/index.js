@@ -6,7 +6,7 @@ import axios from "axios";
 import HeaderTeacher from "../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import { Image } from "react-bootstrap";
 
-const createCourse = () => {
+const editProgramPage = () => {
   const router = useRouter();
   const programId = router.query.program
   const teacherUrl = router.query.url
@@ -107,57 +107,75 @@ const createCourse = () => {
         isInMainPage={isInMainPage}
       />
       <div className={styles.editProgram}>
-        <div className={styles.contentContainer}>
+        <div className={styles.stepTwo}>
           <div className={styles.row}>
             <h1>Изменение программы занятий</h1>
             <button onClick={() => {deleteProgram(programId)}}>Удалить программу</button>
           </div>
-          <p>Название программы</p>
-          <input value={title} placeholder="Для Алишера 9 класс" onChange={(e) => setTitle(e.target.value)} />
-          <p>Выберите формат</p>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="programType"
-                value="group"
-                checked={type === 'group'}
-                onChange={(e) => setType(e.target.value)}
-              />
-              Групповая
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="programType"
-                value="individual"
-                checked={type === 'individual'}
-                onChange={(e) => setType(e.target.value)}
-              />
-              Индивидуальная
-            </label>
+          <div className={styles.input_container}>
+            <p>Название программы</p>
+            <input value={title} placeholder="Для Алишера 9 класс" onChange={(e) => setTitle(e.target.value)} />
           </div>
-          <p>Количество занятий в неделю</p>
-          <div>
-            <select value="1">
-              <option value="1">{programLessCount}</option>
-            </select>
-            <input type="checkbox" />
-            <span>Пропустить</span>
+          <div className={styles.input_container}>
+            <p>Выберите формат</p>
+            <div className={styles.radio_wrapper}>
+              <div className={styles.wrapperLabel}>          
+                <input
+                  className={styles.custom_radio}
+                  id='group'
+                  type="radio"
+                  name="programType"
+                  value="group"
+                  checked={type === 'group'}
+                  onChange={(e) => setType(e.target.value)}
+                />
+                <label htmlFor="group">Групповая</label>
+              </div>
+              <div className={styles.wrapperLabel}>
+                <input
+                  className={styles.custom_radio}
+                  id='individual'
+                  type="radio"
+                  name="programType"
+                  value="individual"
+                  checked={type === 'individual'}
+                  onChange={(e) => setType(e.target.value)}
+                />
+                <label htmlFor="individual"> Индивидуальная </label>
+              </div>
+            </div>
           </div>
-          <p>Расписание занятий</p>
-          <div>
-            <input placeholder={programSchedule} />
-            <input type="checkbox" />
-            <span>Пропустить</span>
+          <div className={styles.input_container}>
+            <p>Количество занятий в неделю</p>
+            <div className={styles.input_with_checkbox}>
+              <select value="1">
+                <option value="1">{programLessCount}</option>
+              </select>
+              <div className={styles.wrapperLabelCheckbox}>
+                <input className={styles.custom_checkbox} id="skip_1" type="checkbox" />
+                <label htmlFor="skip_1">Пропустить</label>
+              </div>
+            </div>
           </div>
-          <p>Время занятий</p>
-          <input placeholder={programLessTime} />
-          <button onClick={() => {handleSubmit()}}>Сохранить</button>
+          <div className={styles.input_container}>
+            <p>Расписание занятий</p>
+            <div className={styles.input_with_checkbox}>
+              <input placeholder={programSchedule} />
+              <div className={styles.wrapperLabelCheckbox}>
+                <input className={styles.custom_checkbox} id="skip_2" type="checkbox" />
+                <label htmlFor="skip_2">Пропустить</label>
+              </div>
+            </div>
+          </div>
+          <div className={styles.input_container}>
+            <p>Время занятий</p>
+            <input placeholder={programLessTime} />
+          </div>
+          <button className={styles.form_button} onClick={() => {handleSubmit()}}>Сохранить</button>
         </div>
       </div>
     </div>
   </>;
 };
 
-export default createCourse;
+export default editProgramPage;

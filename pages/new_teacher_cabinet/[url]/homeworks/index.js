@@ -117,18 +117,20 @@ const homeworks = () => {
               {answer.isExpanded && (
                 <div className={styles.answerText}>
                   {lessonData.map((LD, i) => {
+                    console.log('LD', LD)
+                    console.log('answer', answer)
                     return (
                       <div key={i}>
                         {(LD?.lesson_id == answer?.lesson_id && LD?.student_id == answer?.student_id) ?
                           <>
-                            {students.map(student => {
-                              console.log('student', student)
-                              return (
-                                <>
-                              //{student?.student_id == LD?.student_id ? <HomeworksByTeacher student={student} program={answer?.program_id} /> : null}
-                                </>
-                              );
-                            })}
+                           {answer?.student_id} : {LD?.student_id} - {LD?.student_name}
+                           <div>
+                              <div className={styles.lesson_work}
+                                data-index={i}
+                              >
+                                Задание {LD?.exercise_order}
+                              </div>
+                            </div>
                           </>
                           :
                           <></>

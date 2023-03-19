@@ -175,7 +175,7 @@ function TeacherProfile(props) {
                     </div>
                     <div className={styles.programBlock}>
                         <h2>Фото профиля</h2> 
-                        <Image src={teacher.avatar} />
+                        <Image src={teacher?.avatar} />
                         <form onSubmit={handleSubmit}>
                             <input type="file" name="file" onChange={(event) => setFiles(event.target.files)} />
                             <input type="submit" value="Upload" />

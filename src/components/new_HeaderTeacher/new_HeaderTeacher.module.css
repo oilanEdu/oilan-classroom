@@ -83,8 +83,6 @@
   color: black;
   /* background: linear-gradient(90deg, #7365C6 1.99%, #6657BF 46.33%, #412FAE 98.22%);*/
   z-index: auto;
-  padding-left: 5%;
-  padding-right: 5%;
   position: sticky;
   top: 0;
 }
@@ -93,7 +91,7 @@
   /* padding: 0 120px; */
   padding-top: 15px;
   margin: 0 auto;
-  width: 1440px;
+  width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;

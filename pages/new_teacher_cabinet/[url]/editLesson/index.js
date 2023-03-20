@@ -59,16 +59,16 @@ const createCourse = () => {
       console.log('exercises', res.data)
       res.data.forEach(async row => {
         count += 1
-        row.exercise_order = count 
+        row.exercise_order = count
         const data = {
           new_order: count,
           exercise_id: row.id
-        } 
+        }
         await axios.put(`${globals.productionServerDomain}/updateExerNumber/`, data)
       })
       setExercises(res.data)
     })
-    
+
   }
 
   const handleSubmit = () => {
@@ -79,47 +79,47 @@ const createCourse = () => {
     const data = {
       lessonId,
       lessonTitle,
-      lessonDesc, 
+      lessonDesc,
       exerciseId: selectedExercise?.id,
       exerciseText,
       exerciseAnswer,
-    }; 
+    };
 
     console.log('data', data)
 
-    if (!lessonId){
+    if (!lessonId) {
       alert("Урок не найден")
-    }else{
+    } else {
       await axios({
         method: "put",
         url: `${globals.productionServerDomain}/updateNewLesson`,
         data: data,
       })
         .then(function (res) {
-          alert("Урок успешно изменен"); 
+          alert("Урок успешно изменен");
         })
         .catch((err) => {
-          alert("Произошла ошибка"); 
+          alert("Произошла ошибка");
         });
-      }
     }
+  }
 
   const deleteLesson = async (id) => {
     const data = {
       id
-    }; 
+    };
 
     await axios({
       method: "delete",
       url: `${globals.productionServerDomain}/deleteLesson`,
       data: data,
     })
-    .then(function (res) {
-      router.push(`/new_teacher_cabinet/${teacherUrl}/myLessons?program=${lesson?.program_id}`)
-    })
-    .catch((err) => {
-      alert("Произошла ошибка"); 
-    });
+      .then(function (res) {
+        router.push(`/new_teacher_cabinet/${teacherUrl}/myLessons?program=${lesson?.program_id}`)
+      })
+      .catch((err) => {
+        alert("Произошла ошибка");
+      });
   }
 
 
@@ -127,7 +127,7 @@ const createCourse = () => {
   const createEmptyExercise = async () => {
     const exerciseText = 'Текст'
     const exerciseLessonId = lesson?.id
-    const correctlyAnswer = 'Ответ' 
+    const correctlyAnswer = 'Ответ'
     const status = "not verified"
 
     const data = {
@@ -137,20 +137,20 @@ const createCourse = () => {
       status
     };
     console.log(data)
-    if (!exerciseLessonId){
+    if (!exerciseLessonId) {
       alert("Урок не найден")
-    }else{
+    } else {
       await axios({
         method: "post",
         url: `${globals.productionServerDomain}/createExercise`,
         data: data,
       })
-      .then(function (res) {
-        alert("Задание успешно создано"); 
-      })
-      .catch((err) => {
-        alert("Произошла ошибка");
-      });
+        .then(function (res) {
+          alert("Задание успешно создано");
+        })
+        .catch((err) => {
+          alert("Произошла ошибка");
+        });
     }
   }
 
@@ -159,37 +159,37 @@ const createCourse = () => {
       exerciseId,
       exerciseText,
       exerciseAnswer
-    }; 
+    };
 
     await axios({
       method: "put",
       url: `${globals.productionServerDomain}/updateExercise`,
       data: data,
     })
-    .then(function (res) {
-      alert("Задание успешно изменено"); 
-    })
-    .catch((err) => {
-      alert("Произошла ошибка"); 
-    });
+      .then(function (res) {
+        alert("Задание успешно изменено");
+      })
+      .catch((err) => {
+        alert("Произошла ошибка");
+      });
   }
 
   const deleteExercise = async (id) => {
     const data = {
       id
-    }; 
+    };
 
     await axios({
       method: "delete",
       url: `${globals.productionServerDomain}/deleteExercise`,
       data: data,
     })
-    .then(function (res) {
-      alert("Задание успешно удалено");
-    })
-    .catch((err) => {
-      alert("Произошла ошибка"); 
-    });
+      .then(function (res) {
+        alert("Задание успешно удалено");
+      })
+      .catch((err) => {
+        alert("Произошла ошибка");
+      });
   }
 
   return <>
@@ -201,27 +201,27 @@ const createCourse = () => {
         isInMainPage={isInMainPage}
       />
       <div className={styles.editLesson}>
-        <span>Программа {lesson?.program_title}</span>
+        <span className={styles.whichProgramm}>Программа {lesson?.program_title}</span>
         <div className={styles.row}>
           <h1>Изменение урока</h1>
-          <button onClick={() => {
+          <span onClick={() => {
             deleteLesson(lessonId)
-          }}>Удалить урок</button>
+          }}>Удалить урок</span>
         </div>
-        <div className={styles.lessonData}>
+        <div className={styles.input_container}>
           <span>Название урока</span>
           <input
             className={styles.lessonTitle}
-            type="text" 
+            type="text"
             value={lessonTitle}
             placeholder="Текст"
             onChange={(e) => setLessonTitle(e.target.value)}
-          />    
+          />
           <span>Описание урока</span>
           <textarea
             className={styles.lessonContent}
             type="text"
-            value={lessonDesc} 
+            value={lessonDesc}
             placeholder="Текст"
             onChange={(e) => setLessonDesc(e.target.value)}>
           </textarea>
@@ -229,52 +229,53 @@ const createCourse = () => {
         <div className={styles.exercisesData}>
           <div className={styles.exerciseSelectBlock}>
             {exercises.map(exercise => (
-              <div 
-                style={exercise.id == selectedExercise.id?{display:'flex', padding: '2px', border: '3px solid #007AFF', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}:{display:'flex', padding: '2px', border: '3px solid white', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px'}}
-                onClick={async() => {
+              <div className={styles.exerItem}
+                // style={exercise.id == selectedExercise.id ? { display: 'flex', padding: '2px', border: '3px solid #007AFF', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px' } : { display: 'flex', padding: '2px', border: '3px solid white', borderRadius: '8px', marginRight: '20px', marginBottom: '5px', marginTop: '5px' }}
+                onClick={async () => {
                   await setSelectedExercise(exercise)
                   await setExerciseText(exercise.text)
                   await setFirstExerPress(true)
                   await setExerciseAnswer(exercise.correct_answer)
-                  await loadBaseData() 
+                  await loadBaseData()
                 }}
               >
                 Задание {exercise.exer_order}
               </div>
             ))}
-            <div 
-              className={styles.plusMinusButton}
-              onClick={async() => {
-                await createEmptyExercise()
-                await loadBaseData()
-                await setSelectedExercise('')
-                await loadBaseData() 
-                await loadBaseData() 
-              }}
-            >+</div>
-            <div 
-              style={{padding: '3px'}}
-              className={styles.plusMinusButton}
-              onClick={async() => {
-                await deleteExercise(selectedExercise.id)
-                await loadBaseData()
-                await setSelectedExercise('')
-              }}
-            >-</div>
+            <div className={styles.wrapperPlusMinus}>
+              <div
+                className={styles.plusMinusButton}
+                onClick={async () => {
+                  await createEmptyExercise()
+                  await loadBaseData()
+                  await setSelectedExercise('')
+                  await loadBaseData()
+                  await loadBaseData()
+                }}
+              >+</div>
+              <div
+                className={styles.plusMinusButton}
+                onClick={async () => {
+                  await deleteExercise(selectedExercise.id)
+                  await loadBaseData()
+                  await setSelectedExercise('')
+                }}
+              >-</div>
             </div>
-            <div className={styles.exerciseInfoFirstRow}> 
-              <span>Домашнее задание</span>
-              <textarea
-                className={styles.exerciseText}
-                type="text"
-                value={exerciseText}
-                placeholder="пр. в учебнике на странице 52 сделать задание 5, 6, 7А"
-                disabled={!firstExerPress}
-                onChange={(e) => setExerciseText(e.target.value)}>
-              </textarea>
-            </div>
-            <div className={styles.exerciseInfoSecondRow}>
-              <div className={styles.inputBlock}>
+          </div>
+          <div className={styles.input_container}>
+            <span>Домашнее задание</span>
+            <textarea
+              className={styles.exerciseText}
+              type="text"
+              value={exerciseText}
+              placeholder="пр. в учебнике на странице 52 сделать задание 5, 6, 7А"
+              disabled={!firstExerPress}
+              onChange={(e) => setExerciseText(e.target.value)}>
+            </textarea>
+          </div>
+          <div className={styles.input_container}>
+            <div className={styles.inputBlock}>
               <input
                 className={styles.exerciseAnswer}
                 type="text"
@@ -284,14 +285,14 @@ const createCourse = () => {
                 onChange={(e) => setExerciseAnswer(e.target.value)}
               />
             </div>
-            <div className={styles.inputBlock}> 
-              <button 
-                style={{display: 'flex'}}
+            <div className={styles.inputBlock}>
+              <button
+                style={{ display: 'flex' }}
                 className={styles.saveButton}
-                onClick={async() => {
+                onClick={async () => {
                   handleSubmit()
                 }}
-              >Сохранить</button> 
+              >Сохранить</button>
             </div>
           </div>
         </div>

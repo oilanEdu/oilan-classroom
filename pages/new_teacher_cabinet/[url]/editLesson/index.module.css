@@ -1,33 +1,120 @@
+@font-face {
+	font-family: "Gotham Regular";
+	src: url('../../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Medium';
+	src: url('../../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Light';
+	src: url('../../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Bold';
+	src: url('../../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+.container {
+	position: relative;
+	padding: 0 100px;
+	background: #FBFDFF;
+}
+
 .row {
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
+	margin-top: 15px;
 }
+
+.row h1 {
+	font-size: 35px;
+	font-family: 'Gotham Medium';
+	color: #2E8CF2
+}
+
+.row span {
+	font-family: 'Gotham Regular';
+	color: #B63737;
+}
+
+.input_container {
+	margin: 20px 0;
+}
+
+.editLesson {
+	margin-top: 70px;
+}
+
+.whichProgramm {
+	font-family: 'Gotham Regular';
+}
+
+.exerItem {
+	padding: 8px 15px;
+	border: none;
+	border-radius: 3px;
+	width: fit-content;
+	background: #2E8CF2;
+	color: white;
+	font-family: 'Gotham Regular';
+	outline: none;
+	margin-right: 10px;
+}
+
+.exerItem:hover {
+	transition: all 0.1s linear;
+	background: #2b7ed6;
+}
+
+.wrapperPlusMinus {
+	display: flex;
+	margin-left: 15px;
+}
+
+.input_container span {
+	font-family: 'Gotham Regular';
+	font-size: 18px;
+	margin-bottom: 10px;
+	display: block;
+	width: 40%;
+}
+
+
+
+.input_container input,
+.input_container textarea {
+	width: 40%;
+	outline: none;
+	background: #FFFFFF;
+	border: 0.5px solid #A3CEFD;
+	border-radius: 5px;
+	padding: 10px 20px;
+	font-family: 'Gotham Regular';
+}
+
 
 .lessonData {
 	display: flex;
 	flex-direction: column;
 }
 
-.saveButton{
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	padding: 18px 0px;
-	gap: 10px;
-	width: 260px;
-	height: 48px;
-	background: #007AFF;
-	border-radius: 8px;
-	font-family: 'Noto Sans Medium';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 16px;
-	line-height: 22px;
-	color: #FFFFFF;
+.saveButton {
+	background: #2E8CF2;
+	border-radius: 5px;
+	color: white;
+	padding: 15px 40px;
+	outline: none;
 	border: none;
+	width: fit-content;
+	margin-top: 25px;
 }
-.lessonTitle{
+
+.lessonTitle {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -45,7 +132,8 @@
 	line-height: 24px;
 	margin-bottom: 20px;
 }
-.lessonContent{
+
+.lessonContent {
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: row;
@@ -64,36 +152,43 @@
 	line-height: 22px;
 	margin-bottom: 20px;
 }
-.plusMinusButton{
-	width: 32px;
-	height: 32px;
-	background-color: #007AFF;
-	border-radius: 50%;
-	text-align: center;
-	align-items: center;
+
+.plusMinusButton {
+	border-radius: 3px;
+	background: #2E8CF2;
 	color: white;
-	font-family: 'Noto Sans Medium';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 26px;
-	line-height: 22px;
-	padding: 4px;
-	margin-right: 10px;
+	padding: 8px 15px;
+	width: 50px;
+	border: none;
+	outline: none;
+	margin: 0 5px;
 	cursor: pointer;
+	font-size: 15px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
-.exerciseSelectBlock{
+
+.plusMinusButton:hover {
+	transition: all 0.1s linear;
+	background: #2b7ed6;
+}
+
+.exerciseSelectBlock {
 	display: flex;
 	flex-direction: row;
 	margin-bottom: 10px;
 	flex-wrap: wrap;
 	align-items: center;
 }
-.exerciseInfoFirstRow{
+
+.exerciseInfoFirstRow {
 	display: flex;
 	flex-direction: column;
 }
 
-.exerciseInfoFirstRow span{
+.exerciseInfoFirstRow span {
 	font-family: 'Noto Sans Medium';
 	font-style: normal;
 	font-weight: 500;
@@ -102,7 +197,8 @@
 	color: #000000;
 	margin-bottom: 10px;
 }
-.exerciseText{
+
+.exerciseText {
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: row;
@@ -121,16 +217,19 @@
 	line-height: 22px;
 	margin-bottom: 20px;
 }
-.exerciseInfoSecondRow{
+
+.exerciseInfoSecondRow {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 }
-.inputBlock{
+
+.inputBlock {
 	display: flex;
 	flex-direction: column;
 }
-.exerciseAnswer{
+
+.exerciseAnswer {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -146,4 +245,82 @@
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 24px;
+}
+
+
+@media screen and (max-width:575px) {
+
+	.input_container input,
+	.input_container select,
+	.input_container textarea {
+		width: 100%;
+	}
+
+	.container {
+		padding: 0 20px;
+		width: 100%;
+	}
+
+	.createLesson {
+		padding: 20px 0;
+	}
+
+	.lesson_head p {
+		font-size: 14px;
+		margin-bottom: 10px;
+	}
+
+	.contentWrapper {}
+
+	.wrapper_box {
+		width: 100% !important;
+	}
+
+	.whichProgramm {
+		font-size: 14px;
+	}
+
+	.input_container span {
+		width: 100%;
+	}
+
+	.row h1 {
+		font-size: 20px;
+	}
+
+	.form_button {
+		width: 100%;
+	}
+
+	.exerRow {
+		width: 100%;
+	}
+
+	.exerItem {
+		width: 31%;
+		margin: 0 15px 0px 0;
+	}
+
+	.exerItem button {
+		padding: 8px 15px;
+		border: none;
+		border-radius: 3px;
+		width: fit-content;
+		background: #2E8CF2;
+		color: white;
+		font-family: 'Gotham Regular';
+		outline: none;
+	}
+
+	.exerciseSelectBlock {
+		width: 100%;
+		margin-bottom: 15px;
+	}
+
+
+	.wrapperPlusMinus {
+		margin-left: 0;
+	}
+
+
 }

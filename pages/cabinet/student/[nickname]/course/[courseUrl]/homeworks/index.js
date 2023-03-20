@@ -26,11 +26,11 @@ const Homeworks = (props) => {
     const response = await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${router.query.nickname}&course_url=${router.query.courseUrl}`).then(async (res) => {
       setStudent(res.data[0]);
       if (res.data[0] !== undefined) {
-        await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${router.query.courseUrl}&program_id=${res.data[0].program_id}&student_id=${res.data[0].id}`).then(async (res2) => {
+        await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${router.query.courseUrl}&program_id=${res.data[0].program_id}&student_id=${res.data[0].id}`).then(async (res2) => {
           setLesson(res2.data[0]);
           setLessons(res2.data);
 
-          await axios.get(`${globals.productionServerDomain}/getLessonExercises?lesson_id=${res2.data[0].id}&student_id=${res.data[0].id}`).then(res3 => {
+          await axios.get(`${globals.productionServerDomain}/getLessonExercises?lesson_id=${res2.data[0]?.id}&student_id=${res.data[0]?.id}`).then(res3 => {
             setExercises(res3.data);
           });
         });

@@ -273,9 +273,9 @@ export default function Student({ programs }) {
       <div className={styles.detailInfo}>
         <div className={styles.menu}>
           <div className={styles.menu_tabs}>
-            <p onClick={() => setTabNum(0)}>Главная</p>
-            <p onClick={() => setTabNum(1)}>Программа</p>
-            <p onClick={() => setTabNum(2)}>Домашние задания</p>
+            <p style={{color: tabNum === 0 ? "#2E8CF2" : "#000"}} onClick={() => setTabNum(0)}>Главная</p>
+            <p style={{color: tabNum === 1 ? "#2E8CF2" : "#000"}}  onClick={() => setTabNum(1)}>Программа</p>
+            <p style={{color: tabNum === 2 ? "#2E8CF2" : "#000"}}  onClick={() => setTabNum(2)}>Домашние задания</p>
           </div>
           <div>
             {tabNum === 0 && <p className={styles.studentDelete}>Удалить студента</p>}
@@ -362,6 +362,9 @@ export default function Student({ programs }) {
                         <span className={+lesson.score > 0 ? styles.lesson_item_done : styles.lesson_item}>{lesson.lesson_order}</span>
                         {/* <p className={styles.lesson_date}>{+lesson.score > 0 ? "Пройден" : lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}</p> */}
                       </div>
+                      <p className={styles.lesson_date}>
+                        {lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}
+                      </p>    
                       <p>{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours().toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")}-{(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours() + 1).toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")} </p>
                     </div>
                   </>

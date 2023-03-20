@@ -224,6 +224,7 @@ const NewTeacherHomeworksLessons = ({ index, lesson, showCheck, selectedExercise
     }
   }, [studentPrograms])
 
+
   console.log(answer);
   return <>
     <div className={styles.wrapperAll}>
@@ -265,6 +266,7 @@ const NewTeacherHomeworksLessons = ({ index, lesson, showCheck, selectedExercise
                       openExer(e);
                     }}
                     data-index={i}
+                    style={{opacity: selectedExerciseId === exercise.id ? "1" : "40%"}}
                   >
                     Задание {exercise.exer_number}
                   </div>
@@ -275,29 +277,44 @@ const NewTeacherHomeworksLessons = ({ index, lesson, showCheck, selectedExercise
           </div>
           {(selectedExerciseId > 0) &&
             <div className={styles.answer_block}>
-              <div className={styles.wrapper_block}>
-                <span className={styles.work_headline}>Задание</span>
-                <ExerciseText exerciseText={exerciseText} />
-              </div>
-              <div className={styles.checkRow}>
-                <span className={styles.student_answer}>
-                  {answer
-                    ? <div className={styles.student_answer_text}>
-                      <span className={styles.work_headline}>Ответ студента: </span>
-                      <input className={styles.input_container} type="text" value={answer.text} />
+              <div>
+                  <div className={styles.wrapper_block}>
+                  <span className={styles.work_headline}>Задание</span>
+                  <ExerciseText exerciseText={exerciseText} />
+                </div>
+                <div className={styles.checkRow}>
+                  <span className={styles.student_answer}>
+                    {answer
+                      ? <div className={styles.student_answer_text}>
+                        <span className={styles.work_headline}>Ответ студента: </span>
+                        <input className={styles.input_container} type="text" value={answer.text} />
+                      </div>
+                      : <i>студент еще не дал ответа на текущее задание</i>
+                    }
+                  </span>
+                  {answer 
+                    ? <div className={styles.wrapper_block}>
+                      <span className={styles.work_headline}>Оцените выполнение задания</span>
+                      <div className={styles.grade_toMark}>
+                        <span className={mark === 1 ? styles.grade_toMark_active : styles.grade_toMark_item} onClick={() => setMark(1)}>1</span>
+                        <span className={mark === 2 ? styles.grade_toMark_active : styles.grade_toMark_item} onClick={() => setMark(2)}>2</span>
+                        <span className={mark === 3 ? styles.grade_toMark_active : styles.grade_toMark_item}  onClick={() => setMark(3)}>3</span>
+                        <span className={mark === 4 ? styles.grade_toMark_active : styles.grade_toMark_item}  onClick={() => setMark(4)}>4</span>
+                        <span className={mark === 5 ? styles.grade_toMark_active : styles.grade_toMark_item}  onClick={() => setMark(5)}>5</span>
+                      </div> 
                     </div>
-                    : <i>студент еще не дал ответа на текущее задание</i>
+                    : <></>
                   }
-                </span>
-                <div className={styles.wrapper_block}>
-                  <span className={styles.work_headline}>Оцените выполнение задания</span>
-                  <div className={styles.grade_toMark}>
-                    <span onClick={() => setMark(1)}>1</span>
-                    <span onClick={() => setMark(2)}>2</span>
-                    <span onClick={() => setMark(3)}>3</span>
-                    <span onClick={() => setMark(4)}>4</span>
-                    <span onClick={() => setMark(5)}>5</span>
-                  </div>
+                </div>
+              </div>
+              <div style={answer ? { display: 'flex' } : { display: 'none' }} className={styles.comment_block}>
+                <span className={styles.work_headline}>Комментарий ученика</span>
+                <div className={styles.answer_input}>
+                  <textarea
+                    className={styles.studentComment}
+                    value={answer?.student_comment ? answer?.student_comment : "Студент не оставил комментарии"}
+                  >
+                  </textarea>
                 </div>
               </div>
             </div>
@@ -334,6 +351,7 @@ const NewTeacherHomeworksLessons = ({ index, lesson, showCheck, selectedExercise
               Сохранить и отправить
             </button>
           </div>
+          
         </div>
       </div>
       <button

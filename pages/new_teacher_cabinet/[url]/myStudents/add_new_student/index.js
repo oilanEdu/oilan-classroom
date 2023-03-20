@@ -54,15 +54,17 @@ const AddNewStudent = () => {
   }
 
   const getCourses = async () => {
-    let result = await axios.get(`${globals.productionServerDomain}/getCourses`)
+    console.log(teacher);
+    let result = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/${teacher?.id}`)
     setCourses(result.data);
     console.log(courses)
   }
 
   const getPrograms = async () => {
-    let result = await axios.get(`${globals.productionServerDomain}/getPrograms`)
+    console.log(courseId);
+    let result = await axios.post(`${globals.productionServerDomain}/getProgramsByCourseId/${courseId}`)
     setProgramsAll(result.data);
-    console.log(programsAll)
+    console.log(result.data);
   }
 
   const getLessons = async () => {
@@ -87,12 +89,18 @@ const AddNewStudent = () => {
     loadBaseData()
     getTeachers()
     getCategories()
-    getCourses()
-    getPrograms()
     getLessons()
     getStudents()
     getRoles()
   }, [])
+
+  useEffect(() => {
+    getPrograms();
+  }, [courseId]);
+
+  useEffect(() => {
+    getCourses();
+  }, [teacher]);
 
   const createStudentAndProgram = async () => {
     let result = await axios.post(`${globals.productionServerDomain}/getCourseByProgramId`, { programId: lessonProgramId });

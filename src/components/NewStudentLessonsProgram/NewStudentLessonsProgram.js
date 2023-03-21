@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import StudentLessonsProgramItem from "../StudentLessonsProgramItem/StudentLessonsProgramItem";
 import styles from "./NewStudentLessonsProgram.module.css";
 
-const NewStudentLessonsProgram = ({lessons, courseUrl, nickname}) => {
+const NewStudentLessonsProgram = ({ lessons, courseUrl, nickname }) => {
 
   const [doneLessons, setDoneLessons] = useState([]);
   const [done, setDone] = useState(0);
@@ -32,34 +32,37 @@ const NewStudentLessonsProgram = ({lessons, courseUrl, nickname}) => {
   useEffect(() => {
     lessons.map((el) => {
       console.log(Number.isInteger(el.number / 3), "lessons.map StudentsLessonsProgramRounds");
-    }) 
+    })
   }, [])
 
   return <div className={styles.container}>
 
     <h2 id="programs">Программа курса</h2>
+    <div className={styles.programWrapper}>
+      {lessons.map(lesson => {
+        return <div key={lesson.id} className={styles.programms_uploaded}>
+          <div className={styles.programRow}>
+            <div className={styles.programTitle}>
+              <p className={styles.lesson_order}>
+                Урок {lesson.number}:
+                <span> {lesson.title}</span>
+              </p>
+            </div>
+            <div className={styles.programSchedule}>
+              <p className={styles.lesson_content_title}>{lesson.tesis}</p>
+            </div>
 
-    {lessons.map(lesson => {
-      return <div key={lesson.id} className={styles.lesson}> 
-      <div>
-        <div className={styles.lesson_content}>
-          <p className={styles.lesson_order}>
-            Урок {lesson.number}: 
-            <span>{lesson.title}</span>
-          </p>
-          <p className={styles.lesson_content_title}>{lesson.tesis}</p>
-          
-          <div>
-            <p className={styles.lesson_date} >
-              {new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).toLocaleDateString()}
-            </p>
-            <p>
-              {new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).toLocaleTimeString().slice(0, 5)}-{(new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).getHours() + 1).toString().padStart(2, "0")}:{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).getMinutes().toString().padStart(2, "0")} 
-            </p>
-          </div>
+            <div className={styles.programStatistics}>
+              <p className={styles.lesson_date} >
+                {new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).toLocaleDateString()}
+              </p>
+              <p>
+                {new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).toLocaleTimeString().slice(0, 5)}-{(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours() + 1).toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")}
+              </p>
+            </div>
 
-          
-          {/* <p 
+
+            {/* <p 
             // style={{
             //   display: width >= 480 ? "block" : "none",  background: +lesson.score === 0 ? "#CAE3FF" : +lesson.score < 50 ? "#EA6756" : +lesson.score < 80 ? "#F8D576" : "#74C87D"
             // }}
@@ -67,7 +70,7 @@ const NewStudentLessonsProgram = ({lessons, courseUrl, nickname}) => {
           >
             Оценка - {lesson.score} ({lesson.done_exer}/{lesson.all_exer})
           </p> */}
-          {/* {isActive
+            {/* {isActive
             ? <span 
               className={styles.open} 
               onClick={() => {
@@ -80,7 +83,7 @@ const NewStudentLessonsProgram = ({lessons, courseUrl, nickname}) => {
               className={styles.block} 
             ></span>
           } */}
-          {/* <p 
+            {/* <p 
             style={{
               background: +lesson.score === 0 ? "#CAE3FF" : +lesson.score < 50 ? "#EA6756" : +lesson.score < 80 ? "#F8D576" : "#74C87D"
             }}
@@ -88,8 +91,8 @@ const NewStudentLessonsProgram = ({lessons, courseUrl, nickname}) => {
           >
             + {lesson.score * 10} ₸
           </p> */}
-        </div>
-        {/* <div className={styles.lesson_tesis} style={{display: showTesis ? "block" : "none"}}>
+          </div>
+          {/* <div className={styles.lesson_tesis} style={{display: showTesis ? "block" : "none"}}>
           <div className={styles.mobileDatesWrapper}>
             <p className={styles.lesson_date} style={{display: width >= 480 ? "none" : "block"}}>{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).toLocaleDateString()}</p>
             <p className={styles.lesson_time} style={{display: width >= 480 ? "none" : "block"}}>{new Date(lesson.personal_time?lesson.personal_time:lesson.start_time).toLocaleTimeString().slice(0, 5)}</p>
@@ -126,8 +129,7 @@ const NewStudentLessonsProgram = ({lessons, courseUrl, nickname}) => {
             className={styles.resendButton}
           >{+lesson.done_exer === 0 || lesson.done_exer === "0"? "Сдать тему" : "Пересдать тему"}</button>
         </div> */}
-      </div>
-      {/* {isActive
+          {/* {isActive
         ? <span 
           style={{display: width >= 480 ? "block" : "none"}}
           className={styles.open} 
@@ -141,9 +143,10 @@ const NewStudentLessonsProgram = ({lessons, courseUrl, nickname}) => {
           className={styles.block} 
         ></span>
       } */}
+        </div>
+      })}
     </div>
-    })}
-  </div>
+  </div >
 };
 
 export default NewStudentLessonsProgram;

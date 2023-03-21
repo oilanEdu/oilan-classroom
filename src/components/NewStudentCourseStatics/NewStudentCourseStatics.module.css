@@ -1,33 +1,27 @@
 @font-face {
-  font-family: "Noto Sans Regular";
-  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+  font-family: "Gotham Regular";
+  src: url('../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
 }
+
 @font-face {
-  font-family: "Noto Sans Medium";
-  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+  font-family: 'Gotham Medium';
+  src: url('../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
 }
+
 @font-face {
-  font-family: "Noto Sans Bold";
-  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+  font-family: 'Gotham Light';
+  src: url('../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
 }
+
 @font-face {
-  font-family: "Muller Regular";
-  src: url("../../../public/fonts/Muller/MullerRegular.ttf") format("truetype");
-}
-@font-face {
-  font-family: "Muller Medium";
-  src: url("../../../public/fonts/Muller/MullerMedium.ttf") format("truetype");
-}
-@font-face {
-  font-family: "Muller Bold";
-  src: url("../../../public/fonts/Muller/MullerBold.ttf") format("truetype");
+  font-family: 'Gotham Bold';
+  src: url('../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
 }
 
 .container {
-  background-color: rgb(241, 250, 255);
-  padding: 40px 120px;
-  max-width: 1440px;
-  margin: 0 auto;
+  position: relative;
+  padding: 40px 100px;
+  background: #FBFDFF;
 }
 
 .next_lesson {
@@ -53,10 +47,46 @@
   padding: 20px;
 }
 
+.lesson_complete {
+  width: 70px;
+  height: 70px;
+  background: #2E8CF2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+  font-family: 'Gotham Medium';
+  margin-bottom: 10px;
+}
+
+.lesson_complete_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 25px;
+}
+
+.lesson_complete_wrapper p {
+  font-family: 'Gotham Regular';
+  margin-bottom: 5px;
+}
+
+.course_success_wrapper {
+  margin-top: 85px;
+}
+
+.course_success {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
 .next_lesson_content p {
   margin: 0;
   font-size: 20px;
-  font-family: "Noto Sans Regular";
+  font-family: "Gotham Regular";
 }
 
 .next_lesson_content button {
@@ -65,7 +95,7 @@
   background: #D8D8DC;
   border-radius: 8px;
   border: none;
-  font-family: "Noto Sans Bold";
+  font-family: "Gotham Medium";
   font-size: 16px;
 }
 
@@ -74,44 +104,57 @@
   justify-content: space-between;
 }
 
+
+.course_success_wrapper h5 {
+  font-family: 'Gotham Medium';
+}
+
 .course_container h2 {
   text-transform: uppercase;
   font-size: 24px;
-  font-family: "Muller Medium";
+  font-family: "Gotham Medium";
 }
 
-.course_container p {
-  font-size: 16px;
-  font-family: "Noto Sans Regular";
+.course_container p:nth-child(1) {
+  font-size: 14px;
+  font-family: "Gotham Regular";
+}
+
+.prepod {
+  font-family: 'Gotham Medium';
+}
+
+.course_container_1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .goToLessonButton {
   border: none;
-  font-family: "Noto Sans Bold";
-  background: #007AFF;
-  border-radius: 8px;
+  font-family: "Gotham Regular";
+  background: #2E8CF2;
+  border-radius: 4px;
   color: #fff;
-  padding: 13px 65px;
+  padding: 13px 25px;
   font-size: 16px;
 }
+
 .goToLessonButton:disabled {
-  border: none;
-  font-family: "Noto Sans Bold";
-	background: #D8D8DC;
-	color: #fff;
-  border-radius: 8px;
-  padding: 13px 65px;
-  font-size: 16px;
+  background: #D8D8DC;
+  color: #fff;
 }
 
 
 .pie_text {
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-size: 20px;
+  font-family: 'Gotham Regular';
 }
 
 .pie_text_score {
   font-size: 48px;
+  font-family: 'Gotham Medium';
 }
 
 .linksToOtherPrograms {
@@ -130,12 +173,14 @@
   .container {
     padding: 40px 10px;
   }
+
   /* .course_container:first-child {
     order: 2;
   } */
   .course_container_1 {
     order: 2;
   }
+
   .course_container {
     flex-direction: column;
   }
@@ -145,12 +190,14 @@
   .container {
     padding: 40px 10px;
   }
+
   /* .course_container:first-child {
     order: 2;
   } */
   .course_container_1 {
     order: 2;
   }
+
   .course_container {
     flex-direction: column;
   }
@@ -160,12 +207,14 @@
   .container {
     padding: 40px 10px;
   }
+
   /* .course_container:first-child {
     order: 2;
   } */
   .course_container_1 {
     order: 2;
   }
+
   .course_container {
     flex-direction: column;
   }

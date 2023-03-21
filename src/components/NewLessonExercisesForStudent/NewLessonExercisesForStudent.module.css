@@ -1,0 +1,68 @@
+@font-face {
+    font-family: "Gotham Regular";
+    src: url('../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
+}
+
+@font-face {
+    font-family: 'Gotham Medium';
+    src: url('../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+    font-family: 'Gotham Light';
+    src: url('../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+    font-family: 'Gotham Bold';
+    src: url('../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+.exercises {
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+}
+
+#exerItem {
+    margin-right: 10px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 3px;
+    width: fit-content;
+    background: #A3CEFD;
+    color: white;
+    font-family: 'Gotham Regular';
+    outline: none;
+}
+
+.input_container p {
+    font-family: 'Gotham Regular';
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.exercises p {
+    font-family: 'Gotham Medium';
+}
+
+.input_container input {
+    height: fit-content;
+    width: 40%;
+    outline: none;
+    background: #FFFFFF;
+    border: 0.5px solid #A3CEFD;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: 'Gotham Regular';
+    margin-top: 10px;
+}
+
+.answer_text {
+    background: red;
+    color: red;
+}
+
+.answer_btn {
+    background: red;
+}

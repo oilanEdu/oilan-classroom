@@ -3,23 +3,23 @@ import styles from "./NewLessonExercisesForStudent.module.css";
 import axios from "axios";
 import globals from "../../globals";
 
-const NewLessonExercisesForStudent = ({fetchData, exercises, student, bg, padding, brickBorder}) => {
-  const [ active, setActive ] = useState(0);
-  const [ answer, setAnswer ] = useState('')
+const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, padding, brickBorder }) => {
+  const [active, setActive] = useState(0);
+  const [answer, setAnswer] = useState('')
   const [comment, setComment] = useState('');
-  const [ editMode, setEditMode ] = useState(false)
-  const [ teacherComments, setTeacherComments ] = useState([])
-  const [ symbols, setSymbols ] = useState(1500);
-  const [ exerciseText, setExerciseText ] = useState([])
+  const [editMode, setEditMode] = useState(false)
+  const [teacherComments, setTeacherComments] = useState([])
+  const [symbols, setSymbols] = useState(1500);
+  const [exerciseText, setExerciseText] = useState([])
   function linkify(text) {
     var url_pattern = /(https?:\/\/\S+)/g;
     let test = text?.split(url_pattern)
     setExerciseText(test)
   }
- 
+
   const openExer = e => setActive(+e.target.dataset.index);
   useEffect(() => {
-    
+
     if (active != null) {
       let studentId = student
       let exerciseId = exercises[active]?.id
@@ -33,63 +33,63 @@ const NewLessonExercisesForStudent = ({fetchData, exercises, student, bg, paddin
         data: data,
       })
         .then(function (res) {
-          if (res.data[0]){
-              setTeacherComments(res.data)
-          }else{
-              console.log('ответов нет')
-              setTeacherComments([])
+          if (res.data[0]) {
+            setTeacherComments(res.data)
+          } else {
+            console.log('ответов нет')
+            setTeacherComments([])
           }
         })
         .catch((err) => {
-          alert("Произошла ошибка");   
+          alert("Произошла ошибка");
         });
-      
+
       linkify(exercises[active]?.text)
     }
   }, [active])
-  
+
   const sendAnswer = async (answerText, lessonId, exerciseId, studentId, status, comment) => {
     const data = {
-          answerText,
-          lessonId,
-          exerciseId,
-          studentId,
-          status,
-          comment
-        };
-        console.log(data)
-        await axios({
-          method: "post",
-          url: `${globals.productionServerDomain}/createAnswer`,
-          data: data,
-        })
-          .then(function (res) {
-            alert("Ответ на задание успешно отправлен"); 
-          })
-          .catch((err) => {
-            alert("Произошла ошибка");
-          });
+      answerText,
+      lessonId,
+      exerciseId,
+      studentId,
+      status,
+      comment
+    };
+    console.log(data)
+    await axios({
+      method: "post",
+      url: `${globals.productionServerDomain}/createAnswer`,
+      data: data,
+    })
+      .then(function (res) {
+        alert("Ответ на задание успешно отправлен");
+      })
+      .catch((err) => {
+        alert("Произошла ошибка");
+      });
   }
 
   const sendEditedAnswer = async (answerText, answerId, status) => {
     const data = {
-          answerText,
-          answerId,
-          status
-        };
-        console.log(data)
-        await axios({
-          method: "put",
-          url: `${globals.productionServerDomain}/updateStudentAnswer`,
-          data: data,
-        })
-          .then(function (res) {
-            alert("Ответ на задание успешно изменен"); 
-            setEditMode(false)
-          })
-          .catch((err) => {
-            alert("Произошла ошибка");
-          });
+      answerText,
+      answerId,
+      status
+    };
+    console.log(data)
+    await axios({
+      method: "put",
+      url: `${globals.productionServerDomain}/updateStudentAnswer`,
+      data: data,
+    })
+      .then(function (res) {
+        alert("Ответ на задание успешно изменен");
+        setEditMode(false)
+      })
+      .catch((err) => {
+        alert("Произошла ошибка");
+      });
   }
 
   const onKeyDownHandler = (e) => {
@@ -126,22 +126,23 @@ const NewLessonExercisesForStudent = ({fetchData, exercises, student, bg, paddin
       {props.exerciseText?.map((el, index) => index % 2 === 0 ? el : <a href={el}>{el}</a>)}
     </>
   }
-  return <div style={{ backgroundColor: bg, padding: padding}} className={styles.container}>
+  return <div style={{ backgroundColor: bg, padding: padding }} className={styles.container}>
     <div>
       <div className={styles.exercises}>
         {exercises.map((exer, i) => {
-          return <div 
-            style={exercises[active]?.id == exer.id 
-              ? {} 
-              : {border: brickBorder}
+          return <div
+            style={exercises[active]?.id == exer.id
+              ? {}
+              : { border: brickBorder }
             }
-            className={exercises[active]?.id == exer.id 
+            className={exercises[active]?.id == exer.id
               ? styles.blueBrickBorder
               : styles.whiteBrickBorder
-            } 
+            }
+            id={styles.exerItem}
           >
-            <div 
-              className={styles.emptyExercise} 
+            <div
+              className={styles.emptyExercise}
               onClick={openExer}
               data-index={i}
             >
@@ -151,34 +152,37 @@ const NewLessonExercisesForStudent = ({fetchData, exercises, student, bg, paddin
         })}
       </div>
       {exercises[active] && <div>
-        {!exercises[active].answer_text?
-        (
-          <>
-            <p className={styles.answer_text}>
-              Задание: 
-            </p>
-            <input value={exerciseText}/>
-            <div className={styles.answer_row}>
-              Ваш ответ:
-              <div className={styles.answer_input}>
-                <textarea  
-                  className={styles.answer} 
-                  placeholder="Ответ"
-                  value={answer}
-                  onChange={e => {
-                    if (symbols !== 0 && answer.length <= 1500) {
-                      setAnswer(e.target.value)
-                      console.log(answer)
-                    }
-                  }}
-                  onKeyDown={(e) => onKeyDownHandler(e)}
-                ></textarea>
+        {!exercises[active].answer_text ?
+          (
+            <>
+              <div style={{ background: 'red' }} className={styles.input_container}>
+                <p className={styles.answer_text}>
+                  Задание:
+                </p>
+                <input value={exerciseText} />
               </div>
-              <div className={styles.answer_row}>
-                Комментарий для учителя:
+              <div className={styles.input_container}>
+                <p>Ваш ответ:</p>
                 <div className={styles.answer_input}>
-                  <textarea  
-                    className={styles.answer} 
+                  <textarea
+                    className={styles.answer}
+                    placeholder="Ответ"
+                    value={answer}
+                    onChange={e => {
+                      if (symbols !== 0 && answer.length <= 1500) {
+                        setAnswer(e.target.value)
+                        console.log(answer)
+                      }
+                    }}
+                    onKeyDown={(e) => onKeyDownHandler(e)}
+                  ></textarea>
+                </div>
+              </div>
+              <div className={styles.input_container}>
+                <p>Комментарий для учителя:</p>
+                <div className={styles.answer_input}>
+                  <textarea
+                    className={styles.answer}
                     placeholder="Если вам было что-то не понятно - напишите сюда, мы передадим :)"
                     value={comment}
                     onChange={e => {
@@ -190,30 +194,29 @@ const NewLessonExercisesForStudent = ({fetchData, exercises, student, bg, paddin
                   ></textarea>
                 </div>
               </div>
-              <button 
+              <button
                 className={styles.answer_btn}
-                onClick={async() => {
+                onClick={async () => {
                   await sendAnswer(answer, exercises[active].lesson_id, exercises[active].id, student, 'not verified')
                   await fetchData()
                 }}
               >
                 Сохранить и отправить
               </button>
-            </div>
-          </>
-        ):
-        (<>
+            </>
+          ) :
+          (<>
             <div className={styles.reTryBlock}>
               {/* {exerciseText.map((el, index) => {
                 
               })} */}
               <p>
-              Задание: <ExerciseText exerciseText={exerciseText}/>
+                Задание: <ExerciseText exerciseText={exerciseText} />
               </p>
               {/* <span>Задание: {exerciseText.map((el, index) => el)}</span> */}
               <span>Ваш ответ: {exercises[active].answer_text}</span>
-              <div className={styles.advice}>{exercises[active].answer_status == 'correct'?<><div className={styles.correctAdvice}></div>Сдано на отлично</>:exercises[active].answer_status == 'uncorrect'?<><><div className={styles.uncorrectAdvice}></div>Есть ошибки попробуйте снова</></>:''}</div>
-              <button 
+              <div className={styles.advice}>{exercises[active].answer_status == 'correct' ? <><div className={styles.correctAdvice}></div>Сдано на отлично</> : exercises[active].answer_status == 'uncorrect' ? <><><div className={styles.uncorrectAdvice}></div>Есть ошибки попробуйте снова</></> : ''}</div>
+              <button
                 className={styles.reanswer_btn}
                 onClick={() => {
                   setEditMode(true)
@@ -221,57 +224,57 @@ const NewLessonExercisesForStudent = ({fetchData, exercises, student, bg, paddin
               >
                 Изменить ответ
               </button>
-              {editMode?
+              {editMode ?
                 (
-                <>
-                  <div className={styles.editAnswerBlock}>
-                    <div>
-                      <div className={styles.answer_input}>
-                        <textarea 
-                          type="text" 
-                          className={styles.answer} 
-                          placeholder="Ответ"
-                          value={answer}
-                          onChange={e => {
-                            if (symbols !== 0 && answer.length <= 1500) {
-                              setAnswer(e.target.value)
-                              console.log(answer)
-                            }
+                  <>
+                    <div className={styles.editAnswerBlock}>
+                      <div>
+                        <div className={styles.answer_input}>
+                          <textarea
+                            type="text"
+                            className={styles.answer}
+                            placeholder="Ответ"
+                            value={answer}
+                            onChange={e => {
+                              if (symbols !== 0 && answer.length <= 1500) {
+                                setAnswer(e.target.value)
+                                console.log(answer)
+                              }
+                            }}
+                            onKeyDown={(e) => onKeyDownHandler(e)}
+                          />
+                          <label>
+                            Осталось символов <span>{symbols}</span>
+                          </label>
+                        </div>
+                        <button
+                          className={styles.answer_btn}
+                          onClick={async () => {
+                            await sendEditedAnswer(answer, exercises[active].answer_id, 'not verified')
+                            await fetchData()
                           }}
-                          onKeyDown={(e) => onKeyDownHandler(e)}
-                        />
-                        <label>
-                          Осталось символов <span>{symbols}</span>
-                        </label>
+                        >
+                          Сохранить и отправить
+                        </button>
                       </div>
-                      <button 
-                        className={styles.answer_btn}
-                        onClick={async() => {
-                          await sendEditedAnswer(answer, exercises[active].answer_id, 'not verified')
-                          await fetchData()
-                        }}
-                      >
-                        Сохранить и отправить
-                      </button>
                     </div>
-                  </div>
-                </>):(<></>)
+                  </>) : (<></>)
               }
               <div>
-                <div className={styles.teacherComment}><img src="https://realibi.kz/file/108886.png" className={styles.mailLogo}/><span>Комментарий преподователя:</span></div>
+                <div className={styles.teacherComment}><img src="https://realibi.kz/file/108886.png" className={styles.mailLogo} /><span>Комментарий преподователя:</span></div>
                 {teacherComments.map(comment => {
-                return <div className={styles.comment}>
-                <span>{comment.text}</span>
-                <span className={styles.commentDate}>{comment.date?.toLocaleString().substring(0, 10)} {comment.date?.toLocaleString('ru', { hour12: false }).substring(11, 16)}</span>  
-              </div> 
-            })}
+                  return <div className={styles.comment}>
+                    <span>{comment.text}</span>
+                    <span className={styles.commentDate}>{comment.date?.toLocaleString().substring(0, 10)} {comment.date?.toLocaleString('ru', { hour12: false }).substring(11, 16)}</span>
+                  </div>
+                })}
               </div>
             </div>
-        </>)
-      }
+          </>)
+        }
       </div>}
     </div>
-  </div>
+  </div >
 };
 
 export default NewLessonExercisesForStudent;

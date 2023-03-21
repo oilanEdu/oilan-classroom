@@ -1,3 +1,73 @@
+@font-face {
+  font-family: "Gotham Regular";
+  src: url('/../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Medium';
+  src: url('/../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Light';
+  src: url('/../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Bold';
+  src: url('/../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+
 .lesson_content {
   display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.lesson {
+  margin-top: 20px;
+  box-shadow: 0px 0px 11px 3px #A3CEFD40;
+  padding: 25px 20px;
+  width: 90%;
+}
+
+.lesson_order {
+  font-family: 'Gotham Medium';
+  font-size: 25px;
+}
+
+.lesson_order_wrapper {
+  width: 40%;
+}
+
+.lesson_grade_wrapper {
+  /* width: 15%; */
+}
+
+#plusButton {
+  width: 75px;
+  height: 75px;
+  background: #2E8CF2;
+  color: #fff;
+  border-radius: 50%;
+  border: none;
+  margin-left: 15px;
+  font-size: 25px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapperAll {
+  display: flex;
+  align-items: center
+}
+
+
+.lesson_order span {
+  /* font-family: 'Gotham Regular'; */
+  color: #2E8CF2;
 }

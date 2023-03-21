@@ -1,60 +1,60 @@
 @font-face {
-  font-family: "Noto Sans Regular";
-  src: url("../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+  font-family: "Gotham Regular";
+  src: url('../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
 }
+
 @font-face {
-  font-family: "Noto Sans Medium";
-  src: url("../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+  font-family: 'Gotham Medium';
+  src: url('../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
 }
+
 @font-face {
-  font-family: "Noto Sans Bold";
-  src: url("../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+  font-family: 'Gotham Light';
+  src: url('../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
 }
+
 @font-face {
-  font-family: "Muller Regular";
-  src: url("../../public/fonts/Muller/MullerRegular.ttf") format("truetype");
+  font-family: 'Gotham Bold';
+  src: url('../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
 }
-@font-face {
-  font-family: "Muller Medium";
-  src: url("../../public/fonts/Muller/MullerMedium.ttf") format("truetype");
-}
-@font-face {
-  font-family: "Muller Bold";
-  src: url("../../public/fonts/Muller/MullerBold.ttf") format("truetype");
-}
+
+
 
 .container {
-  background-color: #f1faff;
-  width: 100%;
+  position: relative;
+  padding: 0 100px;
+  background: #FBFDFF;
   display: flex;
-  flex-direction: column;;
   align-items: center;
   justify-content: center;
 }
 
-.selectYourWay{
+
+
+.selectYourWay {
   display: flex;
-  flex-direction: column;;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 695px;
+  padding: 20px 80px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 4px 1px rgb(0 0 0 / 20%);
-  margin-top: 200px;
-  margin-bottom: 200px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .buttons {
   display: flex;
-  justify-content: center;
-  width: 100%;
+  justify-content: space-between;
+  width: 80%;
   padding: 0;
-  margin-top: 30px;
+  /* margin-top: 30px; */
+  font-family: 'Gotham Regular';
 }
 
 .button {
-  width: 28%;
+  /* width: 28%; */
   padding: 0;
   background-color: white;
   border: none;
@@ -70,12 +70,12 @@
   cursor: pointer;
 }
 
-.leftButton{
+.leftButton {
   border-radius: 10px 0 0 0;
   text-transform: uppercase;
 }
 
-.rightButton{
+.rightButton {
   border-radius: 0 10px 0 0;
   text-transform: uppercase;
 }

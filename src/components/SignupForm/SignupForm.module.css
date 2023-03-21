@@ -1,14 +1,21 @@
 @font-face {
-  font-family: "Noto Sans Regular";
-  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
+  font-family: "Gotham Regular";
+  src: url('../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
 }
+
 @font-face {
-  font-family: "Noto Sans Medium";
-  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
+  font-family: 'Gotham Medium';
+  src: url('../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
 }
+
 @font-face {
-  font-family: "Noto Sans Bold";
-  src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+  font-family: 'Gotham Light';
+  src: url('../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Bold';
+  src: url('../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
 }
 
 .welcome_section {
@@ -16,18 +23,19 @@
 }
 
 .welcome_header {
-  font-size: 32px;
+  font-size: 25px;
   color: #000;
   text-align: center;
-  margin-bottom: 43px;
-    margin-top: 25px;
-  font-family: "Noto Sans Medium";
+  /* margin-bottom: 43px; */
+  margin-top: 25px;
+  font-family: "Gotham Medium";
 }
 
 .enter_data_header {
+  font-family: 'Gotham Regular';
   font-size: 16px;
   color: #636975;
-  margin-bottom: 58px;
+  margin-bottom: 25px;
 }
 
 .role_radio_section {
@@ -40,8 +48,11 @@
   display: inline-block;
   margin-right: 10px;
 }
+
 .role_radio label {
-  text-transform: lowercase;
+  font-family: 'Gotham Regular';
+  font-size: 15px;
+  margin-bottom: 15px;
 }
 
 /* .form_input {
@@ -49,47 +60,63 @@
 } */
 
 .form_input input {
-  font-size: 16px;
-  color: #000;
-  width: 70%;
-  background: #fff;
-  margin-bottom: 10px;
-  font-family: Rubik Regular;
-  -webkit-transition: .3s;
-  transition: .3s;
-  border: 1px solid #9D99AC;
-  border-radius: 3px;
-  padding: 10px;
+  width: 100%;
+  outline: none;
+  background: #FFFFFF;
+  border: 0.5px solid #A3CEFD;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: 'Gotham Regular';
+}
+
+.form_input {
+  margin-bottom: 20px;
 }
 
 .forget_pass {
   border: none;
   background: none;
-  color: #1E90FF;
-  text-decoration: underline;
+  color: #2E8CF2;
+  font-family: 'Gotham Regular';
+  /* text-decoration: underline; */
   cursor: pointer;
+  display: flex;
+  align-self: flex-start;
+  font-size: 14px;
+  margin-top: 10px;
+  width: fit-content;
 }
 
-.form_submit_button{
+.forget_pass:hover {
+  transition: all 0.1s linear;
+  text-decoration: underline;
+}
+
+.form_submit_button {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.submit_button{
-  border: none;
-  font-size: 16px;
-  width: 70%;
-  color: #fff;
-  background: #007aff;
+.submit_button {
+  background: #2E8CF2;
   border-radius: 5px;
-  padding: 10px;
-  margin-top: 20px;
-  margin-bottom: 30px;
+  color: white;
+  padding: 15px 40px;
+  outline: none;
+  border: none;
+  width: fit-content;
 }
 
-.error_message{
+.submit_button:hover {
+  transition: all 0.1s linear;
+  background: #2b7ed6;
+}
+
+.error_message {
   color: red;
+  font-family: 'Gotham Regular';
+  font-size: 15px;
 }
 
 .error_message_restore {

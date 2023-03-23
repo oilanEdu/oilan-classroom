@@ -22,8 +22,10 @@
 .lesson_content {
   display: flex;
   flex-direction: row;
+  align-items: center;
   width: 100%;
   justify-content: space-between;
+  border-bottom: 0.5px solid #a3cefd83;
 }
 
 .lesson {
@@ -36,6 +38,7 @@
 .lesson_order {
   font-family: 'Gotham Medium';
   font-size: 25px;
+  margin-bottom: 0;
 }
 
 .lesson_order_wrapper {
@@ -44,6 +47,19 @@
 
 .lesson_grade_wrapper {
   /* width: 15%; */
+}
+
+.lesson_grade {
+  display: flex;
+  display: block;
+  padding: 10px 20px;
+  border: 1px solid #2E8CF2;
+  color: #000;
+  align-self: flex-end;
+  justify-self: flex-end;
+  border-radius: 4px;
+  margin-left: 15px;
+  font-family: 'Gotham Regular';
 }
 
 #plusButton {
@@ -66,8 +82,57 @@
   align-items: center
 }
 
+.wrapperAll h2 {
+  font-family: 'Gotham Medium';
+}
+
 
 .lesson_order span {
   /* font-family: 'Gotham Regular'; */
   color: #2E8CF2;
+}
+
+
+@media screen and (max-width:575px) {
+  .lesson_content {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .lesson_title_wrapper,
+  .lesson_grade_wrapper,
+  .lesson_tesis {
+    width: 100%;
+    margin: 10px 0;
+    border-bottom: 0.5px solid #a3cefd83;
+    border-left: none;
+    border-right: none;
+  }
+
+  .lesson_title_wrapper span {
+    font-size: 18px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .lesson_grade {
+    margin-left: 0;
+  }
+
+  .lesson_order {
+    font-size: 18px;
+  }
+
+  .lesson_order_wrapper {
+    width: 100%;
+    text-align: center;
+  }
+
+  .lesson_grade_wrapper {
+    width: 100%;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+  }
+
 }

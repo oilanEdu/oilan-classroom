@@ -39,14 +39,20 @@
 .input_container p {
     font-family: 'Gotham Regular';
     font-size: 18px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+}
+
+.input_container {
+    margin: 20px 0;
+    font-family: 'Gotham Medium';
 }
 
 .exercises p {
     font-family: 'Gotham Medium';
 }
 
-.input_container input {
+.input_container input,
+.input_container textarea {
     height: fit-content;
     width: 40%;
     outline: none;
@@ -58,11 +64,78 @@
     margin-top: 10px;
 }
 
-.answer_text {
-    background: red;
-    color: red;
+.input_container_text_reTry {
+    height: fit-content;
+    width: 70%;
+    outline: none;
+    background: #FFFFFF;
+    border: 0.5px solid #A3CEFD;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: 'Gotham Regular';
+    margin-top: 10px;
 }
 
-.answer_btn {
-    background: red;
+.answer_text {
+    /* background: red; */
+    color: black;
+}
+
+.answer_btn,
+.reanswer_btn {
+    background: #2E8CF2;
+    border-radius: 5px;
+    color: white;
+    padding: 15px 40px;
+    outline: none;
+    border: none;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-top: 15px;
+}
+
+.teacherComment {
+    margin-top: 20px;
+}
+
+.comment {
+    height: fit-content;
+    width: 70%;
+    outline: none;
+    background: #FFFFFF;
+    border: 0.5px solid #A3CEFD;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: 'Gotham Regular';
+    margin-top: 10px;
+}
+
+.teacherComment span {
+    font-family: 'Gotham Medium';
+}
+
+
+@media screen and (max-width:575px) {
+
+    .input_container,
+    .teacherComment {
+        width: 100%;
+    }
+
+    .input_container input,
+    .input_container textarea,
+    .input_container_text_reTry {
+        width: 100%;
+    }
+
+    #exerItem {
+        font-size: 12px;
+        padding: 5px 15px;
+    }
+
+    .answer_text,
+    .input_container p,
+    .input_container {
+        font-size: 13px;
+    }
 }

@@ -1,3 +1,13 @@
 .WrapperAll {
     padding: 40px 80px;
 }
+
+.WrapperAll h2 {
+    font-family: 'Gotham Medium';
+}
+
+@media screen and (max-width:575px) {
+    .WrapperAll {
+        padding: 0 20px;
+    }
+}

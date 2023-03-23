@@ -131,6 +131,7 @@
   margin: 20px 0;
   background: #F0F8FF;
   padding: 17px 50px;
+  font-family: 'Gotham Regular';
 }
 
 .new_pass_container {
@@ -232,7 +233,7 @@
   font-size: 16px;
   color: #000;
   background: #fff;
-  font-family: Rubik Regular;
+  font-family: 'Gotham Regular';
   transition: .3s;
   border: 1px solid #9D99AC;
   border-radius: 3px;
@@ -241,12 +242,12 @@
 }
 
 .restore_button {
-  background: url(https://realibi.kz/file/597413.png) no-repeat #007affa1;
-  background-position: center;
-  background-size: 10px;
   border-radius: 3px;
   padding: 10px 30px;
   cursor: pointer;
+  background: #2E8CF2;
+  color: #fff;
+  font-family: 'Gotham Regular';
 }
 
 .generate_pass {
@@ -282,4 +283,34 @@
 
 .url_input {
   display: none;
+}
+
+@media screen and (max-width:575px) {
+  .welcome_header {
+    font-size: 20px;
+  }
+
+  .enter_data_header {
+    font-size: 15px;
+  }
+
+  .welcome_section {
+    width: 100%;
+  }
+
+  .restore_container {
+    width: 100%;
+    padding: 0;
+    background: none;
+  }
+
+  .restore_form {
+    flex-direction: column;
+    ;
+  }
+
+  .restore_form input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }

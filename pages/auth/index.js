@@ -26,11 +26,11 @@ const LoginForm = () => {
 
   return (
     <>
-    <Header/>
+      <Header />
       <div className={styles.container}>
         <div className={styles.selectYourWay}>
           <div className={styles.buttons}>
-            <button 
+            <button
               className={`${styles.button} ${!isSignup ? styles.active : ''} ${styles.leftButton}`}
               onClick={() => setIsSignup(false)}
             >
@@ -46,7 +46,7 @@ const LoginForm = () => {
           {isSignup ? <SignupForm /> : <RegisterForm />}
         </div>
       </div>
-      <Footer/>
+      {/* <Footer /> */}
     </>
   );
 };

@@ -68,10 +68,11 @@
   margin-top: 10px;
 }
 
+/* 
 .answer_block {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
+  display: flex;
+  flex-wrap: wrap;
+} */
 
 .student_answer {
   display: flex;
@@ -238,7 +239,7 @@
 }
 
 .studentComment {
-  width: 80%;
+  width: 40%;
   height: 70px;
   outline: none;
   background: #FFFFFF;
@@ -317,5 +318,13 @@
 
   .work_headline {
     font-size: 16px;
+  }
+
+  .studentComment {
+    width: 100%;
+  }
+
+  .comment_block {
+    width: 100%;
   }
 }

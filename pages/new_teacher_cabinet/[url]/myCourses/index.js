@@ -94,7 +94,7 @@ const myCourses = () => {
         :
         <>
           <div className={styles.noCourses}>
-            <Image style={{width: '300px'}} src='https://realibi.kz/file/296080.png'/>
+            <img src='https://realibi.kz/file/296080.png' />
             <h1>У вас еще нет созданных курсов</h1>
             <p>Для того, чтобы вести уроки на платформе, вам необходимо выбрать предмет, по которому будете обучать</p>
             <button onClick={() => router.push(`/new_teacher_cabinet/${teacherUrl}/createCourse`)}>Создать курс</button>

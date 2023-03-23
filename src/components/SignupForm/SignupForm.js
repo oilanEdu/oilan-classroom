@@ -204,7 +204,7 @@ const SignupForm = () => {
             placeholder="Email"
             className={styles.restore_input}
           />
-          <div className={styles.restore_button} onClick={restoreHandler}></div>
+          <div className={styles.restore_button} onClick={restoreHandler}>Восстановить пароль</div>
         </div>
         <span
           style={{ display: errorMessageRestore === "" ? "none" : "inline-block" }}

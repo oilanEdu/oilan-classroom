@@ -81,6 +81,7 @@
   display: flex;
   align-items: center;
   margin-top: 15px;
+  flex-wrap: wrap;
 }
 
 .next_lesson_content p {
@@ -203,19 +204,21 @@
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 575px) {
   .container {
-    padding: 40px 10px;
+    padding: 0 20px;
   }
 
-  /* .course_container:first-child {
-    order: 2;
-  } */
   .course_container_1 {
     order: 2;
   }
 
   .course_container {
     flex-direction: column;
+  }
+
+  .lesson_complete_wrapper {
+    margin-right: 15px;
+    margin-bottom: 15px;
   }
 }

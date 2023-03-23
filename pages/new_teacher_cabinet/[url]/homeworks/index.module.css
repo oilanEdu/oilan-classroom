@@ -44,6 +44,18 @@
 	border-left: 0.5px solid #a3cefd83;
 }
 
+#lesson_grade {
+	display: flex;
+	display: block;
+	padding: 10px 20px;
+	border: 1px solid #2E8CF2;
+	color: #000;
+	align-self: flex-end;
+	justify-self: flex-end;
+	border-radius: 4px;
+	/* margin-left: 15px; */
+}
+
 
 .lesson_tesis p,
 .lesson_grade_wrapper div,
@@ -67,9 +79,6 @@
 	width: 20%;
 }
 
-.lesson_grade_wrapper {
-	width: 20%;
-}
 
 .lesson_title_wrapper {
 	width: 25%;
@@ -85,6 +94,15 @@
 .lesson_title_wrapper p:nth-child(2) {
 	font-size: 18px;
 	color: #2e8df27e;
+}
+
+.lesson_grade_wrapper {
+	width: 20%;
+	font-family: 'Gotham Regular';
+}
+
+.lesson_grade_wrapper p {
+	margin-bottom: 0;
 }
 
 

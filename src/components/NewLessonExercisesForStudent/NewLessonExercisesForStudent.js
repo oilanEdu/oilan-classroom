@@ -155,7 +155,7 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
         {!exercises[active].answer_text ?
           (
             <>
-              <div style={{ background: 'red' }} className={styles.input_container}>
+              <div className={styles.input_container}>
                 <p className={styles.answer_text}>
                   Задание:
                 </p>
@@ -210,11 +210,17 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
               {/* {exerciseText.map((el, index) => {
                 
               })} */}
-              <p>
-                Задание: <ExerciseText exerciseText={exerciseText} />
-              </p>
+              <div className={styles.input_container}>
+                Задание:
+                <p className={styles.input_container_text_reTry}>
+                  <ExerciseText exerciseText={exerciseText} />
+                </p>
+              </div>
               {/* <span>Задание: {exerciseText.map((el, index) => el)}</span> */}
-              <span>Ваш ответ: {exercises[active].answer_text}</span>
+              <div className={styles.input_container}>
+                Ваш ответ:
+                <p className={styles.input_container_text_reTry}>Ваш ответ: {exercises[active].answer_text}</p>
+              </div>
               <div className={styles.advice}>{exercises[active].answer_status == 'correct' ? <><div className={styles.correctAdvice}></div>Сдано на отлично</> : exercises[active].answer_status == 'uncorrect' ? <><><div className={styles.uncorrectAdvice}></div>Есть ошибки попробуйте снова</></> : ''}</div>
               <button
                 className={styles.reanswer_btn}
@@ -243,9 +249,6 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
                             }}
                             onKeyDown={(e) => onKeyDownHandler(e)}
                           />
-                          <label>
-                            Осталось символов <span>{symbols}</span>
-                          </label>
                         </div>
                         <button
                           className={styles.answer_btn}
@@ -261,7 +264,7 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
                   </>) : (<></>)
               }
               <div>
-                <div className={styles.teacherComment}><img src="https://realibi.kz/file/108886.png" className={styles.mailLogo} /><span>Комментарий преподователя:</span></div>
+                <div className={styles.teacherComment}><span>Комментарий преподавателя:</span></div>
                 {teacherComments.map(comment => {
                   return <div className={styles.comment}>
                     <span>{comment.text}</span>

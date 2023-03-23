@@ -1,24 +1,33 @@
 @font-face {
-  font-family: "Rubik Regular";
-  src: url("../../../public/fonts/Rubik/Rubik-Regular.ttf") format("truetype");
+  font-family: "Gotham Regular";
+  src: url('/../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
 }
+
 @font-face {
-  font-family: "Rubik Medium";
-  src: url("../../../public/fonts/Rubik/Rubik-Medium.ttf") format("truetype");
+  font-family: 'Gotham Medium';
+  src: url('/../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
 }
+
 @font-face {
-  font-family: "Rubik Bold";
-  src: url("../../../public/fonts/Rubik/Rubik-Bold.ttf") format("truetype");
+  font-family: 'Gotham Light';
+  src: url('/../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
 }
+
+@font-face {
+  font-family: 'Gotham Bold';
+  src: url('/../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+
 .desktopHeader {
-  padding: 0 120px;
-  margin: 0 auto;
-  width: 1440px;
+  /* padding: 0 120px; */
+  /* margin: 0 auto; */
+  /* width: 1440px; */
   display: flex;
   height: auto;
   justify-content: space-between;
   align-items: center;
-  background: transparent;
+  background: #fff;
 }
 
 .menu-active {
@@ -34,9 +43,11 @@
 .li:hover {
   background-color: lightgray;
 }
+
 .menuButtonBody {
   display: none;
 }
+
 .header {
   width: 100%;
   height: auto;
@@ -51,18 +62,20 @@
   position: sticky;
   top: 0;
 }
+
 .whiteHeader {
   width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background: #f1faff;
+  /* align-items: center; */
+  /* background: #f1faff; */
   z-index: 6;
   padding-left: 5%;
   padding-right: 5%;
   position: sticky;
   top: 0;
+  padding-top: 15px;
 }
 
 .logo {
@@ -71,19 +84,23 @@
   width: auto;
   display: flex;
 }
+
 .searchBlock {
   order: 2;
   display: flex;
 }
+
 .searchInput {
   border-radius: 10px 0 0 10px;
   padding: 5px 10px;
   border: 1px solid transparent;
   width: 300px;
 }
+
 .searchInput:focus {
   outline: none;
 }
+
 .searchIconBody {
   padding: 5px;
   border-radius: 0 10px 10px 0;
@@ -94,9 +111,11 @@
   align-items: center;
   box-sizing: border-box;
 }
+
 .searchIcon {
   height: 24px;
 }
+
 .menu {
   display: flex;
   z-index: 3;
@@ -115,11 +134,12 @@
   list-style: none;
   font-size: 18px;
   margin: 0;
+  padding: 0px !important;
 }
 
 .menu_ul li a {
-  font-family: "Noto Sans Medium";
-  font-size: 16px;
+  font-family: "Gotham Medium";
+  font-size: 14px;
   cursor: pointer;
   display: flex;
   align-content: center;
@@ -136,61 +156,113 @@
   cursor: pointer;
   text-decoration-line: underline;
 }
-.link > a {
+
+.link>a {
   color: white;
-  font-family: "Rubik Medium";
+  font-family: "Gotham Regular";
   cursor: pointer;
   text-decoration: none;
 }
-.contact{
-    display: flex;
-    flex-direction: column;
-    order: 3;
-    background: url(https://realibi.kz/file/142617.png) no-repeat;
-    background-size: 40px;
-    background-position: 0px 50%;
-    padding-left: 50px;
+
+
+.contact {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  order: 3;
+  /* padding-left: 20px; */
+  cursor: pointer;
 }
-.contact p {
-  font-weight: bolder;
+
+.image_wrapper img {
+  width: 40px;
+  height: 40px;
+}
+
+.contactImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin-right: 20px;
+}
+
+.contactDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactName {
+  font-family: 'Gotham Medium';
+  font-size: 16px;
+}
+
+.contactRole {
+  font-family: 'Gotham Regular';
+  font-size: 14px;
+  color: #757575;
+}
+
+
+
+.wrapper_text span {
+  font-family: 'Gotham Regular';
+  font-size: 13px;
+}
+
+.wrapper_text p {
+  font-family: 'Gotham Medium';
+  font-size: 14px;
   margin-bottom: 0;
 }
-.contact span {
-  margin: 0;
+
+.wrapper_text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
 }
-.link{
-    color: black;
-    text-decoration: none;
-    font-family: "Rubik Regular";
-    font-size: 16px;
-    cursor: pointer;
-    display: block;
+
+.link {
+  color: black;
+  text-decoration: none;
+  font-family: "Gotham Regular";
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
 }
+
 .phone {
-    background: url("https://realibi.kz/file/520994.png") no-repeat;
-    background-size: 24px 24px;
-    background-position: 0 50%;
-    padding: 3px;
-    padding-left: 30px;
+  background: url("https://realibi.kz/file/520994.png") no-repeat;
+  background-size: 24px 24px;
+  background-position: 0 50%;
+  padding: 3px;
+  padding-left: 30px;
 }
+
 .mobileMenu {
   display: none;
 }
-.svg > * {
+
+.svg>* {
   transition: 0.3s;
 }
+
 .svg:hover path {
   transition: 0.3s;
   fill: rgba(246, 137, 57, 1);
 }
+
 .svg:hover rect {
   transition: 0.3s;
   fill: rgba(246, 137, 57, 1);
 }
+
 .svg:hover circle {
   transition: 0.3s;
   fill: rgba(246, 137, 57, 1);
 }
+
 /* .svg:hover {
 } */
 
@@ -198,72 +270,87 @@
   display: flex;
   align-items: center;
 }
+
 .studentAvatar {
   height: 42px;
   width: 42px;
   border-radius: 50%;
   margin-right: 10px;
 }
+
 .studentInfo {
   display: flex;
   flex-direction: column;
 }
+
 .exitBtn {
   font-size: 14px;
-  font-family: "Rubik Medium";
+  font-family: "Gotham Regular";
 }
+
 .exitBtn:hover {
   text-decoration: underline;
 }
+
 @media screen and (max-width: 768px) {
   .header {
     width: 100%;
     display: flex;
     z-index: 7;
   }
+
   .whiteHeader {
     width: 100%;
     display: flex;
     z-index: 7;
   }
+
   .logo {
     order: 3;
     width: auto;
     margin: 10px 0px;
   }
+
   .menu {
     display: none;
   }
-  .contact{
+
+  .contact {
     display: none;
   }
+
   .searchBlock {
     order: 2;
   }
+
   .searchInput {
     width: 100px;
   }
+
   .menuButtonBody {
     order: 1;
     display: flex;
     align-items: center;
   }
+
   .mobileMenu {
     transition: 0.5s;
     display: block;
     width: 100%;
   }
+
   .menu_ul {
-    padding: 0;
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
   }
+
   .menu_ul li a {
     font-size: 16px;
     margin: 0;
     margin-bottom: 10px;
   }
+
   .svg {
     height: 40px;
     width: 85px;
@@ -279,17 +366,12 @@
     justify-content: space-between;
     padding: 0;
   }
+
   .whiteHeader {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
-
-@media screen and (max-width: 1440px) {
-  .desktopHeader {
-    width: auto;
-  }
-} 
 
 @media screen and (max-width: 1024px) {
   .header {
@@ -297,46 +379,56 @@
     display: flex;
     z-index: 7;
   }
+
   .whiteHeader {
     width: 100%;
     display: flex;
     z-index: 7;
   }
+
   .logo {
     order: 1;
     width: auto;
     margin: 10px 0px;
   }
+
   .menu {
     display: none;
   }
+
   .searchBlock {
     order: 2;
   }
+
   .menuButtonBody {
     order: 3;
     display: flex;
     align-items: center;
   }
+
   .menuButtonBody span {
     display: none;
   }
+
   .mobileMenu {
     transition: 0.5s;
     display: block;
     width: 100%;
   }
+
   .menu_ul {
     padding: 0;
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
   }
+
   .menu_ul li a {
     font-size: 16px;
     margin: 0;
     margin-bottom: 10px;
   }
+
   .svg {
     height: 40px;
     width: 85px;
@@ -351,12 +443,14 @@
     justify-content: space-between;
     padding: 0 10px;
   }
+
   .whiteHeader {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
-@media screen and (max-width: 500px) {
+
+@media screen and (max-width: 575px) {
   .logo {
     order: 1;
     width: 100px;
@@ -365,7 +459,7 @@
   }
 }
 
-@media screen and (max-width: 480px){
+@media screen and (max-width: 480px) {
   .desktopHeader {
     width: 100%;
     display: flex;
@@ -375,13 +469,14 @@
     justify-content: space-between;
     padding: 0;
   }
+
   .whiteHeader {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
 
-@media screen and (max-width: 360px){
+@media screen and (max-width: 360px) {
   .desktopHeader {
     width: 100%;
     display: flex;
@@ -391,9 +486,9 @@
     justify-content: space-between;
     padding: 0;
   }
+
   .whiteHeader {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
-

@@ -107,9 +107,9 @@ const homeworks = () => {
                     <p>{answer?.student_comment ? 'Ученик оставил комментарий к заданию' : 'Студент не оставил комментарий'}</p>
                   </div>
                   <div className={styles.lesson_grade_wrapper}>
-                    <div className={answer?.total_obtained_mark ? styles.green : styles.white}>
+                    <p id={styles.lesson_grade} className={answer?.total_obtained_mark ? styles.green : styles.white}>
                       {answer?.total_obtained_mark ? `Оценка - ${answer?.average_mark} (${answer?.percent_completed}%)` : 'Ждет проверки'}
-                    </div>
+                    </p>
                   </div>
                 </div>
                 <button className={styles.plusButton} onClick={() => toggleAnswer(index)}>{answer.isExpanded ? "-" : "+"}</button>
@@ -123,8 +123,8 @@ const homeworks = () => {
                       <div key={i}>
                         {(LD?.lesson_id == answer?.lesson_id && LD?.student_id == answer?.student_id) ?
                           <>
-                           {answer?.student_id} : {LD?.student_id} - {LD?.student_name}
-                           <div>
+                            {answer?.student_id} : {LD?.student_id} - {LD?.student_name}
+                            <div>
                               <div className={styles.lesson_work}
                                 data-index={i}
                               >

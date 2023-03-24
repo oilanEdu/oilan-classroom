@@ -31,17 +31,27 @@ const AddNewGroup = () => {
   const studentsHandler = () => {
     students.forEach(student => {
       studentsByGroup.forEach(id => {
-        if (student.id === id) {
+        if (student.student_id === id) {
           setStudentsByGroupInfo(Array.from(new Set([...studentsByGroupInfo, student])));
         }
       })
     })
   }
 
+
+  const deleteStudHandler = (studId) => {
+    console.log(studId);
+    setStudentsByGroup(studentsByGroup.filter(stud => stud !== studId))
+    setStudentsByGroupInfo(studentsByGroupInfo.filter(stud => stud.student_id !== studId))
+  }
+
   useEffect(() => {
     studentsHandler();
+  }, [studentsByGroup]);
+
+  useEffect(() => {
     if (students.length<1) {getStudents()}
-  }, [studentsByGroup, students])
+  }, [students]);
 
   console.log(studentsByGroupInfo);
 
@@ -222,21 +232,22 @@ const AddNewGroup = () => {
                     <select
                       className={styles.input_block}
                       onChange={(e) => {
+                        console.log(+e.target.value);
                         setStudentsByGroup(Array.from(new Set([...studentsByGroup, +e.target.value])))
                       }}
                     >
-                      <option value="0" disabled>Студенты</option>
+                      <option value="0">Студенты</option>
                       {students.map(student => (
-                        <option value={student.id}>{student.surname} {student.name}</option>
+                        <option value={student.student_id}>{student.surname} {student.name}</option>
                       ))}
                     </select>
                   </div>
-                  <span
-                    style={{ display: errorMessage === "" ? "none" : "inline-block" }}
+                  <div
+                    style={{ display: errorMessage === "" ? "none" : "block" }}
                     className={styles.error_message}
                   >
                     {errorMessage}
-                  </span>
+                  </div>
                   <button
                     className={styles.form_button}
                     onClick={() => {
@@ -245,12 +256,12 @@ const AddNewGroup = () => {
                   >
                     Создать группу
                   </button>
-                  <span
-                    style={{ display: succesMessage === "" ? "none" : "inline-block" }}
+                  <div
+                    style={{ display: succesMessage === "" ? "none" : "block" }}
                     className={styles.success_message}
                   >
                     {succesMessage}
-                  </span>
+                  </div>
                 </div>
                 <div className={styles.addedStudents}>
                   <p>Добавленные студенты</p>
@@ -260,12 +271,13 @@ const AddNewGroup = () => {
                         <img src="https://realibi.kz/file/185698.svg" alt="" />
                         <p>{stud.surname} {stud.name}</p>
                       </div>
-                      <img className={styles.student_delete} src="https://realibi.kz/file/775192.svg" alt="" />
+                      <div onClick={() => deleteStudHandler(stud.student_id)}>
+                        <img className={styles.student_delete} src="https://realibi.kz/file/775192.svg" alt="" />
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
-
             </div>
           </div>
         </div>

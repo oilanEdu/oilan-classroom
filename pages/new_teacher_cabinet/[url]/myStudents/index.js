@@ -218,8 +218,8 @@ const myStudents = () => {
       />
       <div className={styles.contentWrapper}>
         <div className={styles.groupClicker}>
-          <span onClick={() => setIsStudents(true)}>Студенты</span>
-          <span onClick={() => setIsStudents(false)}>Группы</span>
+          <span className={isStudents?styles.blueSpan:styles.whiteSpan} onClick={() => setIsStudents(true)}>Студенты</span>
+          <span className={!isStudents?styles.blueSpan:styles.whiteSpan} onClick={() => setIsStudents(false)}>Группы</span>
         </div>
         <div>
           {isStudents

@@ -40,7 +40,9 @@ const AddNewGroup = () => {
 
   useEffect(() => {
     studentsHandler();
-  }, [studentsByGroup])
+    if (students.length<1) {getStudents()}
+  }, [studentsByGroup, students])
+
   console.log(studentsByGroupInfo);
 
   const loadBaseData = async () => {
@@ -84,8 +86,9 @@ const AddNewGroup = () => {
   }
 
   const getStudents = async () => {
-    let result = await axios.get(`${globals.productionServerDomain}/getStudents`)
+    let result = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId`, {id: teacher?.id, sort: 'name'})
     setStudents(result.data);
+    console.log('result.data', result.data)
     console.log(students)
   }
 

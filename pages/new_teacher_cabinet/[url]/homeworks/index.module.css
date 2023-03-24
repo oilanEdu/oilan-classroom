@@ -44,18 +44,6 @@
 	border-left: 0.5px solid #a3cefd83;
 }
 
-#lesson_grade {
-	display: flex;
-	display: block;
-	padding: 10px 20px;
-	border: 1px solid #2E8CF2;
-	color: #000;
-	align-self: flex-end;
-	justify-self: flex-end;
-	border-radius: 4px;
-	/* margin-left: 15px; */
-}
-
 
 .lesson_tesis p,
 .lesson_grade_wrapper div,
@@ -79,6 +67,28 @@
 	width: 20%;
 }
 
+.lesson_grade_wrapper {
+	width: 20%;
+}
+
+
+.lesson_grade {
+  display: flex;
+  display: block;
+  padding: 10px 20px;
+  border: 1px solid #2E8CF2;
+  color: #000;
+  align-self: flex-end;
+  justify-self: flex-end;
+  border-radius: 4px;
+  margin-left: 15px;
+}
+
+.bricksRow {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
 
 .lesson_title_wrapper {
 	width: 25%;
@@ -96,25 +106,25 @@
 	color: #2e8df27e;
 }
 
-.lesson_grade_wrapper {
-	width: 20%;
-	font-family: 'Gotham Regular';
-}
-
-.lesson_grade_wrapper p {
-	margin-bottom: 0;
-}
-
 
 
 .answerRow {
-	display: flex;
-	flex-direction: row;
-	/* border: 1px solid black; */
 	margin-top: 20px;
 	box-shadow: 0px 0px 11px 3px #A3CEFD40;
 	padding: 25px 20px;
 	width: 90%;
+}
+.lessons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.answerText {
+	display: flex;
+  flex-direction: column;
+  border-top: 0.5px solid #a3cefd83;
+  width: 100%;
 }
 
 .wrapperAnswers {
@@ -138,4 +148,124 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.answer_block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.student_answer {
+  display: flex;
+  flex-direction: column;
+}
+
+.student_answer_text {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment_block {
+  flex-direction: column;
+}
+
+.work_headline {
+  font-size: 20px;
+  font-family: 'Gotham Medium';
+  margin-top: 0;
+}
+
+.comment_block,
+.student_answer_text,
+.student_answer,
+.answer_block,
+.wrapper_block {
+  margin: 10px 0;
+}
+
+.wrapper_block {
+  display: flex;
+  flex-direction: column;
+}
+
+.grade_toMark_item {
+  padding: 7px 20px;
+  background: #fff;
+  border: 1px solid #A3CEFD;
+  box-shadow: 0px 0px 11px 3px #A3CEFD33;
+  color: #fff;
+  margin-right: 10px;
+  border-radius: 5px;
+  color: #000;
+  cursor: pointer;
+}
+
+.grade_toMark_active {
+  padding: 7px 20px;
+  color: #fff;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  background: #A7E577;
+  border: 1px solid #A7E577;
+  box-shadow: 0px 0px 11px 3px rgba(163, 206, 253, 0.2);
+}
+
+.grade_toMark {
+  margin-top: 15px;
+}
+
+.input_container p {
+  font-family: 'Gotham Regular';
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.lesson_work {
+  margin-right: 10px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 3px;
+  width: fit-content;
+  background: #A3CEFD;
+  color: white;
+  font-family: 'Gotham Regular';
+  outline: none;
+}
+
+.input_container {
+  height: fit-content;
+  width: 80%;
+  outline: none;
+  background: #FFFFFF;
+  border: 0.5px solid #A3CEFD;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: 'Gotham Regular';
+  margin-top: 10px;
+}
+
+.teacherComment {
+  width: 40%;
+  height: 70px;
+  outline: none;
+  background: #FFFFFF;
+  border: 0.5px solid #A3CEFD;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: 'Gotham Regular';
+  resize: none;
+}
+
+.studentComment {
+  width: 80%;
+  height: 70px;
+  outline: none;
+  background: #FFFFFF;
+  border: 0.5px solid #A3CEFD;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: 'Gotham Regular';
+  resize: none;
 }

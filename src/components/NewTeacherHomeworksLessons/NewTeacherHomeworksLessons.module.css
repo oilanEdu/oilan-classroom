@@ -68,11 +68,10 @@
   margin-top: 10px;
 }
 
-/* 
 .answer_block {
-  display: flex;
-  flex-wrap: wrap;
-} */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
 .student_answer {
   display: flex;
@@ -216,7 +215,6 @@
   margin-right: 10px;
   border-radius: 5px;
   cursor: pointer;
-
   background: #A7E577;
   border: 1px solid #A7E577;
   box-shadow: 0px 0px 11px 3px rgba(163, 206, 253, 0.2);
@@ -239,7 +237,7 @@
 }
 
 .studentComment {
-  width: 40%;
+  width: 80%;
   height: 70px;
   outline: none;
   background: #FFFFFF;
@@ -318,13 +316,5 @@
 
   .work_headline {
     font-size: 16px;
-  }
-
-  .studentComment {
-    width: 100%;
-  }
-
-  .comment_block {
-    width: 100%;
   }
 }

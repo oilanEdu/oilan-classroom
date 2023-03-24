@@ -18,8 +18,9 @@ const NewTeacherHomeworksLessons = ({ index, lesson, showCheck, selectedExercise
   const openExer = e => setActive(+e.target.dataset.index);
 
   useEffect(() => {
-    console.log(exercises2, "exercises2");
-  }, [exercises2])
+    setMark(answer?.teacher_mark);
+  }, [answer]);
+
   useEffect(() => {
     console.log(lesson, "lessonPROPS");
     if (index === 0) {
@@ -190,7 +191,7 @@ const NewTeacherHomeworksLessons = ({ index, lesson, showCheck, selectedExercise
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  console.log(lesson);
+  console.log(answer?.teacher_mark);
 
   //<< HH:MM
   const [studentPrograms, setStudentPrograms] = useState()
@@ -258,6 +259,7 @@ const NewTeacherHomeworksLessons = ({ index, lesson, showCheck, selectedExercise
                 <div>
                   <div className={styles.lesson_work}
                     onClick={async (e) => {
+                      console.log(exercise);
                       await getAnswer(student.id, exercise.id)
                       setSelectedExerciseId(exercise.id)
                       setSelectedExerciseNumber(exercise.exer_number)

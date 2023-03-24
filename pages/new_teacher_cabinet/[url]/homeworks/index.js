@@ -257,7 +257,7 @@ const homeworks = () => {
                                           <div className={styles.answer_input}>
                                             <textarea
                                               className={styles.studentComment}
-                                              value={answer?.student_comment ? answer?.student_comment : "Студент не оставил комментарии"}
+                                              value={LD?.student_comment ? LD?.student_comment : "Студент не оставил комментарии"}
                                             >
                                             </textarea>
                                           </div>
@@ -290,7 +290,7 @@ const homeworks = () => {
                                             // await getLessonExercises(selectedLessonId)
                                             // await getLessonExercises22(selectedLessonId)
                                           }}
-                                          disabled={teacherComment == '' ? true : false}
+                                          // disabled={teacherComment == '' ? true : false}
                                         >
                                           Сохранить и отправить
                                         </button>

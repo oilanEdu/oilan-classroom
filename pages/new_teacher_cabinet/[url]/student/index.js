@@ -309,7 +309,7 @@ export default function Student({ programs }) {
             <div className={styles.input_wrapper}>
               <div className={styles.input_container}>
                 <p>Ссылка на личный кабинет</p>
-                <input value={"oilan-classroom.com/cabinet/student/" + student?.nickname + "/course/" + studentPrograms[0]?.course_url + "?program=" + studentPrograms[0]?.program_id} />
+                <input value={"oilan-classroom.com/new_student_cabinet/" + student?.nickname + "/course/" + studentPrograms[0]?.course_url + "?program=" + studentPrograms[0]?.program_id} />
               </div>
               <div className={styles.input_container}>
                 <p>Курс</p>

@@ -108,6 +108,8 @@
     padding: 10px 20px;
     font-family: 'Gotham Regular';
     margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .teacherComment span {

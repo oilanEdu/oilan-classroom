@@ -197,7 +197,7 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
               <button
                 className={styles.answer_btn}
                 onClick={async () => {
-                  await sendAnswer(answer, exercises[active].lesson_id, exercises[active].id, student, 'not verified')
+                  await sendAnswer(answer, exercises[active].lesson_id, exercises[active].id, student, 'not verified', comment)
                   await fetchData()
                 }}
               >
@@ -235,7 +235,8 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
                   <>
                     <div className={styles.editAnswerBlock}>
                       <div>
-                        <div className={styles.answer_input}>
+                      <div className={styles.input_container}>
+                          <p>Новый ответ</p>
                           <textarea
                             type="text"
                             className={styles.answer}
@@ -249,6 +250,21 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
                             }}
                             onKeyDown={(e) => onKeyDownHandler(e)}
                           />
+                        </div>
+                        
+                        <div className={styles.input_container}>
+                        <p>Комментарий для учителя:</p>
+                        <textarea
+                          className={styles.answer}
+                          placeholder="Если вам было что-то не понятно - напишите сюда, мы передадим :)"
+                          value={comment}
+                          onChange={e => {
+                            if (symbols !== 0 && answer.length <= 1500) {
+                              setComment(e.target.value)
+                              console.log(comment)
+                            }
+                          }}
+                        ></textarea>
                         </div>
                         <button
                           className={styles.answer_btn}

@@ -19,6 +19,11 @@ function TeacherProfile(props) {
     const [teacherPassword, setTeacherPassword] = useState()
     const [teacherAboutSelf, setTeacherAboutSelf] = useState()
     const [teacherSkills, setTeacherSkills] = useState()
+    const [teacherSkillsSplitted, setTeacherSkillsSplitted] = useState([])
+    useEffect(() => {
+        setTeacherSkillsSplitted(teacherSkills?.split(";"))
+        // let test = teacherSkills?.split(";")
+    }, [teacherSkills])
     const [teacherExp, setTeacherExp] = useState()
     const [teacherLogin, setTeacherLogin] = useState()
     const [passwordIsChanging, setPasswordIsChanging] = useState(false)
@@ -162,6 +167,8 @@ function TeacherProfile(props) {
         loadTeacherProfileInfo()
     }, [])
 
+    const [changeMod, setChangeMod] = useState(false)
+
     return (
         <>  <div className={styles.container}>
             <HeaderTeacher white={true} teacher={teacher} />
@@ -184,7 +191,7 @@ function TeacherProfile(props) {
                                         </div>
                                     </div>
                                     <div className={styles.header_btn}>
-                                        <button>Редактировать</button>
+                                        <button onClick={() => setChangeMod(true)}>Редактировать</button>
                                     </div>
                                 </div>
                             </div>
@@ -197,18 +204,21 @@ function TeacherProfile(props) {
                             <div className={styles.input_container}>
                                 <h2>Ф.И.О</h2>
                                 <input type="text"
+                                disabled={!changeMod}
                                     onChange={(event) => setTeacherFIO(event.target.value)}
                                     value={teacherFIO} />
                             </div>
                             <div className={styles.input_container}>
                                 <h2>Почта</h2>
                                 <input type="text"
+                                disabled={!changeMod}
                                     onChange={(event) => setTeacherEmail(event.target.value)}
                                     value={teacherEmail} />
                             </div>
                             <div className={styles.input_container}>
                                 <h2>Телефон</h2>
                                 <input type="text"
+                                disabled={!changeMod}
                                     onChange={(event) => setTeacherPhone(event.target.value)}
                                     value={teacherPhone} />
                             </div>
@@ -224,33 +234,43 @@ function TeacherProfile(props) {
                                     setPasswordIsChanged(true)
                                 }}>OK</button>
                             </div> */}
-                            <div className={styles.input_container}>
+                            {/* <div className={styles.input_container}>
                                 <h2>Телефон</h2>
                                 <input type="text"
+                                disabled={!changeMod}
                                     onChange={(event) => setTeacherPhone(event.target.value)}
                                     value={teacherPhone} />
-                            </div>
+                            </div> */}
                             <div className={styles.input_container}>
                                 <h2>О себе</h2>
                                 <input type="text"
+                                disabled={!changeMod}
                                     onChange={(event) => setTeacherAboutSelf(event.target.value)}
                                     value={teacherAboutSelf} />
                             </div>
                             <div className={styles.input_container}>
                                 <h2>Навыки</h2>
-                                <input type="text"
+                                {changeMod ? <input type="text"
+                                disabled={!changeMod}
                                     onChange={(event) => setTeacherSkills(event.target.value)}
-                                    value={teacherSkills} />
+                                    value={teacherSkills} /> : <div className={styles.skillsContainer}>
+                                        {teacherSkillsSplitted?.map(el => <p className={styles.skillWords}>{el}</p>)}
+                                        <p
+                                        onClick={() => {setChangeMod(true)}} 
+                                        className={styles.skillWordsAdd}>+</p>
+                                        </div>}
                             </div>
                             <div className={styles.input_container}>
                                 <h2>Опыт работы</h2>
                                 <input type="text"
+                                disabled={!changeMod}
                                     onChange={(event) => setTeacherExp(event.target.value)}
                                     value={teacherExp} />
                             </div>
                             <div className={styles.input_container}>
                                 <h2>Логин</h2>
                                 <input type="text"
+                                disabled={!changeMod}
                                     // disabled
                                     onChange={(event) => {
                                         setTeacherLogin(event.target.value)

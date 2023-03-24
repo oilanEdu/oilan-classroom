@@ -21,8 +21,8 @@
 
 
 .calendar_wrapper {
-    width: 488px;
-    height: 432px;
+    width: 688px;
+    height: 461px;
     /* border: 1px solid; */
     background-color: white;
     border-radius: 16px;
@@ -103,11 +103,17 @@
     text-align: center;
     margin-top: 15px;
     font-family: 'Gotham Regular';
+    padding-left: 35px;
+    padding-right: 35px;
 }
 
 .wrapper7 {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-gap: 10px;
+    grid-column-gap: 20px;
+    padding-left: 35px;
+    padding-right: 35px;
 }
 
 /* //отныне эти классы есть в глобалсе */
@@ -145,7 +151,7 @@
 }
 
 .countOfLessons {
-    background-color: red;
+    /* background-color: red; */
     /* width: fit-content; */
     /* width: 18px;
     height: 20px;
@@ -157,7 +163,8 @@
     /* right: 5px;
     color: white; */
 
-    background-color: #0FAB41;
+    /* background-color: #0FAB41; */
+    background: rgba(255, 255, 255, 0.99);
     /* width: fit-content; */
     width: 17px;
     height: 17px;
@@ -167,8 +174,26 @@
     top: 5px;
     /* top: 367px; */
     right: 5px;
-    color: white;
-    font-weight: bold;
+    color: rgba(0, 0, 0, 1);
+    /* font-weight: bold; */
+}
+
+.lessonsOfTheDay {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 11px 3px rgba(0, 0, 0, 0.11);
+    border-radius: 10px;
+    top: 60px;
+    text-align: start;
+    padding-bottom: 20px;
+}
+
+.LessonOfTheDay {
+    padding: 20px 20px 10px 20px;
+    border-bottom: 0.5px solid #2E8CF2;
 }
 
 @media screen and (max-width: 480px) {

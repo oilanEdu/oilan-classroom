@@ -90,6 +90,23 @@ export default function HeaderTeacher(props) {
     setLoadingData(false);
   }, []);
 
+  const [activeNavButton, setActiveNavButton] = useState()
+  useEffect(() => {
+    if (window.location.href.includes("myCourses")) {
+      setActiveNavButton("myCourses")
+    }
+    if (window.location.href.includes("myStudents")) {
+      setActiveNavButton("myStudents")
+    }
+    if (window.location.href.includes("homeworks")) {
+      setActiveNavButton("homeworks")
+    }
+  }, [])
+  useEffect(() => {
+    activeNavButton
+    debugger
+  }, [activeNavButton])
+
   return (
     <><div id={"header"} className={styles.whiteHeader}>
       {/*<YMInitializer accounts={[78186067]} options={{webvisor: true, defer: true}} version="2" />*/}
@@ -136,7 +153,10 @@ export default function HeaderTeacher(props) {
                 target="_blank"
                 className={styles.titleLink}
               >
-                <a className={styles.link}>
+                <a className={styles.link}
+                style={{color: activeNavButton === "myCourses" ? "#2E8CF2" : "black"}}
+                // style={{color: window.location.href.includes("myCourses") ? "#2E8CF2" : "black"}}
+                >
                   Мои курсы
                 </a>
               </Link>
@@ -148,12 +168,14 @@ export default function HeaderTeacher(props) {
                 className={styles.titleLink}
               >
                 <a
-                  onClick={() =>
-                    setTimeout(() => {
-                      router.push("#students");
-                    }, props.isInMainPage ? 0 : 1000)
-                  }
+                  // onClick={() =>
+                  //   setTimeout(() => {
+                  //     router.push("#students");
+                  //   }, props.isInMainPage ? 0 : 1000)
+                  // }
                   className={styles.link}
+                  style={{color: activeNavButton === "myStudents" ? "#2E8CF2" : "black"}}
+                  // style={{color: window?.location.href.includes("myStudents") ? "#2E8CF2" : "black"}}
                 >
                   Студенты
                 </a>
@@ -164,8 +186,17 @@ export default function HeaderTeacher(props) {
                 href={`/new_teacher_cabinet/${encodeURIComponent(props?.teacher?.url)}/homeworks`}
                 target="_blank"
                 className={styles.titleLink}
+                
+                // style={{color: window?.location.href.includes("homeworks") ? "#2E8CF2" : "black"}}
               >
-                Домашние задания
+                <a
+                
+                  className={styles.link}
+                  style={{color: activeNavButton === "homeworks" ? "#2E8CF2" : "black"}}
+                  // style={{color: window?.location.href.includes("myStudents") ? "#2E8CF2" : "black"}}
+                >
+                  Домашние задания
+                </a>
               </Link>
             </li>
           </ul>
@@ -173,18 +204,26 @@ export default function HeaderTeacher(props) {
         <div
           className={styles.contact}
           onClick={() => setMenuVisible(!menuVisible)}
+          style={{cursor: "pointer"}}
         >
-          <div
+            <Link
+              href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/profile`}
+              target="_blank"
+
+            >
+                        <div
             className={styles.contactImage}
             style={{
               backgroundImage: props.teacher?.avatar !== null ? "url(" + props.teacher?.avatar + ")" : "url(https://realibi.kz/file/142617.png)",
             }}
           />
+            </Link>
+
           <div className={styles.contactDetails}>
             <b className={styles.contactName}>
               {props.teacher?.name} {props.teacher?.surname}
             </b>
-            <span className={styles.contactRole}>Преподаватель</span>
+            {/* <span className={styles.contactRole}>Преподаватель</span> */}
           </div>
 
         </div>
@@ -241,6 +280,7 @@ export default function HeaderTeacher(props) {
                 href={`/new_teacher_cabinet/${encodeURIComponent(props?.teacher?.url)}/myCourses`}
                 target="_blank"
                 className={styles.titleLink}
+                style={{color: activeNavButton === "myCourses" ? "#2E8CF2" : "black"}}
               >
                 <a className={styles.link} style={{ color: "black" }}>
                   Мои курсы
@@ -255,7 +295,7 @@ export default function HeaderTeacher(props) {
               >
                 <a
                   className={styles.link}
-                  style={{ color: "black" }}
+                  style={{color: activeNavButton === "myStudents" ? "#2E8CF2" : "black"}}
                 >
                   Студенты
                 </a>
@@ -266,6 +306,7 @@ export default function HeaderTeacher(props) {
                 href={`/new_teacher_cabinet/${encodeURIComponent(props?.teacher?.url)}/homeworks`}
                 target="_blank"
                 className={styles.titleLink}
+                style={{color: activeNavButton === "homeworks" ? "#2E8CF2" : "black"}}
               >
                 Домашние задания
               </Link>
@@ -274,18 +315,20 @@ export default function HeaderTeacher(props) {
         </div>
       ) : null}
       <div className={styles.dropMenu}>
-        {menuVisible && (
-          <ul className={classnames(styles.menu, { [styles.menuActive]: menuVisible })}>
-            <Link
+        {/* {menuVisible && ( */}
+          <ul className={classnames(styles.menu
+            // , { [styles.menuActive]: menuVisible }
+            )}>
+            {/* <Link
               href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/profile`}
               target="_blank"
 
             >
               <li className={styles.li}>Профиль</li>
-            </Link>
+            </Link> */}
             <li className={styles.li} onClick={handleLogout}>Выйти</li>
           </ul>
-        )}
+        {/* )} */}
       </div>
     </div>
     </>

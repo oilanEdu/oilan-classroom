@@ -53,23 +53,28 @@ a {
   text-align: center;
   height: 50px; */
 
-  width: 70px;
-    text-align: center;
-    height: 50px;
-    border: 1px;
-    border-color: #F6F6F6;
+  width: 71px;
+  text-align: center;
+  height: 61px;
+    /* border: 1px;
+    border-color: #F6F6F6; */
     /* border-style: inset; */
     border-style: ridge;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+
+    border: none;
+    background: #F0F7FF;
+    border-radius: 4px;
+    cursor: pointer;
 }
 .today {
   background-color: #87bbf4;
 }
 .selectedDay {
-  background-color: #007AFF;
+    background: #2E8CF2;
 }
 .selectedDayNumber {
   color: white;

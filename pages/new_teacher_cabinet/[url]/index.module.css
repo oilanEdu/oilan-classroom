@@ -530,6 +530,23 @@
 	justify-content: space-between;
 }
 
+.subscriptionLoss {
+    background: #E0EFFF;
+    border-radius: 15px;
+    padding: 30px 75px 30px 75px;
+    text-align: center;
+    max-width: fit-content;
+    place-self: center;
+	position: relative;
+	margin-bottom: 45px;
+}
+.subscriptionLossClose {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+	cursor: pointer;
+}
+
 .sortOptions {
 	flex-direction: column;
 	margin-bottom: 30px;

@@ -179,9 +179,12 @@
 
 .menu_ul li a:hover {
   /* text-decoration: none; */
-  color: #2E8CF2;
+  color: #2E8CF2 !important;
   /* text-decoration-line: underline; */
   cursor: pointer;
+}
+.titleLink {
+  cursor: pointer
 }
 
 .link>a {

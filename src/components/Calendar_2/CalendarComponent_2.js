@@ -12,19 +12,23 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
-import { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { ru } from 'date-fns/locale';
 import styles from "./styles.module.css";
+import LessonOfTheDay from "../LessonOfTheDay/LessonOfTheDay";
 
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Calendar2(props) {
+const Calendar2 = React.memo((props) => {
   useEffect(() => {
     console.log("days", days)
   }, [])
+  useEffect(() => {
+    console.log("CALENDAR PROPS", props)
+  }, [props])
   // let test = props.lessons
   // let test2 = test.map(el => el.start_time == days)
   let today = startOfToday();
@@ -66,6 +70,78 @@ export default function Calendar2(props) {
   useEffect(() => {
     console.log("selectedDayMeetings2", selectedDayMeetings2)
   }, [selectedDayMeetings2])
+
+  // const lessonOfTheDay = (day, lesson2) => {
+  //   useEffect(() => {
+  //     if (lesson2.student_id != undefined) {
+  //       async function test() {
+  //         let student_id = lesson2.student_id
+  //         let data = {
+  //           student_id
+  //         }
+  //         let test1 = await axios.post(`${globals.productionServerDomain}/getStudentById`, data);
+  //         debugger
+  //         // let student_id = errorOfDateOfGoingLessonLesson.student_id
+  //         // let data = {
+  //         //   student_id
+  //         // }
+  //         // let getStudent = await axios({
+  //         //   method: "post",
+  //         //   url: `${globals.productionServerDomain}/getStudentById`,
+  //         //   data: data,
+  //         // }) 
+  //         //   .then(function (res) {
+  //         //     if (res.data[0]){
+  //         //       setStudentOfError(res.data[0])
+  //         //         // console.log('EXE', res.data[0].status)
+  //         //         // exercise.answer_status = res.data[0].status
+  //         //         // exercise.teacher_comment = res.data[0].comment 
+  //         //     }else{
+  //         //         console.log('ответов нет')
+  //         //         // setStudent()
+  //         //     }
+  //         //   })
+  //         //   .catch((err) => {
+  //         //     alert("Произошла ошибка");   
+  //         //   });
+  //       }
+  //       test()
+  //     }
+  //   }, [])
+  //   return (
+  //     <div>
+  //       TEST
+  //     </div>
+  //   )
+  // }
+  const LessonsOfTheDay = ({day, lessons}) => {
+    useEffect(() => {
+      console.log('HIIIIIII')
+    }, )
+    return (
+      <div
+      style={{display: isEqual(day, selectedDay) && lessons.some((lesson) =>
+        isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
+        ? 
+        "flex" : "none"}}
+        className={styles.lessonsOfTheDay}
+      >
+         {/* {lessons.filter((lesson2) =>
+              isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day)).length} */}
+          {lessons.map((lesson2) => <div 
+          style={{display: isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day) ? "flex" : "none"}}
+          // className={styles.lessonsOfTheDay}
+          >
+            {isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day) 
+        ? <div className={styles.LessonOfTheDay}>
+          <LessonOfTheDay day={day} lesson2={lesson2} />
+          </div> : ''}
+            
+          </div>
+          )}
+      </div>
+    )
+  }
   return (
     <div className={styles.calendar_wrapper}>
       <div className={styles.wrapper1}>
@@ -106,7 +182,7 @@ export default function Calendar2(props) {
         <div className={styles.wrapper7}>
           {days.map((day, dayIdx) => (
             <div
-              onClick={() => setSelectedDay(day)}
+              onClick={() => {setSelectedDay(day)}}
               key={day.toString()}
               className={classNames(
                 dayIdx === 0 && colStartClasses[getDay(day)],
@@ -169,13 +245,41 @@ export default function Calendar2(props) {
                   isSameDay(parseISO(meeting.startDatetime), day)
                 ) && <div className="w-1 h-1 rounded-full bg-sky-500"></div>}
               </div> */}
+              
+              {/* <div
+              style={{display: isEqual(day, selectedDay) && props?.lessons?.some((lesson) =>
+                isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
+                ? 
+                "block" : "none"}}
+              >
+                {isEqual(day, selectedDay) && props?.lessons?.some((lesson) =>
+                isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
+                ?  
+                <LessonsOfTheDay day={day} lessons={props?.lessons} /> : ''}
+                
+                 {/* {props?.lessons?.filter((lesson2) =>
+                      isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day)).length}
+                  {props?.lessons?.map((lesson2) => <div 
+                  style={{display: isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day) ? "block" : "none"}}
+                  >
+                    test
+                  </div>
+                  )} */}
+              {/* </div>  */}
+
+              {isEqual(day, selectedDay) && props?.lessons?.some((lesson) =>
+                isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
+                ?  
+                <LessonsOfTheDay day={day} lessons={props?.lessons} /> : ''}
+                {/* <LessonsOfTheDay day={day} lessons={props?.lessons} /> */}
+              {/* <div>{lessonsOfTheDay(day, props?.lessons)}</div> */}
             </div>
           ))}
         </div>
       </div>
     </div>
   );
-}
+})
 
 // function Meeting({ meeting }) {
 //   let startDateTime = parseISO(meeting.startDatetime);
@@ -213,3 +317,5 @@ let colStartClasses = [
   "col-start-6",
   "col-start-7",
 ];
+
+export default Calendar2

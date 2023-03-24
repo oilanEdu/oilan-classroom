@@ -662,6 +662,28 @@
     border: none;
 }
 
+.skillWords {
+    padding: 3px 16px;
+    text-align: center;
+    border: 1px solid #2E8CF2;
+    border-radius: 31px;
+}
+.skillWordsAdd {
+    padding: 3px 16px;
+    text-align: center;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 11px 3px rgba(0, 0, 0, 0.11);
+    border-radius: 30px;
+    cursor: pointer;
+}
+.skillWordsAdd:hover {
+    color: #2E8CF2;
+}
+.skillsContainer {
+    display: flex;
+    gap: 10px;
+}
+
 @media screen and (max-width: 1000px) {
     .mainWrapperOfEditProgram {
         padding: 0

@@ -71,11 +71,12 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
       });
   }
 
-  const sendEditedAnswer = async (answerText, answerId, status) => {
+  const sendEditedAnswer = async (answerText, answerId, status, comment) => {
     const data = {
       answerText,
       answerId,
-      status
+      status, 
+      comment
     };
     console.log(data)
     await axios({
@@ -269,7 +270,7 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
                         <button
                           className={styles.answer_btn}
                           onClick={async () => {
-                            await sendEditedAnswer(answer, exercises[active].answer_id, 'not verified')
+                            await sendEditedAnswer(answer, exercises[active].answer_id, 'not verified', comment)
                             await fetchData()
                           }}
                         >

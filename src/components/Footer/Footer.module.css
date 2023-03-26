@@ -1,28 +1,24 @@
 @font-face {
-    font-family: "Noto Sans Regular";
-    src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Regular.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Noto Sans Medium";
-    src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Medium.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Noto Sans Bold";
-    src: url("../../../public/fonts/notosansdisplay/NotoSansDisplay-Bold.ttf") format("truetype");
+    font-family: "Gotham Regular";
+    src: url('/../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
 }
 
 @font-face {
-    font-family: "Muller Regular";
-    src: url("../../../public/fonts/Muller/MullerRegular.ttf") format("truetype");
-  }
-  @font-face {
-    font-family: "Muller Medium";
-    src: url("../../../public/fonts/Muller/MullerMedium.ttf") format("truetype");
-  }
-  @font-face {
-    font-family: "Muller Bold";
-    src: url("../../../public/fonts/Muller/MullerBold.ttf") format("truetype");
-  }
+    font-family: 'Gotham Medium';
+    src: url('/../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+    font-family: 'Gotham Light';
+    src: url('/../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+    font-family: 'Gotham Bold';
+    src: url('/../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+
 
 .outerContainer {
     background: white;
@@ -31,8 +27,8 @@
     left: 0px;
 }
 
-.container{
-    padding: 50px 120px;
+.container {
+    padding: 50px 0;
     max-width: 1440px;
     margin: 0 auto;
     display: grid;
@@ -41,40 +37,49 @@
         'logo instagram phone partner privacy'
         'logo email phone partner privacy';
 }
-.logo{
+
+.logo {
     display: flex;
     grid-area: logo;
 }
+
 .instagram_container {
     grid-area: instagram;
 }
+
 .phone_container {
     grid-area: phone;
 }
+
 .email_container {
     grid-area: email;
 }
+
 .partner_container {
     grid-area: partner;
 }
+
 .privacy_policy_container {
     grid-area: privacy;
 }
 
-.svg > *{
+.svg>* {
     transition: 0.3s;
 }
-.svg:hover path{
+
+.svg:hover path {
     transition: 0.3s;
-    fill: rgba(246,137,57,1) ;
+    fill: rgba(246, 137, 57, 1);
 }
-.svg:hover rect{
+
+.svg:hover rect {
     transition: 0.3s;
-    fill: rgba(246,137,57,1) ;
+    fill: rgba(246, 137, 57, 1);
 }
-.svg:hover circle{
+
+.svg:hover circle {
     transition: 0.3s;
-    fill: rgba(246,137,57,1) ;
+    fill: rgba(246, 137, 57, 1);
 }
 
 .instagram {
@@ -129,61 +134,66 @@
     margin: 16px 0px;
 }
 
-.columnTitle{
-    font-family: "Muller Bold";
+.columnTitle {
+    font-family: "Gotham Medium";
     text-transform: uppercase;
     font-size: 16px;
 }
 
-.columnLinks{
+.columnLinks {
     width: 100%;
     margin-top: 10px;
 }
-.link{
+
+.link {
     color: black;
     text-decoration: none;
-    font-family: "Noto Sans Regular";
+    font-family: "Gotham Regular";
     font-size: 16px;
     cursor: pointer;
     display: block;
 }
-.link:hover{
+
+.link:hover {
     text-decoration: none;
     color: black;
 }
-.wrapper{
+
+.wrapper {
     width: 100%;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
 }
+
 /* 
 .primary_logo {
     display: none;
 } */
 
 .copy_abaz {
-    font-family: 'Montserrat Regular';
+    font-family: 'Gotham Regular';
     font-size: 16px;
     line-height: 20px;
     color: #000;
     opacity: 0.5;
 }
-@media screen and (max-width: 1380px){
-    .container{
+
+@media screen and (max-width: 1380px) {
+    .container {
         grid-template-areas: 'logo instagram phone partner privacy' 'logo email phone partner privacy';
     }
 }
 
 @media screen and (max-width: 1280px) {
-    .container{
+    .container {
         grid-template-areas: 'logo instagram phone partner' 'logo instagram email privacy';
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 }
 
 @media screen and (max-width: 1000px) {
-    .container{
+    .container {
         grid-template-areas: 'logo phone partner' 'instagram email privacy';
         grid-template-columns: 1fr 1fr 1fr;
         display: grid;
@@ -195,29 +205,32 @@
     }
 }
 
-@media screen and (max-width: 768px){
-    .container{
+@media screen and (max-width: 768px) {
+    .container {
         grid-template-areas: 'logo phone partner' 'instagram email privacy';
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 600px) {
+
     /* .container{
         grid-template-areas: 'logo logo' 'instagram phone' 'partner email'
         'privacy email';
         grid-template-columns: 1fr 1fr;
     } */
-    .container{
+    .container {
         grid-template-areas: 'logo' 'instagram' 'partner' 'phone' 'email'
-        'privacy';
+            'privacy';
         grid-template-columns: 1fr;
     }
+
     .columnTitle {
         font-weight: 700;
         font-size: 16px;
         line-height: 16px;
     }
+
     .logo {
         display: block;
         grid-area: logo;
@@ -225,10 +238,10 @@
     }
 }
 
-@media screen and (max-width: 415px){
-    .container{
+@media screen and (max-width: 415px) {
+    .container {
         grid-template-areas: 'logo' 'instagram' 'partner' 'phone' 'email'
-        'privacy';
+            'privacy';
         grid-template-columns: 1fr;
     }
 }

@@ -287,7 +287,7 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
               }
               <div>
                 <div className={styles.teacherComment}><span>Комментарий преподавателя:</span></div>
-                {teacherComments.map(comment => {
+                {teacherComments.filter(el => el.text != 0).map(comment => {
                   return <div className={styles.comment}>
                     <span>{comment.text}</span>
                     <span className={styles.commentDate}>{comment.date?.toLocaleString().substring(0, 10)} {comment.date?.toLocaleString('ru', { hour12: false }).substring(11, 16)}</span>

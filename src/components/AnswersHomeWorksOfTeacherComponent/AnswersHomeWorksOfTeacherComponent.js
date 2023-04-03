@@ -30,6 +30,7 @@ const AnswersHomeWorksOfTeacherComponent = ({answer, index, answers, setAnswers}
     const [selectedLessonId, setSelectedLessonId] = useState(0);
     const [teacherComment, setTeacherComment] = useState('')
     const [updateAnswerCommentClicked, setUpdateAnswerComment] = useState(false)
+    const [buttonIsClicked, setButtonIsClicked] = useState(false)
     
     const onKeyDownHandler = (e) => {
       if (e.keyCode === 8) {
@@ -453,6 +454,8 @@ const AnswersHomeWorksOfTeacherComponent = ({answer, index, answers, setAnswers}
                   return (
                     <LessonDataComponent LD={LD} i={i} answer={answer} selectedExId={selectedExId} selectedStudId={selectedStudId} selectedAnswerId={selectedAnswerId} updateAnswerCommentClicked={updateAnswerCommentClicked} setUpdateAnswerComment={setUpdateAnswerComment}
                     toggleAnswer={toggleAnswer} index={index}
+                    buttonIsClicked={buttonIsClicked}
+                    setButtonIsClicked={setButtonIsClicked}
                     />
                   )
                 })}

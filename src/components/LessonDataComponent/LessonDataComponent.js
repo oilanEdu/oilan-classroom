@@ -4,7 +4,7 @@ import styles from '../../../pages/cabinet/teacher/[url]/homeworks/index.module.
 import globals from "../../globals";
 import axios from "axios";
 
-const LessonDataComponent = ({LD, i, answer, selectedExId, selectedStudId, selectedAnswerId, updateAnswerCommentClicked, setUpdateAnswerComment, toggleAnswer, index}) => {
+const LessonDataComponent = ({LD, i, answer, selectedExId, selectedStudId, selectedAnswerId, updateAnswerCommentClicked, setUpdateAnswerComment, toggleAnswer, index, buttonIsClicked, setButtonIsClicked}) => {
     const [localExrciseText, setLocalExrciseText] = useState()
     const [teacherCommentLocal, setTeacherCommentLocal] = useState('')
     const [markLocal, setMarkLocal] = useState(0);
@@ -23,7 +23,7 @@ const LessonDataComponent = ({LD, i, answer, selectedExId, selectedStudId, selec
           data: data,
         })
           .then(function (res) {
-            alert("Комментарий отправлен");
+            // alert("Комментарий отправлен");
           })
           .catch((err) => {
             alert("Произошла ошибка");
@@ -42,7 +42,7 @@ const LessonDataComponent = ({LD, i, answer, selectedExId, selectedStudId, selec
           data: data,
         })
           .then(function (res) {
-            alert("Отметка о выполнении изменена");
+            // alert("Отметка о выполнении изменена");
           })
           .catch((err) => {
             alert("Произошла ошибка");
@@ -62,13 +62,16 @@ const LessonDataComponent = ({LD, i, answer, selectedExId, selectedStudId, selec
     }, [])
 
     useEffect(() => {
-        if (updateAnswerCommentClicked) {
+      updateAnswerCommentClicked
+      debugger
+        if (buttonIsClicked) {
             async function submitCommentAndMark () {
                 await updateAnswerComment(selectedStudId, realExerciseID, teacherCommentLocal, new Date())
                 await updateAnswerStatus(LD?.answer_id, 'correct', markLocal)
                 
             }
             submitCommentAndMark()
+            debugger
         }
     }, [updateAnswerCommentClicked])
 
@@ -158,7 +161,10 @@ const LessonDataComponent = ({LD, i, answer, selectedExId, selectedStudId, selec
               <button
                 className={styles.sendButton}
                 onClick={async () => {
-                    setUpdateAnswerComment(true)
+                  
+                  setButtonIsClicked(true)
+                  setUpdateAnswerComment(!updateAnswerCommentClicked)
+                    
                     
                 //   await updateAnswerComment(selectedStudId, realExerciseID, teacherCommentLocal, new Date())
                 //   await updateAnswerStatus(LD?.answer_id, 'correct', markLocal)

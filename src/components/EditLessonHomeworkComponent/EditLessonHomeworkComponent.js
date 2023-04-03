@@ -111,8 +111,8 @@ const EditLessonHomeworkComponent = ({el, selectedExercise, firstExerPress,
         lessonTitle,
         lessonDesc,
         exerciseId: el?.id,
-        exerciseText,
-        exerciseAnswer,
+        exerciseText: exerciseText === undefined ? "Текст" : exerciseText,
+        exerciseAnswer: exerciseAnswer === undefined ? "Ответ" : exerciseAnswer,
       };
       debugger
       console.log('data', data)
@@ -178,7 +178,7 @@ const EditLessonHomeworkComponent = ({el, selectedExercise, firstExerPress,
           data: data,
         })
           .then(function (res) {
-            alert("Задание успешно создано");
+            // alert("Задание успешно создано");
             // let idOfNewExercise = res['data']
             // let localExercisesArray1 = exercises
             // const newExercise = {id: idOfNewExercise, text: exerciseText, lesson_id: exerciseLessonId, correct_answer: correctlyAnswer, status: status}
@@ -206,7 +206,7 @@ const EditLessonHomeworkComponent = ({el, selectedExercise, firstExerPress,
         data: data,
       })
         .then(function (res) {
-          alert("Задание успешно изменено");
+          // alert("Задание успешно изменено");
         })
         .catch((err) => {
           alert("Произошла ошибка");
@@ -224,7 +224,7 @@ const EditLessonHomeworkComponent = ({el, selectedExercise, firstExerPress,
         data: data,
       })
         .then(function (res) {
-          alert("Задание успешно удалено");
+          // alert("Задание успешно удалено");
         })
         .catch((err) => {
           alert("Произошла ошибка");
@@ -237,8 +237,17 @@ const EditLessonHomeworkComponent = ({el, selectedExercise, firstExerPress,
         }
     }, [handleSubmitIsClicked])
     useEffect(() => {
+      if (el.text === "Текст") {
+        setExerciseText()
+      } else {
         setExerciseText(el.text)
+      } 
+
+      if (el.correct_answer === "Ответ") {
+        setExerciseAnswer()
+      } else {
         setExerciseAnswer(el.correct_answer)
+      } 
     }, [])
     return (<>
     {el.id === selectedExercise.id ?        <> <div className={styles.input_container}>
@@ -251,6 +260,25 @@ const EditLessonHomeworkComponent = ({el, selectedExercise, firstExerPress,
             disabled={!firstExerPress}
             onChange={(e) => setExerciseText(e.target.value)}>
           </textarea>
+          {/* {exerciseText === "Текст" ?
+                    <textarea
+                    className={styles.exerciseText}
+                    type="text"
+                    // value={exerciseText}
+                    placeholder="пр. в учебнике на странице 52 сделать задание 5, 6, 7А"
+                    disabled={!firstExerPress}
+                    onChange={(e) => setExerciseText(e.target.value)}>
+                  </textarea>
+          :
+                    <textarea
+                    className={styles.exerciseText}
+                    type="text"
+                    value={exerciseText}
+                    placeholder="пр. в учебнике на странице 52 сделать задание 5, 6, 7А"
+                    disabled={!firstExerPress}
+                    onChange={(e) => setExerciseText(e.target.value)}>
+                  </textarea>
+          } */}
         </div>
         <div className={styles.input_container}>
           <div className={styles.inputBlock}>

@@ -258,6 +258,11 @@ function NewDateAndTimePickerForLesson(props) {
       test()
     }
   }, [errorOfDateOfGoingLessonLesson])
+
+  function handleKeyDown(e) {
+    e.preventDefault();
+    return false;
+  }
   return (
     <div className={styles.wrapper}>
       <div className={styles.lessonInfo}>
@@ -281,6 +286,7 @@ function NewDateAndTimePickerForLesson(props) {
           value={dateState}
           disabled={!props.editData}
           onChange={(e) => { setDateState(e.target.value) }}
+          onKeyDown={handleKeyDown}
         ></input>
         <input
           style={{ borderColor: errorOfDate || errorOfDateOfGoingLesson ? "red" : "" }}
@@ -288,7 +294,8 @@ function NewDateAndTimePickerForLesson(props) {
           type="time"
           value={timeState}
           disabled={!props.editData}
-          onChange={(e) => setTimeState(e.target.value)}>
+          onChange={(e) => setTimeState(e.target.value)}
+          onKeyDown={handleKeyDown}>
         </input>
         <p style={{ display: errorOfDate || errorOfDateOfGoingLesson ? "block" : "none", margin: "0", color: "red", textAlign: "end" }}>
           {errorOfDate ? <>Занятие номер {props.lesson.lesson_order} не может быть раньше занятия номер {errorOfDateLesson.lesson_order} <br /></> : ''}

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import styles from "../../../pages/cabinet/teacher/[url]/homeworks/styles.module.css";
+import styles from "../../../pages/cabinet/teacher/[url]/homeworks/index.module.css";
 import { Image } from "react-bootstrap";
 import classnames from 'classnames';
 import axios from "axios";

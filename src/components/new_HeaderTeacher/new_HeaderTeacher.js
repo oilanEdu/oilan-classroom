@@ -104,7 +104,7 @@ export default function HeaderTeacher(props) {
   }, [])
   useEffect(() => {
     activeNavButton
-    debugger
+    // debugger
   }, [activeNavButton])
 
   return (
@@ -141,7 +141,11 @@ export default function HeaderTeacher(props) {
               cursor: 'pointer',
             }}
           >
-            <img src="https://realibi.kz/file/42902.svg" alt="" />
+            <img 
+              src="https://realibi.kz/file/42902.svg" 
+              alt="" 
+              onClick={() => router.push(`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}`)}
+            />
           </a>
           {/* </Link> */}
         </div>
@@ -149,7 +153,7 @@ export default function HeaderTeacher(props) {
           <ul className={styles.menu_ul}>
             <li>
               <Link
-                href={`/new_teacher_cabinet/${encodeURIComponent(props?.teacher?.url)}/myCourses`}
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/myCourses`}
                 target="_blank"
                 className={styles.titleLink}
               >
@@ -163,7 +167,7 @@ export default function HeaderTeacher(props) {
             </li>
             <li>
               <Link
-                href={`/new_teacher_cabinet/${encodeURIComponent(props?.teacher?.url)}/myStudents`}
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/myStudents`}
                 target="_blank"
                 className={styles.titleLink}
               >
@@ -183,7 +187,7 @@ export default function HeaderTeacher(props) {
             </li>
             <li>
               <Link
-                href={`/new_teacher_cabinet/${encodeURIComponent(props?.teacher?.url)}/homeworks`}
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/homeworks`}
                 target="_blank"
                 className={styles.titleLink}
                 
@@ -203,27 +207,23 @@ export default function HeaderTeacher(props) {
         </div>
         <div
           className={styles.contact}
-          onClick={() => setMenuVisible(!menuVisible)}
           style={{cursor: "pointer"}}
         >
-            <Link
-              href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/profile`}
-              target="_blank"
-
-            >
-                        <div
+            
+            <div
             className={styles.contactImage}
+            onClick={() => router.push(`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/profile`)}
             style={{
               backgroundImage: props.teacher?.avatar !== null ? "url(" + props.teacher?.avatar + ")" : "url(https://realibi.kz/file/142617.png)",
             }}
           />
-            </Link>
+            
 
           <div className={styles.contactDetails}>
             <b className={styles.contactName}>
               {props.teacher?.name} {props.teacher?.surname}
             </b>
-            {/* <span className={styles.contactRole}>Преподаватель</span> */}
+            <span className={styles.contactRole} onClick={handleLogout}>Выйти</span>
           </div>
 
         </div>
@@ -277,7 +277,7 @@ export default function HeaderTeacher(props) {
           <ul className={styles.menu_ul}>
             <li>
               <Link
-                href={`/new_teacher_cabinet/${encodeURIComponent(props?.teacher?.url)}/myCourses`}
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/myCourses`}
                 target="_blank"
                 className={styles.titleLink}
                 style={{color: activeNavButton === "myCourses" ? "#2E8CF2" : "black"}}
@@ -289,7 +289,7 @@ export default function HeaderTeacher(props) {
             </li>
             <li>
               <Link
-                href={`/new_teacher_cabinet/${encodeURIComponent(props?.teacher?.url)}/myStudents`}
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/myStudents`}
                 target="_blank"
                 className={styles.titleLink}
               >
@@ -303,7 +303,7 @@ export default function HeaderTeacher(props) {
             </li>
             <li>
               <Link
-                href={`/new_teacher_cabinet/${encodeURIComponent(props?.teacher?.url)}/homeworks`}
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/homeworks`}
                 target="_blank"
                 className={styles.titleLink}
                 style={{color: activeNavButton === "homeworks" ? "#2E8CF2" : "black"}}
@@ -326,7 +326,7 @@ export default function HeaderTeacher(props) {
             >
               <li className={styles.li}>Профиль</li>
             </Link> */}
-            <li className={styles.li} onClick={handleLogout}>Выйти</li>
+            
           </ul>
         {/* )} */}
       </div>

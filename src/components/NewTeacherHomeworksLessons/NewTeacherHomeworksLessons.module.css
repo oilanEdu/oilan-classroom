@@ -176,6 +176,7 @@
   color: white;
   font-family: 'Gotham Regular';
   outline: none;
+  cursor: pointer;
 }
 
 .work_headline {

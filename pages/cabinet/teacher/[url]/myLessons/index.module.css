@@ -1,0 +1,266 @@
+@font-face {
+	font-family: "Gotham Regular";
+	src: url('../../../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Medium';
+	src: url('../../../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Light';
+	src: url('../../../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Bold';
+	src: url('../../../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+.container {
+	padding: 0 100px;
+	background: #FBFDFF;
+}
+
+.wrapperAll {
+	padding: 60px;
+}
+
+.mainRow {
+	width: 60%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.mainRow h1 {
+	font-size: 45px;
+	font-family: 'Gotham Medium';
+}
+
+.mainRow button {
+	outline: none;
+	border: solid 2px #2E8CF2;
+	font-family: 'Gotham Regular';
+	background: #fff;
+	padding: 7px 30px;
+	border-radius: 6px;
+	font-size: 20px;
+}
+
+.mainRow button:hover {
+	transition: all 0.2s linear;
+	background: #2e8cf2;
+	color: #fff;
+	box-shadow: 0px 0px 11px 4px #A3CEFD40;
+}
+
+.courseTitle {
+	font-family: 'Gotham Regular';
+	font-size: 18px;
+	cursor: pointer;
+	color: rgba(0, 0, 0, 0.71);
+}
+
+.titleRow {
+	display: flex;
+	flex-direction: column;
+	cursor: pointer;
+}
+
+.lessons_uploaded {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+}
+
+.lessonWrapper {
+	display: flex;
+	flex-direction: column;
+	margin-top: 60px;
+	width: 80%;
+}
+
+.lessonRow {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	box-shadow: 0px 0px 11px 4px #A3CEFD40;
+	margin: 15px 0;
+	border-radius: 10px;
+	background: #fff;
+	display: flex;
+	align-items: center;
+}
+
+.lessonRow:hover {
+	transition: all 0.1s linear;
+	box-shadow: 0px 0px 11px 6px #a3cefd6f;
+	cursor: pointer;
+}
+
+.lessonTitle {
+	font-family: 'Gotham Medium';
+	font-size: 28px;
+	color: black;
+	padding: 30px 25px;
+	width: 30%;
+}
+
+.lessonDesc {
+	border-left: 0.5px solid #a3cefd60;
+	padding: 15px 20px;
+	width: 70%;
+}
+
+.lessonDesc p {
+	font-family: 'Gotham Regular';
+	font-size: 16px;
+	color: #000;
+	margin: 0;
+}
+
+.lessonButtons {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	margin-left: 25px;
+	font-family: 'Gotham Regular';
+	font-size: 20px;
+	width: 20%;
+}
+
+.lessonButtons button {
+	background: #2E8CF2;
+	border-radius: 6px;
+	color: white;
+	width: 300px;
+	padding: 20px 25px;
+	outline: none;
+	border: none;
+}
+
+.lessonButtons button:hover {
+	transition: all 0.1s linear;
+	background: #2b7ed6;
+}
+
+
+@media screen and (max-width:1450px) {
+	.mainRow h1 {
+		font-size: 30px;
+	}
+
+	.courseTitle {
+		font-size: 15px;
+	}
+
+	.mainRow button {
+		font-size: 14px;
+	}
+
+	.mainRow {
+		width: 60%;
+	}
+
+	.lessonTitle {
+		font-size: 18px;
+		width: 30%;
+	}
+
+	.lessonButtons button {
+		width: 200px;
+		padding: 15px 20px;
+		font-size: 15px;
+	}
+
+	.lessonButtons span {
+		font-size: 13px;
+		margin-top: 5px;
+		width: max-content;
+		text-align: center;
+	}
+
+	.lessonButtons {
+		align-items: center
+	}
+
+	.lessonDesc p {
+		font-size: 14px;
+		margin-bottom: 7px;
+	}
+
+	.programSchedule {
+		width: 40%;
+	}
+
+	.lessonWrapper {
+		width: 100%;
+	}
+
+}
+
+
+
+@media screen and (max-width:575px) {
+	@media screen and (max-width: 575px) {
+		.mainRow h1 {
+			font-size: 20px;
+			margin: 0;
+		}
+
+		.container {
+			padding: 0 20px;
+		}
+
+		.lessons_uploaded {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 30px;
+		}
+
+		.wrapperAll {
+			padding: 0;
+		}
+
+		.lessonTitle {
+			font-size: 16px;
+		}
+
+		.lessonDesc p {
+			font-size: 12px;
+		}
+
+		.lessonDesc {
+			width: 100%;
+			padding: 10px 20px;
+		}
+
+		.lessonButtons button {
+			width: 100%;
+		}
+
+		.lessonButtons {
+			width: 100%;
+			margin: 0;
+		}
+
+		.mainRow {
+			width: 100%;
+			display: flex;
+			align-items: center
+		}
+
+		.programButtons {
+			margin-left: 0;
+		}
+
+		.mainRow button {
+			font-size: 12px;
+		}
+	}
+}

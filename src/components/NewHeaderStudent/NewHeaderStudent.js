@@ -165,7 +165,11 @@ export default function NewHeaderStudent(props) {
               cursor: 'pointer',
             }}
           >
-            <img src="https://realibi.kz/file/42902.svg" alt="" />
+            <img 
+              src="https://realibi.kz/file/42902.svg" 
+              alt=""
+              onClick={() => router.push(`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}?program=${props.programId}`)} 
+            />
           </a>
           {/* </Link> */}
         </div>
@@ -173,7 +177,7 @@ export default function NewHeaderStudent(props) {
           <ul className={styles.menu_ul}>
             <li>
               <Link
-                href={`/new_student_cabinet/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}?program=${props.programId}`}
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}?program=${props.programId}`}
                 target="_blank"
 
               >
@@ -185,7 +189,7 @@ export default function NewHeaderStudent(props) {
             </li>
             <li>
               <Link
-                href={`/new_student_cabinet/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}/programs?program=${props.programId}`}
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}/programs?program=${props.programId}`}
                 target="_blank"
 
               >
@@ -197,7 +201,7 @@ export default function NewHeaderStudent(props) {
             <li>
               {/* /cabinet/student/test/course/1/homeworks */}
               <Link
-                href={`/new_student_cabinet/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}/homeworks?program=${props.programId}`}
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}/homeworks?program=${props.programId}`}
                 target="_blank"
 
               >
@@ -209,13 +213,13 @@ export default function NewHeaderStudent(props) {
             </li>
           </ul>
         </div>
-        <div className={styles.contact} onClick={() => setMenuVisible(!menuVisible)}>
+        <div className={styles.contact}>
           <div className={styles.image_wrapper}>
-            <img src="https://realibi.kz/file/185698.svg" alt="" />
+            <img src="https://realibi.kz/file/185698.svg" alt="" onClick={() => router.push(`/cabinet/student/${encodeURIComponent(props.nickname)}/profile`)}/>
           </div>
           <div className={styles.wrapper_text}>
-            <p>Сашка Барабанов{props.name} {props.surname}</p>
-            <span>Студент</span></div>
+            <p>{props.name} {props.surname}</p>
+            <span onClick={handleLogout}>Выйти</span></div>
           {/* <span>Баланс - {balance * 10}</span> */}
           {menuVisible && (
             <ul className={`menu ${menuVisible ? "menu-active" : ""}`}>
@@ -280,7 +284,7 @@ export default function NewHeaderStudent(props) {
           <ul className={styles.menu_ul}>
             <li>
               <Link
-                href={`/new_student_cabinet/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}?program=${props.programId}`}
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}?program=${props.programId}`}
                 target="_blank"
 
               >
@@ -292,7 +296,7 @@ export default function NewHeaderStudent(props) {
             </li>
             <li>
               <Link
-                href={`/new_student_cabinet/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}/programs?program=${props.programId}`}
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}/programs?program=${props.programId}`}
                 target="_blank"
               >
                 <a className={styles.link}
@@ -304,7 +308,7 @@ export default function NewHeaderStudent(props) {
             </li>
             <li>
               <Link
-                href={`/new_student_cabinet/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}/homeworks?program=${props.programId}`}
+                href={`/cabinet/student/${encodeURIComponent(props.nickname)}/course/${props.courseUrl}/homeworks?program=${props.programId}`}
                 target="_blank"
 
               >

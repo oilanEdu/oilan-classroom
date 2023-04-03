@@ -2,8 +2,8 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, {useEffect, useState, useRef} from "react";
 import Footer from "../../../../../src/components/Footer/Footer";
-import HeaderStudent from "../../../../../src/components/HeaderStudent/HeaderStudent";
-import HeaderTeacher from "../../../../../src/components/HeaderTeacher/HeaderTeacher";
+import HeaderStudent from "../../../../../src/components/NewHeaderStudent/NewHeaderStudent";
+import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import globals from "../../../../../src/globals";
 import styles from './styles.module.css'
 ///getTeacherByUrl/:url

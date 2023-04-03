@@ -16,7 +16,7 @@ function NewDateAndTimePickerForLesson(props) {
   console.log(props.student);
 
   let dateStr = new Date(props.lesson.personal_time ? props.lesson.personal_time : props.lesson.start_time)
-  let dateStrTime = new Date(props.lesson.personal_time ? props.lesson.personal_time : props.lesson.start_time).toLocaleTimeString();
+  let dateStrTime = new Date(props.lesson.personal_time ? props.lesson.personal_time : props.lesson.start_time).toLocaleTimeString(); 
   useEffect(() => {
     const newLessons = [...props.lessons2];
     const index2 = newLessons.findIndex(el => el.id === props.lesson_id);

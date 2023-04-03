@@ -151,12 +151,12 @@ const Index = () => {
 				setNeedRoom(false)
 				if (role == 'student'){
 					const roomy = groupCallRooms.find(roomy => roomy.hostName === teacher?.url);
-					webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId);
+					webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId, role === 'student' ? teacher?.url : student?.nickname);
 					setActualRoom(roomy)
 				}
 				if (role == 'teacher'){
 					const roomy = groupCallRooms.find(roomy => roomy.hostName === student?.nickname);
-					webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId);
+					webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId, role === 'student' ? teacher?.url : student?.nickname);
 					setActualRoom(roomy)
 				}
 			}
@@ -167,7 +167,7 @@ const Index = () => {
 	const createRoom = (groupCallRooms) => {
 		const roomExists = groupCallRooms.some(roomy => roomy.hostName === (role === 'student' ? teacher?.url : student?.nickname));
   		if (roomExists) {
-  			console('roomExists', roomExists)
+  			console.log('roomExists', roomExists)
     		setNeedRoom(false)
   		} else {
     		if (needRoom) {
@@ -191,7 +191,7 @@ const Index = () => {
 			webRTCHandler.getLocalStream();
 			webRTCGroupHandler.connectWithMyPeer(username);
 			roomExists = groupCallRooms.some(roomy => roomy.hostName === (role === 'student' ? teacher?.url : student?.nickname));
-			// console.log('groupCallRooms', groupCallRooms)
+			console.log('groupCallRooms', groupCallRooms)
 		}, [groupCallRooms, roomExists, webRTCHandler]);
 
 		return (

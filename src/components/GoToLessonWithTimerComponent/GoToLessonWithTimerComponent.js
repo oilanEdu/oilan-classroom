@@ -5,6 +5,16 @@ import globals from "../../globals";
 import GoToLessonWithTimer from "../GoToLessonWithTimer/GoToLessonWithTimer";
 
 function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
+  useEffect(() => {
+    isTeacher, url, nickname, courseUrl
+    // debugger
+  }, [])
+  useEffect(() => {
+    if (isTeacher === true && url != undefined) {
+
+      loadTeacherData()          
+    } 
+  }, [url])
     const [showTimer, setShowTimer] = useState(false)
     const [teacher, setTeacher] = useState([])
     const [programs, setPrograms] = useState([])
@@ -16,6 +26,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
     const [dataLoaded, setDataLoaded] = useState(false)
+    const [studentsLoaded, setStudentsLoaded] = useState(false)
     
     const [emptyProgramCourseId, setEmptyProgramCourseId] = useState(0)
     const [emptyProgramTeacherId, setEmptyProgramTeacherId] = useState(0)
@@ -46,11 +57,11 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     }, [lessonsForNearestDate])
     useEffect(() => {
 
-      if (idOfNearest != undefined && isTeacher == true) {
+      // if (idOfNearest != undefined && isTeacher == true) {
 
-        let closerLessonLocal =  lessonsForNearestDate[idOfNearest];
-        setCloserLesson(closerLessonLocal) 
-      } 
+      //   let closerLessonLocal =  lessonsForNearestDate[idOfNearest];
+      //   setCloserLesson(closerLessonLocal) 
+      // } 
       if (idOfNearest != undefined && isTeacher == false) {
 
         let closerLessonLocal =  lessonsForNearestDate[idOfNearest];
@@ -108,7 +119,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     }, [lessons])
     
     const updateTimer = () => {
-        const future = Date.parse(isTeacher ? closerLesson.personal_time : closerLesson.fact_date);
+        const future = Date.parse(isTeacher ? closerLesson?.personal_time : closerLesson?.fact_date);
         const now = new Date();
         const diff = future - now; 
           
@@ -183,123 +194,386 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     }
     
     const loadTeacherData = async () => {
-        let data = url
-        let getTeacherByUrl = await axios.post(`${globals.productionServerDomain}/getTeacherByUrl/` + data)
-        const teacherIdLocal = getTeacherByUrl['data'][0]?.id
-        setEmptyProgramTeacherId(teacherIdLocal)
-        let teacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + teacherIdLocal)
-          teacherCourses['data'].forEach(course => { 
-            setEmptyProgramCourseId(course.id)
-            }
-           ); 
-        let teacherPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByTeacherId/` + teacherIdLocal)
-        let count = 0
-          teacherPrograms['data'].forEach(program => {  
-            count += 1 
-            program.number = count
-             setEmptyProgramCourseId(program.course_id)
-            }
-           ); 
-        const dataStudents = {
-            id: teacherIdLocal,
-            sort: sortType
-        }
-        let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
-        setTeacher(getTeacherByUrl['data'][0])
-        setPrograms(teacherPrograms['data'])
-        let lessonsOfAllStudents = []
-        teacherStudents['data'].forEach(async student => {
+      setDataLoaded(false)
 
-        let diff = 604800000*7
-            // loadStudentLessons(student.student_id, student.program_id) 
-            let answersCount = 0 
-            let studentCheck = 0
-            let studentLessons = await axios.post(`${globals.productionServerDomain}/getStudentLessonsByProgramId/`, {studentId: student.student_id, programId: student.program_id}).then(res => {
-                let lessons = res.data
-                lessonsOfAllStudents.push(...lessons);
-                // nearestDate(res.data, Date.now())
-                // setLessons(lessons => [...lessons, ...res.data])
-                res.data.forEach(async lesson => { 
-                    // student.check = 0 
-                    let currentDate = new Date().toLocaleDateString()
-                    let lessonDate 
-                    if (lesson.personal_time){
-                        lesson.fact_time = lesson.personal_time
-                        lessonDate = new Date(lesson.fact_time).toLocaleDateString()
-                    }else{
-                        lesson.fact_time = lesson.start_time
-                        lessonDate = new Date(lesson.fact_time).toLocaleDateString()
-                    }
-                    let dateStr = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time);
-                    let closerDate 
-                    if ((Date.parse(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time)) > Date.parse(new Date())) && (Date.parse(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time)) - Date.parse(new Date()) < diff)){ 
-                        closerDate = lessonDate
-                        if (closerLesson){
-                            if (closerDate < new Date(closerLesson.fact_time).toLocaleDateString()){
-                                // setCloserLesson(lesson)
-                            }
-                        }else{
-                            // setCloserLesson(lesson)
-                        }
-                        let curr_hours = dateStr.getHours();
-                        let curr_minutes = dateStr.getMinutes();
-                        student.lesson_date = lesson.fact_time
-                        student.closer_date = closerDate 
-                        student.curr_hours = curr_hours 
-                        student.curr_minutes = curr_minutes 
- 
-                    }
-                    // console.log(lesson)
-                    let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
-                        let exercises = res.data
-                        if (exercises) {
-                            exercises.forEach(async exercise => {
-                                let studentId = student.student_id 
-                                let exerciseId = exercise.id   
-                                const data = {
-                                  studentId, 
-                                  exerciseId 
-                                };
-                                let exerciseAnswers = await axios({ 
-                                  method: "post",
-                                  url: `${globals.productionServerDomain}/getAnswersByStudExId`,
-                                  data: data,
-                                }).then(res =>{
-                                    let answers = res.data
-                                    answers.forEach(answer => {
-                                        answersCount += 1 
-                                    })
-                                    if ((exercises.length > 0) && (exercises.length == answersCount)){
-                                        student.check += 1 
-                                        studentCheck += 1
+      let data = url 
 
-                                        setCheck(student.check)
-                                        student.check = studentCheck  
-                                        student.progress = 100/student.lessons_count*student.check 
-                                    }  
-                                    else{ 
-
-                                        // setCheck(0)
-                                        // studentCheck = 0
-                                        // student.check = 0
-                                        // student.progress = 0
-                                    }
-                                })
-                            }) 
-                        }
-                    })
-                })   
-            })
-            setLessons(lessonsOfAllStudents)
-            }
-           );  
-        
-
-        setStudents(teacherStudents['data'])
-        setDataLoaded(true) 
-
-                // setCheckIsLoaded(true)
+      let getTeacherByUrl = await axios.post(`${globals.productionServerDomain}/getTeacherByUrl/` + data)
+      const teacherIdLocal = getTeacherByUrl['data'][0]?.id
+      console.log("SUPER TEST", teacherIdLocal)
+      setEmptyProgramTeacherId(teacherIdLocal)
+      let teacherCourses = await axios.post(`${globals.productionServerDomain}/getCoursesByTeacherId/` + teacherIdLocal)
+      // setCourses(teacherCourses['data'])
+      teacherCourses['data'].forEach(async course => { 
+        setEmptyProgramCourseId(course.id)
+        const allStudents = await axios.post(`${globals.productionServerDomain}/getAllStudents/` + course.id)
+        course.all_students = allStudents.data[0].all_students;
+        const passedStudents = await axios.post(`${globals.productionServerDomain}/getPassedStudents/` + course.id)
+        // console.log('passedStudents', passedStudents, router)
+        course.passed_students = passedStudents.data[0].passed_students;
+      }); 
+      let teacherPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByTeacherId/` + teacherIdLocal)
+      let count = 0
+        teacherPrograms['data'].forEach(async program => {
+          // console.log(program);
+          let qtyStudentsInProgram
+          // try {
+          //   qtyStudentsInProgram = await axios.post(`${globals.productionServerDomain}/getQtyStudentsInProgram`, program.id);
+          // } catch (error) {
+            
+          // }
+          // console.log(qtyStudentsInProgram);
+  
+          count += 1
+          program.number = count
+            setEmptyProgramCourseId(program.course_id)
+          }
+         ); 
+      const dataStudents = {
+          id: teacherIdLocal,
+          sort: sortType
       }
+      console.log("SUPER TEST", dataStudents)
+      setTeacher(getTeacherByUrl['data'][0])
+      setPrograms(teacherPrograms['data'])
+      let lessonsOfAllStudents = []
+      let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
+      for (let index = 0; index < teacherStudents['data'].length; index++) {
+        const student = teacherStudents['data'][index];
+        // console.log("SUPER TEST", student);
+         // debugger
+         student.check = 0
+         let diff = 604800000*7
+        //  if (!lessonsLoaded) {loadStudentLessons(student.student_id, student.program_id)}
+         let answersCount = 0 
+         let studentCheck = 0
+         let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${student.course_url}&program_id=${student.program_id}&student_id=${student.student_id}`)
+             let lessons = studentLessons.data
+             // console.log("SUPER TEST", lessons);
+             // console.log(lessons, "lessonsOfAllStudents"); 
+            //  setAllStudentsLessons(prevData => ({ ...prevData, ...lessons }));
+             lessonsOfAllStudents.push(...lessons); 
+             for (let index = 0; index < studentLessons.data.length; index++) {
+              const lesson = studentLessons.data[index];
+              if (+lesson.all_exer !== 0 && +lesson.all_exer === +lesson.done_exer) {
+                studentCheck += 1
+                student.check = studentCheck 
+                student.progress = 100/student.lessons_count*student.check
+              };
+            let currentDate = new Date().toLocaleDateString()
+            let lessonDate 
+            if (lesson.personal_time){
+                lesson.fact_time = lesson.personal_time
+                lessonDate = new Date(lesson.fact_time).toLocaleDateString()
+            }else{
+                lesson.fact_time = lesson.start_time
+                lessonDate = new Date(lesson.fact_time).toLocaleDateString()
+            }
+            let dateStr = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time);
+            let closerDate 
+            // console.log('setCloserLesson', lesson)
+            if ((Date.parse(dateStr) > Date.parse(new Date())) && (Date.parse(dateStr) - Date.parse(new Date()) < diff)){ 
+              // debugger
+                closerDate = lessonDate
+                if (closerLesson){
+                    if (closerDate < new Date(closerLesson?.fact_time).toLocaleDateString()){
+                        // setCloserLesson(lesson)
+                        // console.log('setCloserLesson', lesson)
+                    }
+                }else{
+                    // setCloserLesson(lesson)
+                    // console.log('setCloserLesson', lesson)
+                }
+                let curr_hours = dateStr.getHours();
+                let curr_minutes = dateStr.getMinutes();
+                student.lesson_date = lesson.fact_time
+                // student.closer_date = closerDate 
+                // student.curr_hours = curr_hours 
+                // student.curr_minutes = curr_minutes 
+                // debugger
+            }
+            let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
+                let exercises = res.data
+                if (exercises) {
+                    exercises.forEach(async exercise => {
+                        let studentId = student.student_id 
+                        let exerciseId = exercise.id   
+                        const data = {
+                          studentId, 
+                          exerciseId 
+                        };
+                        let exerciseAnswers = await axios({ 
+                          method: "post",
+                          url: `${globals.productionServerDomain}/getAnswersByStudExId`,
+                          data: data,
+                        }).then(res =>{
+                            // let answers = res.data
+                            // answersCount = answers.length
+                            // if ((exercises.length > 0) && (exercises.length == answersCount)){
+                            //     student.check += 1 
+                            //     studentCheck += 1
+                            //     console.log('studentCheck', studentCheck)
+                            //     setCheck(student.check)
+                            //     student.check = studentCheck 
+                            //     student.progress = 100/student.lessons_count*student.check
+                            // }  
+                            // else{ 
+                            //     console.log('')
+                            //     setCheck(0)
+                            //     studentCheck = 0
+                            //     student.check = 0
+                            //     student.progress = 0
+                            // }
+                        })
+                    }) 
+                }
+            })
+              } 
+            //  await res.data.forEach(async lesson => {
+            //      if (+lesson.all_exer !== 0 && +lesson.all_exer === +lesson.done_exer) {
+            //          studentCheck += 1
+            //          student.check = studentCheck 
+            //          student.progress = 100/student.lessons_count*student.check
+            //        };
+            //      let currentDate = new Date().toLocaleDateString()
+            //      let lessonDate 
+            //      if (lesson.personal_time){
+            //          lesson.fact_time = lesson.personal_time
+            //          lessonDate = new Date(lesson.fact_time).toLocaleDateString()
+            //      }else{
+            //          lesson.fact_time = lesson.start_time
+            //          lessonDate = new Date(lesson.fact_time).toLocaleDateString()
+            //      }
+            //      let dateStr = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time);
+            //      let closerDate 
+            //      if ((Date.parse(dateStr) > Date.parse(new Date())) && (Date.parse(dateStr) - Date.parse(new Date()) < diff)){ 
+            //        // debugger
+            //          closerDate = lessonDate
+            //          if (closerLesson){
+            //              if (closerDate < new Date(closerLesson.fact_time).toLocaleDateString()){
+            //                  // setCloserLesson(lesson)
+            //              }
+            //          }else{
+            //              // setCloserLesson(lesson)
+            //          }
+            //          let curr_hours = dateStr.getHours();
+            //          let curr_minutes = dateStr.getMinutes();
+            //          student.lesson_date = lesson.fact_time
+            //          // student.closer_date = closerDate 
+            //          // student.curr_hours = curr_hours 
+            //          // student.curr_minutes = curr_minutes 
+            //          // debugger
+            //      }
+            //      let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
+            //          let exercises = res.data
+            //          if (exercises) {
+            //              exercises.forEach(async exercise => {
+            //                  let studentId = student.student_id 
+            //                  let exerciseId = exercise.id   
+            //                  const data = {
+            //                    studentId, 
+            //                    exerciseId 
+            //                  };
+            //                  let exerciseAnswers = await axios({ 
+            //                    method: "post",
+            //                    url: `${globals.productionServerDomain}/getAnswersByStudExId`,
+            //                    data: data,
+            //                  }).then(res =>{
+            //                      // let answers = res.data
+            //                      // answersCount = answers.length
+            //                      // if ((exercises.length > 0) && (exercises.length == answersCount)){
+            //                      //     student.check += 1 
+            //                      //     studentCheck += 1
+            //                      //     console.log('studentCheck', studentCheck)
+            //                      //     setCheck(student.check)
+            //                      //     student.check = studentCheck 
+            //                      //     student.progress = 100/student.lessons_count*student.check
+            //                      // }  
+            //                      // else{ 
+            //                      //     console.log('')
+            //                      //     setCheck(0)
+            //                      //     studentCheck = 0
+            //                      //     student.check = 0
+            //                      //     student.progress = 0
+            //                      // }
+            //                  })
+            //              }) 
+            //          }
+            //      })
+            //  })   
+             var lessonsFuture = lessons.filter(el => (new Date() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() < 0)) 
+             var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
+             var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
+             var idx = withoutNan.indexOf(Math.min(...withoutNan)); 
+             if (lessonsFuture[idx] != undefined) {
+               let curr_hours = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getHours();
+               let curr_minutes = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getMinutes();
+               student.closer_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString()
+               student.closer_date_witout_local = lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time
+               student.curr_hours = curr_hours  
+               student.curr_minutes = curr_minutes  
+               student.lesson_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString() 
+             } else {
+               let curr_hours = undefined
+               let curr_minutes = undefined  
+               student.closer_date = undefined
+               student.closer_date_witout_local = undefined
+               student.curr_hours = undefined
+               student.curr_minutes = undefined
+               student.lesson_date = undefined
+             }
+              
+             // setCloserLesson(lessonsFuture[idx]) 
+             // let lessonIsGoingHandler = lessons.find(el => new Date().getTime() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() <= 3600000)
+              
+             // setCloserLesson(lessonIsGoingHandler ? lessonIsGoingHandler : lessonsFuture[idx]) 
+         
+         // console.log(lessonsOfAllStudents, "lessonsOfAllStudents");
+         let test0 = lessonsOfAllStudents
+        //  debugger
+         try {
+          let lessonsOfFuture = test0.filter(el => new Date(el.personal_time ? el.personal_time : el.start_time).getTime() - new Date().getTime() > 0)
+          const dateDiffs = lessonsOfFuture.map((date) => Math.abs(new Date().getTime() - new Date(date.personal_time ? date.personal_time : date.start_time).getTime()));
+          const closestDateIndex = dateDiffs.indexOf(Math.min(...dateDiffs));
+          const closestDate = lessonsOfFuture[closestDateIndex];
+          // let lessonIsGoingHandler = test0.find(el => new Date(el.personal_time ? el.personal_time : el.start_time).getTime() - new Date().getTime() >= -(teacherPrograms['data'].find(el2 => el.program_id === el2.id).lesson_duration * 60 * 1000) && new Date(el.personal_time ? el.personal_time : el.start_time).getTime() - new Date().getTime() < 0)
+          // let test = lessonIsGoingHandler ? closestDate : lessonIsGoingHandler
+          let test
+          test = closestDate
+          setCloserLesson(test) 
+          getCloserCourse(test?.course_id)
+         } catch (error) {
+          
+         }
+        //  debugger
+        //  console.log("SUPER TEST", test)
+        //  setAllStudentsLessons(test)
+        //  debugger
+      } 
+      // await teacherStudents['data'].forEach(async student => {
+      //     // debugger
+      //     student.check = 0
+      //     let diff = 604800000*7
+      //     if (!lessonsLoaded) {loadStudentLessons(student.student_id, student.program_id)}
+      //     let answersCount = 0 
+      //     let studentCheck = 0
+      //     let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${student.course_url}&program_id=${student.program_id}&student_id=${student.student_id}`).then(async res => {
+      //         let lessons = res.data
+      //         console.log(lessons, "lessonsOfAllStudents"); 
+      //         lessonsOfAllStudents.push(...lessons); 
+      //         await res.data.forEach(async lesson => {
+      //             if (+lesson.all_exer !== 0 && +lesson.all_exer === +lesson.done_exer) {
+      //                 studentCheck += 1
+      //                 student.check = studentCheck 
+      //                 student.progress = 100/student.lessons_count*student.check
+      //               };
+      //             let currentDate = new Date().toLocaleDateString()
+      //             let lessonDate 
+      //             if (lesson.personal_time){
+      //                 lesson.fact_time = lesson.personal_time
+      //                 lessonDate = new Date(lesson.fact_time).toLocaleDateString()
+      //             }else{
+      //                 lesson.fact_time = lesson.start_time
+      //                 lessonDate = new Date(lesson.fact_time).toLocaleDateString()
+      //             }
+      //             let dateStr = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time);
+      //             let closerDate 
+      //             if ((Date.parse(dateStr) > Date.parse(new Date())) && (Date.parse(dateStr) - Date.parse(new Date()) < diff)){ 
+      //               // debugger
+      //                 closerDate = lessonDate
+      //                 if (closerLesson){
+      //                     if (closerDate < new Date(closerLesson.fact_time).toLocaleDateString()){
+      //                         // setCloserLesson(lesson)
+      //                     }
+      //                 }else{
+      //                     // setCloserLesson(lesson)
+      //                 }
+      //                 let curr_hours = dateStr.getHours();
+      //                 let curr_minutes = dateStr.getMinutes();
+      //                 student.lesson_date = lesson.fact_time
+      //                 // student.closer_date = closerDate 
+      //                 // student.curr_hours = curr_hours 
+      //                 // student.curr_minutes = curr_minutes 
+      //                 // debugger
+      //             }
+      //             let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
+      //                 let exercises = res.data
+      //                 if (exercises) {
+      //                     exercises.forEach(async exercise => {
+      //                         let studentId = student.student_id 
+      //                         let exerciseId = exercise.id   
+      //                         const data = {
+      //                           studentId, 
+      //                           exerciseId 
+      //                         };
+      //                         let exerciseAnswers = await axios({ 
+      //                           method: "post",
+      //                           url: `${globals.productionServerDomain}/getAnswersByStudExId`,
+      //                           data: data,
+      //                         }).then(res =>{
+      //                             // let answers = res.data
+      //                             // answersCount = answers.length
+      //                             // if ((exercises.length > 0) && (exercises.length == answersCount)){
+      //                             //     student.check += 1 
+      //                             //     studentCheck += 1
+      //                             //     console.log('studentCheck', studentCheck)
+      //                             //     setCheck(student.check)
+      //                             //     student.check = studentCheck 
+      //                             //     student.progress = 100/student.lessons_count*student.check
+      //                             // }  
+      //                             // else{ 
+      //                             //     console.log('')
+      //                             //     setCheck(0)
+      //                             //     studentCheck = 0
+      //                             //     student.check = 0
+      //                             //     student.progress = 0
+      //                             // }
+      //                         })
+      //                     }) 
+      //                 }
+      //             })
+      //         })   
+      //         var lessonsFuture = lessons.filter(el => (new Date() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() < 0)) 
+      //         var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
+      //         var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
+      //         var idx = withoutNan.indexOf(Math.min(...withoutNan)); 
+      //         if (lessonsFuture[idx] != undefined) {
+      //           let curr_hours = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getHours();
+      //           let curr_minutes = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getMinutes();
+      //           student.closer_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString()
+      //           student.closer_date_witout_local = lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time
+      //           student.curr_hours = curr_hours  
+      //           student.curr_minutes = curr_minutes  
+      //           student.lesson_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString() 
+      //         } else {
+      //           let curr_hours = undefined
+      //           let curr_minutes = undefined  
+      //           student.closer_date = undefined
+      //           student.closer_date_witout_local = undefined
+      //           student.curr_hours = undefined
+      //           student.curr_minutes = undefined
+      //           student.lesson_date = undefined
+      //         }
+               
+      //         // setCloserLesson(lessonsFuture[idx]) 
+      //         // let lessonIsGoingHandler = lessons.find(el => new Date().getTime() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() <= 3600000)
+               
+      //         // setCloserLesson(lessonIsGoingHandler ? lessonIsGoingHandler : lessonsFuture[idx]) 
+      //     }) 
+      //     // console.log(lessonsOfAllStudents, "lessonsOfAllStudents");
+      //     let test = lessonsOfAllStudents
+      //     setAllStudentsLessons(test)
+      //     }
+      //    );
+      if (!studentsLoaded) {
+          setStudents(teacherStudents['data'])
+          setStudentsLoaded(true)
+      }
+      setDataLoaded(true) 
+      console.log('programs', programs)
+      console.log('students', students)
+              // setCheckIsLoaded(true)
+    }
 
     const createEmptyProgram = async () => { 
         const emptyProgramTitle = 'emptyProgram'

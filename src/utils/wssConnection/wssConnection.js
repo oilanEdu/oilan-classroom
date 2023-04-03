@@ -3,6 +3,7 @@ import store from '../../store/store.js';
 import * as dashboardActions from '../../store/actions/dashboardActions';
 import * as webRTCHandler from '../webRTC/webRTCHandler';
 import * as webRTCGroupCallHandler from '../webRTC/webRTCGroupCallHandler';
+import { Provider, useSelector, useDispatch } from 'react-redux';
 
 const SERVER = 'wss://realibi.kz:3031';
 
@@ -59,7 +60,89 @@ export const connectWithWebSocket = () => {
   socket.on('group-call-user-left', (data) => {
     webRTCGroupCallHandler.removeInactiveStream(data);
   });
+
+  socket.on('camera-state-changed', (data) => {
+    console.log('step4', data)
+  });
+
+  socket.on('reload-streams', ({ socketId, state, userName, peerId, room }) => {
+    // Обновляем потоки для пользователя с id=socketId на фронтенде
+    console.log('step5', { socketId: socketId, screenStatus: state, username: userName, streamId: peerId, room: room })
+    const streams = store.getState().call.groupCallStreams;
+    const groupCallRooms = store.getState().dashboard.groupCallRooms;
+    const activeUsers = store.getState().dashboard.activeUsers;
+    console.log('eee activeUsers', activeUsers)
+    console.log('eee groupCallRooms', groupCallRooms)
+    console.log('eee streams', streams)
+    streams.map(stream => {
+      // if (stream.id === peerId) {
+      //   // webRTCGroupCallHandler.addVideoStream(screen)
+      //   webRTCGroupCallHandler.tesT()
+      //   // const groupCallRooms = store.getState().dashboard.groupCallRooms;
+      //   const roomy = groupCallRooms.find(roomy => roomy.hostName === userName);
+      //   console.log('eee roomy exist', roomy)
+      //   webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId, 'test')
+      // }
+      console.log('eee', stream.id, ' - ', peerId)
+    })
+    
+  });
 };
+
+// socket.on('reload-streams', ({ socketId, state, userName, peerId, room }) => {
+//   // Обновляем потоки для пользователя с id=socketId на фронтенде
+//     console.log('step5', { socketId: socketId, screenStatus: state, username: userName, streamId: peerId, room: room });
+//     const streams = store.getState().call.groupCallStreams;
+//     streams.map(stream => {
+//       if (stream?.id === peerId) {
+//         console.log('eee SOVPALO')
+//         const groupCallRooms = store.getState().dashboard.groupCallRooms;
+//         const activeUsers = store.getState().dashboard.activeUsers;
+//         console.log('eee activeUsers', activeUsers);
+//         console.log('eee groupCallRooms', groupCallRooms);
+//         console.log('eee streams', streams);
+
+//         // Найти стрим с помощью peerId
+//         const remoteStream = streams.find(stream => stream?.id === peerId);
+
+//         if (remoteStream) {
+//           console.log('eee STREAM FINDED')
+//           // Стрим найден, добавляем его пользователю
+//           webRTCGroupCallHandler.addVideoStream(remoteStream);
+//         } else {
+//           console.log('eee RECONNECT')
+//           // Стрим не найден, пользователь может либо покинуть комнату и заново подключиться,
+//           // либо искать другой peerId и попробовать подключиться к его стриму
+//           console.log('Remote stream with peerId', peerId, 'was not found.');
+//           console.log('You can either leave the room and join again or try another peerId');
+
+//           // Покинуть комнату и заново подключиться
+//           webRTCGroupCallHandler.leaveGroupCall();
+//           const roomy = groupCallRooms.find(roomy => roomy.hostName === userName);
+//           console.log('eee roomy exist', roomy);
+//           webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId, 'test');
+//         }
+//       } else {
+//           console.log('eee RECONNECT')
+//           const groupCallRooms = store.getState().dashboard.groupCallRooms;
+//           // Стрим не найден, пользователь может либо покинуть комнату и заново подключиться,
+//           // либо искать другой peerId и попробовать подключиться к его стриму
+//           console.log('Remote stream with peerId', peerId, 'was not found.');
+//           console.log('You can either leave the room and join again or try another peerId');
+
+//           // Покинуть комнату и заново подключиться
+//           //const roomy = groupCallRooms.find(roomy => roomy.hostName === userName);
+//           const roomy = groupCallRooms[0]
+//           console.log('eee roomy and GCR', roomy, groupCallRooms)
+//           console.log('eee roomy exist', roomy);
+//           if (roomy) { 
+//             webRTCGroupCallHandler.leaveGroupCall();
+//             webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId, 'test'); 
+//           }
+//         }
+//     });
+//   });
+// };
 
 export const sendMessage = (type, data) => {
   socket.emit(type, data);
@@ -77,6 +160,12 @@ export const registerNewUser = (username) => {
 
 export const sendPreOffer = (data) => {
   socket.emit('pre-offer', data);
+};
+
+export const changedCamera = (state, username, id) => {
+  console.log('step3', { screenStatus: state, username: username, streamId: id })
+  socket.emit('camera-state-changed', { state: state, username: username, id: id });
+  
 };
 
 export const sendPreOfferAnswer = (data) => {

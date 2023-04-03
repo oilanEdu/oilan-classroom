@@ -1,10 +1,17 @@
 .next_lesson {
-    position: relative;
+    /* position: relative;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
     border: 2px solid #F3F3F3;
     margin-bottom: 40px;
     border-radius: 16px;
-    width: 100%;
+    width: 100%; */
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+    border: 2px solid #F3F3F3;
+    margin-bottom: 40px;
+    border-radius: 16px;
+    width: 87%;
+    position: fixed;
+    z-index: 3;
   }
   
   .next_lesson img {

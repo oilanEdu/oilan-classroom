@@ -30,10 +30,19 @@
     border: none;
     border-radius: 3px;
     width: fit-content;
-    background: #A3CEFD;
+    /*background: #A3CEFD;*/
     color: white;
     font-family: 'Gotham Regular';
     outline: none;
+    cursor: pointer;
+}
+
+.blueBrickBorder {
+    background-color: #2E8CF2;
+}
+
+.whiteBrickBorder {
+    background-color: #A3CEFD;
 }
 
 .input_container p {

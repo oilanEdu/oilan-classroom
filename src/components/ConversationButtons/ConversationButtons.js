@@ -1,10 +1,12 @@
 import React from 'react';
 import ConversationButton from './ConversationButton';
 import GroupCallButton from './../GroupCallButton/GroupCallButton';
-import { switchForScreenSharingStream, hangUp } from '../../../src/utils/webRTC/webRTCHandler';
+import { getLocalStream, switchForScreenSharingStream, hangUp, changedCamera } from '../../../src/utils/webRTC/webRTCHandler';
 import * as webRTCGroupCallHandler from '../../../src/utils/webRTC/webRTCGroupCallHandler';
 import styles from './ConversationButtons.module.css';
 import { setScreenSharingActive } from '../../../src/store/actions/callActions';
+import store from '../../../src/store/store.js';
+
 
 const ConversationButtons = (props) => {
   const {
@@ -19,7 +21,9 @@ const ConversationButtons = (props) => {
     setCheck,
     goMeet,
     setGoMeet, 
-    role
+    role,
+    groupCallRooms,
+    teacher
   } = props;
   
   const handleMicButtonPressed = () => {
@@ -31,11 +35,17 @@ const ConversationButtons = (props) => {
   const handleCameraButtonPressed = () => {
     const cameraEnabled = localCameraEnabled;
     localStream.getVideoTracks()[0].enabled = !cameraEnabled;
+    
     setCameraEnabled(!cameraEnabled);
   };
 
   const handleScreenSharingButtonPressed = () => {
-    switchForScreenSharingStream();
+    const sharable = !store.getState().call.screenSharingActive;
+    switchForScreenSharingStream(!sharable, localStream.username, localStream.id);
+    console.log('step1', {screenStatus: !sharable, username: localStream.username, streamId: localStream.id})
+    changedCamera(sharable, localStream.username, localStream.id)
+    console.log('PROPS', props)
+    
   };
 
   const handleHangUpButtonPressed = () => {
@@ -46,6 +56,18 @@ const ConversationButtons = (props) => {
     webRTCGroupCallHandler.leaveGroupCall();
     setGoMeet(!goMeet)
   };
+
+  const reconnect = () => {
+    
+    groupCallRooms?.forEach(room => {
+      console.log('eee room', room)
+      const roomy = groupCallRooms.find(room => room.hostName === teacher?.url);
+        console.log('eee roomy and teacher', roomy, teacher)
+        webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId);
+
+    })  
+    //setGoMeet(!goMeet)
+  }
 
   return (
     <div className={styles.buttonContainer}>

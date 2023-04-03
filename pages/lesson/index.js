@@ -5,7 +5,7 @@ import styles from "./lesson.module.css";
 import axios from "axios";
 import Footer from "../../src/components/Footer/Footer";
 import ScreenShare from "../../src/components/ScreenShare/ScreenShare";
-import HeaderTeacher from "../../src/components/HeaderTeacher/HeaderTeacher";
+import HeaderTeacher from "../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import Header from "../../src/components/Header/Header";
 import { selectIsConnectedToRoom, useHMSStore, useHMSActions, useScreenShare } from '@100mslive/react-sdk'
 import JoinRoom from '../../src/components/joinRoom/joinRoom';
@@ -21,7 +21,7 @@ import {
 } from "@100mslive/hms-video-react";
 import LessonContain from "../../src/components/LessonContain/LessonContain";
 import TeacherHomeworksLesson from "../../src/components/TeacherHomeworksLesson/TeacherHomeworksLesson";
-import HeaderStudent from "../../src/components/HeaderStudent/HeaderStudent";
+import HeaderStudent from "../../src/components/NewHeaderStudent/NewHeaderStudent";
 import LessonExercisesForStudent from "../../src/components/LessonExercisesForStudent/LessonExercisesForStudent";
 
 const endPoint =

@@ -1,302 +1,316 @@
-import { useRouter } from "next/router";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
+import styles from './index.module.css'
 import globals from "../../../../../src/globals";
-import styles from "./styles.module.css";
 import axios from "axios";
-import { Image } from "react-bootstrap";
-import Footer from "../../../../../src/components/Footer/Footer";
-import HeaderTeacher from "../../../../../src/components/HeaderTeacher/HeaderTeacher";
-import classnames from 'classnames';
-import TeacherHomeworksLessons from "../../../../../src/components/TeacherHomeworksLessons/TeacherHomeworksLessons";
+import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
+import HomeworksByTeacher from "../../../../../src/components/HomeworksByTeacher/HomeworksByTeacher";
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
-import ClickAwayListener from '@mui/base/ClickAwayListener';
+import LessonDataComponent from "../../../../../src/components/LessonDataComponent/LessonDataComponent";
+import AnswersHomeWorksOfTeacherComponent from "../../../../../src/components/AnswersHomeWorksOfTeacherComponent/AnswersHomeWorksOfTeacherComponent";
 
-function Homeworks(props) {
-	
-	const router = useRouter()
-	const teacherUrl = router.query.url
-  const studentId = router.query.studentId
-  const programId = router.query.programId
+const homeworks = () => {
+  const router = useRouter();
+  const teacherUrl = router.query.url
+  const programId = router.query.program
   const [teacher, setTeacher] = useState([])
-  const [students, setStudents] = useState([])
-  const [selectedStudentId, setSelectedStudentId] = useState(studentId)
-  const [selectedStudentName, setSelectedStudentName] = useState("Студенты")
-  const [selectedProgramId, setSelectedProgramId] = useState(programId)
-  const [selectedProgram, setSelectedProgram] = useState("Программы");
-  const [selectedExerciseId, setSelectedExerciseId] = useState(0)
-  const [selectedExerciseNumber, setSelectedExerciseNumber] = useState(0)
-  const [selectedExerciseText, setSelectedExerciseText] = useState('')
-  const [selectedExerciseCorrectAnswer, setSelectedExerciseCorrectAnswer] = useState('')
-  const [studentSelectShow, setStudentSelectShow] = useState(false);
-  const [programSelectShow, setProgramSelectShow] = useState(false);
-  const [answer, setAnswer] = useState([])
-  const [programs, setPrograms] = useState([])
-  const [lessons, setLessons] = useState([])
-  const [exercises, setExercises] = useState([])
-  const [showCheck, setShowCheck] = useState(0)
-  const [teacherComment, setTeacherComment] = useState('')
+  const [baseDataLoaded, setBaseDataLoaded] = useState(false)
+  // const [lessons, setLessons] = useState([])
+  const [answers, setAnswers] = useState([])
+  const [lessonData, setLessonData] = useState([])
+  // useEffect(() => {
+  //   console.log("lessonData CHANGED");
+  // }, [lessonData])
+  const [students, setStudents] = useState([]);
+  // const [mark, setMark] = useState(0);
+  // const [selectedExId, setSelectedExId] = useState(0);
+  // const [selectedExIdForQuery, setSelectedExIdForQuery] = useState(0);
+  // useEffect(() => {
+  //   selectedExId
+  //   debugger
+  // }, [selectedExId])
+  // const [selectedStudId, setSelectedStudId] = useState(0);
+  // const [selectedAnswerId, setSelectedAnswerId] = useState(0);
+  // const [selectedLessonId, setSelectedLessonId] = useState(0);
+  // const [teacherComment, setTeacherComment] = useState('')
+  // const [updateAnswerCommentClicked, setUpdateAnswerComment] = useState(false)
+  
+  // const onKeyDownHandler = (e) => {
+  //   if (e.keyCode === 8) {
+  //     if (symbols === 1500) { }
+  //     else if (teacherComment?.length >= 0 || teacherComment !== "") {
+  //       setSymbols(symbols + 1)
+  //     }
+  //   } else {
+  //     if (teacherComment?.length < 1500 && symbols !== 0) {
+  //       setSymbols(symbols - 1)
+  //     }
+  //   }
+  // }
+
+  const isInMainPage = true;
 
   useEffect(() => {
-    setLessons('')
-    reloadButton()
-  }, [selectedStudentId])
-  useEffect(() => {
-    loadBaseData()
-    loadPrograms(selectedStudentId)
-    loadStudentLessons(selectedStudentId, selectedProgramId)
-  }, []) 
+    if (!baseDataLoaded || !teacher || !students) {
+      loadBaseData()
+      setBaseDataLoaded(true)
+    }
+    console.log('teacherUrl', teacherUrl)
+    console.log('teacher', teacher)
+    console.log('router', router)
+    console.log('students', students)
+
+  }, [teacherUrl, teacher, students]);
+
+  // const ExerciseText = (props) => {
+  //   return <>
+  //     {props.exerciseText?.map((el, index) => index % 2 === 0 ? el : <a href={el}>{el}</a>)}
+  //   </>
+  // }
 
   const loadBaseData = async () => {
-    let data = props.url 
+    console.log("IM HERE");
+    let data = teacherUrl
     let getTeacherByUrl = await axios.post(`${globals.productionServerDomain}/getTeacherByUrl/` + data)
     const teacherIdLocal = getTeacherByUrl['data'][0]?.id
-    const dataStudents = {
-      id: teacherIdLocal,
-      sort: "oc_students.surname"
-    }
-    let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`,  dataStudents)
+    console.log('teacherIdLocal', teacherIdLocal)
     setTeacher(getTeacherByUrl['data'][0])
-    setStudents(teacherStudents['data'])
-    console.log(students)
+    let megadata = await axios.post(`${globals.productionServerDomain}/getAnswersStatistics/`, { id: teacherIdLocal })
+    console.log('megadata', megadata['data'])
+    megadata['data'].forEach(answer => {
+      answer.isExpanded = false
+    })
+    const uniqueLessons = megadata['data'].filter((item, index, self) => 
+      index === self.findIndex((t) => (
+        t.lesson_id === item.lesson_id
+      ))
+    );
+    setAnswers(uniqueLessons)
+    let studentsData = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, { id: teacherIdLocal, sort: 'id' })
+    console.log('studentsData', studentsData['data'])
+    setStudents(studentsData['data'])
+    let megadata2 = await axios.post(`${globals.productionServerDomain}/getAssignmentsByTeacherId/`, { id: teacherIdLocal })
+    console.log('megadata2', megadata2['data'])
+    let uniqueData = megadata2['data'].reduce((acc, curr) => {
+      const key = curr.answer_id;
+      if (!acc.map.has(key)) {
+        acc.map.set(key, true);
+        acc.data.push(curr);
+      }
+      return acc;
+    }, { map: new Map(), data: [] }).data;
+    let count = 0
+    uniqueData.forEach(async (row, index) => {
+      count += 1
+      row.exercise_order = count
+      // let getExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + row?.lesson_id)
+      // let localLesson = getExercises['data'][index]
+      // row.exercise_text = localLesson?.text
+      // debugger
+    })
+    console.log('uniqueData', uniqueData);
+    setLessonData(uniqueData)
   }
-
-  const loadPrograms = async (studentId) => {
-    let studentPrograms;
-    if (studentId) {
-      studentPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + studentId);
-    } else if (selectedStudentId) {
-      studentPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + selectedStudentId);
-    } else {
-      studentPrograms = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + students[0]?.student_id);
+  // useEffect(() => {
+  //   loadBaseData()
+  // }, [])
+  useEffect(() => {
+    if (!answers.length > 0 && !lessonData.length > 0) {
+      console.log('myState has not changed yet');
+      setTimeout(() => {
+        loadBaseData()
+      }, 1000);
     }
+  }, [answers, lessonData]);
+
+  // function formatDate(dateString) {
+  //   const date = new Date(dateString);
+  //   const year = date.getFullYear();
+  //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  //   const day = date.getDate().toString().padStart(2, '0');
+  //   const hours = date.getHours().toString().padStart(2, '0');
+  //   const minutes = date.getMinutes().toString().padStart(2, '0');
+  //   return `${day}.${month}.${year}, ${hours}:${minutes}`;
+  // }
+
+  // const toggleAnswer = (index) => {
+  //   setAnswers(prevAnswers => {
+  //     const newAnswers = [...prevAnswers];
+  //     newAnswers[index].isExpanded = !newAnswers[index].isExpanded;
+  //     return newAnswers;
+  //   });
+  // };
+
+
+
+  // console.log(selectedExId);
+
+  // const LessonDataComponent = ({LD, i, answer}) => {
+  //   const [localExrciseText, setLocalExrciseText] = useState()
+  //   const [teacherCommentLocal, setTeacherCommentLocal] = useState('')
+  //   const [markLocal, setMarkLocal] = useState(0);
+  //   useEffect(() => {
+  //     LD
+  //     async function test () {
+  //       let getExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + LD?.lesson_id)
+  //       let localLesson = getExercises['data'][i]
+  //       setLocalExrciseText(localLesson?.text)
+  //       // debugger
+  //     }
+  //     test()
+  //     setMarkLocal(LD.teacher_mark)
+  //     // debugger
+  //   }, [])
+  //   return <div key={i}>
+  //   <div>
+  //     {selectedExId === LD?.exercise_id && selectedStudId === LD?.student_id && selectedAnswerId === LD?.answer_id ? <div className={styles.checkRow}>
+  //       <div className={styles.answer_block}>
+  //             <div>
+  //                 <div className={styles.wrapper_block}>
+  //                 <span className={styles.work_headline}>Задание</span>
+  //                 <input className={styles.input_container} type="text" value={localExrciseText} />
+  //               </div>
+  //               <div className={styles.checkRow}>
+  //                 <span className={styles.student_answer}>
+  //                   <div className={styles.student_answer_text}>
+  //                       <span className={styles.work_headline}>Ответ студента: </span>
+  //                       <input className={styles.input_container} type="text" value={LD?.answer_text} />
+  //                   </div>
+  //                 </span>
+  //                 {answer 
+  //                   ? <div className={styles.wrapper_block}>
+  //                     <span className={styles.work_headline}>Оцените выполнение задания</span>
+  //                     <div className={styles.grade_toMark}>
+  //                       <span className={markLocal === 1 ? styles.grade_toMark_active : styles.grade_toMark_item} onClick={() => setMarkLocal(1)}>1</span>
+  //                       <span className={markLocal === 2 ? styles.grade_toMark_active : styles.grade_toMark_item} onClick={() => setMarkLocal(2)}>2</span>
+  //                       <span className={markLocal === 3 ? styles.grade_toMark_active : styles.grade_toMark_item}  onClick={() => setMarkLocal(3)}>3</span>
+  //                       <span className={markLocal === 4 ? styles.grade_toMark_active : styles.grade_toMark_item}  onClick={() => setMarkLocal(4)}>4</span>
+  //                       <span className={markLocal === 5 ? styles.grade_toMark_active : styles.grade_toMark_item}  onClick={() => setMarkLocal(5)}>5</span>
+  //                     </div> 
+  //                   </div>
+  //                   : <></>
+  //                 }
+  //               </div>
+  //             </div>
+  //             <div style={answer ? { display: 'flex' } : { display: 'none' }} className={styles.comment_block}>
+  //               <span className={styles.work_headline}>Комментарий ученика</span>
+  //               <div className={styles.answer_input}>
+  //                 <textarea
+  //                   className={styles.studentComment}
+  //                   value={LD?.student_comment ? LD?.student_comment : "Студент не оставил комментарии"}
+  //                 >
+  //                 </textarea>
+  //               </div>
+  //             </div>
+  //           </div>
+  //           <div className={styles.comment_block}>
+  //             <span className={styles.work_headline}>Добавьте комментарий для ученика</span>
+  //             <div className={styles.answer_input}>
+  //               <textarea
+  //                 className={styles.teacherComment}
+  //                 value={teacherCommentLocal}
+  //                 onChange={e => {
+  //                   // if (symbols !== 0) {
+  //                     setTeacherCommentLocal(e.target.value)
+  //                     console.log(teacherCommentLocal)
+  //                   // }
+  //                 }}
+  //                 placeholder=""
+  //                 // onKeyDown={(e) => onKeyDownHandler(e)}
+  //               >
+  //               </textarea>
+  //             </div>
+
+  //             <button
+  //               className={styles.sendButton}
+  //               onClick={async () => {
+  //                 await updateAnswerComment(selectedStudId, selectedExIdForQuery, teacherCommentLocal, new Date())
+  //                 await updateAnswerStatus(selectedAnswerId, 'correct', markLocal)
+  //                 // await getAnswer(selectedStudId, selectedExId)
+  //                 // await getLessonExercises(selectedLessonId)
+  //                 // await getLessonExercises22(selectedLessonId)
+  //               }}
+  //               // disabled={teacherComment == '' ? true : false}
+  //             >
+  //               Сохранить и отправить
+  //             </button>
+  //           </div>
+  //         </div> 
+  //         : <></>}
+  //       </div>
+        
     
-    setPrograms(studentPrograms['data']);
-    console.log(studentPrograms['data'])
-    console.log(studentId, studentPrograms['data'][0].id)
-    loadStudentLessons(studentId, studentPrograms['data'][0].program_id);
-  }
     
-  const reloadButton = async () => {
-    await loadPrograms(selectedStudentId);
-  };
-    
-  const loadStudentLessons = async (studentId, programId) => {
-    const data = {
-      studentId,
-      programId
-    };
+  // </div>
+  // }
 
-    console.log(data);
+  // const Exercises = ({LD, i}) => {
+  //   const [realExerciseID, setRealExerciseID] = useState()
 
-    await axios({
-      method: "post",
-      url: `${globals.productionServerDomain}/getStudentLessonsByProgramId`,
-      data: data,
-    })
-      .then(function (res) {
-        let lessons = res.data
-        let lesson_number = 0
-        lessons.forEach(lesson => {
-          lesson_number += 1
-          lesson.lesson_number = lesson_number 
-          if (lesson.personal_time){
-            lesson.fact_time = lesson.personal_time
-          } else {
-            lesson.fact_time = lesson.start_time
-          }
-          let strDate = new Date(lesson.fact_time)
-          let curr_hours = strDate.getHours();
-          let curr_minutes = strDate.getMinutes(); 
-          lesson.out_date = new Date(strDate).toLocaleDateString() 
-          lesson.out_hours = curr_hours
-          lesson.out_minutes = curr_minutes
-        })
-        setLessons(lessons)
-      })
-      .catch((err) => {
-        alert("Произошла ошибка");
-      });
-  }
+  //   useEffect(() => {
+  //     async function getRealExercises () {
+  //       // debugger
+  //       LD.lesson_id
+  //       LD.student_id
+  //       let test = await axios.get(`${globals.productionServerDomain}/getLessonExercises?lesson_id=${LD?.lesson_id}&student_id=${LD?.student_id}`).then(res3 => {
+  //         // res3.data.forEach(item => {
+  //         //   counter += 1
+  //         //   item.exer_number = counter
+  //         // })
+  //         // setExercises(res3.data);
+  //         res3.data
+  //         setRealExerciseID(res3.data[i]?.id)
+  //         // debugger
+  //       })
+  //       // debugger
+  //       // setRealExerciseID(test['data'][i - 1]?.id)
+  //     }
+  //     getRealExercises()
+  //   }, [])
 
-  const getAnswer = async (studentId, exerciseId) => {
-    const data = {
-      studentId,
-      exerciseId
-    };
-    await axios({
-      method: "post",
-      url: `${globals.productionServerDomain}/getAnswersByStudExId`,
-      data: data,
-    })
-      .then(function (res) {
-        setAnswer(res.data[0])
-      })
-      .catch((err) => {
-        alert("Произошла ошибка");
-      });
-  }
 
-  console.log(programs);
-  const updateAnswerStatus = async (id, status) => {
-    const data = {
-      id,
-      status
-    }; 
-    await axios({
-      method: "put",
-      url: `${globals.productionServerDomain}/updateAnswerStatus`,
-      data: data,
-    })
-      .then(function (res) {
-        alert("Отметка о выполнении изменена"); 
-      })
-      .catch((err) => {
-        alert("Произошла ошибка"); 
-          });
-    }
+  //   return (<div>
+  //     <div 
+  //       className={styles.lesson_work}
+  //       data-index={i}
+  //       style={{opacity: selectedAnswerId === LD?.answer_id ? "1" : "40%"}}
+  //       onClick={() => {
+  //         setMark(LD?.teacher_mark)
+  //         setSelectedExId(LD?.exercise_id)
+  //         setSelectedExIdForQuery(realExerciseID)
+  //         // debugger
+  //         setSelectedStudId(LD?.student_id)
+  //         setSelectedAnswerId(LD?.answer_id)
+  //         setSelectedLessonId(LD?.lesson_id)
+  //         // debugger
+  //       }}
+  //     >
+  //       Задание {i + 1}
+  //     </div>
+  //   </div>)
+  // }
 
-    const updateAnswerComment = async (studentId, exerciseId, text, date) => {
-        const data = {
-          studentId, 
-          exerciseId, 
-          text,
-          date
-        }; 
-
-        await axios({
-          method: "post",
-          url: `${globals.productionServerDomain}/createTeacherComment`,
-          data: data,
-        })
-          .then(function (res) {
-        alert("Комментарий отправлен"); 
-      })
-      .catch((err) => {
-        alert("Произошла ошибка"); 
-      });
-  }
-  if (typeof localStorage !== "undefined") {
-	return (localStorage && teacher.url == localStorage.login?
-    <>
-      <div style={{backgroundColor: "#f1faff", width: "100vw", overflowX: "hidden"}}>
-        <HeaderTeacher white={true} teacher={teacher} />
-        <div className={styles.cantainer}>
-                <GoToLessonWithTimerComponent isTeacher={true} url={props.url}/>
-      		<div className={styles.selectBlock}>
-            <h1>Домашние задания</h1>
-            <ClickAwayListener onClickAway={() => setStudentSelectShow(false)}>
-              <div className={styles.select_student_container}>
-                <div 
-                  className={!studentSelectShow ? styles.select_student_show : styles.select_student_hide}
-                  onClick={() => {
-                    setStudentSelectShow(!studentSelectShow)
-                  }}
-                >
-                  <span className={styles.select_student_name}>{selectedStudentName}</span>
-                </div>
-                <div 
-                  className={styles.select_student_options}
-                  style={{display: studentSelectShow ? "block" : "none"}}
-                >
-                  {students.map(student => (
-                    <div 
-                      onClick={async (e) => {
-                        setSelectedStudentId(student.student_id)
-                        if (student.surname && student.name && student.patronymic) {
-                          setSelectedStudentName(`${student?.surname} ${student?.name} ${student?.patronymic}`)
-                        } else if (student.surname && student.name) {
-                          setSelectedStudentName(`${student?.surname} ${student?.name}`)
-                        } else {
-                          setSelectedStudentName(`${student?.name}`)
-                        }
-                        await loadPrograms(student.student_id)
-                        setStudentSelectShow(!studentSelectShow)
-                      }}
-                      className={styles.select_student_option}
-                    >
-                      {student.surname} {student.name} {student.patronymic}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </ClickAwayListener>
-            <ClickAwayListener onClickAway={() => setProgramSelectShow(false)}>
-              <div className={styles.select_program_container}>
-                <div 
-                  className={!programSelectShow ? styles.select_program_show : styles.select_program_hide}
-                  onClick={() => {
-                    setProgramSelectShow(!programSelectShow)
-                  }}
-                >
-                  <span className={styles.select_program_name}>{selectedProgram}</span>
-                </div>
-                <div  
-                  className={styles.select_program_options}
-                  style={{display: programSelectShow ? "block" : "none"}}
-                >
-                  {programs.map(program => (
-                    <div 
-                      onClick={async (e) => {
-                        setSelectedProgramId(program.id)
-                        setSelectedProgram(`${program.course_title} (${program.title})`)
-                        loadStudentLessons(selectedStudentId, program.program_id)
-                        setProgramSelectShow(!programSelectShow)
-                      }}
-                      className={styles.select_student_option}
-                    >
-                      {program.course_title} ({program.title})
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </ClickAwayListener>
-          </div>
-          <div className={styles.lessons}>
-            {lessons.length > 0 
-              ? <> {lessons.map((lesson, index) => (
-                <TeacherHomeworksLessons 
-                  index={index}
-                  lesson={lesson} 
-                  showCheck={showCheck} 
-                  selectedExerciseId={selectedExerciseId} 
-                  answer={answer} 
-                  // teacherComment={teacherComment} 
-                  setShowCheck={setShowCheck} 
-                  setSelectedExerciseId={setSelectedExerciseId} 
-                  setAnswer={setAnswer} 
-                  // setTeacherComment={setTeacherComment} 
-                  setSelectedExerciseNumber={setSelectedExerciseNumber} 
-                  setSelectedExerciseText={setSelectedExerciseText} 
-                  setSelectedExerciseCorrectAnswer={setSelectedExerciseCorrectAnswer} 
-                  getAnswer={getAnswer} 
-                  selectedStudentId={selectedStudentId} 
-                  selectedExerciseNumber={selectedExerciseNumber} 
-                  selectedExerciseText={selectedExerciseText} 
-                  selectedExerciseCorrectAnswer={selectedExerciseCorrectAnswer} 
-                  updateAnswerStatus={updateAnswerStatus} 
-                  updateAnswerComment={updateAnswerComment}
-                  loadStudentLessons={loadStudentLessons}
-                  selectedProgramId={selectedProgramId}
-                />
-              ))} </> 
-              : ''
-            }
+  return <>
+    <div className={styles.container}>
+      <HeaderTeacher
+        white={true}
+        url={teacherUrl}
+        teacher={teacher}
+        isInMainPage={isInMainPage}
+      />
+       <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
+      <div className={styles.wrapperAll}>
+        <div><h1>Домашние задания</h1></div>
+        <div className={styles.wrapperAnswers}>
+          {answers?.map((answer, index) => (
+            <>
+              <AnswersHomeWorksOfTeacherComponent answer={answer} index={index} answers={answers} setAnswers={setAnswers}/>
+            </>
+          ))}
         </div>
-      </div>            	
-      <Footer />
       </div>
-    </>:<></>
-  )} else {return <></>}
-}
+    </div>
+  </>;
+};
 
-Homeworks.getInitialProps = async (ctx) => {
-  if(ctx.query.url !== undefined) {
-    return {
-      url: ctx.query.url,
-    }
-  } else{
-    return {};
-  }
-}
-
-export default Homeworks;
+export default homeworks;

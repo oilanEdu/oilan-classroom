@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import store from '../../store/store';
 import { setLocalStream, setCallState, callStates, setCallingDialogVisible, setCallerUsername, setCallRejected, setRemoteStream, setScreenSharingActive, resetCallDataState, setMessage } from '../../store/actions/callActions';
 import * as wss from '../wssConnection/wssConnection';
+import * as webRTCGroupCallHandler from './webRTCGroupCallHandler';
 
 const preOfferAnswers = {
   CALL_ACCEPTED: 'CALL_ACCEPTED',
@@ -28,6 +29,7 @@ let peerConnection;
 let dataChannel;
 let cameraStream;
 let screenSharingStream;
+let ls;
 
 export const getLocalStream = async () => {
   let audioStream;
@@ -48,7 +50,8 @@ export const getLocalStream = async () => {
     }
     store.dispatch(setLocalStream(cameraStream));
     store.dispatch(setCallState(callStates.CALL_AVAILABLE));
-    createPeerConnection();
+    ls = cameraStream
+    createPeerConnection(cameraStream)
   } else {
     if (!screenSharingStream) {
       try {
@@ -69,9 +72,12 @@ export const getLocalStream = async () => {
         return;
       }
     }
+    // webRTCGroupCallHandler.addVideoStream(screenSharingStream)
+    // wss.changedCamera( screenSharingStream.getTracks(), 1, 1 );
     store.dispatch(setLocalStream(screenSharingStream));
     store.dispatch(setCallState(callStates.CALL_AVAILABLE));
-    createPeerConnection();
+    createPeerConnection(screenSharingStream)
+    ls = screenSharingStream
   }
 };
 
@@ -88,14 +94,14 @@ export const getLocalStream = async () => {
 //     });
 // };
 
-const createPeerConnection = () => {
+const createPeerConnection = (localStream) => {
   if (peerConnection) {
     peerConnection.close();
     peerConnection = null;
   }
   peerConnection = new RTCPeerConnection(configuration);
   
-  const localStream = store.getState().call.localStream;
+  // const localStream = store.getState().call.localStream;
 
   for (const track of localStream.getTracks()) {
     peerConnection.addTrack(track, localStream);
@@ -203,6 +209,12 @@ export const handlePreOfferAnswer = (data) => {
   }
 };
 
+export const changedCamera = (state, username, id) => {
+  console.log('step2', {screenStatus: state, username: username, streamId: id});
+  wss.changedCamera( state, username, id );
+  console.log('step7', ls)
+};
+
 const sendOffer = async () => {
   const offer = await peerConnection.createOffer();
   await peerConnection.setLocalDescription(offer);
@@ -252,6 +264,7 @@ export const checkIfCallIsPossible = () => {
 //       const senders = peerConnection.getSenders();
 //       const sender = senders.find(sender => sender.track.kind === screenSharingStream.getVideoTracks()[0].kind);
 //       sender.replaceTrack(screenSharingStream.getVideoTracks()[0]);
+//       getLocalStream()
 //     } catch (err) {
 //       console.error('error occured when trying to get screen sharing stream', err);
 //     }
@@ -270,7 +283,7 @@ export const checkIfCallIsPossible = () => {
 //   getLocalStream();
 // };
 
-export const switchForScreenSharingStream = async () => {
+export const switchForScreenSharingStream = async (state, username, id) => {
   const screenSharingActive = store.getState().call.screenSharingActive;
   const localStream = store.getState().call.localStream;
   const audioTrack = localStream.getAudioTracks()[0];

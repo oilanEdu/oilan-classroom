@@ -10,11 +10,11 @@ const GroupCall = (props) => {
   // console.log('GroupCall props', props)
 
   // eslint-disable-next-line
-  const { callState, localStream, groupCallActive, groupCallStreams } = props;
+  const { callState, localStream, groupCallActive, groupCallStreams, groupCallRooms } = props;
   let x
   useEffect(() => {
     groupCallStreams.map(stream => {
-      x = stream.getAudioTracks()[0].enabled 
+      //x = stream.getAudioTracks()[0].enabled 
       // console.log('GroupCall groupCallStream', stream)
       // console.log('GroupCall groupCallStream.getTracks()', stream.getTracks())
       // console.log('GroupCall groupCallStream.getTracks()[0].enabled', stream.getAudioTracks()[0].enabled) 
@@ -35,7 +35,7 @@ const GroupCall = (props) => {
         //<GroupCallButton onClickHandler={createRoom} label='Create room' />
         <></>
       }
-      {groupCallActive && <GroupCallRoom role={props.role} teacher={props.teacher} student={props.student} username={props.username} goMeet={props.goMeet} setGoMeet={props.setGoMeet} check={props.check} setCheck={props.setCheck} {...props} />}
+      {groupCallActive && <GroupCallRoom groupCallRooms={groupCallRooms} role={props.role} teacher={props.teacher} student={props.student} username={props.username} goMeet={props.goMeet} setGoMeet={props.setGoMeet} check={props.check} setCheck={props.setCheck} {...props} />}
       {groupCallActive && 
         //<GroupCallButton onClickHandler={leaveRoom} label='Leave room' />
         <></>

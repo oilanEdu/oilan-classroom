@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState, useRef } from "react";
 import Footer from "../../../../../src/components/Footer/Footer";
-import HeaderTeacher from "../../../../../src/components/HeaderTeacher/HeaderTeacher";
+import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import globals from "../../../../../src/globals";
 import styles from './styles.module.css'
 import { Image } from "react-bootstrap";
@@ -11,6 +11,7 @@ import { Image } from "react-bootstrap";
 function TeacherProfile(props) {
     const [files, setFiles] = useState([]);
     const [fileName, setFileName] = useState()
+
     const [link, setLink] = useState()
     const [teacher, setTeacher] = useState()
     const [teacherFIO, setTeacherFIO] = useState()
@@ -20,10 +21,7 @@ function TeacherProfile(props) {
     const [teacherAboutSelf, setTeacherAboutSelf] = useState()
     const [teacherSkills, setTeacherSkills] = useState()
     const [teacherSkillsSplitted, setTeacherSkillsSplitted] = useState([])
-    useEffect(() => {
-        setTeacherSkillsSplitted(teacherSkills?.split(";"))
-        // let test = teacherSkills?.split(";")
-    }, [teacherSkills])
+
     const [teacherExp, setTeacherExp] = useState()
     const [teacherLogin, setTeacherLogin] = useState()
     const [passwordIsChanging, setPasswordIsChanging] = useState(false)
@@ -32,6 +30,9 @@ function TeacherProfile(props) {
     useEffect(() => {
         console.log(teacherLoginIsChanged, "teacherLoginIsChanged");
     }, [teacherLoginIsChanged])
+    useEffect(() => {
+        setFileName(teacher?.avatar)
+    }, [teacher])
     const router = useRouter();
 
     const handleSubmit = (event) => {
@@ -160,15 +161,25 @@ function TeacherProfile(props) {
         setTeacherPassword()
         setTeacherAboutSelf(teacherInfo.description)
         setTeacherSkills(teacherInfo.skills)
+        // setTeacherSkillsSplitted(teacherInfo.skills?.split(";"))
         setTeacherExp(teacherInfo.experience)
         setTeacherLogin(teacherInfo.url)
     }
     useEffect(() => {
         loadTeacherProfileInfo()
     }, [])
+    useEffect(() => {
+        setTeacherSkillsSplitted(teacherSkills?.split(";"))
+    }, [teacherSkills])
 
     const [changeMod, setChangeMod] = useState(false)
+    const [changeModOfSkills, setChangeModOfSkills] = useState(false)
+    const [newSkillValue, setNewSkillValue] = useState()
 
+    // useEffect(() => {
+    //     setTeacherSkillsSplitted(teacherSkills?.split(";"))
+    //     // let test = teacherSkills?.split(";")
+    // }, [teacherSkills])
     return (
         <>  <div className={styles.container}>
             <HeaderTeacher white={true} teacher={teacher} />
@@ -195,10 +206,11 @@ function TeacherProfile(props) {
                                     </div>
                                 </div>
                             </div>
-                            <form className={styles.image_upload_wrapper} onSubmit={handleSubmit}>
+                            {changeMod ? <><form className={styles.image_upload_wrapper} onSubmit={handleSubmit}>
                                 <input type="file" name="file" onChange={(event) => setFiles(event.target.files)} />
                                 <input type="submit" value="Upload" />
-                            </form>
+                            </form></> : ''}
+
                         </div>
                         <div className={styles.inputs_wrapper}>
                             <div className={styles.input_container}>
@@ -250,15 +262,31 @@ function TeacherProfile(props) {
                             </div>
                             <div className={styles.input_container}>
                                 <h2>Навыки</h2>
-                                {changeMod ? <input type="text"
-                                disabled={!changeMod}
-                                    onChange={(event) => setTeacherSkills(event.target.value)}
-                                    value={teacherSkills} /> : <div className={styles.skillsContainer}>
-                                        {teacherSkillsSplitted?.map(el => <p className={styles.skillWords}>{el}</p>)}
-                                        <p
-                                        onClick={() => {setChangeMod(true)}} 
-                                        className={styles.skillWordsAdd}>+</p>
-                                        </div>}
+                                        <div className={styles.skillsContainer}>
+                                        {teacherSkillsSplitted?.map(el => { return (el.length != 0 ? <p className={styles.skillWords}>{el}</p> : '')})}
+                                        {changeModOfSkills ? '' : <p
+                                        onClick={() => {
+                                            setChangeModOfSkills(true)
+                                        }} 
+                                        className={styles.skillWordsAdd}>+</p>}
+                                        {changeModOfSkills ? <div className={styles.skillsSubmitWrapper}>
+                                            <input className={styles.skillsInput} value={newSkillValue} onChange={() => setNewSkillValue(event.target.value)}/>
+                                            <p
+                                                onClick={() => {setChangeModOfSkills(false)
+                                                                let test
+                                                                // test = (prevState => {
+                                                                //     return [
+                                                                //       ...prevState,
+                                                                //       newSkillValue + ";"
+                                                                //     ]
+                                                                //   })
+                                                                test = teacherSkills + " " + newSkillValue + ";"
+                                                                setTeacherSkills(test)
+                                                                debugger}} 
+                                                className={styles.skillWordsAdd}>✓
+                                            </p>
+                                        </div>  : ''}
+                                        </div>
                             </div>
                             <div className={styles.input_container}>
                                 <h2>Опыт работы</h2>

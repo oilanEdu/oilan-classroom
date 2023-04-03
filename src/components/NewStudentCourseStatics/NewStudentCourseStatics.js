@@ -345,12 +345,11 @@ const NewStudentCourseStatics = ({ programDesc, student, lesson, lessons, scores
               {/* <p className={styles.lesson_date}>
               {+lesson.score > 0 ? "Пройден" : lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}
               </p> */}
-              <p className={styles.lesson_date}>
-                {lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}
-              </p>
-              <p>
-                {new Date(lesson.start_time).getHours().toString().padStart(2, "0")}:{new Date(lesson.start_time).getMinutes().toString().padStart(2, "0")}-{(new Date(lesson.start_time).getHours() + 1).toString().padStart(2, "0")}:{new Date(lesson.start_time).getMinutes().toString().padStart(2, "0")}
-              </p>
+                      <p className={styles.lesson_date}>
+                        {lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}
+                      </p>
+                      <p>{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours().toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")}-{(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours() + 1).toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")} </p>
+
             </div>
           </>
         })}

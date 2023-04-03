@@ -15,11 +15,16 @@ function HomeworksByTeacher(props) {
   console.log('HomeworksByTeacher', props)
   const router = useRouter()
   const teacherUrl = router.query.url
-  const studentId = router.query.studentId ? router.query.studentId : props.student.student_id
+  const studentId = router.query.studentId ? router.query.studentId : props.student.id
   const programId = router.query.programId ? router.query.programId : props.program
   const [teacher, setTeacher] = useState([])
   const [students, setStudents] = useState([])
   const [selectedStudentId, setSelectedStudentId] = useState(studentId)
+  useEffect(() => {
+    router
+    props
+    debugger
+  }, [])
   const [selectedStudentName, setSelectedStudentName] = useState("Студенты")
   const [selectedProgramId, setSelectedProgramId] = useState(programId)
   const [selectedProgram, setSelectedProgram] = useState("Программы");
@@ -169,7 +174,7 @@ function HomeworksByTeacher(props) {
       text,
       date
     };
-
+    debugger
     await axios({
       method: "post",
       url: `${globals.productionServerDomain}/createTeacherComment`,

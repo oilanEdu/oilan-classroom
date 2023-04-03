@@ -1,7 +1,7 @@
 import * as wss from '../wssConnection/wssConnection';
 import { connectWithWebSocket } from '../wssConnection/wssConnection';
 import store from '../../store/store';
-import { setGroupCallActive, setCallState, callStates, setGroupCallIncomingStreams, clearGroupCallData } from '../../store/actions/callActions';
+import { setGroupCallActive, setCallState, callStates, setGroupCallIncomingStreams, clearGroupCallData, setRemoteStream } from '../../store/actions/callActions';
 import React, { useState, useMemo, useEffect } from 'react';
 
 let myPeer;
@@ -54,6 +54,7 @@ export const createNewGroupCall = () => {
 };
 
 export const joinGroupCall = (hostSocketId, roomId, user) => {
+  console.log('eee from conv', hostSocketId, roomId, user)
   const localStream = store.getState().call.localStream;
   localStream.username = user;
   groupCallRoomId = roomId;
@@ -125,12 +126,19 @@ export const removeInactiveStream = (data) => {
   store.dispatch(setGroupCallIncomingStreams(groupCallStreams));
 };
 
-const addVideoStream = (incomingStream) => {
+export const addVideoStream = (incomingStream) => {
   const groupCallStreams = [
     ...store.getState().call.groupCallStreams,
     incomingStream
   ];
 
+  store.dispatch(setGroupCallIncomingStreams(groupCallStreams));
+};
+
+export const tesT = () => {
+  const groupCallStreams = [
+    ...store.getState().call.groupCallStreams
+  ];
   store.dispatch(setGroupCallIncomingStreams(groupCallStreams));
 };
 

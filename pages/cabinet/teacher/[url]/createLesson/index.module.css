@@ -1,0 +1,248 @@
+@font-face {
+	font-family: "Gotham Regular";
+	src: url('../../../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Medium';
+	src: url('../../../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Light';
+	src: url('../../../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+	font-family: 'Gotham Bold';
+	src: url('../../../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+
+.container {
+	position: relative;
+	padding: 0 100px;
+	background: #FBFDFF;
+}
+
+.exerItem {
+	display: flex;
+	margin-right: 15px;
+	margin-bottom: 15px;
+}
+
+.exerItem button {
+	padding: 8px 15px;
+	border: none;
+	border-radius: 3px;
+	width: fit-content;
+	/*background: #2E8CF2;*/
+	color: white;
+	font-family: 'Gotham Regular';
+	outline: none;
+}
+
+.exerRow {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	width: 40%;
+	justify-content: flex-start;
+}
+
+.btn_add_wrapper {
+	margin-left: 15px;
+	margin-bottom: 15px;
+}
+
+.btn_add_wrapper button {
+	border-radius: 3px;
+	background: #2E8CF2;
+	color: white;
+	padding: 8px 15px;
+	width: 50px;
+	border: none;
+	outline: none;
+	margin: 0 5px;
+}
+
+.btn_add_wrapper button:hover {
+	transition: all 0.1s linear;
+	background: #2b7ed6;
+}
+
+.inputsRow {
+	display: flex;
+	flex-direction: column;
+}
+
+.selectedExer {
+	background-color: #2E8CF2;
+}
+
+.notSelectedExer {
+	background-color: #A3CEFD;
+}
+
+.input_container {
+	margin-bottom: 20px;
+	/* width: 100%; */
+}
+
+.input_container p {
+	font-family: 'Gotham Regular';
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+.input_container input {
+	width: 40%;
+	outline: none;
+	background: #FFFFFF;
+	border: 0.5px solid #A3CEFD;
+	border-radius: 5px;
+	padding: 10px 20px;
+	font-family: 'Gotham Regular';
+}
+
+
+.input_container input:focus,
+.input_container textarea:focus,
+.input_container select:focus {
+	border: 0.5px solid #2E8CF2;
+}
+
+.input_container select {
+	width: 40%;
+	outline: none;
+	background: #FFFFFF;
+	border: 0.5px solid #A3CEFD;
+	border-radius: 5px;
+	padding: 12px 40px 12px 20px;
+	font-family: 'Gotham Regular';
+}
+
+.input_container textarea {
+	width: 40%;
+	height: 100px;
+	outline: none;
+	background: #FFFFFF;
+	border: 0.5px solid #A3CEFD;
+	border-radius: 5px;
+	padding: 10px 20px;
+	font-family: 'Gotham Regular';
+	resize: none;
+}
+
+.form_button {
+	background: #2E8CF2;
+	border-radius: 5px;
+	color: white;
+	padding: 15px 40px;
+	outline: none;
+	border: none;
+	width: fit-content;
+}
+
+.form_button:hover {
+	transition: all 0.1s linear;
+	background: #2b7ed6;
+}
+
+.lessonData {
+	margin-top: 30px;
+}
+
+.lesson_head p {
+	font-family: 'Gotham Regular';
+	margin-bottom: 0;
+}
+
+.lesson_head h1 {
+	font-size: 45px;
+	font-family: 'Gotham Medium';
+	color: #2E8CF2;
+	margin-bottom: 0;
+}
+
+.createLesson {
+	padding: 60px 0;
+}
+
+.inputsRow {
+	margin-top: 30px;
+}
+
+@media screen and (max-width: 1450px) {
+
+	.lesson_head h1 {
+		font-size: 30px;
+		font-family: 'Gotham Medium';
+	}
+
+
+	.lesson_head p {
+		font-size: 14px;
+	}
+}
+
+
+@media screen and (max-width:575px) {
+
+	.input_container input,
+	.input_container select,
+	.input_container textarea {
+		width: 100%;
+	}
+
+	.container {
+		padding: 0 20px;
+		width: 100%;
+	}
+
+	.createLesson {
+		padding: 20px 0;
+	}
+
+	.lesson_head p {
+		font-size: 14px;
+		margin-bottom: 10px;
+	}
+
+	.contentWrapper {}
+
+	.wrapper_box {
+		width: 100% !important;
+	}
+
+	.lesson_head h1 {
+		font-size: 20px;
+	}
+
+	.form_button {
+		width: 100%;
+	}
+
+	.exerRow {
+		width: 100%;
+	}
+
+	.exerItem {
+		width: 31%;
+		margin: 0 5px 5px 0;
+	}
+
+	.exerItem button {
+		padding: 8px 15px;
+		border: none;
+		border-radius: 3px;
+		width: fit-content;
+		/*background: #2E8CF2;*/
+		color: white;
+		font-family: 'Gotham Regular';
+		outline: none;
+	}
+
+
+}

@@ -1,0 +1,247 @@
+@font-face {
+  font-family: "Gotham Regular";
+  src: url('../../../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Medium';
+  src: url('../../../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Light';
+  src: url('../../../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Bold';
+  src: url('../../../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
+
+.container {
+  position: relative;
+  padding: 0 100px;
+  background: #FBFDFF;
+}
+
+.profile_header,
+.program_header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  align-items: center;
+}
+
+.profile_header button,
+.program_header button {
+  background: #2E8CF2;
+  border-radius: 5px;
+  color: white;
+  padding: 12px 30px;
+  outline: none;
+  border: none;
+  width: fit-content;
+}
+
+.program_header h3,
+.profile_header h3 {
+  font-family: 'Gotham Medium';
+  font-size: 45px;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu_tabs {
+  display: flex;
+}
+
+.menu_tabs p {
+  font-family: 'Gotham Regular';
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.detailInfo {
+  padding-top: 30px;
+}
+
+.course_success {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.lesson_complete {
+  width: 70px;
+  height: 70px;
+  background: #2E8CF2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+  font-family: 'Gotham Medium';
+  margin-bottom: 10px;
+}
+
+.lesson_complete_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 25px;
+}
+
+.lesson_complete_wrapper p {
+  font-family: 'Gotham Regular';
+}
+
+.studentPrograms_wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.studentPrograms_wrapper span {
+  font-family: 'Gotham Regular';
+  font-size: 18px;
+}
+
+.input_programm {
+  width: 40%;
+  outline: none;
+  background: #FFFFFF;
+  border: 0.5px solid #A3CEFD;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: 'Gotham Regular';
+  margin-top: 15px;
+}
+
+.studentPrograms_wrapper input:focus {
+  border: 0.5px solid #2E8CF2;
+}
+
+.lessonsWrapper {
+  margin-top: 30px;
+}
+
+.input_container p {
+  font-family: 'Gotham Regular';
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.input_container {
+  margin-bottom: 20px;
+  /* width: 100%; */
+}
+
+
+.input_container input {
+  width: 40%;
+  outline: none;
+  background: #FFFFFF;
+  border: 0.5px solid #A3CEFD;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: 'Gotham Regular';
+  box-shadow: 0px 0px 11px 3px #A3CEFD33;
+}
+
+
+.input_container input:focus,
+.input_container textarea:focus,
+.input_container select:focus {
+  border: 0.5px solid #2E8CF2;
+}
+
+.input_container select {
+  width: 40%;
+  outline: none;
+  background: #FFFFFF;
+  border: 0.5px solid #A3CEFD;
+  border-radius: 5px;
+  padding: 12px 40px 12px 20px;
+  font-family: 'Gotham Regular';
+}
+
+.student_info__wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.student__info p {
+  font-family: 'Gotham Medium';
+  margin-bottom: 0px;
+}
+
+.student__info p:nth-child(1) {
+  font-size: 25px;
+}
+
+.student__info p:nth-child(2) {
+  font-size: 18px;
+  color: #0000007b
+}
+
+
+.student__info {
+  margin-left: 15px;
+}
+
+.input_wrapper {
+  margin-top: 35px;
+}
+
+.course_success_wrapper {
+  margin-top: 45px;
+}
+
+.studentDelete {
+  font-family: 'Gotham Regular';
+  color: #B63737;
+}
+
+.course_success_wrapper h5 {
+  font-family: 'Gotham Medium';
+}
+
+
+@media screen and (max-width:575px) {
+
+  .menu_tabs p,
+  .studentDelete {
+    font-size: 13px;
+  }
+
+  .menu {
+    flex-wrap: wrap;
+  }
+
+  .profile_header h3,
+  .program_header h3 {
+    font-size: 20px;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .input_container input,
+  .input_programm {
+    width: 100%;
+  }
+
+  .profile_header button,
+  .program_header button {
+    font-size: 12px;
+  }
+}

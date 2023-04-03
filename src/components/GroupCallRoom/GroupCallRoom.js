@@ -19,7 +19,8 @@ const GroupCallRoom = (props) => {
     message, 
     role, 
     teacher, 
-    student
+    student,
+    groupCallRooms
   } = props;
 
 
@@ -30,23 +31,23 @@ const GroupCallRoom = (props) => {
   }, [groupCallStreams, callState]); 
 
   useEffect(() => {
-    console.log('activeStreams', activeStreams)
-  }, [activeStreams]);
+    console.log('eee activeStreams', activeStreams)
+    console.log('groupCallStreams', groupCallStreams)
+  }, [activeStreams.length]);
 
   return (
     <div className={styles.group_call_room_container}>
       <div className={styles.group_call_videos_container}>
         <LocalVideoView role={role} teacher={teacher} student={student} localStream={localStream} />
         {
-          activeStreams.map(stream => {
+          activeStreams.map((stream, index) => {
             return <>
               {stream && callState && <RemoteVideoView role={role} teacher={teacher} student={student} username={props.username} key={stream.id} remoteStream={stream} />}
-              
             </>
           })
         }
       </div>
-      <ConversationButtons role={props.role} {...props} />
+      <ConversationButtons groupCallRooms={groupCallRooms} teacher={teacher} role={props.role} {...props} />
     </div>
   );
 };

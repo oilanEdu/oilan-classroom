@@ -342,7 +342,8 @@ const NewTeacherHomeworksLessons = ({ index, lesson, showCheck, selectedExercise
             <button
               className={styles.sendButton}
               onClick={async () => {
-                updateAnswerComment(selectedStudentId, selectedExerciseId, teacherComment, new Date())
+                await updateAnswerComment(selectedStudentId, selectedExerciseId, teacherComment, new Date())
+                debugger
                 await updateAnswerStatus(answer.id, 'correct', mark)
                 await getAnswer(selectedStudentId, selectedExerciseId)
                 await getLessonExercises(lesson.id)

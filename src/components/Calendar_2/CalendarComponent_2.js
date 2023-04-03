@@ -16,6 +16,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { ru } from 'date-fns/locale';
 import styles from "./styles.module.css";
 import LessonOfTheDay from "../LessonOfTheDay/LessonOfTheDay";
+import ClickAwayListener from "@mui/base/ClickAwayListener";
 
 
 function classNames(...classes) {
@@ -142,6 +143,7 @@ const Calendar2 = React.memo((props) => {
       </div>
     )
   }
+  const [showLessonsOfTheDay, setShowLessonsOfTheDay] = useState(false)
   return (
     <div className={styles.calendar_wrapper}>
       <div className={styles.wrapper1}>
@@ -180,101 +182,200 @@ const Calendar2 = React.memo((props) => {
           <div>Вс</div>
         </div>
         <div className={styles.wrapper7}>
-          {days.map((day, dayIdx) => (
-            <div
-              onClick={() => {setSelectedDay(day)}}
-              key={day.toString()}
-              className={classNames(
-                dayIdx === 0 && colStartClasses[getDay(day)],
-                "py-1-5",
-                isEqual(day, selectedDay) && "selectedDay", //selected day
-                !isEqual(day, selectedDay) && isToday(day) && "today", //today
-                !isEqual(day, selectedDay) &&
-                !isToday(day) &&
-                isSameMonth(day, firstDayCurrentMonth) &&
-                "text-gray-900", //everything that is not today
-                !isEqual(day, selectedDay) &&
-                !isToday(day) &&
-                !isSameMonth(day, firstDayCurrentMonth) &&
-                "text-gray-400",
-                isEqual(day, selectedDay) && isToday(day) && "bg-red-500", //if selected day is today
-                isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
-                !isEqual(day, selectedDay) && "hover:bg-gray-200",
-                (isEqual(day, selectedDay) || isToday(day)) &&
-                "font-semibold", //today
-                "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
-              )}
-            >
-              <div>
-                {props?.lessons?.some((lesson) =>
-                  isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day)
-                ) && <div className={styles.countOfLessons}>
-                    {props?.lessons?.filter((lesson2) =>
-                      isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day)).length}
-                  </div>}
-              </div>
-              <button
-                type="button"
-
-                className={classNames(
-                  isEqual(day, selectedDay) && "selectedDayNumber", //selected day
-                  !isEqual(day, selectedDay) && isToday(day) && "todayNumber", //today
-                  !isEqual(day, selectedDay) &&
-                  !isToday(day) &&
-                  isSameMonth(day, firstDayCurrentMonth) &&
-                  "text-gray-900", //everything that is not today
-                  !isEqual(day, selectedDay) &&
-                  !isToday(day) &&
-                  !isSameMonth(day, firstDayCurrentMonth) &&
-                  "text-gray-400",
-                  isEqual(day, selectedDay) && isToday(day) && "bg-red-500", //if selected day is today
-                  isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
-                  !isEqual(day, selectedDay) && "hover:bg-gray-200",
-                  (isEqual(day, selectedDay) || isToday(day)) &&
-                  "font-semibold", //today
-                  styles.calendarDay
-                )}
-              >
-                <time dateTime={format(day, "yyyy-MM-dd")}>
-                  {format(day, "d")}
-                </time>
-              </button>
-              {/* 
-              <div className="w-1 h-1 mx-auto mt-1">
-                {meetings.some((meeting) =>
-                  isSameDay(parseISO(meeting.startDatetime), day)
-                ) && <div className="w-1 h-1 rounded-full bg-sky-500"></div>}
-              </div> */}
-              
-              {/* <div
-              style={{display: isEqual(day, selectedDay) && props?.lessons?.some((lesson) =>
-                isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
-                ? 
-                "block" : "none"}}
-              >
-                {isEqual(day, selectedDay) && props?.lessons?.some((lesson) =>
-                isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
-                ?  
-                <LessonsOfTheDay day={day} lessons={props?.lessons} /> : ''}
-                
-                 {/* {props?.lessons?.filter((lesson2) =>
-                      isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day)).length}
-                  {props?.lessons?.map((lesson2) => <div 
-                  style={{display: isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day) ? "block" : "none"}}
-                  >
-                    test
-                  </div>
-                  )} */}
-              {/* </div>  */}
-
-              {isEqual(day, selectedDay) && props?.lessons?.some((lesson) =>
-                isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
-                ?  
-                <LessonsOfTheDay day={day} lessons={props?.lessons} /> : ''}
-                {/* <LessonsOfTheDay day={day} lessons={props?.lessons} /> */}
-              {/* <div>{lessonsOfTheDay(day, props?.lessons)}</div> */}
-            </div>
-          ))}
+          {days.map((day, dayIdx) => (<>
+                        {isEqual(day, selectedDay) 
+                          ?  
+                          <ClickAwayListener onClickAway={() => {setShowLessonsOfTheDay(false)}}>
+                          <div
+                          onClick={() => {setSelectedDay(day)
+                                          setShowLessonsOfTheDay(true)}}
+                          key={day.toString()}
+                          className={classNames(
+                            dayIdx === 0 && colStartClasses[getDay(day)],
+                            "py-1-5",
+                            isEqual(day, selectedDay) && "selectedDay", //selected day
+                            !isEqual(day, selectedDay) && isToday(day) && "today", //today
+                            !isEqual(day, selectedDay) &&
+                            !isToday(day) &&
+                            isSameMonth(day, firstDayCurrentMonth) &&
+                            "text-gray-900", //everything that is not today
+                            !isEqual(day, selectedDay) &&
+                            !isToday(day) &&
+                            !isSameMonth(day, firstDayCurrentMonth) &&
+                            "text-gray-400",
+                            isEqual(day, selectedDay) && isToday(day) && "bg-red-500", //if selected day is today
+                            isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
+                            !isEqual(day, selectedDay) && "hover:bg-gray-200",
+                            (isEqual(day, selectedDay) || isToday(day)) &&
+                            "font-semibold", //today
+                            "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
+                          )}
+                        >
+                          <div>
+                            {props?.lessons?.some((lesson) =>
+                              isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day)
+                            ) && <div className={styles.countOfLessons}>
+                                {props?.lessons?.filter((lesson2) =>
+                                  isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day)).length}
+                              </div>}
+                          </div>
+                          <button
+                            type="button"
+            
+                            className={classNames(
+                              isEqual(day, selectedDay) && "selectedDayNumber", //selected day
+                              !isEqual(day, selectedDay) && isToday(day) && "todayNumber", //today
+                              !isEqual(day, selectedDay) &&
+                              !isToday(day) &&
+                              isSameMonth(day, firstDayCurrentMonth) &&
+                              "text-gray-900", //everything that is not today
+                              !isEqual(day, selectedDay) &&
+                              !isToday(day) &&
+                              !isSameMonth(day, firstDayCurrentMonth) &&
+                              "text-gray-400",
+                              isEqual(day, selectedDay) && isToday(day) && "bg-red-500", //if selected day is today
+                              isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
+                              !isEqual(day, selectedDay) && "hover:bg-gray-200",
+                              (isEqual(day, selectedDay) || isToday(day)) &&
+                              "font-semibold", //today
+                              styles.calendarDay
+                            )}
+                          >
+                            <time dateTime={format(day, "yyyy-MM-dd")}>
+                              {format(day, "d")}
+                            </time>
+                          </button>
+                          {/* 
+                          <div className="w-1 h-1 mx-auto mt-1">
+                            {meetings.some((meeting) =>
+                              isSameDay(parseISO(meeting.startDatetime), day)
+                            ) && <div className="w-1 h-1 rounded-full bg-sky-500"></div>}
+                          </div> */}
+                          
+                          {/* <div
+                          style={{display: isEqual(day, selectedDay) && props?.lessons?.some((lesson) =>
+                            isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
+                            ? 
+                            "block" : "none"}}
+                          >
+                            {isEqual(day, selectedDay) && props?.lessons?.some((lesson) =>
+                            isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
+                            ?  
+                            <LessonsOfTheDay day={day} lessons={props?.lessons} /> : ''}
+                            
+                             {/* {props?.lessons?.filter((lesson2) =>
+                                  isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day)).length}
+                              {props?.lessons?.map((lesson2) => <div 
+                              style={{display: isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day) ? "block" : "none"}}
+                              >
+                                test
+                              </div>
+                              )} */}
+                          {/* </div>  */}
+            
+                          {isEqual(day, selectedDay) && showLessonsOfTheDay && props?.lessons?.some((lesson) =>
+                            isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
+                            ?  
+                            <LessonsOfTheDay day={day} lessons={props?.lessons} /> : ''}
+                            {/* <LessonsOfTheDay day={day} lessons={props?.lessons} /> */}
+                          {/* <div>{lessonsOfTheDay(day, props?.lessons)}</div> */}
+                        </div>
+                          </ClickAwayListener> :             <div
+                          onClick={() => {setSelectedDay(day)
+                                          setShowLessonsOfTheDay(true)}}
+                          key={day.toString()}
+                          className={classNames(
+                            dayIdx === 0 && colStartClasses[getDay(day)],
+                            "py-1-5",
+                            isEqual(day, selectedDay) && "selectedDay", //selected day
+                            !isEqual(day, selectedDay) && isToday(day) && "today", //today
+                            !isEqual(day, selectedDay) &&
+                            !isToday(day) &&
+                            isSameMonth(day, firstDayCurrentMonth) &&
+                            "text-gray-900", //everything that is not today
+                            !isEqual(day, selectedDay) &&
+                            !isToday(day) &&
+                            !isSameMonth(day, firstDayCurrentMonth) &&
+                            "text-gray-400",
+                            isEqual(day, selectedDay) && isToday(day) && "bg-red-500", //if selected day is today
+                            isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
+                            !isEqual(day, selectedDay) && "hover:bg-gray-200",
+                            (isEqual(day, selectedDay) || isToday(day)) &&
+                            "font-semibold", //today
+                            "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
+                          )}
+                        >
+                          <div>
+                            {props?.lessons?.some((lesson) =>
+                              isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day)
+                            ) && <div className={styles.countOfLessons}>
+                                {props?.lessons?.filter((lesson2) =>
+                                  isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day)).length}
+                              </div>}
+                          </div>
+                          <button
+                            type="button"
+            
+                            className={classNames(
+                              isEqual(day, selectedDay) && "selectedDayNumber", //selected day
+                              !isEqual(day, selectedDay) && isToday(day) && "todayNumber", //today
+                              !isEqual(day, selectedDay) &&
+                              !isToday(day) &&
+                              isSameMonth(day, firstDayCurrentMonth) &&
+                              "text-gray-900", //everything that is not today
+                              !isEqual(day, selectedDay) &&
+                              !isToday(day) &&
+                              !isSameMonth(day, firstDayCurrentMonth) &&
+                              "text-gray-400",
+                              isEqual(day, selectedDay) && isToday(day) && "bg-red-500", //if selected day is today
+                              isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
+                              !isEqual(day, selectedDay) && "hover:bg-gray-200",
+                              (isEqual(day, selectedDay) || isToday(day)) &&
+                              "font-semibold", //today
+                              styles.calendarDay
+                            )}
+                          >
+                            <time dateTime={format(day, "yyyy-MM-dd")}>
+                              {format(day, "d")}
+                            </time>
+                          </button>
+                          {/* 
+                          <div className="w-1 h-1 mx-auto mt-1">
+                            {meetings.some((meeting) =>
+                              isSameDay(parseISO(meeting.startDatetime), day)
+                            ) && <div className="w-1 h-1 rounded-full bg-sky-500"></div>}
+                          </div> */}
+                          
+                          {/* <div
+                          style={{display: isEqual(day, selectedDay) && props?.lessons?.some((lesson) =>
+                            isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
+                            ? 
+                            "block" : "none"}}
+                          >
+                            {isEqual(day, selectedDay) && props?.lessons?.some((lesson) =>
+                            isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
+                            ?  
+                            <LessonsOfTheDay day={day} lessons={props?.lessons} /> : ''}
+                            
+                             {/* {props?.lessons?.filter((lesson2) =>
+                                  isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day)).length}
+                              {props?.lessons?.map((lesson2) => <div 
+                              style={{display: isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), day) ? "block" : "none"}}
+                              >
+                                test
+                              </div>
+                              )} */}
+                          {/* </div>  */}
+            
+                          {isEqual(day, selectedDay) && showLessonsOfTheDay && props?.lessons?.some((lesson) =>
+                            isSameDay(parseISO(lesson.personal_time ? lesson.personal_time : lesson.start_time), day))  
+                            ?  
+                            <LessonsOfTheDay day={day} lessons={props?.lessons} /> : ''}
+                            {/* <LessonsOfTheDay day={day} lessons={props?.lessons} /> */}
+                          {/* <div>{lessonsOfTheDay(day, props?.lessons)}</div> */}
+                        </div>}
+                      
+                        </>))}
         </div>
       </div>
     </div>

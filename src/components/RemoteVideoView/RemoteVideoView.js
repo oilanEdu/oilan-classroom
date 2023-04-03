@@ -10,11 +10,11 @@ const RemoteVideoView = props => {
   useEffect(() => {
     setStream(remoteStream);
     // console.log('PROPS', props)
-    // console.log('remoteStream', remoteStream)
+    console.log('remoteStream', remoteStream)
     // console.log('stream', stream)
     // console.log('remoteStream.getTracks()', remoteStream.getTracks())
     // console.log('remoteStream.getAudioTracks()[0].enabled', remoteStream.getAudioTracks()[0].enabled) 
-  }, []);
+  }, [remoteStream]);
 
   useEffect(() => {
     if (stream) {

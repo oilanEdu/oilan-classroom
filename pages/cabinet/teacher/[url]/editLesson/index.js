@@ -307,6 +307,7 @@ const createCourse = () => {
             setHandleSubmitIsClicked={setHandleSubmitIsClicked}
             lessonTitle={lessonTitle}
             lessonDesc={lessonDesc}
+            lesson={lesson}
             />
           ))}
 

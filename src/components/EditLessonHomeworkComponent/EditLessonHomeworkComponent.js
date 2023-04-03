@@ -8,7 +8,8 @@ const EditLessonHomeworkComponent = ({el, selectedExercise, firstExerPress,
     handleSubmitIsClicked,
     setHandleSubmitIsClicked,
     lessonDesc,
-    lessonTitle}) => {
+    lessonTitle,
+    lesson}) => {
     const router = useRouter();
     const teacherUrl = router.query.url
     const lessonId = router.query.lesson
@@ -124,13 +125,15 @@ const EditLessonHomeworkComponent = ({el, selectedExercise, firstExerPress,
           url: `${globals.productionServerDomain}/updateNewLesson`,
           data: data,
         })
-          .then(function (res) {
+          .then(async function (res) {
             // alert("Урок успешно изменен");
+            await router.push(`/cabinet/teacher/${teacherUrl}/myLessons?program=${lesson?.program_id}`)
+            window.location.reload()
           })
           .catch((err) => {
             // alert("Произошла ошибка");
           });
-      }
+        }
     }
   
     const deleteLesson = async (id) => {

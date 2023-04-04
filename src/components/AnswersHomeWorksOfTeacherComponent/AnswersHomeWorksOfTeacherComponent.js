@@ -5,7 +5,7 @@ import globals from "../../globals";
 import axios from "axios";
 import LessonDataComponent from "../LessonDataComponent/LessonDataComponent";
 
-const AnswersHomeWorksOfTeacherComponent = ({answer, index, answers, setAnswers}) => {
+const AnswersHomeWorksOfTeacherComponent = ({answer, index, answers, setAnswers, toggleAnswer, closeAnswer}) => {
     const router = useRouter();
     const teacherUrl = router.query.url
     const programId = router.query.program
@@ -130,13 +130,13 @@ const AnswersHomeWorksOfTeacherComponent = ({answer, index, answers, setAnswers}
       return `${day}.${month}.${year}, ${hours}:${minutes}`;
     }
   
-    const toggleAnswer = (index) => {
-      setAnswers(prevAnswers => {
-        const newAnswers = [...prevAnswers];
-        newAnswers[index].isExpanded = !newAnswers[index].isExpanded;
-        return newAnswers;
-      });
-    };
+
+    // const [toggleAnswerClicked, setToggleAnswerClicked] = useState(false)
+    // useEffect(() => {
+    //   if (toggleAnswerClicked) {
+    //     toggleAnswer(index)
+    //   }
+    // }, [toggleAnswerClicked])
   
   
   
@@ -453,7 +453,7 @@ const AnswersHomeWorksOfTeacherComponent = ({answer, index, answers, setAnswers}
                 {lessonData.filter(el => (el?.lesson_id == answer?.lesson_id && el?.student_id == answer?.student_id)).map((LD, i) => {
                   return (
                     <LessonDataComponent LD={LD} i={i} answer={answer} selectedExId={selectedExId} selectedStudId={selectedStudId} selectedAnswerId={selectedAnswerId} updateAnswerCommentClicked={updateAnswerCommentClicked} setUpdateAnswerComment={setUpdateAnswerComment}
-                    toggleAnswer={toggleAnswer} index={index}
+                    closeAnswer={closeAnswer} index={index}
                     buttonIsClicked={buttonIsClicked}
                     setButtonIsClicked={setButtonIsClicked}
                     />

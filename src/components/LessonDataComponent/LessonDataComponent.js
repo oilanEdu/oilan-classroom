@@ -4,7 +4,7 @@ import styles from '../../../pages/cabinet/teacher/[url]/homeworks/index.module.
 import globals from "../../globals";
 import axios from "axios";
 
-const LessonDataComponent = ({LD, i, answer, selectedExId, selectedStudId, selectedAnswerId, updateAnswerCommentClicked, setUpdateAnswerComment, toggleAnswer, index, buttonIsClicked, setButtonIsClicked}) => {
+const LessonDataComponent = ({LD, i, answer, selectedExId, selectedStudId, selectedAnswerId, updateAnswerCommentClicked, setUpdateAnswerComment, index, buttonIsClicked, setButtonIsClicked, closeAnswer}) => {
     const [localExrciseText, setLocalExrciseText] = useState()
     const [teacherCommentLocal, setTeacherCommentLocal] = useState('')
     const [markLocal, setMarkLocal] = useState(0);
@@ -43,9 +43,11 @@ const LessonDataComponent = ({LD, i, answer, selectedExId, selectedStudId, selec
         })
           .then(function (res) {
             // alert("Отметка о выполнении изменена");
+            setButtonIsClicked(false)
+            closeAnswer(index)
           })
           .catch((err) => {
-            alert("Произошла ошибка");
+            alert(err);
           });
       }
     useEffect(() => {

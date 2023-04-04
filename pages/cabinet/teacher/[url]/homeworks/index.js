@@ -123,6 +123,22 @@ const homeworks = () => {
     }
   }, [answers, lessonData]);
 
+  const toggleAnswer = (index) => {
+    setAnswers(prevAnswers => {
+      const newAnswers = [...prevAnswers];
+      newAnswers[index].isExpanded = !newAnswers[index].isExpanded;
+      // debugger
+      return newAnswers;
+    });
+  };
+  const closeAnswer = (index) => {
+    setAnswers(prevAnswers => {
+      const newAnswers = [...prevAnswers];
+      newAnswers[index].isExpanded = false;
+      debugger
+      return newAnswers;
+    });
+  };
   // function formatDate(dateString) {
   //   const date = new Date(dateString);
   //   const year = date.getFullYear();
@@ -304,7 +320,10 @@ const homeworks = () => {
         <div className={styles.wrapperAnswers}>
           {answers?.map((answer, index) => (
             <>
-              <AnswersHomeWorksOfTeacherComponent answer={answer} index={index} answers={answers} setAnswers={setAnswers}/>
+              <AnswersHomeWorksOfTeacherComponent answer={answer} index={index} answers={answers} setAnswers={setAnswers}
+              toggleAnswer={toggleAnswer}
+              closeAnswer={closeAnswer}
+              />
             </>
           ))}
         </div>

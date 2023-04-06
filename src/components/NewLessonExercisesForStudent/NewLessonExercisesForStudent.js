@@ -3,7 +3,7 @@ import styles from "./NewLessonExercisesForStudent.module.css";
 import axios from "axios";
 import globals from "../../globals";
 
-const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, padding, brickBorder }) => {
+const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, padding, brickBorder, lesson }) => {
   const [active, setActive] = useState(0);
   const [answer, setAnswer] = useState('')
   const [comment, setComment] = useState('');
@@ -127,6 +127,75 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const saveLessonDateAndTime = async (dateAndTimeMerger, lesson_id, course_id, student_id) => {
+    debugger 
+    if (dateAndTimeMerger) {
+      debugger
+      const dataForGetSchedule = {
+        lesson_id,
+        course_id,
+        student_id
+      };
+      console.log("dataForGetSchedule", dataForGetSchedule)
+      let schedule = await axios({
+        method: "post",
+        url: `${globals.productionServerDomain}/getScheduleByLessonIdAndCourseIdAndStudentId`,
+        data: dataForGetSchedule,
+      }).then(function (res) {
+        debugger
+        let scheduleRes = res.data
+        console.log("scheduleRes", scheduleRes);
+        if (scheduleRes.length > 0) {
+          return scheduleRes
+        }
+      })
+        .catch((err) => {
+          alert("Произошла ошибка");
+        });
+      console.log(schedule, "schedule1")
+      if (schedule != undefined) {
+        debugger
+        if (schedule.some(el => el.lesson_id == lesson_id) && schedule.some(el => el.course_id == course_id) && schedule.some(el => el.student_id == student_id)) {
+          console.log("isscheduleRIGHT is RIGHT")
+          const dataForUpdateSchedule = {
+            dateAndTimeMerger,
+            lesson_id,
+            course_id,
+            student_id
+          };
+          // console.log("dataForGetSchedule", dataForGetSchedule)
+          let schedule = await axios({
+            method: "put",
+            url: `${globals.productionServerDomain}/updateSchedule`,
+            data: dataForUpdateSchedule,
+          })
+          debugger
+        }
+      }
+      else {
+        debugger
+        console.log("isscheduleRIGHT is NOT RIGHT");
+        const dataForCreateSchedule = {
+          dateAndTimeMerger,
+          lesson_id,
+          course_id,
+          student_id
+        };
+        debugger
+        let schedule = await axios({
+          method: "post",
+          url: `${globals.productionServerDomain}/createSchedule`,
+          data: dataForCreateSchedule,
+        })
+        debugger
+      }
+    }
+  }
+  // useEffect(() => {
+  //   answer
+  //   debugger
+  // }, [answer])
+
   const ExerciseText = (props) => {
     return <>
       {props.exerciseText?.map((el, index) => index % 2 === 0 ? el : <a href={el}>{el}</a>)}
@@ -205,6 +274,13 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
                 onClick={async () => {
                   await sendAnswer(answer, exercises[active].lesson_id, exercises[active].id, student, 'not verified', comment)
                   await fetchData()
+                  debugger
+                  if (lesson.personal_time) {
+                    
+                  } else {
+                    saveLessonDateAndTime(new Date(), lesson.id, lesson.course_id, student)
+                  }
+                  debugger
                 }}
               >
                 Сохранить и отправить
@@ -277,6 +353,11 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
                           onClick={async () => {
                             await sendEditedAnswer(answer, exercises[active].answer_id, 'not verified', comment)
                             await fetchData()
+                            if (lesson.personal_time) {
+                    
+                            } else {
+                              saveLessonDateAndTime(new Date(), lesson.id, lesson.course_id, student)
+                            }
                           }}
                         >
                           Сохранить и отправить

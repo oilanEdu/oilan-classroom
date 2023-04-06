@@ -82,10 +82,11 @@ const homeworks = () => {
     })
     const uniqueLessons = megadata['data'].filter((item, index, self) => 
       index === self.findIndex((t) => (
-        t.lesson_id === item.lesson_id
+        t.lesson_id === item.lesson_id && t.student_id === item.student_id
       ))
     );
     setAnswers(uniqueLessons)
+    debugger
     let studentsData = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, { id: teacherIdLocal, sort: 'id' })
     console.log('studentsData', studentsData['data'])
     setStudents(studentsData['data'])

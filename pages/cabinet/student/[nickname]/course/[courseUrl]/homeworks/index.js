@@ -31,16 +31,32 @@ const StudentPrograms = (props) => {
       console.log(res.data);
       console.log(res.data[0] !== undefined);
       if (res.data.length !== 0) {
-        await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${courseUrl}&program_id=${programId == !undefined ? programId : res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(res => {
+        await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${courseUrl}&program_id=${programId == !undefined ? programId : res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(async res => {
           let array = res.data
           // debugger 
           const uniqueLessons = array.filter((item, index, self) => 
-            index === self.findIndex((t) => (
-              t.id === item.id
-            ))
+          index === self.findIndex((t) => (
+            t.id === item.id
+          ))
           );
-          setLesson(uniqueLessons[0]);
-          setLessons(uniqueLessons);
+            debugger
+          let programLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + programId)
+
+          const newArray = [];
+    
+          uniqueLessons.forEach(element => {
+            newArray.push(element);
+          });
+    
+          programLessons['data'].forEach(element => {
+            const found = newArray.some(el => el.id === element.id);
+            if (!found) {
+              newArray.push(element);
+            }
+          });
+          debugger
+          setLesson(newArray[0]);
+          setLessons(newArray);
           setDataLoaded(true)
         });
       } else {

@@ -96,6 +96,7 @@ export default function Student({ programs }) {
     console.log(result.data);
   }
   const getLessons = async () => {
+    let programLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + studentPrograms[0]?.program_id)
     await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${studentPrograms[0]?.course_url}&program_id=${studentPrograms[0]?.program_id}&student_id=${studentPrograms[0]?.student_id}`).then(res => {
       let array = res.data
       const uniqueLessons = array.filter((item, index, self) => 
@@ -103,9 +104,21 @@ export default function Student({ programs }) {
           t.id === item.id
         ))
       );
-      setLessons(uniqueLessons);
-      console.log(uniqueLessons);
-      // debugger
+      const newArray = [];
+
+      uniqueLessons.forEach(element => {
+        newArray.push(element);
+      });
+
+      programLessons['data'].forEach(element => {
+        const found = newArray.some(el => el.id === element.id);
+        if (!found) {
+          newArray.push(element);
+        }
+      });
+      setLessons(newArray);
+      console.log(newArray);
+      debugger
     });
   }
 
@@ -343,7 +356,7 @@ export default function Student({ programs }) {
             <div className={styles.input_wrapper}>
               <div className={styles.input_container}>
                 <p>Ссылка на личный кабинет</p>
-                <input value={"oilan.io/cabinet/student/" + student?.nickname + "/course/" + studentPrograms[0]?.course_url + "?program=" + studentPrograms[0]?.program_id} />
+                <input value={"www.oilan-classroom.com/cabinet/student/" + student?.nickname + "/course/" + studentPrograms[0]?.course_url + "?program=" + studentPrograms[0]?.program_id} />
               </div>
               <div className={styles.input_container}>
                 <p>Курс</p>

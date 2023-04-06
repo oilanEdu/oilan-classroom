@@ -297,7 +297,7 @@ function NewDateAndTimePickerForLesson(props) {
           onChange={(e) => setTimeState(e.target.value)}
           onKeyDown={handleKeyDown}>
         </input>
-        <p style={{ display: errorOfDate || errorOfDateOfGoingLesson ? "block" : "none", margin: "0", color: "red", textAlign: "end" }}>
+        <p style={{ display: errorOfDate || errorOfDateOfGoingLesson ? "block" : "none", margin: "0", color: "red", textAlign: "end", position: "absolute", top: "90px", width: "max-content"}}>
           {errorOfDate ? <>Занятие номер {props.lesson.lesson_order} не может быть раньше занятия номер {errorOfDateLesson.lesson_order} <br /></> : ''}
           {errorOfDateOfGoingLesson ? <>Занятие номер {props.lesson.lesson_order} совпадает по времени с занятием номер {errorOfDateOfGoingLessonLesson.lesson_order} {errorOfDateOfGoingLessonLesson.student_id === props.lesson.student_id ? '' : <>студента {studentOfError?.surname} {studentOfError?.name}</>}</> : ''}
         </p>

@@ -47,7 +47,7 @@ const NewStudentHomeworks = ({ index, lesson, student }) => {
           </div>
         </div>
         <p className={styles.lesson_tesis} style={{ display: showTesis ? "block" : "none" }}>
-          {exercises.length > 0 ? <NewLessonExercisesForStudent exercises={exercises} student={student} fetchData={fetchData} /> : ''}
+          {exercises.length > 0 ? <NewLessonExercisesForStudent lesson={lesson} exercises={exercises} student={student} fetchData={fetchData} /> : ''}
         </p>
       </div>
     </div>

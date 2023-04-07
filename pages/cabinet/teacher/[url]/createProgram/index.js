@@ -57,7 +57,7 @@ const createProgram = () => {
   }
 
   const handleSubmit2 = () => {
-    if (programTitle && programType) {
+    if (programTitle && programType && daysOfTheWeek.length !== 0 && newProgramTimes !== undefined) {
       createNewProgram2()
       if (autoLessonsCancelled) {
         setViewMidal(true)

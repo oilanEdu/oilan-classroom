@@ -77,6 +77,14 @@ function NewDateAndTimePickerForLesson(props) {
   // let time2 = time.length < 10 ? "0" + time : ''
 
   const [dateState, setDateState] = useState(formated_date);
+  // useEffect(() => {
+  //   dateState
+  //   debugger
+  //   if (dateState === "1970-01-01") {
+      
+  //   }
+    
+  // }, [dateState])
   const [timeState, setTimeState] = useState(dateStrTime)
 
 
@@ -86,7 +94,7 @@ function NewDateAndTimePickerForLesson(props) {
   console.log(props.saveIsClicked);
 
   const saveLessonDateAndTimeHandler = async () => {
-    if (props.saveIsClicked == true) {
+    if (props.saveIsClicked == true && dateState !== "1970-01-01") {
       props.saveLessonDateAndTime(dateAndTimeMerger, props.lesson.id, props.lesson.course_id, props.student.id)
     }
   }
@@ -283,7 +291,7 @@ function NewDateAndTimePickerForLesson(props) {
           className={styles.inputs}
           id="date"
           type="date"
-          value={dateState}
+          value={dateState === "1970-01-01" ? new Date() : dateState}
           disabled={!props.editData}
           onChange={(e) => { setDateState(e.target.value) }}
           onKeyDown={handleKeyDown}
@@ -292,7 +300,7 @@ function NewDateAndTimePickerForLesson(props) {
           style={{ borderColor: errorOfDate || errorOfDateOfGoingLesson ? "red" : "" }}
           className={styles.inputs}
           type="time"
-          value={timeState}
+          value={dateState === "1970-01-01" ? new Date() : timeState}
           disabled={!props.editData}
           onChange={(e) => setTimeState(e.target.value)}
           onKeyDown={handleKeyDown}>

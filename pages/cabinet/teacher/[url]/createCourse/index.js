@@ -54,7 +54,7 @@ const createCourse = () => {
   const handleSubmit = () => {
     if (step === 1 && subject && title && description) {
       setStep(2)
-    } else if (step === 2 && programTitle && programType) {
+    } else if (step === 2 && programTitle && programType  && daysOfTheWeek.length !== 0 && newProgramTimes !== undefined) {
       if (autoLessonsCancelled) {
         setViewMidal(true)
       } else {

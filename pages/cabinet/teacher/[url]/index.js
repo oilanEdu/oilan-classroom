@@ -957,7 +957,7 @@ function TeacherCabinet(props) {
                 </h1>
                 {closerLesson ? <p>
                   Ближайшее занятие сегодня, в {formattedTime}, с учеником {closerStudent?.name} {closerStudent?.surname} 
-                  по предмету {closerCourse?.title}
+                   по предмету {closerCourse?.title}
                 </p> : ''}
 
                 {/* <p>Занятие №{closerLesson.lesson_number} {closerLesson.title}</p> */}

@@ -191,10 +191,10 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
       }
     }
   }
-  // useEffect(() => {
-  //   answer
-  //   debugger
-  // }, [answer])
+  useEffect(() => {
+    exercises
+    debugger
+  }, [exercises])
 
   const ExerciseText = (props) => {
     return <>
@@ -303,7 +303,16 @@ const NewLessonExercisesForStudent = ({ fetchData, exercises, student, bg, paddi
                 Ваш ответ:
                 <p className={styles.input_container_text_reTry}>Ваш ответ: {exercises[active].answer_text}</p>
               </div>
-              <div className={styles.advice}>{exercises[active].answer_status == 'correct' ? <><div className={styles.correctAdvice}></div>Сдано на отлично</> : exercises[active].answer_status == 'uncorrect' ? <><><div className={styles.uncorrectAdvice}></div>Есть ошибки попробуйте снова</></> : ''}</div>
+              <div className={styles.advice}>
+                {/* {exercises[active].answer_status == 'correct' ? 
+                <><div className={styles.correctAdvice}></div>Сдано на отлично</> 
+                : 
+                exercises[active].answer_status == 'uncorrect' ? 
+                  <><><div className={styles.uncorrectAdvice}></div>Есть ошибки попробуйте снова</></> 
+                  : 
+                  ''} */}
+                  Оценка - {exercises[active].mark}
+              </div>
               <button
                 className={styles.reanswer_btn}
                 onClick={() => {

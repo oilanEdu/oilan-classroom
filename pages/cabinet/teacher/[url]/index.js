@@ -926,109 +926,127 @@ function TeacherCabinet(props) {
     // let test2 = test.getTime() - new Date(teacher?.register_date).getTime() 
   }, [teacher]) 
 
-  if (typeof localStorage !== "undefined" && localStorage.getItem('login') !== null) {
-    return (localStorage && teacher.url === localStorage.getItem('login') ?
-      <>
-        <div className={styles.container}>
-          <HeaderTeacher
-            white={true}
-            url={props.url}
-            teacher={teacher}
-            isInMainPage={isInMainPage}
-          />
-          <div className={styles.cantainer}>
-            <GoToLessonWithTimerComponent isTeacher={true} url={props.url} />
-            {showSubscriptionLoss && teacher.register_date != undefined && Math.floor(dateOfSubscriptionLoss/86400000) > 0 ?
-                        <div className={styles.subscriptionLoss}>
-                        До истечения пробного периода осталось {Math.floor(dateOfSubscriptionLoss/86400000)} дней
-                        <div
-                          onClick={() => setShowSubscriptionLoss(false)} 
-                          className={styles.subscriptionLossClose}>X</div>
-                      </div> : ''}
-            <div className={styles.topBlock}>
-              <div className={styles.greetings}>
-                <span>Рады вас видеть, {teacher.name}</span>
-                <h1>
-                  На сегодня у вас {lessons.filter((lesson2) =>
-                      isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), today)).length 
-                      ? 
-                      lessons.filter((lesson2) =>
-                      isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), today)).length + " запланированных занятия" : "нету запланированных занятий"}
-                </h1>
-                {closerLesson ? <p>
-                  Ближайшее занятие сегодня, в {formattedTime}, с учеником {closerStudent?.name} {closerStudent?.surname} 
-                   по предмету {closerCourse?.title}
-                </p> : ''}
-
-                {/* <p>Занятие №{closerLesson.lesson_number} {closerLesson.title}</p> */}
-                <button
-                  className={styles.goToLessonButton}
-                  disabled={disableButton}
-                  onClick={() => {
-                    closerLesson.personal_lesson_link ||
-                      closerLesson.default_lesson_link
-                      ? startLessonLink(
-                        closerLesson.personal_lesson_link
-                          ? closerLesson.personal_lesson_link
-                          : closerLesson.default_lesson_link
-                      )
-                      : startNewLesson()
-                  }}
-                >
-                  Перейти к занятию
-                </button>
-                {/* {closerLesson !== undefined && students.length > 0 && closerStudent != undefined ?
-                  <>
-                    <p className={styles.closerLessonInfo}>Занятие №{closerLesson.lesson_order} Тема - {closerLesson.title}  </p>
-                    <p className={styles.closerLessonInfo}>Студент - {closerStudent?.name} {closerStudent?.surname}</p>
-                  </>
-                  : ''} */}
-              </div>
-              <div className={styles.calendarBlock}>
-                <Calendar2 lessons={lessons} />
+  if (dataLoaded === true) {
+    if (typeof localStorage !== "undefined" && localStorage.getItem('login') !== null) {
+      return (localStorage && teacher.url === localStorage.getItem('login') ?
+        <>
+          <div className={styles.container}>
+            <HeaderTeacher
+              white={true}
+              url={props.url}
+              teacher={teacher}
+              isInMainPage={isInMainPage}
+            />
+            <div className={styles.cantainer}>
+              <GoToLessonWithTimerComponent isTeacher={true} url={props.url} />
+              {showSubscriptionLoss && teacher.register_date != undefined && Math.floor(dateOfSubscriptionLoss/86400000) > 0 ?
+                          <div className={styles.subscriptionLoss}>
+                          До истечения пробного периода осталось {Math.floor(dateOfSubscriptionLoss/86400000)} дней
+                          <div
+                            onClick={() => setShowSubscriptionLoss(false)} 
+                            className={styles.subscriptionLossClose}>X</div>
+                        </div> : ''}
+              <div className={styles.topBlock}>
+                <div className={styles.greetings}>
+                  <span>Рады вас видеть, {teacher.name}</span>
+                  <h1>
+                    На сегодня у вас {lessons.filter((lesson2) =>
+                        isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), today)).length 
+                        ? 
+                        lessons.filter((lesson2) =>
+                        isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), today)).length + " запланированных занятия" : "нету запланированных занятий"}
+                  </h1>
+                  {closerLesson ? <p>
+                    Ближайшее занятие сегодня, в {formattedTime}, с учеником {closerStudent?.name} {closerStudent?.surname} 
+                     по предмету {closerCourse?.title}
+                  </p> : ''}
+  
+                  {/* <p>Занятие №{closerLesson.lesson_number} {closerLesson.title}</p> */}
+                  <button
+                    className={styles.goToLessonButton}
+                    disabled={disableButton}
+                    onClick={() => {
+                      closerLesson.personal_lesson_link ||
+                        closerLesson.default_lesson_link
+                        ? startLessonLink(
+                          closerLesson.personal_lesson_link
+                            ? closerLesson.personal_lesson_link
+                            : closerLesson.default_lesson_link
+                        )
+                        : startNewLesson()
+                    }}
+                  >
+                    Перейти к занятию
+                  </button>
+                  {/* {closerLesson !== undefined && students.length > 0 && closerStudent != undefined ?
+                    <>
+                      <p className={styles.closerLessonInfo}>Занятие №{closerLesson.lesson_order} Тема - {closerLesson.title}  </p>
+                      <p className={styles.closerLessonInfo}>Студент - {closerStudent?.name} {closerStudent?.surname}</p>
+                    </>
+                    : ''} */}
+                </div>
+                <div className={styles.calendarBlock}>
+                  <Calendar2 lessons={lessons} />
+                </div>
               </div>
             </div>
+  
+            <Footer />
           </div>
-
+        </>
+        : <div
+          style={{
+            backgroundColor: "#f1faff",
+            overflowX: "auto"
+          }}
+        >
+          <Header white={true} />
+          <div className={styles.not_in}>
+            <span>У вас нет доступа к данной странице. Перейти в</span>
+            <span className={styles.not_in_lk} onClick={async () => {
+              await router.push(`/cabinet/${localStorage.role}/${localStorage.login}`)
+              await window.location.reload()
+            }}>
+              <a> Личный кабинет</a>
+            </span>
+          </div>
           <Footer />
         </div>
-      </>
-      : <div
-        style={{
-          backgroundColor: "#f1faff",
-          overflowX: "auto"
-        }}
-      >
-        <Header white={true} />
-        <div className={styles.not_in}>
-          <span>У вас нет доступа к данной странице. Перейти в</span>
-          <span className={styles.not_in_lk} onClick={async () => {
-            await router.push(`/cabinet/${localStorage.role}/${localStorage.login}`)
-            await window.location.reload()
-          }}>
-            <a> Личный кабинет</a>
-          </span>
+      )
+    } else {
+      return (
+        <div
+          style={{
+            backgroundColor: "#f1faff",
+            overflowX: "auto"
+          }}
+        >
+          <Header white={true} />
+          <div className={styles.not_in}>
+            <span>Вы не авторизованы, пройдите на страницу </span>
+            <Link href={'https://www.oilan-classroom.com/auth'}>
+              <a> авторизации</a>
+            </Link>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    )
+      )
+    } 
   } else {
     return (
-      <div
-        style={{
-          backgroundColor: "#f1faff",
-          overflowX: "auto"
-        }}
-      >
-        <Header white={true} />
-        <div className={styles.not_in}>
-          <span>Вы не авторизованы, пройдите на страницу </span>
-          <Link href={'https://www.oilan-classroom.com/auth'}>
-            <a> авторизации</a>
-          </Link>
-        </div>
-        <Footer />
+      <div className={styles.container}>
+      <HeaderTeacher
+        white={true}
+        url={props.url}
+        teacher={teacher}
+        isInMainPage={isInMainPage}
+      />
+      <div className={styles.cantainer}>
+        
       </div>
+
+      <Footer />
+    </div>
     )
   }
 }

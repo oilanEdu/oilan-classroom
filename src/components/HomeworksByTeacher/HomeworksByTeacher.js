@@ -332,6 +332,7 @@ function HomeworksByTeacher(props) {
             ))} </>
             : ''
           }
+          {answers.length === 0 ? 'Пока что, нету выполненных домашних заданий...' : ''}
         </div>
       </div>
     </div>

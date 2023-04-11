@@ -614,7 +614,7 @@ const Lesson = (props) => {
     return (
     //localStorage && teacher.url == localStorage.login || student?.nickname == localStorage.login?
     <div className={styles.all}>
-      <div style={{backgroundColor: "#f1faff", width: "100%"}}>
+      <div style={{backgroundColor: "#white", width: "100%"}}>
         {role === "student" 
           ? 
           <HeaderStudent name={student?.name} surname={student?.surname} nickname={student?.nickname} courseUrl={student?.url} />
@@ -753,7 +753,11 @@ const Lesson = (props) => {
                 </div>
               </>) 
               : <>
-                <img src="https://realibi.kz/file/756332.png" style={{width: "100%"}} />
+                {/* <img src="https://realibi.kz/file/756332.png" style={{width: "100%"}} /> */}
+                {/* <div className={styles.allReady}>
+                          <p>Всё готово и настроено</p>
+                          <button>Присоедениться к уроку</button>
+                </div> */}
                 <JoinRoom handleSubmit={handleSubmit}
                   idOfNewRoom={idOfNewRoom}
                   setIdOfNewRoom={setIdOfNewRoom}
@@ -893,7 +897,7 @@ const Lesson = (props) => {
                 </div>
               </>) 
               : <>
-                <img src="https://realibi.kz/file/756332.png" style={{width: "100%"}} />
+                {/* <img src="https://realibi.kz/file/756332.png" style={{width: "100%"}} /> */}
                 <JoinRoom handleSubmit={handleSubmit} 
                   idOfNewRoom={idOfNewRoom}
                   setIdOfNewRoom={setIdOfNewRoom}

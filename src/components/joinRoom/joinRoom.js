@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import uuid4 from 'uuid4';
 import axios from 'axios';
 import globals from "../../globals";
+import styles from "../../../pages/lesson/lesson.module.css"
 
 const joinRoom = ({ handleSubmit, userName, roomName, token, setToken, setIdOfNewRoom, idOfNewRoom }) => {
   console.log('USER!!!', userName);
@@ -75,9 +76,11 @@ const joinRoom = ({ handleSubmit, userName, roomName, token, setToken, setIdOfNe
     }
   };
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-gray-800">
-      <div className="w-64 h-32 p-4 rounded-lg">
-        <form
+    <div className={styles.allReady}>
+    {/* <p>Всё готово и настроено</p>
+    <button>Присоедениться к уроку</button> */}
+    <h1 style={{color: "white", marginBottom: "40px"}}>Всё готово и настроено</h1>
+    <form
           style={{textAlign: "end"}}
           onSubmit={(e) => {
             e.preventDefault();
@@ -88,25 +91,28 @@ const joinRoom = ({ handleSubmit, userName, roomName, token, setToken, setIdOfNe
         >
           <button 
             style={{
-              background: "#007AFF",
-              borderRadius: "8px",
-              border: "none"
+              background: "#ffffff",
+              borderRadius: "5px",
+              border: "none",
+              marginBottom: "15%",
+              color: "black",
+              fontSize: "24px",
+              padding: "20px 40px"
             }}
-            className="px-4 py-2 bg-blue-700 rounded-lg text-white"
+            // className="px-4 py-2 bg-blue-700 rounded-lg text-white"
           >
             <span
               style={{
-                background: "url(https://realibi.kz/file/892662.png) no-repeat",
-                backgroundPosition: "right",
-                backgroundSize: "18px",
-                paddingRight: "30px",
+                // background: "url(https://realibi.kz/file/892662.png) no-repeat",
+                // backgroundPosition: "right",
+                // backgroundSize: "18px",
+                // paddingRight: "30px",
               }}
             >
-              Подключиться к уроку
+              Присоедениться к уроку
             </span>
           </button>
         </form>
-      </div>
     </div>
   );
 };

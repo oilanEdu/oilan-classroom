@@ -266,6 +266,12 @@ export default function Student({ programs }) {
             method: "put",
             url: `${globals.productionServerDomain}/updateSchedule`,
             data: dataForUpdateSchedule,
+          }).then(response => {
+            getTeachers()
+            getCategories()
+            loadTeacherData()
+            getStudents()
+            getRoles()
           })
         }
       }
@@ -281,6 +287,12 @@ export default function Student({ programs }) {
           method: "post",
           url: `${globals.productionServerDomain}/createSchedule`,
           data: dataForCreateSchedule,
+        }).then(response => {
+          getTeachers()
+          getCategories()
+          loadTeacherData()
+          getStudents()
+          getRoles()
         })
       }
     }
@@ -409,10 +421,25 @@ export default function Student({ programs }) {
                         <span className={+lesson.score > 0 ? styles.lesson_item_done : styles.lesson_item}>{lesson.lesson_order}</span>
                         {/* <p className={styles.lesson_date}>{+lesson.score > 0 ? "Пройден" : lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}</p> */}
                       </div>
-                      <p className={styles.lesson_date}>
+                      {new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).toLocaleDateString() ===
+                        "01.01.1970" ? (
+                          <>
+                            <p>Дата не задана</p>{" "}
+                            <p
+                              style={{ color: "#2E8CF2", cursor: "pointer" }}
+                              onClick={() => setTabNum(1)}
+                            >
+                              Задать
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                          <p className={styles.lesson_date}>
                         {lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}
                       </p>    
                       <p>{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours().toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")}-{(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours() + 1).toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")} </p>
+                          </>
+                        )}     
                     </div>
                   </>
                 })}

@@ -1,0 +1,206 @@
+@font-face {
+    font-family: "Gotham Regular";
+    src: url('../../../../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
+  }
+  
+  @font-face {
+    font-family: 'Gotham Medium';
+    src: url('../../../../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+  }
+  
+  @font-face {
+    font-family: 'Gotham Light';
+    src: url('../../../../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+  }
+  
+  @font-face {
+    font-family: 'Gotham Bold';
+    src: url('../../../../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+  }
+  
+  
+  .container {
+    padding: 0 100px;
+    background: #FBFDFF;
+  }
+  
+  .contentWrapper {
+    padding: 60px 0;
+  }
+  
+  .detailInfoHeader p {
+    font-size: 45px;
+    font-family: 'Gotham Medium';
+    color: #2E8CF2;
+  }
+  
+  .dataBlock {
+    display: flex;
+  }
+  
+  .input_container p {
+    font-family: 'Gotham Regular';
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .input_container {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .input_container .wrapper_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 30%;
+  }
+  
+  .input_container input {
+    width: 80%;
+    outline: none;
+    background: #FFFFFF;
+    border: 0.5px solid #A3CEFD;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: 'Gotham Regular';
+  }
+  
+  
+  .input_container input:focus {
+    border: 0.5px solid #2E8CF2;
+  }
+  
+  .input_container select {
+    width: 80%;
+    outline: none;
+    background: #FFFFFF;
+    border: 0.5px solid #A3CEFD;
+    border-radius: 5px;
+    padding: 12px 40px 12px 20px;
+    font-family: 'Gotham Regular';
+  }
+  
+  .input_container textarea {
+    width: 40%;
+    height: 100px;
+    outline: none;
+    background: #FFFFFF;
+    border: 0.5px solid #A3CEFD;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: 'Gotham Regular';
+    resize: none;
+  }
+  
+  .form_button {
+    background: #2E8CF2;
+    border-radius: 6px;
+    color: white;
+    width: auto;
+    padding: 15px 30px;
+    outline: none;
+    border: none;
+  
+  }
+  
+  .form_button:hover {
+    transition: all 0.1s linear;
+    background: #2b7ed6;
+  }
+  
+  .error_message {
+    font-family: 'Gotham Medium';
+    color: rgb(179, 7, 7);
+    margin-bottom: 15px;
+  }
+  
+  .addedStudents p {
+    /* font-family: 'Gotham Pro'; */
+    font-size: 18px;
+  }
+  
+  .addedStudents {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 25%;
+  }
+  
+  .wrapper_students {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    background: #fff;
+    border: 1px solid #A3CEFD;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px
+  }
+  
+  .student_info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  .student_info p {
+    margin-bottom: 0;
+    margin-left: 10px;
+    font-family: 'Gotham Medium';
+  }
+  
+  .student_info img {
+    width: 30px;
+  }
+  
+  .student_delete {
+    width: 12px;
+    cursor: pointer
+  }
+  
+  
+  
+  @media screen and (max-width:575px) {
+  
+    .input_container input,
+    .input_container select,
+    .input_container textarea {
+      width: 100%;
+    }
+  
+    .container {
+      padding: 0 20px;
+      width: 100%;
+    }
+  
+    .contentWrapper {
+      padding: 30px 0;
+    }
+  
+    .wrapper_box {
+      width: 100% !important;
+    }
+  
+    .detailInfoHeader p {
+      font-size: 20px;
+    }
+  
+    .form_button {
+      width: 100%;
+    }
+  
+    .dataBlock {
+      flex-wrap: wrap;
+    }
+  
+    .formBlock {
+      margin-bottom: 30px;
+    }
+  
+    .addedStudents {
+      width: 100%;
+    }
+  }

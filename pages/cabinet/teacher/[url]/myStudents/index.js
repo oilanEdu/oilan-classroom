@@ -181,8 +181,8 @@ const myStudents = () => {
     );
 
     setStudents(teacherStudents['data'])
-    debugger
     setGroups(teacherGroups['data'])
+    debugger
     console.log(teacherStudents['data']);
   }
 
@@ -391,7 +391,9 @@ const myStudents = () => {
                         </p>
                       </div>
                       <div className={styles.student_btn_obman}><span></span></div>
-                      <div onClick={() => router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents/group`)} className={styles.student_btn}><img src="https://realibi.kz/file/897616.svg" alt="" /></div>
+                      <div 
+                      // onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/student?nick=${student?.nickname}&programId=${student?.program_id}`)} 
+                      onClick={() => router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents/group?groupId=${group.id}`)} className={styles.student_btn}><img src="https://realibi.kz/file/897616.svg" alt="" /></div>
                     </div>
                   ))}
                 </div>

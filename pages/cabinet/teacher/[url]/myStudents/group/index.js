@@ -21,6 +21,7 @@ const Group = () => {
   const [lessons, setLessons] = useState([]);
   const [showSort, setShowSort] = useState(false);
   const [sortMode, setSortMode] = useState(false)
+  const [currentGroup, setCurrentGroup] = useState()
 
   const isInMainPage = true;
 
@@ -170,9 +171,19 @@ const Group = () => {
     }
     );
 
-    setStudents(teacherGroups['data'])
+    // setStudents(teacherGroups['data'])
     setGroups(teacherGroups['data'])
+
+    let currentGroupLocal = teacherGroups['data'].find(el => el.id === +router.query.groupId)
+    setCurrentGroup(currentGroupLocal)
     console.log(teacherGroups['data']);
+
+    let groupId = router.query.groupId
+    // debugger
+    let getStudentsByGroupId = await axios.post(`${globals.productionServerDomain}/getStudentsByGroupId/` + groupId)
+
+    let filteredStudents = teacherGroups['data'].filter(el => getStudentsByGroupId['data'].some(el2 => el.student_id === el2.student_id && el.course_id === el2.course_id && el.program_id === el2.program_id && el.title === currentGroupLocal.title))
+    setStudents(filteredStudents)
   }
 
   useEffect(() => {
@@ -220,8 +231,10 @@ const Group = () => {
         <div>
           <div>
               <div className={styles.students_head}>
-                <h4>{groups[0]?.title}</h4>
-                <button>Редактировать</button>
+                <h4>{currentGroup?.title}</h4>
+                <button
+                onClick={() => router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents/edit_group?groupId=${router.query.groupId}`)}
+                >Редактировать</button>
                 <ClickAwayListener onClickAway={() => setShowSort(false)}>
                   <div className={styles.sortContainer}>
                     <div

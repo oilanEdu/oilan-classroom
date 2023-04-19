@@ -47,10 +47,11 @@ const RegisterForm = () => {
   }
  
   const checkPassword = (password) => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/;
-    if(!regex.test(password)) {
-      return false;
-    }
+    debugger
+    // const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/;
+    // if(!regex.test(password)) {
+    //   return false;
+    // }
 
     if(password.length < 8) {
       return false;
@@ -161,7 +162,7 @@ const loadCaptcha = async () => {
             login, 
             password 
           };
-  
+          debugger
           await axios.post(`${globals.productionServerDomain}/register`, data).then((res) => {
             console.log('proshlo', res);
             // setErrorMessage('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!');
@@ -174,6 +175,7 @@ const loadCaptcha = async () => {
             console.log('ne proshlo', error)
           });
         } else {
+          debugger
           setErrorMessage("Ваш пароль небезопасен")
         }
 

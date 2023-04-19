@@ -4,6 +4,7 @@ import * as dashboardActions from '../../store/actions/dashboardActions';
 import * as webRTCHandler from '../webRTC/webRTCHandler';
 import * as webRTCGroupCallHandler from '../webRTC/webRTCGroupCallHandler';
 import { Provider, useSelector, useDispatch } from 'react-redux';
+import { setGroupCallActive, setCallState, callStates, setGroupCallIncomingStreams, clearGroupCallData, setRemoteStream } from '../../store/actions/callActions';
 
 const SERVER = 'wss://realibi.kz:3031';
 
@@ -65,28 +66,23 @@ export const connectWithWebSocket = () => {
     console.log('step4', data)
   });
 
-  socket.on('reload-streams', ({ socketId, state, userName, peerId, room }) => {
-    // Обновляем потоки для пользователя с id=socketId на фронтенде
-    console.log('step5', { socketId: socketId, screenStatus: state, username: userName, streamId: peerId, room: room })
-    const streams = store.getState().call.groupCallStreams;
-    const groupCallRooms = store.getState().dashboard.groupCallRooms;
-    const activeUsers = store.getState().dashboard.activeUsers;
-    console.log('eee activeUsers', activeUsers)
-    console.log('eee groupCallRooms', groupCallRooms)
-    console.log('eee streams', streams)
-    streams.map(stream => {
-      // if (stream.id === peerId) {
-      //   // webRTCGroupCallHandler.addVideoStream(screen)
-      //   webRTCGroupCallHandler.tesT()
-      //   // const groupCallRooms = store.getState().dashboard.groupCallRooms;
-      //   const roomy = groupCallRooms.find(roomy => roomy.hostName === userName);
-      //   console.log('eee roomy exist', roomy)
-      //   webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId, 'test')
-      // }
-      console.log('eee', stream.id, ' - ', peerId)
-    })
-    
-  });
+  socket.on('reload-streams', async ({ socketId, state, userName, peerId, room, role, teacherUrl }) => {
+  console.log('step5', { socketId: socketId, screenStatus: state, username: userName, streamId: peerId, room: room, role: role, teacherUrl: teacherUrl });
+
+  const streams = store.getState().call.groupCallStreams;
+
+  for (const stream of streams) {
+    if (stream.id === peerId) {
+      try {
+        //await webRTCGroupCallHandler.leaveGroupCall();
+        //await webRTCGroupCallHandler.joinGroupCall(room.socketId, room.roomId);
+      } catch (error) {
+        console.log('Error:', error);
+      }
+    }
+    console.log('eee', stream.id, ' - ', peerId);
+  }
+});
 };
 
 // socket.on('reload-streams', ({ socketId, state, userName, peerId, room }) => {
@@ -162,9 +158,9 @@ export const sendPreOffer = (data) => {
   socket.emit('pre-offer', data);
 };
 
-export const changedCamera = (state, username, id) => {
-  console.log('step3', { screenStatus: state, username: username, streamId: id })
-  socket.emit('camera-state-changed', { state: state, username: username, id: id });
+export const changedCamera = (state, username, id, role, teacherUrl) => {
+  console.log('step3', { screenStatus: state, username: username, streamId: id, role: role, teacherUrl: teacherUrl })
+  socket.emit('camera-state-changed', { state: state, username: username, id: id, role: role, teacherUrl: teacherUrl });
   
 };
 

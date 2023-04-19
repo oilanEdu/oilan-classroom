@@ -72,8 +72,7 @@ export const getLocalStream = async () => {
         return;
       }
     }
-    // webRTCGroupCallHandler.addVideoStream(screenSharingStream)
-    // wss.changedCamera( screenSharingStream.getTracks(), 1, 1 );
+
     store.dispatch(setLocalStream(screenSharingStream));
     store.dispatch(setCallState(callStates.CALL_AVAILABLE));
     createPeerConnection(screenSharingStream)
@@ -94,14 +93,14 @@ export const getLocalStream = async () => {
 //     });
 // };
 
-const createPeerConnection = (localStream) => {
+const createPeerConnection = () => {
   if (peerConnection) {
     peerConnection.close();
     peerConnection = null;
   }
   peerConnection = new RTCPeerConnection(configuration);
-  
-  // const localStream = store.getState().call.localStream;
+
+  const localStream = store.getState().call.localStream;
 
   for (const track of localStream.getTracks()) {
     peerConnection.addTrack(track, localStream);
@@ -209,9 +208,9 @@ export const handlePreOfferAnswer = (data) => {
   }
 };
 
-export const changedCamera = (state, username, id) => {
-  console.log('step2', {screenStatus: state, username: username, streamId: id});
-  wss.changedCamera( state, username, id );
+export const changedCamera = (state, username, id, role, teacherUrl) => {
+  console.log('step2', {screenStatus: state, username: username, streamId: id, role: role, teacherUrl: teacherUrl});
+  wss.changedCamera( state, username, id, role, teacherUrl );
   console.log('step7', ls)
 };
 
@@ -283,7 +282,7 @@ export const checkIfCallIsPossible = () => {
 //   getLocalStream();
 // };
 
-export const switchForScreenSharingStream = async (state, username, id) => {
+export const switchForScreenSharingStream = async () => {
   const screenSharingActive = store.getState().call.screenSharingActive;
   const localStream = store.getState().call.localStream;
   const audioTrack = localStream.getAudioTracks()[0];
@@ -297,6 +296,7 @@ export const switchForScreenSharingStream = async (state, username, id) => {
       screenSharingStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
       audioTrack && screenSharingStream.addTrack(audioTrack);
       store.dispatch(setScreenSharingActive(true));
+
       getLocalStream();
     } else {
       // Switch back to camera
@@ -306,11 +306,11 @@ export const switchForScreenSharingStream = async (state, username, id) => {
       sender.replaceTrack(localStream.getVideoTracks()[0]);
       store.dispatch(setScreenSharingActive(false));
       screenSharingStream.getTracks().forEach(track => track.stop());
+
       getLocalStream();
     }
 
     const senders = peerConnection.getSenders();
-    // console.log('senders', senders)
     const sender = senders.find(sender => sender.track.kind === videoTrack.kind);
     sender.replaceTrack(videoTrack);
 

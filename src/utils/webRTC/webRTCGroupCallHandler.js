@@ -55,15 +55,16 @@ export const createNewGroupCall = () => {
 
 export const joinGroupCall = (hostSocketId, roomId, user) => {
   console.log('eee from conv', hostSocketId, roomId, user)
+  console.log('CONNECTED!!!')
   const localStream = store.getState().call.localStream;
-  localStream.username = user;
+  //localStream.username = user;
   groupCallRoomId = roomId;
   wss.userWantsToJoinGroupCall({
     username: user,
     peerId: myPeerId,
     hostSocketId,
     roomId,
-    localStreamId: localStream.id
+    localStreamId: localStream?.id
   });
 
   store.dispatch(setGroupCallActive(true));
@@ -132,13 +133,19 @@ export const addVideoStream = (incomingStream) => {
     incomingStream
   ];
 
+  console.log('eee GCS', groupCallStreams)
+
   store.dispatch(setGroupCallIncomingStreams(groupCallStreams));
 };
 
-export const tesT = () => {
+export const updateVideoStream = (data) => {
   const groupCallStreams = [
-    ...store.getState().call.groupCallStreams
+    ...store.getState().call.groupCallStreams,
+    data.stream
   ];
+
+  console.log('eee GCS', groupCallStreams)
+  store.dispatch(setRemoteStream(data.stream));
   store.dispatch(setGroupCallIncomingStreams(groupCallStreams));
 };
 

@@ -441,7 +441,7 @@ const Lesson = (props) => {
     }, [videoTrack]);
 
     return (
-      <div style={{display: 'flex', flexDirection: 'column', width: percentOfUnderTile, marginRight: '12px'}}>
+      <div style={{display: 'flex', flexDirection: 'column', width: "122px", marginRight: '12px'}}>
         {videoTrack?.enabled ? (
           <video style={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', borderRadius: '6px'}} className={styles.minVidArea} ref={videoRef} autoPlay playsInline muted={isLocal} ></video>
         ) : <div className={styles.zaglushkahahaMini}></div>}
@@ -560,7 +560,7 @@ const Lesson = (props) => {
     }, [videoTrack]);
 
     return (
-      <div style={{display: 'flex', flexDirection: 'column', width: percentOfUnderTile, marginRight: '12px'}}>
+      <div style={{display: 'flex', flexDirection: 'column', width: "122px", marginRight: '12px'}}>
         {videoTrack?.enabled ? (
           <video style={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', aspectRatio: '4/3', background: 'black', borderRadius: '6px'}} className={styles.minVidArea} ref={videoRef} autoPlay playsInline muted={isLocal} ></video>
         ) : <div className={styles.zaglushkahahaMini}></div>}

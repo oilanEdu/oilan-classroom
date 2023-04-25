@@ -96,8 +96,8 @@ export default function Student({ programs }) {
     console.log(result.data);
   }
   const getLessons = async () => {
-    let programLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + studentPrograms[0]?.program_id)
-    await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${studentPrograms[0]?.course_url}&program_id=${studentPrograms[0]?.program_id}&student_id=${studentPrograms[0]?.student_id}`).then(res => {
+    let programLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + studentPrograms?.program_id)
+    await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${studentPrograms?.course_url}&program_id=${studentPrograms?.program_id}&student_id=${studentPrograms?.student_id}`).then(res => {
       let array = res.data
       const uniqueLessons = array.filter((item, index, self) => 
         index === self.findIndex((t) => (
@@ -118,7 +118,6 @@ export default function Student({ programs }) {
       });
       setLessons(newArray);
       console.log(newArray);
-      debugger
     });
   }
 
@@ -136,8 +135,11 @@ export default function Student({ programs }) {
 
   const getProgramsByStudentId = async () => {
     let result = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentId/` + student?.id)
+    let result2 = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentIdGroup/` + student?.id)
     console.log('ee', student)
-    setStudentPrograms(result.data);
+    let findProgram = result.data.find(el => el.course_id === +router.query.courseId && el.program_id === +router.query.programId)
+    setStudentPrograms(findProgram);
+    debugger
     console.log(studentPrograms)
   }
 
@@ -148,7 +150,6 @@ export default function Student({ programs }) {
     getStudents()
     getRoles()
     router
-    debugger
   }, [])
 
   useEffect(() => {
@@ -368,7 +369,7 @@ export default function Student({ programs }) {
             <div className={styles.input_wrapper}>
               <div className={styles.input_container}>
                 <p>Ссылка на личный кабинет</p>
-                <input value={"www.oilan-classroom.com/cabinet/student/" + student?.nickname + "/course/" + studentPrograms[0]?.course_url + "?program=" + studentPrograms[0]?.program_id} />
+                <input value={"www.oilan-classroom.com/cabinet/student/" + student?.nickname + "/course/" + studentPrograms?.course_url + "?program=" + studentPrograms?.program_id} />
               </div>
               <div className={styles.input_container}>
                 <p>Курс</p>
@@ -386,7 +387,7 @@ export default function Student({ programs }) {
                       <option value={course.id}>{course.title}</option>
                     ))}
                   </select>
-                  : <input value={studentPrograms[0]?.course_title} />
+                  : <input value={studentPrograms?.course_title} />
                 }
               </div>
               <div className={styles.input_container}>
@@ -405,7 +406,7 @@ export default function Student({ programs }) {
                       <option value={program.id}>{program.title}</option>
                     ))}
                   </select>
-                  : <input value={studentPrograms[0]?.title} />
+                  : <input value={studentPrograms?.title} />
                 }
               </div>
             </div>
@@ -466,7 +467,7 @@ export default function Student({ programs }) {
           </div>
           <div className={styles.studentPrograms_wrapper}>
             <span>Программа</span>
-            <input className={styles.input_programm} value={studentPrograms[0]?.title} />
+            <input className={styles.input_programm} value={studentPrograms?.title} />
             <div>
               <div className={styles.lessonsWrapper}>
                 <h6>Список уроков</h6>

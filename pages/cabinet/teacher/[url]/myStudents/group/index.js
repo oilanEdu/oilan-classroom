@@ -65,7 +65,7 @@ const Group = () => {
       // debugger
       student.check = 0
       let diff = 604800000 * 7
-      if (!lessonsLoaded) { loadStudentLessons(student.student_id, student.program_id) }
+      // if (!lessonsLoaded) { loadStudentLessons(student.student_id, student.program_id) }
       let answersCount = 0
       let studentCheck = 0
       let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${student.course_url}&program_id=${student.program_id}&student_id=${student.student_id}`).then(async res => {
@@ -184,6 +184,33 @@ const Group = () => {
 
     let filteredStudents = teacherGroups['data'].filter(el => getStudentsByGroupId['data'].some(el2 => el.student_id === el2.student_id && el.course_id === el2.course_id && el.program_id === el2.program_id && el.title === currentGroupLocal.title))
     setStudents(filteredStudents)
+
+    let programLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + currentGroupLocal?.program_id)
+    // setLessons(programLessons['data'])
+    debugger
+
+    await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${currentGroupLocal?.course_url}&program_id=${currentGroupLocal?.program_id}&student_id=${currentGroupLocal?.student_id}`).then(res => {
+      let array = res.data
+      const uniqueLessons = array.filter((item, index, self) => 
+        index === self.findIndex((t) => (
+          t.id === item.id
+        ))
+      );
+      const newArray = [];
+
+      uniqueLessons.forEach(element => {
+        newArray.push(element);
+      });
+
+      programLessons['data'].forEach(element => {
+        const found = newArray.some(el => el.id === element.id);
+        if (!found) {
+          newArray.push(element);
+        }
+      });
+      setLessons(newArray);
+      console.log(newArray);
+    });
   }
 
   useEffect(() => {
@@ -267,6 +294,14 @@ const Group = () => {
                   </div>
                 </ClickAwayListener>
               </div>
+              <div className={styles.groupDesc}>
+                <p>
+                Курс - {currentGroup.program_title}
+                </p>
+                <p>
+                Программа - {currentGroup.course_title}
+                </p>
+              </div>
 
               {students
                 ? <div className={styles.my_students}>
@@ -311,6 +346,42 @@ const Group = () => {
                 </div>
                 : <></>
               }
+              <div className={styles.course_success_wrapper}>
+              <div>
+                <h5>Прохождение курса</h5>
+              </div>
+              <div className={styles.course_success}>
+                {lessons.map(lesson => {
+                  return <>
+                    <div className={styles.lesson_complete_wrapper}>
+                      <div className={styles.lesson_complete}>
+                        <span className={+lesson.score > 0 ? styles.lesson_item_done : styles.lesson_item}>{lesson.lesson_order}</span>
+                        {/* <p className={styles.lesson_date}>{+lesson.score > 0 ? "Пройден" : lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}</p> */}
+                      </div>
+                      {new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).toLocaleDateString() ===
+                        "01.01.1970" ? (
+                          <>
+                            <p>Дата не задана</p>{" "}
+                            <p
+                              style={{ color: "#2E8CF2", cursor: "pointer" }}
+                              onClick={() => setTabNum(1)}
+                            >
+                              Задать
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                          <p className={styles.lesson_date}>
+                        {lesson.personal_time ? new Date(lesson.personal_time).toLocaleDateString() : new Date(lesson.start_time).toLocaleDateString()}
+                      </p>    
+                      <p>{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours().toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")}-{(new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getHours() + 1).toString().padStart(2, "0")}:{new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time).getMinutes().toString().padStart(2, "0")} </p>
+                          </>
+                        )}     
+                    </div>
+                  </>
+                })}
+              </div>
+            </div>
             </div>
         </div>
       </div>

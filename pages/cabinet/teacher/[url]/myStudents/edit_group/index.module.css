@@ -161,6 +161,19 @@
     cursor: pointer
   }
   
+  .saveScheduleButton {
+    background: #2E8CF2;
+    border-radius: 5px;
+    color: white;
+    padding: 12px 30px;
+    outline: none;
+    border: none;
+    width: fit-content;
+  }
+
+  .lessonsBlock {
+    margin-top: 40px;
+  }
   
   
   @media screen and (max-width:575px) {

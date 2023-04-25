@@ -5,6 +5,8 @@ import globals from "../../../../../../src/globals";
 import axios from "axios";
 import HeaderTeacher from "../../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import GoToLessonWithTimerComponent from "../../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
+import stylesOfEditLesson from "../../myLessons/index.module.css"
+import NewDateAndTimePickerForLesson from "../../../../../../src/components/NewDateAndTimePickerForLesson/NewDateAndTimePickerForLesson";
 
 const AddNewGroup = () => {
   const router = useRouter();
@@ -38,6 +40,9 @@ const AddNewGroup = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [succesMessage, setSuccesMessage] = useState("");
   const [selectedStudent, setSelectedStudent] = useState()
+
+  const [saveIsClicked, setSaveIsClicked] = useState(false)
+  const [editData, setEditData] = useState(false);
 
   const studentsHandler = () => {
     
@@ -122,6 +127,33 @@ const AddNewGroup = () => {
     setStudentsByGroup(idArrayFilteredStudents)
     setStudentsByGroupPrevious(idArrayFilteredStudents)
     setStudentsByGroupInfo(filteredStudents)
+
+    let programLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + currentGroupLocal?.program_id)
+    // setLessons(programLessons['data'])
+    debugger
+
+    await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${currentGroupLocal?.course_url}&program_id=${currentGroupLocal?.program_id}&student_id=${currentGroupLocal?.student_id}`).then(res => {
+      let array = res.data
+      const uniqueLessons = array.filter((item, index, self) => 
+        index === self.findIndex((t) => (
+          t.id === item.id
+        ))
+      );
+      const newArray = [];
+
+      uniqueLessons.forEach(element => {
+        newArray.push(element);
+      });
+
+      programLessons['data'].forEach(element => {
+        const found = newArray.some(el => el.id === element.id);
+        if (!found) {
+          newArray.push(element);
+        }
+      });
+      setLessons(newArray);
+      console.log(newArray);
+    });
   }
 
   const getTeachers = async () => {
@@ -152,8 +184,8 @@ const AddNewGroup = () => {
 
   const getLessons = async () => {
     let result = await axios.get(`${globals.productionServerDomain}/getLessons`)
-    setLessons(result.data);
-    console.log(lessons)
+    // setLessons(result.data);
+    // console.log(lessons)
   }
 
   const getStudents = async () => {
@@ -233,10 +265,6 @@ const AddNewGroup = () => {
     }
   }
 
-  useEffect(() => {
-    
-  }, [])
-
   const editGroup = async() => {
     ///Update group data
       const data = {
@@ -279,6 +307,27 @@ const AddNewGroup = () => {
           });
 
         
+        /// middleware updates 
+        for (let index = 0; index < studentsByGroup.length; index++) {
+          const element = studentsByGroup[index];
+          const dataMiddleware = {
+            nickname: studentsByGroupInfo.find(el => el.student_id === element).nickname,
+            courseId: courseId,
+            programId: lessonProgramId
+          };
+          // debugger
+          await axios({
+            method: "post",
+            url: `${globals.productionServerDomain}/addStudentProgram`,
+            data: dataMiddleware,
+          })
+            .then(function (res) {
+              // alert("Программа успешно обновлена");
+            })
+            .catch((err) => {
+              // alert("Произошла ошибка");
+            });
+        }
 
         ///Update students of group list
         const whichStudentsToAdd = studentsByGroup.filter(el => !studentsByGroupPrevious.includes(el))
@@ -337,7 +386,88 @@ const AddNewGroup = () => {
 
         router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents/group?groupId=${currentGroup.id}`)
   }
-  return (
+
+//   2) В странице редактирования:
+// Помимо того что есть, внизу вывести все уроки, а так же по нажатию на редактировать,чтобы можно было менять дату и время
+
+// let selectedProgram = await axios.post(`${globals.productionServerDomain}/getProgramById/`, { programId })
+
+
+const saveLessonDateAndTime = async (dateAndTimeMerger, lesson_id, course_id) => {
+  if (dateAndTimeMerger.length > 10) {
+    for (let index = 0; index < studentsByGroupInfo.length; index++) {
+      const element = studentsByGroupInfo[index];
+      const dataForGetSchedule = {
+        lesson_id,
+        course_id,
+        student_id: element.student_id
+      };
+      console.log("dataForGetSchedule", dataForGetSchedule)
+      let schedule = await axios({
+        method: "post",
+        url: `${globals.productionServerDomain}/getScheduleByLessonIdAndCourseIdAndStudentId`,
+        data: dataForGetSchedule,
+      }).then(function (res) {
+        let scheduleRes = res.data
+        console.log("scheduleRes", scheduleRes);
+        if (scheduleRes.length > 0) {
+          return scheduleRes
+        }
+      })
+        .catch((err) => {
+          alert("Произошла ошибка");
+        });
+      console.log(schedule, "schedule1")
+      if (schedule != undefined) {
+        if (schedule.some(el => el.lesson_id == lesson_id) && schedule.some(el => el.course_id == course_id) && schedule.some(el => el.student_id == element.student_id)) {
+          console.log("isscheduleRIGHT is RIGHT")
+          const dataForUpdateSchedule = {
+            dateAndTimeMerger,
+            lesson_id,
+            course_id,
+            student_id: element.student_id
+          };
+          // console.log("dataForGetSchedule", dataForGetSchedule)
+          let schedule = await axios({
+            method: "put",
+            url: `${globals.productionServerDomain}/updateSchedule`,
+            data: dataForUpdateSchedule,
+          }).then(response => {
+            // getTeachers()
+            // getCategories()
+            // loadTeacherData()
+            // getStudents()
+            // getRoles()
+          })
+        }
+      }
+      else {
+        console.log("isscheduleRIGHT is NOT RIGHT");
+        const dataForCreateSchedule = {
+          dateAndTimeMerger,
+          lesson_id,
+          course_id,
+          student_id: element.student_id
+        };
+        let schedule = await axios({
+          method: "post",
+          url: `${globals.productionServerDomain}/createSchedule`,
+          data: dataForCreateSchedule,
+        }).then(response => {
+          // getTeachers()
+          // getCategories()
+          // loadTeacherData()
+          // getStudents()
+          // getRoles()
+        })
+      }
+    }
+  }
+}
+
+
+
+return (
     <>
       <div className={styles.container}>
         <HeaderTeacher
@@ -459,6 +589,66 @@ const AddNewGroup = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+              {/* {lessons?.map(lesson =>
+                  <NewDateAndTimePickerForLesson
+                    lessons2={lessons}
+                    setLessons2={setLessons}
+                    lesson={lesson}
+                    lesson_id={lesson.id}
+                    lesson_order={lesson.lesson_order}
+                    student={studentsByGroupInfo[0]}
+                    studentsByGroupInfo={studentsByGroupInfo}
+                    saveLessonDateAndTime={saveLessonDateAndTime}
+                    saveIsClicked={saveIsClicked}
+                    editData={editData}
+                  />
+                )} */}
+              <div className={styles.lessonsBlock}>
+              {editData
+              ? <button
+                className={styles.saveScheduleButton}
+                onClick={() => {
+                  setSaveIsClicked(!saveIsClicked)
+                  setEditData(false)
+                }}
+              >
+                Сохранить расписание
+              </button>
+              : <button onClick={() => setEditData(true)} className={styles.saveScheduleButton}>Редактировать расписание</button>
+              }
+              {lessons.map(lesson => (
+                <div className={stylesOfEditLesson.lessons_uploaded}>
+                  <div className={stylesOfEditLesson.lessonRow}>
+                    <div className={stylesOfEditLesson.lessonTitle}>
+                      Урок {lesson.lesson_order}: {lesson.title}
+                    </div>
+                    <div className={stylesOfEditLesson.lessonDesc}>
+                      <p>{lesson.tesis}</p>
+                      <NewDateAndTimePickerForLesson
+                    lessons2={lessons}
+                    setLessons2={setLessons}
+                    lesson={lesson}
+                    lesson_id={lesson.id}
+                    lesson_order={lesson.lesson_order}
+                    student={studentsByGroupInfo[0]}
+
+                    studentsByGroupInfo={studentsByGroupInfo}
+                    isGroup={true}
+
+                    saveLessonDateAndTime={saveLessonDateAndTime}
+                    saveIsClicked={saveIsClicked}
+                    editData={editData}
+                  />
+                    </div>
+                  </div>
+                  <div className={stylesOfEditLesson.lessonButtons}>
+                    <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/editLesson?lesson=${lesson?.id}&fromEditGroup=${true}&groupId=${router.query.groupId}`)}>
+                      Редактировать урок
+                    </button>
+                  </div>
+                </div>
+              ))}
               </div>
             </div>
           </div>

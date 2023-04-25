@@ -127,7 +127,11 @@ const EditLessonHomeworkComponent = ({el, selectedExercise, firstExerPress,
         })
           .then(async function (res) {
             // alert("Урок успешно изменен");
-            await router.push(`/cabinet/teacher/${teacherUrl}/myLessons?program=${lesson?.program_id}`)
+            if (router.query.fromEditGroup === "true") {
+              await router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents/edit_group?groupId=${router.query.groupId}`)
+            } else {
+              await router.push(`/cabinet/teacher/${teacherUrl}/myLessons?program=${lesson?.program_id}`)
+            }
             window.location.reload()
           })
           .catch((err) => {

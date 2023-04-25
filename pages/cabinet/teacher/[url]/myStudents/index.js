@@ -69,6 +69,8 @@ const myStudents = () => {
       sort: sortType
     }
     let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
+    let teacherStudentsGroup = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherIdGroup/`, dataStudents)
+    debugger
     let teacherGroups = await axios.post(`${globals.productionServerDomain}/getGroupsByTeacherId/`, dataStudents)
     await teacherStudents['data'].forEach(async student => {
       // debugger
@@ -310,7 +312,7 @@ const myStudents = () => {
                         </p>
                       </div>
                       <div className={styles.student_btn_obman}><span></span></div>
-                      <div className={styles.student_btn} onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/student?nick=${student?.nickname}&programId=${student?.program_id}`)}><img src="https://realibi.kz/file/897616.svg" alt="" /></div>
+                      <div className={styles.student_btn} onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/student?nick=${student?.nickname}&programId=${student?.program_id}&courseId=${student.course_id}&studentId=${student.student_id}`)}><img src="https://realibi.kz/file/897616.svg" alt="" /></div>
                     </div>
                   ))}
                 </div>

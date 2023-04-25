@@ -17,6 +17,7 @@ function NewDateAndTimePickerForLesson(props) {
 
   let dateStr = new Date(props.lesson.personal_time ? props.lesson.personal_time : props.lesson.start_time)
   let dateStrTime = new Date(props.lesson.personal_time ? props.lesson.personal_time : props.lesson.start_time).toLocaleTimeString(); 
+  debugger 
   useEffect(() => {
     const newLessons = [...props.lessons2];
     const index2 = newLessons.findIndex(el => el.id === props.lesson_id);
@@ -273,17 +274,19 @@ function NewDateAndTimePickerForLesson(props) {
   }
   return (
     <div className={styles.wrapper}>
-      <div className={styles.lessonInfo}>
-        <div className={styles.titleWrapper}>
-          <p className={styles.title}>
-            Урок {props.lesson.lesson_order}:
-            <span> {props.lesson.title}</span>
-          </p>
-        </div>
-        <div className={styles.lesson_tesisWrapper}>
-          <p>{props.lesson.tesis}</p>
-        </div>
-      </div>
+      {props.isGroup === true ? '' : 
+            <div className={styles.lessonInfo}>
+            <div className={styles.titleWrapper}>
+              <p className={styles.title}>
+                Урок {props.lesson.lesson_order}:
+                <span> {props.lesson.title}</span>
+              </p>
+            </div>
+            <div className={styles.lesson_tesisWrapper}>
+              <p>{props.lesson.tesis}</p>
+            </div>
+          </div>
+      }
 
       <div className={styles.inputsWrapper}>
         <input
@@ -305,10 +308,11 @@ function NewDateAndTimePickerForLesson(props) {
           onChange={(e) => setTimeState(e.target.value)}
           onKeyDown={handleKeyDown}>
         </input>
-        <p style={{ display: errorOfDate || errorOfDateOfGoingLesson ? "block" : "none", margin: "0", color: "red", textAlign: "end", position: "absolute", top: "90px", width: "max-content"}}>
+        {/* <p style={{ display: errorOfDate || errorOfDateOfGoingLesson ? "block" : "none", margin: "0", color: "red", textAlign: "end", position: "absolute", top: "90px", width: "max-content"}}>
           {errorOfDate ? <>Занятие номер {props.lesson.lesson_order} не может быть раньше занятия номер {errorOfDateLesson.lesson_order} <br /></> : ''}
           {errorOfDateOfGoingLesson ? <>Занятие номер {props.lesson.lesson_order} совпадает по времени с занятием номер {errorOfDateOfGoingLessonLesson.lesson_order} {errorOfDateOfGoingLessonLesson.student_id === props.lesson.student_id ? '' : <>студента {studentOfError?.surname} {studentOfError?.name}</>}</> : ''}
-        </p>
+        </p> */}
+        {/* Включить когда появится решение визуально сделать не грозной*/}
       </div>
     </div>
   );

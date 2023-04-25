@@ -186,6 +186,28 @@ const AddNewGroup = () => {
           console.log(err);
           setErrorMessage(err.response.data)
         });
+
+        for (let index = 0; index < studentsByGroup.length; index++) {
+          const element = studentsByGroup[index];
+          const dataMiddleware = {
+            nickname: studentsByGroupInfo.find(el => el.student_id === element).nickname,
+            courseId: courseId,
+            programId: lessonProgramId
+          };
+          // debugger
+          await axios({
+            method: "post",
+            url: `${globals.productionServerDomain}/addStudentProgram`,
+            data: dataMiddleware,
+          })
+            .then(function (res) {
+              // alert("Программа успешно обновлена");
+            })
+            .catch((err) => {
+              // alert("Произошла ошибка");
+            });
+        }
+        
         router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents#groups`)
     } else {
       setErrorMessage("Заполните поля, обязательные для заполнения")

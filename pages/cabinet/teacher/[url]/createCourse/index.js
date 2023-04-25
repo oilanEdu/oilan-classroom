@@ -155,6 +155,7 @@ const createCourse = () => {
       })
       .catch(error => {
         console.log(error.response.data);
+        debugger
         // handle error
       });
 

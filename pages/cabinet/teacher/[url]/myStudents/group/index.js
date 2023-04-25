@@ -296,10 +296,10 @@ const Group = () => {
               </div>
               <div className={styles.groupDesc}>
                 <p>
-                Курс - {currentGroup.program_title}
+                Курс - {currentGroup?.program_title}
                 </p>
                 <p>
-                Программа - {currentGroup.course_title}
+                Программа - {currentGroup?.course_title}
                 </p>
               </div>
 

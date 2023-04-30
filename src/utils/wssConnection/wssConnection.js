@@ -1,5 +1,6 @@
 import socketClient from 'socket.io-client';
 import store from '../../store/store.js';
+import { useRouter } from 'next/router';
 import * as dashboardActions from '../../store/actions/dashboardActions';
 import * as webRTCHandler from '../webRTC/webRTCHandler';
 import * as webRTCGroupCallHandler from '../webRTC/webRTCGroupCallHandler';
@@ -56,6 +57,7 @@ export const connectWithWebSocket = () => {
 
   socket.on('group-call-join-request', (data) => {
     webRTCGroupCallHandler.connectToNewUser(data);
+    console.log('stepY', data)
   });
 
   socket.on('group-call-user-left', (data) => {
@@ -68,7 +70,29 @@ export const connectWithWebSocket = () => {
 
   socket.on('reload-streams', async ({ socketId, state, userName, peerId, room, role, teacherUrl }) => {
   console.log('step5', { socketId: socketId, screenStatus: state, username: userName, streamId: peerId, room: room, role: role, teacherUrl: teacherUrl });
+  console.log('step1500', userName, webRTCGroupCallHandler.username)
+  if (userName != webRTCGroupCallHandler.username) {
+    function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
+async function firstFunction() {
+  await delay(3000);
+  // ваш код для первой функции
+}
+
+async function secondFunction() {
+  await delay(6000);
+  // ваш код для второй функции
+}
+
+if (userName != webRTCGroupCallHandler.username) {
+  await webRTCGroupCallHandler.leaveGroupCall();
+  await firstFunction();
+  await webRTCGroupCallHandler.joinGroupCall(room.socketId, room.roomId);
+  await secondFunction();
+}
+  }
   const streams = store.getState().call.groupCallStreams;
 
   for (const stream of streams) {
@@ -85,60 +109,10 @@ export const connectWithWebSocket = () => {
 });
 };
 
-// socket.on('reload-streams', ({ socketId, state, userName, peerId, room }) => {
-//   // Обновляем потоки для пользователя с id=socketId на фронтенде
-//     console.log('step5', { socketId: socketId, screenStatus: state, username: userName, streamId: peerId, room: room });
-//     const streams = store.getState().call.groupCallStreams;
-//     streams.map(stream => {
-//       if (stream?.id === peerId) {
-//         console.log('eee SOVPALO')
-//         const groupCallRooms = store.getState().dashboard.groupCallRooms;
-//         const activeUsers = store.getState().dashboard.activeUsers;
-//         console.log('eee activeUsers', activeUsers);
-//         console.log('eee groupCallRooms', groupCallRooms);
-//         console.log('eee streams', streams);
-
-//         // Найти стрим с помощью peerId
-//         const remoteStream = streams.find(stream => stream?.id === peerId);
-
-//         if (remoteStream) {
-//           console.log('eee STREAM FINDED')
-//           // Стрим найден, добавляем его пользователю
-//           webRTCGroupCallHandler.addVideoStream(remoteStream);
-//         } else {
-//           console.log('eee RECONNECT')
-//           // Стрим не найден, пользователь может либо покинуть комнату и заново подключиться,
-//           // либо искать другой peerId и попробовать подключиться к его стриму
-//           console.log('Remote stream with peerId', peerId, 'was not found.');
-//           console.log('You can either leave the room and join again or try another peerId');
-
-//           // Покинуть комнату и заново подключиться
-//           webRTCGroupCallHandler.leaveGroupCall();
-//           const roomy = groupCallRooms.find(roomy => roomy.hostName === userName);
-//           console.log('eee roomy exist', roomy);
-//           webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId, 'test');
-//         }
-//       } else {
-//           console.log('eee RECONNECT')
-//           const groupCallRooms = store.getState().dashboard.groupCallRooms;
-//           // Стрим не найден, пользователь может либо покинуть комнату и заново подключиться,
-//           // либо искать другой peerId и попробовать подключиться к его стриму
-//           console.log('Remote stream with peerId', peerId, 'was not found.');
-//           console.log('You can either leave the room and join again or try another peerId');
-
-//           // Покинуть комнату и заново подключиться
-//           //const roomy = groupCallRooms.find(roomy => roomy.hostName === userName);
-//           const roomy = groupCallRooms[0]
-//           console.log('eee roomy and GCR', roomy, groupCallRooms)
-//           console.log('eee roomy exist', roomy);
-//           if (roomy) { 
-//             webRTCGroupCallHandler.leaveGroupCall();
-//             webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId, 'test'); 
-//           }
-//         }
-//     });
-//   });
-// };
+export const IAM = (data) => {
+  console.log('stepLOL', data)
+  return data
+}
 
 export const sendMessage = (type, data) => {
   socket.emit(type, data);

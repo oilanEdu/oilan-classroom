@@ -8,10 +8,11 @@ let myPeer;
 let myPeerId;
 let groupCallRoomId;
 let groupCallHost = false;
-let username
+export let username
 
 export const connectWithMyPeer = (user) => {
   console.log('connectWithMyPeer', user)
+  wss.IAM(user)
   username = user
   if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
     const {Peer} = require('peerjs');
@@ -41,6 +42,7 @@ export const connectWithMyPeer = (user) => {
     });
   });
 };}
+
 
 export const createNewGroupCall = () => {
   groupCallHost = true;

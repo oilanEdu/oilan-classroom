@@ -6,6 +6,8 @@ import { YMInitializer } from 'react-yandex-metrika';
 import Head from 'next/head';
 import { HMSRoomProvider } from '@100mslive/react-sdk';
 import { Helmet } from 'react-helmet';
+import { Provider } from 'react-redux';
+import store from '../src/store/store';
 
 const tagManagerArgs = {
   gtmId: 'GTM-MFV3BJ3'
@@ -18,6 +20,7 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return <>
+      <Provider store={store}>
     <Helmet>
       <title>Oilan-classroom</title>
       <link rel="icon" href="https://realibi.kz/file/963267.png" />
@@ -53,6 +56,7 @@ function MyApp({ Component, pageProps }) {
     <CookiesProvider>
       <Component {...pageProps}/>
     </CookiesProvider></HMSRoomProvider>
+    </Provider>
   </>
 };
 

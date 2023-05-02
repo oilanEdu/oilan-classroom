@@ -395,7 +395,7 @@ const myStudents = () => {
                       <div className={styles.student_btn_obman}><span></span></div>
                       <div 
                       // onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/student?nick=${student?.nickname}&programId=${student?.program_id}`)} 
-                      onClick={() => router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents/group?groupId=${group.id}`)} className={styles.student_btn}><img src="https://realibi.kz/file/897616.svg" alt="" /></div>
+                      onClick={() => router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents/group?groupId=${group.id}&isGroup=${true}`)} className={styles.student_btn}><img src="https://realibi.kz/file/897616.svg" alt="" /></div>
                     </div>
                   ))}
                 </div>

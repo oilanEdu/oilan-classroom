@@ -217,6 +217,17 @@ const Group = () => {
     loadTeacherData();
 
   }, [teacherUrl]);
+  useEffect(() => {
+    if (router.query.isGroup === "true") {
+      setIsStudents(false)
+      isStudents
+      debugger
+    }
+  }, [router])
+  useEffect(() => {
+    isStudents
+    debugger
+  }, [isStudents])
 
   const loadBaseData = async () => {
     let data = teacherUrl
@@ -252,8 +263,8 @@ const Group = () => {
        <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
       <div className={styles.contentWrapper}>
         <div className={styles.groupClicker}>
-          <span onClick={() => router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents`)}>Студенты</span>
-          <span onClick={() => setIsStudents(false)}>Группы</span>
+          <span className={isStudents?styles.blueSpan:styles.whiteSpan} onClick={() => router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents`)}>Студенты</span>
+          <span className={!isStudents?styles.blueSpan:styles.whiteSpan} onClick={() => setIsStudents(false)}>Группы</span>
         </div>
         <div>
           <div>

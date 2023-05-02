@@ -24,6 +24,8 @@ const NewStudentCourseStatics = ({ programDesc, student, lesson, lessons, scores
 
   const [lessonIsGoing, setLessonIsGoing] = useState(false)
 
+  const [currentCourse, setCurrentCourse] = useState()
+
   let baseMark = 0;
   let count = 0;
   useEffect(() => {
@@ -228,17 +230,18 @@ const NewStudentCourseStatics = ({ programDesc, student, lesson, lessons, scores
   const getStudentCoursesAndPrograms = async () => {
     const response = await axios.get(`${globals.productionServerDomain}/getAllCoursesAndProgramsOfStudent?studentId=${student[0].id}`)
     const allCoursesOfStudent = response.data
-    let massiveOfUrls = []
-    for (let index = 0; index < allCoursesOfStudent.length; index++) {
-      const element = allCoursesOfStudent[index];
-      const data = {
-        courseId: element.course_id
-      }
-      let result = await axios.post(`${globals.productionServerDomain}/getCourseById`, data)
-      massiveOfUrls.push({ url: result.data[0].url, programId: element.program_id })
-    }
-    massiveOfUrls
-    setCoursesOfStudent(massiveOfUrls)
+    // let massiveOfUrls = []
+    // for (let index = 0; index < allCoursesOfStudent.length; index++) {
+    //   const element = allCoursesOfStudent[index];
+    //   const data = {
+    //     courseId: element.course_id
+    //   }
+    //   let result = await axios.post(`${globals.productionServerDomain}/getCourseById`, data)
+    //   massiveOfUrls.push({ url: result.data[0].url, programId: element.program_id })
+    // }
+    // massiveOfUrls
+    setCoursesOfStudent(allCoursesOfStudent)
+    setCurrentCourse(allCoursesOfStudent.find(el => el.url === courseUrl && el.program_id === (+router.query.program)))
   }
   useEffect(() => {
     if (student != undefined) {
@@ -248,7 +251,21 @@ const NewStudentCourseStatics = ({ programDesc, student, lesson, lessons, scores
 
   console.log(lessons);
 
+  const changeCurrentCourseAndProgram = async (coureMiddleWareId) => {
+    await router.push(`/cabinet/student/${student[0]?.nickname}/course/${coursesOfStudent.find(el => el.id === (+coureMiddleWareId))?.url}?program=${coursesOfStudent.find(el => el.id === (+coureMiddleWareId))?.program_id}`);
+    window.location.reload()
+  }
+
   return <div className={styles.container}>
+    <div className={styles.yourCourses}>
+    <p>Ваши курсы:</p>
+    <select value={currentCourse?.id} onChange={(e) => {
+      setCurrentCourse(e.target.value)
+      changeCurrentCourseAndProgram(e.target.value)
+      }}>
+      {coursesOfStudent?.map(el => <option value={el.id}>Курс - {el.courseTitle}, программа - {el.programTitle}</option>)}
+    </select>
+    </div>
     <GoToLessonWithTimerComponent isTeacher={false} url={student[0].nickname} nickname={nickname} courseUrl={courseUrl} />
     <div className={styles.course_container}>
       <div className={styles.course_container_1}>

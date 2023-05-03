@@ -67,88 +67,28 @@ const Index = () => {
 	  	// console.log('status', check)
 	  	connectWithWebSocket()
 	  	if (!room || !student || username || !role || !teacher){
+			debugger
 	  		registerNewUser(username);
 	    	dispatch(setUsername(username));
 	  	} else {
+			debugger
 	  		registerNewUser((role == 'teacher')?teacher?.url:student?.nickname);
 	    	dispatch(setUsername((role == 'teacher')?teacher?.url:student?.nickname));
 	  	}
 	  };
 
     useEffect(() => {
-      setCheck('classroom')
-			handleSubmitButtonPressed()
-    }, [])
+	  if (!room || !student || username || !role || !teacher){
+
+	  } else {
+		handleSubmitButtonPressed()
+		setCheck('classroom')
+	  }
+    }, [room || student || username || role || teacher])
 
 	  return (
-	    <div className={styles['login-page_container']}>
-	      <div className={styles['login-page_login_box']}>
-	        
-	        {(!room || !student || username || !role || !teacher)?
-		        <>
-		        	<div className={styles['login-page_title_container']}>
-		        		<p>Добро пожаловать на тестовую страницу трансляции</p>
-		        		<UsernameInput
-			          		username={username}
-			          		setUsername={setUsernameState}
-			        	/>
-			        </div>
-			        <button onClick={() => {
-			        	setCheck('test')
-			        	handleSubmitButtonPressed()}}
-			        >START</button>
-			    </>:
-			    <>
-					<div className={styles['login-page_title_container']}>
-		          		<p>room: {room}</p>
-		          		<p>role: {role}</p>
-		          		<p>you: {(role == 'teacher')?teacher?.name + ' ' + teacher?.surname:student?.name + ' ' + student?.surname}</p>
-		          		<p>your {(role == 'teacher')?'student: ' + student?.name + ' ' + student?.surname:'teacher: ' + teacher?.name + ' ' + teacher?.surname}</p>
-		        	</div>
-		        	<button onClick={() => {
-			        	setCheck('classroom')
-			        	handleSubmitButtonPressed()}}
-			        >START</button>
-		        </>
-	        }
-	        
-	      </div>
-	    </div>
+		''
 	  );
-	}
-
-	function Dashboard() {
-		const username = useSelector(state => state.dashboard.username);
-		const callState = useSelector(state => state.call.callState);
-		const leaveClick = () => {
-			window.location.reload()
-			setCheck('empty')
-		}
-		useEffect(() => {
-			webRTCHandler.getLocalStream();
-			webRTCGroupHandler.connectWithMyPeer();
-		}, []);
-		
-		return (
-			<div className={styles['dashboard_container']}>
-				<div className={styles['dashboard_left_section']}>
-					<div className={styles['dashboard_content_container']}>
-						<DirectCall />
-						<GroupCall />
-						{callState !== callStates.CALL_IN_PROGRESS && (
-							<DashboardInformation username={username} />
-						)}
-					</div>
-					<div className={styles['dashboard_rooms_container']}>
-						<GroupCallRoomsList />
-					</div>
-				</div>
-				<div className={styles['dashboard_right_section']}>
-					<ActiveUsersList />
-				</div>
-				<button onClick={() => {leaveClick()}}>Leave</button>
-			</div>
-		);
 	}
 
 	const joinRoom = (groupCallRooms) => {
@@ -310,7 +250,6 @@ const Index = () => {
 
 return (
     <Provider store={store}>
-      {check==='test'?<Dashboard />:<></>}
       {check==='empty'?<LoginPage />:<></>}
       {check==='classroom'?<Dashboard2 />:<></>}
     </Provider>

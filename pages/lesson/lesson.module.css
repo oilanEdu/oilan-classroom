@@ -47,7 +47,9 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 100px;
+  /* padding: 0 100px; */
+  border-radius: 16px;
+  height: 80vh;
 }
 
 .cantainer{
@@ -175,7 +177,7 @@
   border-radius: 16px; */
 
       /* height: 300px; */
-      
+
       /* 24 */
       height: 35vh;
       aspect-ratio: 16/9;

@@ -1,8 +1,10 @@
 .group_call_room_container {
-  /* width: 80%; */
-  border-radius: 10px;
-  -webkit-backdrop-filter: blur(22.5806px);
-  backdrop-filter: blur(22.5806px);
+  width: 100%;
+  background: #1C1C1C;
+  /* border-radius: 10px; */
+  /* -webkit-backdrop-filter: blur(22.5806px);
+  backdrop-filter: blur(22.5806px); */
+  padding-bottom: 85px;
 }
 
 .group_call_title {
@@ -16,7 +18,9 @@
   justify-content: center; */
 
   display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 75%;
+  margin: 0 auto;
 }

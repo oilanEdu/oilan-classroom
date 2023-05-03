@@ -21,6 +21,7 @@ import globals from "../../src/globals";
 import axios from "axios";
 import HeaderStudent from "../../src/components/NewHeaderStudent/NewHeaderStudent";
 import HeaderTeacher from "../../src/components/new_HeaderTeacher/new_HeaderTeacher";
+import Footer from "../../src/components/Footer/Footer";
 
 const Index = () => {
 	const [check, setCheck] = useState('empty')
@@ -148,7 +149,13 @@ const Index = () => {
 			<>
 				{goMeet?
 					<>
-
+						{role === "student" 
+        				  ? 
+        				  <HeaderStudent name={student?.name} surname={student?.surname} nickname={student?.nickname} courseUrl={student?.url} />
+        				  : <HeaderTeacher white={true} teacher={teacher} />
+        				}
+						<div className={styles.all}>
+      					<div style={{backgroundColor: "#white", width: "100%"}}>
 						<div className={styles.cantainer}>
 							<div className={styles.dashboard_left_section}>
 								
@@ -169,6 +176,9 @@ const Index = () => {
 							</div>
 							<button onClick={() => {leaveClick()}}>Leave</button>*/}
 						</div>
+						</div>
+						</div>
+						<Footer />
 					</>:
 					// <>
 					// 	<img src="https://realibi.kz/file/756332.png" style={{width: "80%", marginLeft: '10%'}} />
@@ -246,6 +256,7 @@ const Index = () => {
           </div>
           </div>
           </div>
+		  <Footer />
           </div>
 				}
 			</>

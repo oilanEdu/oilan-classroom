@@ -24,3 +24,9 @@
   width: 75%;
   margin: 0 auto 0 auto;
 }
+
+@media screen and (max-width: 480px) {
+  .videoElement {
+    width: 100%;
+  }
+}

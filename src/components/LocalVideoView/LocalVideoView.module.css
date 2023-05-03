@@ -48,3 +48,10 @@
   line-height: 16px;
   color: #fff;
 }
+
+@media screen and (max-width: 480px) {
+  .videoContainer {
+    width: 50%;
+    margin-right: 0;
+  }
+}

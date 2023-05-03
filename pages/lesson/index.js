@@ -33,6 +33,7 @@ const Index = () => {
 	const [needRoom, setNeedRoom] = useState(true)
 	const [goMeet, setGoMeet] = useState(false)
 	const [actualRoom, setActualRoom] = useState('')
+  const [isRoom, setIsRoom] = useState(false)
 
 	useEffect(() => {
 		// console.log('localStorage', localStorage)
@@ -112,7 +113,8 @@ const Index = () => {
 	}
 
 	const createRoom = (groupCallRooms) => {
-		const roomExists = groupCallRooms.some(roomy => roomy.hostName === (role === 'student' ? teacher?.url : student?.nickname));
+		const roomExists = groupCallRooms.some(roomy => roomy.hostName === teacher?.url);
+    setIsRoom(roomExists)
   		if (roomExists) {
   			console.log('roomExists', roomExists)
     		setNeedRoom(false)
@@ -136,18 +138,21 @@ const Index = () => {
 		} 
 		useEffect(() => {
 			webRTCHandler.getLocalStream();
-			webRTCGroupHandler.connectWithMyPeer(username);
-			roomExists = groupCallRooms.some(roomy => roomy.hostName === (role === 'student' ? teacher?.url : student?.nickname));
-			console.log('groupCallRooms', groupCallRooms)
+			webRTCGroupHandler.connectWithMyPeer(username, role);
+			roomExists = groupCallRooms.some(roomy => roomy.hostName === teacher?.url);
+			setIsRoom(roomExists)
+      console.log('groupCallRooms', groupCallRooms)
 		}, [groupCallRooms, roomExists, webRTCHandler]);
 
 		return (
 			<>
 				{goMeet?
 					<>
-						<div className={styles.dashboard_container}>
+
+						<div className={styles.cantainer}>
 							<div className={styles.dashboard_left_section}>
-								<div className={styles.dashboard_content_container}>
+								
+								<div className={styles.translationBlock}>
 									{/*<DirectCall role={role}/>*/}
 									<GroupCall role={role} teacher={teacher} student={student} groupCallRooms={groupCallRooms} activeUsers={activeUsers} username={username} check={check} setCheck={setCheck} goMeet={goMeet} setGoMeet={setGoMeet}/>
 									{callState !== callStates.CALL_IN_PROGRESS && (
@@ -195,7 +200,7 @@ const Index = () => {
           <div className={styles.allReady}>
           {/* <p>Всё готово и настроено</p>
           <button>Присоедениться к уроку</button> */}
-          <h1 style={{color: "white", marginBottom: "40px"}}>Всё готово и настроено</h1>
+          <h1 style={{color: "white", marginBottom: "40px"}}>{(isRoom || role === "teacher")? "Всё готово и настроено" : "Ожидание преподавателя"}</h1>
           <form
                 style={{textAlign: "end"}}
                 onSubmit={(e) => {
@@ -205,7 +210,7 @@ const Index = () => {
                   // // handleSubmit(userName);
                 }}
               >
-                <button 
+                {(isRoom || role === "teacher") && <button 
                   style={{
                     background: "#ffffff",
                     borderRadius: "5px",
@@ -236,7 +241,7 @@ const Index = () => {
                   >
                     Присоедениться к уроку
                   </span>
-                </button>
+                </button>}
               </form>
           </div>
           </div>

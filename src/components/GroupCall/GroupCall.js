@@ -13,6 +13,7 @@ const GroupCall = (props) => {
   const { callState, localStream, groupCallActive, groupCallStreams, groupCallRooms } = props;
   let x
   useEffect(() => {
+    console.log('groupCallStreams', groupCallStreams)
     groupCallStreams.map(stream => {
       //x = stream.getAudioTracks()[0].enabled 
       // console.log('GroupCall groupCallStream', stream)

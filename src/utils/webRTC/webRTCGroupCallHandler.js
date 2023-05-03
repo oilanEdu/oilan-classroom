@@ -10,7 +10,7 @@ let groupCallRoomId;
 let groupCallHost = false;
 export let username
 
-export const connectWithMyPeer = (user) => {
+export const connectWithMyPeer = (user, role) => {
   console.log('connectWithMyPeer', user)
   wss.IAM(user)
   username = user
@@ -36,6 +36,7 @@ export const connectWithMyPeer = (user) => {
       console.log('streams', streams)
       const stream = streams.find(stream => stream.id === incomingStream.id);
       incomingStream.username = username
+      incomingStream.role = role
       if (!stream) {
         addVideoStream(incomingStream);
       }

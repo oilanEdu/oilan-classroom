@@ -175,11 +175,12 @@
   border-radius: 16px; */
 
       /* height: 300px; */
-      height: 24vh;
+      
+      /* 24 */
+      height: 35vh;
       aspect-ratio: 16/9;
       background-color: black;
       width: 100%;
-      /* margin-left: 10%; */
       border-radius: 16px;
 }
 

@@ -6,10 +6,18 @@
 }
 
 .videoElement {
-  position: relative;
+  /* position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
+  border-radius: 6px;
+  margin-right: 10px;
+  margin-top: 20px; */
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 35%;
   border-radius: 6px;
   margin-right: 10px;
   margin-top: 20px;

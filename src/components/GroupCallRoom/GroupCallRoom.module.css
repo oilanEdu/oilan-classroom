@@ -1,5 +1,5 @@
 .group_call_room_container {
-  width: 80%;
+  /* width: 80%; */
   border-radius: 10px;
   -webkit-backdrop-filter: blur(22.5806px);
   backdrop-filter: blur(22.5806px);
@@ -11,7 +11,12 @@
 }
 
 .group_call_videos_container {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: center; */
+
+  display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }

@@ -68,11 +68,12 @@
 
 .header__contacts_btn {
     font-family: 'gotham regular';
-    color: #fff;
+    color: #fff !important;
     background: #2e8cf2;
     padding: 10px;
     border-radius: 3px;
     text-decoration: none;
+    font-size: 15px !important;
 }
 
 .mainscreen {
@@ -621,8 +622,8 @@
 }
 
 .reviews_item__head img {
-    width: 72px;
-    height: 72px;
+    width: 50px;
+    height: 50px;
     border-radius: 5px;
 }
 
@@ -652,6 +653,7 @@
 .reviews_item__text {
     font-family: 'gotham regular';
     font-size: 18px;
+    line-height: 150%;
 }
 
 .reviews_wrapper {
@@ -1003,7 +1005,7 @@
 
     .reviews_item__text {
         font-size: 14px;
-        line-height: 120%;
+        /* line-height: 120%; */
     }
 
     .footer__project h3,
@@ -1042,6 +1044,373 @@
 
     .footer {
         padding-top: 60px;
+    }
+}
+
+@media screen and (max-width:1200px) {
+
+    .header_nav a {
+        font-size: 12px;
+    }
+
+    .header__contacts {
+        font-size: 12px;
+    }
+
+    .container {
+        padding: 0 50px;
+    }
+
+    .mainscreen__text h1 {
+        font-size: 25px;
+    }
+
+    .persons h2,
+    .about h2 {
+        font-size: 25px;
+    }
+
+    .mainscreen {
+        margin-top: 60px;
+    }
+
+    .mainscreen__image {
+        width: 60%;
+    }
+
+    .mainscreen__image img {
+        width: 100%;
+    }
+
+    .mainscreen__text p {
+        font-size: 17px;
+        width: 80%;
+    }
+
+    .button_wrapper a {
+        font-size: 17px;
+        padding: 20px 30px;
+    }
+
+    .mainscreen__text {
+        width: 60%;
+    }
+
+    .wrapper_person {
+        flex-wrap: wrap;
+    }
+
+    .person {
+        width: 40%;
+        margin: 15px;
+    }
+
+    .person img {
+        width: 150px;
+    }
+
+    .person h3 {
+        font-size: 20px;
+    }
+
+    .person p {
+        font-size: 15px;
+    }
+
+    .persons {
+        margin-top: 100px;
+    }
+
+    .translation h2 {
+        font-size: 25px;
+    }
+
+    .about_item__image {
+        width: 70%;
+    }
+
+    .about_item__image img:nth-child(1),
+    .translation_item__image img:nth-child(1) {
+        width: 100%;
+    }
+
+    .about_item__text p {
+        font-size: 18px;
+    }
+
+    .about_item__text span {
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .about_item__text {
+        margin-left: 10px;
+    }
+
+    .krug_kroshka {
+        width: 100px;
+        bottom: -50px;
+    }
+
+    .krug_zel_kroshka {
+        width: 80px;
+        bottom: -50px;
+    }
+
+    .about {
+        padding: 100px 0;
+        margin: 0;
+    }
+
+    .about h2 {
+        margin-bottom: 0;
+    }
+
+    .about_items_wrapper {
+        margin-top: 30px;
+    }
+
+    .integration {
+        padding: 30px 50px;
+    }
+
+    .integration a {
+        font-size: 16px;
+        padding: 25px;
+    }
+
+    .integration h2 {
+        font-size: 25px;
+    }
+
+    .white_circle_krosh {
+        width: 80px;
+    }
+
+    .volna_circle_krosh,
+    .volna_trans {
+        width: 150px;
+        left: 50px;
+    }
+
+    .translation_item__image_wrapper {
+        width: 50%;
+    }
+
+    .translation_item__image {
+        width: 100%;
+    }
+
+    .translation_item__text p {
+        font-size: 18px;
+        margin-top: 0;
+    }
+
+    .primary_btn {
+        font-size: 14px;
+        padding: 15px 25px;
+    }
+
+    .translation_item__text span {
+        margin-bottom: 40px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .translation_item {
+        margin-top: 50px;
+    }
+
+    .krug_trans_kroshka {
+        width: 80px;
+        bottom: 30px;
+        right: -25px;
+    }
+
+    .price {
+        padding: 60px 0;
+    }
+
+    .price h2 {
+        width: 70%;
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+
+    .price_item {
+        padding: 25px 35px;
+        margin: 5px;
+        width: 30%;
+    }
+
+    .price_wrapper {
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .price_item__headline {
+        font-size: 20px;
+    }
+
+    .price_item li {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .price_item__price {
+        font-size: 18px;
+        margin-top: 25px;
+    }
+
+    .discount span {
+        font-size: 15px;
+    }
+
+    .discount {
+        width: 40px;
+        height: 40px;
+        top: -20px;
+    }
+
+    .dashboard h2 {
+        font-size: 25px;
+        margin-bottom: 0;
+    }
+
+    .dashboard_item__text p {
+        font-size: 18px;
+        margin-top: 0;
+    }
+
+    .dashboard_item__text span {
+        font-size: 14px;
+        margin-bottom: 40px;
+    }
+
+    .steps {
+        padding: 60px 0;
+    }
+
+    .steps h2 {
+        font-size: 25px;
+    }
+
+    .dashboard {
+        padding: 50px 0;
+    }
+
+    .dashboard_item {
+        margin-top: 50px;
+    }
+
+    .content_headline {
+        font-size: 17px;
+    }
+
+    .steps__item {
+        padding: 15px 15px 45px 15px;
+    }
+
+    .steps__item p {
+        font-size: 16px;
+    }
+
+    .steps__item span {
+        font-size: 13px;
+    }
+
+    .steps__item_number {
+        font-size: 30px !important;
+    }
+
+    .steps_wrapper {
+        flex-wrap: wrap;
+    }
+
+    .reviews h2 {
+        font-size: 25px;
+    }
+
+    .reviews {
+        padding-top: 40px;
+    }
+
+    .reviews_item {
+        margin: 15px;
+        width: 29%;
+    }
+
+    .reviews_wrapper {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .reviews_item__info p {
+        font-size: 14px;
+    }
+
+    .reviews_item__head img {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+    }
+
+    .reviews_item__info span {
+        font-size: 12px;
+    }
+
+    .reviews_item__text {
+        font-size: 12px;
+        /* line-height: 120%; */
+    }
+
+    .footer__project h3,
+    .footer__questions h3 {
+        font-size: 15px;
+    }
+
+    .footer__project p,
+    .footer__questions p {
+        font-size: 12px;
+    }
+
+    .footer__questions span {
+        font-size: 10px;
+    }
+
+    .logo img {
+        width: 140px;
+    }
+
+    .messengers img {
+        width: 20px;
+    }
+
+    .header__image img {
+        width: 150px;
+    }
+
+    .content_wrapper {
+        padding-top: 30px;
+    }
+
+    .header {
+        margin-top: 15px;
+    }
+
+    .footer {
+        padding-top: 60px;
+    }
+
+    .footer__project,
+    .footer__questions {
+        width: 25%;
+    }
+
+    .footer .primary_btn {
+        font-size: 10px;
+        padding: 15px 20px;
     }
 }
 
@@ -1360,7 +1729,7 @@
 
     .reviews_item__text {
         font-size: 12px;
-        line-height: 120%;
+        /* line-height: 120%; */
     }
 
     .footer__project h3,
@@ -1789,7 +2158,7 @@
 
     .reviews_item__text {
         font-size: 12px;
-        line-height: 120%;
+        /* line-height: 120%; */
     }
 
     .footer {
@@ -1851,5 +2220,9 @@
     .footer .primary_btn {
         font-size: 10px;
         padding: 15px 20px;
+    }
+
+    .header__contacts_btn {
+        display: none;
     }
 }

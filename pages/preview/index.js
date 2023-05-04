@@ -18,17 +18,16 @@ const Index = () => {
           </div>
           <div className={styles.header__contacts}>
             <a href="tel:+77715066666">+7 (771) 506-66-66</a>
-            {/* <!-- <a href="" class="header__contacts_btn">Попробовать бесплатно</a> --> */}
+            <a href="https://www.oilan-classroom.com/auth" className={styles.header__contacts_btn}>Зарегистрироваться</a>
           </div>
         </div>
         <div className={styles.mainscreen}>
           <div className={styles.mainscreen__text}>
             <h1>Онлайн-платформа для <span className={styles.highlight_text}>ведения и контроля</span> образовательного
               процесса</h1>
-            <p>Соберите весь образовательный процесс в одном месте и экономьте время на обучение</p>
+            <p>Соберите весь образовательный процесс в одном месте и экономьте время на обучение, зарабатывая больше</p>
             <div className={styles.button_wrapper}>
-              <a target="_blank" className={styles.primary_btn} href="https://www.oilan-classroom.com/auth">Попробовать
-                бесплатно</a>
+              <a target="_blank" className={styles.primary_btn} href="https://www.oilan-classroom.com/auth">Начать знакомство!</a>
               <span>Бесплатный период 7 дней</span>
             </div>
           </div>
@@ -44,22 +43,22 @@ const Index = () => {
             <div className={styles.person}>
               <img src="https://realibi.kz/file/469950.svg" alt="" />
               <h3>Репетиторам</h3>
-              <p>желающим автоматизировать онлайн обучение в школах</p>
+              <p>которые хотят брать больше учеников и зарабатывать кратно выше</p>
             </div>
             <div className={styles.person}>
               <img src="https://realibi.kz/file/843536.svg" alt="" />
               <h3>Образовательным центрам</h3>
-              <p>желающим автоматизировать онлайн обучение в школах</p>
+              <p>желающие полностью автоматизировать онлайн образование и масштабироваться по стране</p>
             </div>
             <div className={styles.person}>
               <img src="https://realibi.kz/file/932435.svg" alt="" />
               <h3>Онлайн-школам</h3>
-              <p>в поиске удобной платформы для проведения занятий</p>
+              <p>которые хотят делать крупные запуски на удобной платформе и зарабатывать больше</p>
             </div>
             <div className={styles.person}>
               <img src="https://realibi.kz/file/383726.svg" alt="" />
               <h3>Экспертам</h3>
-              <p>которые хотят держать образовательные процессы под контролем</p>
+              <p>в поиске удобной платформы для ведения своих курсов</p>
             </div>
           </div>
         </div>
@@ -96,6 +95,15 @@ const Index = () => {
                   и давайте обратную связь в 2 раза быстрее</p>
                 <span>Наша система позволяет проверить домашнее задание в пару кликов, а так-же вести общение с
                   учеником в рамках домашнего задания</span>
+              </div>
+            </div>
+            <div className={styles.about_item}>
+              <div className={styles.about_item__text}>
+                <p>Всегда знайте своё расписание занятий</p>
+                <span>Благодаря нашему удобному календарю вы сможете отслеживать во сколько, с кем и по какому предмету урок</span>
+              </div>
+              <div className={styles.about_item__image}>
+                <img src="https://realibi.kz/file/648224.png" alt="" />
               </div>
             </div>
           </div>

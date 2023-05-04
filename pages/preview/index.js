@@ -110,7 +110,9 @@ const Index = () => {
             <div className={styles.about_item}>
               <div className={styles.about_item__text}>
                 <p>Отслеживайте количество уроков</p>
-                <span>Создавайте, дополняйте и будьте в курсе, когда и с кем у вас ближайший урок</span>
+                <span>
+                  Создавайте, дополняйте и назначайте уроки на понятной платформе с удобным функционалом
+                </span>
               </div>
               <div className={styles.about_item__image}>
                 <img src="https://realibi.kz/file/838224.png" alt="" />

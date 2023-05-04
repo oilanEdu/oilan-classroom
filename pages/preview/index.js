@@ -123,7 +123,7 @@ const Index = () => {
       </div>
       <div className={styles.integration}>
         <h2>Бесплатный тест-драйв платформы</h2>
-        <p>пора действовать: выведите ваш образовательный бизнес на новый уровень</p>
+        <p><span>пора действовать:</span> выведите ваш образовательный бизнес на новый уровень!</p>
         <a target="_blank" href="https://www.oilan-classroom.com/auth">Начать знакомство!</a>
         <img className={styles.white_circle_krosh} src="https://realibi.kz/file/539965.png" alt="" />
         <img className={styles.volna_circle_krosh} src="https://realibi.kz/file/583033.svg" alt="" />

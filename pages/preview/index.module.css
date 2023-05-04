@@ -686,6 +686,15 @@
     color: #fff;
     text-align: center;
     margin-top: 0;
+    font-size: 30px;
+    width: 50%;
+    line-height: 130%;
+    margin-bottom: 40px;
+}
+
+
+.integration p span {
+    font-family: 'gotham medium';
 }
 
 
@@ -921,7 +930,7 @@
     }
 
     .integration h2 {
-        font-size: 30px;
+        font-size: 35px;
     }
 
     .white_circle_krosh {
@@ -1120,9 +1129,17 @@
     .footer {
         padding-top: 60px;
     }
+
+    .integration p {
+        font-size: 27px;
+    }
 }
 
 @media screen and (max-width:1200px) {
+    .integration p {
+        font-size: 25px;
+    }
+
     .header_telephone {
         font-size: 14px;
     }
@@ -1262,7 +1279,7 @@
     }
 
     .integration h2 {
-        font-size: 25px;
+        font-size: 35px;
     }
 
     .white_circle_krosh {
@@ -1862,6 +1879,10 @@
         width: 25%;
     }
 
+    .integration p {
+        width: 80%;
+    }
+
     .footer .primary_btn {
         font-size: 10px;
         padding: 15px 20px;
@@ -2191,6 +2212,10 @@
 
     .content_headline {
         font-size: 17px;
+    }
+
+    .integration p {
+        width: 80%;
     }
 
     .steps__item {

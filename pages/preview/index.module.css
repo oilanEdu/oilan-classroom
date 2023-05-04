@@ -51,17 +51,36 @@
     margin: 0 15px;
 }
 
-.header__contacts {}
+.header__contacts {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
 
-.header__contacts a {
-    margin-right: 10px;
+.contacts_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.contacts_wrapper a:nth-child(2) {
+    font-size: 12px;
+    font-family: 'gotham regular';
+    opacity: 0.7;
+    margin-top: 7px;
+}
+
+.header_telephone {
+    margin-right: 25px;
     font-family: 'gotham medium';
     text-decoration: none;
     color: #141414;
     font-size: 23px;
 }
 
-.header__contacts a:hover {
+.header_telephone:hover {
     transition: all 0.2s linear;
     text-decoration: underline;
 }
@@ -152,6 +171,15 @@
     margin-bottom: 50px;
 }
 
+/* .person_text {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+
+} */
+
 .wrapper_person {
     align-items: baseline;
     justify-content: center;
@@ -167,6 +195,7 @@
     margin-bottom: 0;
     margin-top: 15px;
     text-align: center;
+    height: 62px;
 }
 
 .person p {
@@ -298,6 +327,37 @@
 
 .translation_item__text {
     width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn_wrapper_transltaion span {
+    margin-bottom: 5px !important;
+    font-size: 12px !important;
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+
+
+.btn_wrapper_transltaion {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-self: flex-start;
+}
+
+.price_btn_wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-self: flex-start;
+}
+
+.price_btn_wrapper span {
+    font-family: 'gotham regular';
+    margin-top: 5px;
+    font-size: 12px;
 }
 
 .translation {
@@ -621,9 +681,18 @@
     border-radius: 5px;
 }
 
+.integration p {
+    font-family: 'gotham regular';
+    color: #fff;
+    text-align: center;
+    margin-top: 0;
+}
+
+
 .reviews_item__head img {
     width: 50px;
-    height: 50px;
+    height: 60px;
+
     border-radius: 5px;
 }
 
@@ -720,6 +789,12 @@
     color: #2e8cf2;
 }
 
+.footer__logo_messengers span {
+    font-family: 'gotham regular';
+    font-size: 14px;
+    opacity: 0.5;
+}
+
 .messengers a {
     margin: 0 5px;
 }
@@ -740,8 +815,8 @@
 
     .header__contacts {}
 
-    .header__contacts a {
-        margin-right: 10px;
+    .header_telephone {
+        margin-right: 20px;
         font-family: 'gotham medium';
         text-decoration: none;
         color: #141414;
@@ -1048,6 +1123,13 @@
 }
 
 @media screen and (max-width:1200px) {
+    .header_telephone {
+        font-size: 14px;
+    }
+
+    .header__contacts_btn {
+        font-size: 12px !important;
+    }
 
     .header_nav a {
         font-size: 12px;
@@ -1416,8 +1498,20 @@
 
 @media screen and (max-width:770px) {
 
+    .header__image img {
+        width: 100px;
+    }
+
+    .logo img {
+        width: 140px;
+    }
+
     .header_nav a {
-        font-size: 12px;
+        font-size: 10px;
+    }
+
+    .header_telephone {
+        display: none;
     }
 
     .header__contacts {
@@ -1746,17 +1840,10 @@
         font-size: 10px;
     }
 
-    .logo img {
-        width: 140px;
-    }
-
     .messengers img {
         width: 20px;
     }
 
-    .header__image img {
-        width: 150px;
-    }
 
     .content_wrapper {
         padding-top: 30px;
@@ -1792,7 +1879,7 @@
         width: 100px;
     }
 
-    .header__contacts a {
+    .header_telephone {
         font-size: 9px;
         margin-right: 0;
     }
@@ -1892,6 +1979,10 @@
     }
 
     .about_item:nth-child(2) {
+        flex-direction: column-reverse;
+    }
+
+    .about_item:nth-child(4) {
         flex-direction: column-reverse;
     }
 
@@ -2014,7 +2105,7 @@
     .price_item {
         padding: 25px 35px;
         margin: 15px 15px;
-        width: 60%;
+        width: 100%;
     }
 
     .price_wrapper {
@@ -2224,5 +2315,10 @@
 
     .header__contacts_btn {
         display: none;
+    }
+
+    .btn_wrapper_transltaion {
+
+        align-self: center;
     }
 }

@@ -234,6 +234,11 @@
 
 .about_item__image {
     position: relative;
+    width: 60%;
+}
+
+.about_item__image img:nth-child(1) {
+    width: 100%;
 }
 
 .krug_kroshka {

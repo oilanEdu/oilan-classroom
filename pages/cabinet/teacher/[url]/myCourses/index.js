@@ -6,6 +6,7 @@ import axios from "axios";
 import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import { Image } from "react-bootstrap";
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
+import GuideModal from "../../../../../src/components/GuideModal/GuideModal";
 
 
 const myCourses = () => {
@@ -16,6 +17,8 @@ const myCourses = () => {
   const [courses, setCourses] = useState([]);
   const [programs, setPrograms] = useState([])
   const [showAllPrograms, setShowAllPrograms] = useState(false);
+  const [showGuide, setShowGuide] = useState(false)
+  const [guideVideo, setGuideVideo] = useState()
 
   const isInMainPage = true;
 
@@ -61,7 +64,18 @@ const myCourses = () => {
           <div className={styles.wrapperAll}>
             <div className={styles.mainRow}>
               <h1>Мои курсы</h1>
-              <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/createCourse`)}>Создать курс</button>
+              <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} video={guideVideo}/>
+              <div>
+                <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/createCourse`)}>Создать курс</button>
+                {(teacherUrl == 'Azali')?<Image 
+                  src="https://realibi.kz/file/628410.png"
+                  style={{marginLeft: '10px'}}
+                  onClick={() => {
+                    setGuideVideo('https://realibi.kz/file/349367.mp4')
+                    setShowGuide(true)
+                  }}
+                />:<></>}
+              </div>
             </div>
             <div className={styles.courseWrapper}>
               {courses.map(course => {

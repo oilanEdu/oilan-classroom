@@ -1,0 +1,31 @@
+.guideWrapper{
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+	position: absolute;
+	background-color: white;
+	border-radius: 15px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 50%;
+	align-items: center
+}
+
+.closeBtnRow{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: end
+}
+
+.closeBtn{
+	margin-right: 15px;
+	cursor: pointer;
+}
+
+.guideVideo {
+	border-radius: 15px;
+	width: 90%;
+	aspect-ratio: 5/3;
+}

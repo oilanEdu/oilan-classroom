@@ -2348,4 +2348,8 @@
 
         align-self: center;
     }
+
+    .footer__logo_messengers span {
+        margin-top: 10px;
+    }
 }

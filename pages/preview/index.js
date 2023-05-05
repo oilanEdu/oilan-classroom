@@ -299,9 +299,9 @@ const Index = () => {
               <img src="https://realibi.kz/file/956680.svg" alt="" />
             </div>
             <div className={styles.messengers}>
-              <a href="t.me/Azali10"><img src="https://realibi.kz/file/363748.svg" alt="" /></a>
-              <a href="wa.me/+77715066666"><img src="https://realibi.kz/file/99189.svg" alt="" /></a>
-              <a href="https://www.instagram.com/oilan.io/"><img src="https://realibi.kz/file/100080.svg" alt="" /></a>
+              <a target="_blank" href="https://t.me/Azali10"><img src="https://realibi.kz/file/363748.svg" alt="" /></a>
+              <a target="_blank" href="https://wa.me/+77715066666"><img src="https://realibi.kz/file/99189.svg" alt="" /></a>
+              <a target="_blank" href="https://www.instagram.com/oilan.io/"><img src="https://realibi.kz/file/100080.svg" alt="" /></a>
             </div>
             <span>ЧК Oilan.io Ltd 2023</span>
           </div>

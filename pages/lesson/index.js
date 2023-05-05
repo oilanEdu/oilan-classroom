@@ -69,11 +69,11 @@ const Index = () => {
 	  	// console.log('status', check)
 	  	connectWithWebSocket()
 	  	if (!room || !student || username || !role || !teacher){
-			debugger
+			// debugger
 	  		registerNewUser(username);
 	    	dispatch(setUsername(username));
 	  	} else {
-			debugger
+			// debugger
 	  		registerNewUser((role == 'teacher')?teacher?.url:student?.nickname);
 	    	dispatch(setUsername((role == 'teacher')?teacher?.url:student?.nickname));
 	  	}

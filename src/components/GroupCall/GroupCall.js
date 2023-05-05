@@ -10,10 +10,14 @@ const GroupCall = (props) => {
   // console.log('GroupCall props', props)
 
   // eslint-disable-next-line
+  const [mainIndex, setMainIndex] = useState()
   const { callState, localStream, groupCallActive, groupCallStreams, groupCallRooms } = props;
   let x
   useEffect(() => {
-    console.log('groupCallStreams', groupCallStreams)
+    console.log('xcx groupCallStreams', groupCallStreams)
+    console.log('xcx groupCallRooms', groupCallRooms)
+    console.log('xcx localStream', localStream)
+    getLoStream()
     groupCallStreams.map(stream => {
       //x = stream.getAudioTracks()[0].enabled 
       // console.log('GroupCall groupCallStream', stream)
@@ -29,9 +33,23 @@ const GroupCall = (props) => {
     webRTCGroupCallHandler.leaveGroupCall();
   };
 
+  const getLoStream = () => {
+    if (groupCallStreams.length === 1) {
+      setMainIndex(groupCallStreams[0].id)
+      // Если размер массива равен 1, то возвращаем нулевой элемент
+      return groupCallStreams[0];
+    } else if (groupCallStreams.length > 1) {
+      // Если размер массива больше 1, то возвращаем элемент с индексом 1
+      return groupCallStreams[1];
+    } else {
+      // Если массив пустой, то возвращаем null
+      return null;
+    }
+  }
+
   return (
     <>
-      <DirectCall role={props.role} lo={groupCallStreams[0]}/>
+      <DirectCall role={props.role} lo={mainIndex?(groupCallStreams[0]?.id === mainIndex)?groupCallStreams[0]:groupCallStreams[1]:(groupCallStreams.length === 1)?groupCallStreams[0]:groupCallStreams[1]}/>
       {!groupCallActive && localStream && callState !== callStates.CALL_IN_PROGRESS && 
         //<GroupCallButton onClickHandler={createRoom} label='Create room' />
         <></>

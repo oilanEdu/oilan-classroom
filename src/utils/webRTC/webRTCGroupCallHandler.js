@@ -33,7 +33,7 @@ export const connectWithMyPeer = (user, role) => {
     call.answer(store.getState().call.localStream);
     call.on('stream', incomingStream => {
       const streams = store.getState().call.groupCallStreams;
-      console.log('streams', streams)
+      console.log('xcx streams', incomingStream, streams)
       const stream = streams.find(stream => stream.id === incomingStream.id);
       incomingStream.username = username
       incomingStream.role = role

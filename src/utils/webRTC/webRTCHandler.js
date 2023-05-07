@@ -282,7 +282,7 @@ export const checkIfCallIsPossible = () => {
 //   getLocalStream();
 // };
 
-export const switchForScreenSharingStream = async () => {
+export const switchForScreenSharingStream = async (state, username, id, role, teacherUrl) => {
   const screenSharingActive = store.getState().call.screenSharingActive;
   const localStream = store.getState().call.localStream;
   const audioTrack = localStream.getAudioTracks()[0];
@@ -296,7 +296,7 @@ export const switchForScreenSharingStream = async () => {
       screenSharingStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
       audioTrack && screenSharingStream.addTrack(audioTrack);
       store.dispatch(setScreenSharingActive(true));
-
+      wss.changedCamera( state, username, id, role, teacherUrl );
       getLocalStream();
     } else {
       // Switch back to camera
@@ -306,7 +306,7 @@ export const switchForScreenSharingStream = async () => {
       sender.replaceTrack(localStream.getVideoTracks()[0]);
       store.dispatch(setScreenSharingActive(false));
       screenSharingStream.getTracks().forEach(track => track.stop());
-
+      wss.changedCamera( state, username, id, role, teacherUrl );
       getLocalStream();
     }
 

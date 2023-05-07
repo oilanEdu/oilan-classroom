@@ -57,7 +57,7 @@ export const connectWithWebSocket = () => {
 
   socket.on('group-call-join-request', (data) => {
     webRTCGroupCallHandler.connectToNewUser(data);
-    console.log('stepY', data)
+    console.log('xcx stepY', data)
   });
 
   socket.on('group-call-user-left', (data) => {
@@ -73,26 +73,27 @@ export const connectWithWebSocket = () => {
   console.log('step1500', userName, webRTCGroupCallHandler.username)
   if (userName != webRTCGroupCallHandler.username) {
     function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
-async function firstFunction() {
-  await delay(3000);
-  // ваш код для первой функции
-}
+    async function firstFunction() {
+      await delay(1000);
+      // ваш код для первой функции
+    }
 
-async function secondFunction() {
-  await delay(6000);
-  // ваш код для второй функции
-}
+    async function secondFunction() {
+      await delay(2000);
+      // ваш код для второй функции
+    }
 
-if (userName != webRTCGroupCallHandler.username) {
-  await webRTCGroupCallHandler.leaveGroupCall();
-  await firstFunction();
-  await webRTCGroupCallHandler.joinGroupCall(room.socketId, room.roomId);
-  await secondFunction();
-}
+    if (userName != webRTCGroupCallHandler.username) {
+      await webRTCGroupCallHandler.leaveGroupCall();
+      await firstFunction();
+      await webRTCGroupCallHandler.joinGroupCall(room.socketId, room.roomId);
+      await secondFunction();
+    }
   }
+  
   const streams = store.getState().call.groupCallStreams;
 
   for (const stream of streams) {
@@ -165,7 +166,7 @@ export const registerGroupCall = (data) => {
 };
 
 export const userWantsToJoinGroupCall = (data) => {
-  console.log('test2', data)
+  console.log('xcx test2', data)
   socket.emit('group-call-join-request', data);
 };
 

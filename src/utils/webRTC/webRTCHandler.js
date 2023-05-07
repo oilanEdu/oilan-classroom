@@ -305,7 +305,7 @@ export const switchForScreenSharingStream = async (state, username, id, role, te
       const sender = senders.find(sender => sender.track.kind === videoTrack.kind);
       sender.replaceTrack(localStream.getVideoTracks()[0]);
       store.dispatch(setScreenSharingActive(false));
-      screenSharingStream.getTracks().forEach(track => track.stop());
+      screenSharingStream.getVideoTracks().forEach(track => track.stop());
       wss.changedCamera( state, username, id, role, teacherUrl );
       getLocalStream();
     }

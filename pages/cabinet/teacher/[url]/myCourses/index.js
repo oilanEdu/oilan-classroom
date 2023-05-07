@@ -67,14 +67,15 @@ const myCourses = () => {
               <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} video={guideVideo}/>
               <div>
                 <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/createCourse`)}>Создать курс</button>
-                {(teacherUrl == 'Azali')?<Image 
+                <Image 
+                  width='20px'
                   src="https://realibi.kz/file/628410.png"
                   style={{marginLeft: '10px'}}
                   onClick={() => {
-                    setGuideVideo('https://realibi.kz/file/349367.mp4')
+                    setGuideVideo('https://realibi.kz/file/732511.mp4')
                     setShowGuide(true)
                   }}
-                />:<></>}
+                />
               </div>
             </div>
             <div className={styles.courseWrapper}>

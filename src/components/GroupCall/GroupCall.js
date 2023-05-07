@@ -14,15 +14,12 @@ const GroupCall = (props) => {
   const { callState, localStream, groupCallActive, groupCallStreams, groupCallRooms } = props;
   let x
   useEffect(() => {
-    console.log('xcx groupCallStreams', groupCallStreams)
-    console.log('xcx groupCallRooms', groupCallRooms)
-    console.log('xcx localStream', localStream)
+    console.log('xcx2 groupCallStreams', groupCallStreams)
+    console.log('xcx2 groupCallRooms', groupCallRooms)
+    console.log('xcx2 localStream', localStream)
     getLoStream()
     groupCallStreams.map(stream => {
-      //x = stream.getAudioTracks()[0].enabled 
-      // console.log('GroupCall groupCallStream', stream)
-      // console.log('GroupCall groupCallStream.getTracks()', stream.getTracks())
-      // console.log('GroupCall groupCallStream.getTracks()[0].enabled', stream.getAudioTracks()[0].enabled) 
+      console.log('xcx2 streamsDetails', stream.getTracks())
     }) 
   }, [groupCallStreams]);
   const createRoom = () => {

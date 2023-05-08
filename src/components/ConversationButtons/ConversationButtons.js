@@ -23,7 +23,8 @@ const ConversationButtons = (props) => {
     setGoMeet, 
     role,
     groupCallRooms,
-    teacher
+    teacher,
+    studentsOfGroup
   } = props;
   
   const handleMicButtonPressed = () => {
@@ -41,9 +42,10 @@ const ConversationButtons = (props) => {
 
   const handleScreenSharingButtonPressed = () => {
     const sharable = !store.getState().call.screenSharingActive;
-    switchForScreenSharingStream(!sharable, localStream.username, localStream.id, role, teacher?.url);
-    console.log('step1', {screenStatus: !sharable, username: localStream.username, streamId: localStream.id})
-    //changedCamera(sharable, localStream.username, localStream.id)
+    switchForScreenSharingStream(!sharable, localStream.username, localStream.id, role, teacher?.url, studentsOfGroup);
+    console.log('step1', {screenStatus: !sharable, username: localStream.username, streamId: localStream.id, studentsOfGroup: studentsOfGroup})
+    // changedCamera(sharable, localStream.username, localStream.id, studentsOfGroup)
+    debugger
     console.log('PROPS', props)
     
   };

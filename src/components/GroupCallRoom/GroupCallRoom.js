@@ -47,7 +47,7 @@ const GroupCallRoom = (props) => {
           })
         }
       </div>
-      <ConversationButtons groupCallRooms={groupCallRooms} teacher={teacher} role={props.role} {...props} />
+      <ConversationButtons groupCallRooms={groupCallRooms} teacher={teacher} role={props.role} {...props} studentsOfGroup={props.studentsOfGroup}/>
     </div>
   );
 };

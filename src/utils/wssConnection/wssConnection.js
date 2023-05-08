@@ -68,8 +68,8 @@ export const connectWithWebSocket = () => {
     console.log('step4', data)
   });
 
-  socket.on('reload-streams', async ({ socketId, state, userName, peerId, room, role, teacherUrl }) => {
-  console.log('step5', { socketId: socketId, screenStatus: state, username: userName, streamId: peerId, room: room, role: role, teacherUrl: teacherUrl });
+  socket.on('reload-streams', async ({ socketId, state, userName, peerId, room, role, teacherUrl, studentsOfGroup }) => {
+  console.log('step5', { socketId: socketId, screenStatus: state, username: userName, streamId: peerId, room: room, role: role, teacherUrl: teacherUrl, studentsOfGroup: studentsOfGroup });
   console.log('step1500', userName, webRTCGroupCallHandler.username)
   if (userName != webRTCGroupCallHandler.username) {
     function delay(ms) {
@@ -87,10 +87,16 @@ export const connectWithWebSocket = () => {
     }
 
     if (userName != webRTCGroupCallHandler.username) {
+  debugger
+  studentsOfGroup?.map(async el => { ///role here is studentsOfGroup
+    debugger
+    if (el.nickname === webRTCGroupCallHandler.username) {
+      debugger
       await webRTCGroupCallHandler.leaveGroupCall();
       await firstFunction();
       await webRTCGroupCallHandler.joinGroupCall(room.socketId, room.roomId);
       await secondFunction();
+    }}) ///VOT OTSUDA
     }
   }
   
@@ -133,9 +139,9 @@ export const sendPreOffer = (data) => {
   socket.emit('pre-offer', data);
 };
 
-export const changedCamera = (state, username, id, role, teacherUrl) => {
-  console.log('step3', { screenStatus: state, username: username, streamId: id, role: role, teacherUrl: teacherUrl })
-  socket.emit('camera-state-changed', { state: state, username: username, id: id, role: role, teacherUrl: teacherUrl });
+export const changedCamera = (state, username, id, role, teacherUrl, studentsOfGroup) => {
+  console.log('step3', { screenStatus: state, username: username, streamId: id, role: role, teacherUrl: teacherUrl, studentsOfGroup: studentsOfGroup })
+  socket.emit('camera-state-changed', { state: state, username: username, id: id, role: role, teacherUrl: teacherUrl, studentsOfGroup: studentsOfGroup });
   
 };
 

@@ -51,7 +51,7 @@ const GroupCall = (props) => {
         //<GroupCallButton onClickHandler={createRoom} label='Create room' />
         <></>
       }
-      {groupCallActive && <GroupCallRoom groupCallRooms={groupCallRooms} role={props.role} teacher={props.teacher} student={props.student} username={props.username} goMeet={props.goMeet} setGoMeet={props.setGoMeet} check={props.check} setCheck={props.setCheck} {...props} />}
+      {groupCallActive && <GroupCallRoom groupCallRooms={groupCallRooms} role={props.role} teacher={props.teacher} student={props.student} username={props.username} goMeet={props.goMeet} setGoMeet={props.setGoMeet} check={props.check} setCheck={props.setCheck} {...props} studentsOfGroup={props.studentsOfGroup}/>}
       {groupCallActive && 
         //<GroupCallButton onClickHandler={leaveRoom} label='Leave room' />
         <></>

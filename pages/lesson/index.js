@@ -28,6 +28,7 @@ const Index = () => {
 	const router = useRouter()
 	const [student, setStudent] = useState('')
 	const [teacher, setTeacher] = useState('')
+	const [studentsOfGroup, setStudentsOfGroup] = useState()
 	const [selectedStudentId, setSelectedStudentId] = useState(0);
 	const [room, setRoom] = useState(null)
 	const [role, setRole] = useState(null)
@@ -43,6 +44,27 @@ const Index = () => {
 	   	setRole(router.query.role)
 	   	// console.log('check', check)
 	}, [router.query, actualRoom]);
+
+	const groupStudents = async () => {
+		debugger
+		if (router.query.groupId && router.query.role == 'teacher') {
+			let test = (+router.query.groupId)
+			const dataStudents = {
+			  id: teacher.teacher_id,
+			  sort: ""
+			}
+			let teacherGroups = await axios.post(`${globals.productionServerDomain}/getStudentsGroupsByTeacherId/`, dataStudents)
+			let currentGroupLocal = teacherGroups['data'].find(el => el.id === (+router.query.groupId))
+			let getStudentsByGroupId = await axios.post(`${globals.productionServerDomain}/getStudentsByGroupId/` + (+router.query.groupId))
+			let filteredStudents = teacherGroups['data'].filter(el => getStudentsByGroupId['data'].some(el2 => el.student_id === el2.student_id && el.course_id === el2.course_id && el.program_id === el2.program_id && el.title === currentGroupLocal.title)) 
+			setStudentsOfGroup(filteredStudents)
+		} else {
+			setStudentsOfGroup(student)
+		}
+	}
+	useEffect(() => {
+		groupStudents()
+	}, [router, teacher])
 
 	// console.log('router', room) 
 	// console.log('role', role)
@@ -69,11 +91,11 @@ const Index = () => {
 	  	// console.log('status', check)
 	  	connectWithWebSocket()
 	  	if (!room || !student || username || !role || !teacher){
-			// debugger
+			debugger
 	  		registerNewUser(username);
 	    	dispatch(setUsername(username));
 	  	} else {
-			// debugger
+			debugger
 	  		registerNewUser((role == 'teacher')?teacher?.url:student?.nickname);
 	    	dispatch(setUsername((role == 'teacher')?teacher?.url:student?.nickname));
 	  	}
@@ -161,7 +183,7 @@ const Index = () => {
 								
 								<div className={styles.translationBlock}>
 									{/*<DirectCall role={role}/>*/}
-									<GroupCall role={role} teacher={teacher} student={student} groupCallRooms={groupCallRooms} activeUsers={activeUsers} username={username} check={check} setCheck={setCheck} goMeet={goMeet} setGoMeet={setGoMeet}/>
+									<GroupCall role={role} teacher={teacher} student={student} groupCallRooms={groupCallRooms} activeUsers={activeUsers} username={username} check={check} setCheck={setCheck} goMeet={goMeet} setGoMeet={setGoMeet} studentsOfGroup={studentsOfGroup}/>
 									{callState !== callStates.CALL_IN_PROGRESS && (
 										//<DashboardInformation username={username} />
 										<></>

@@ -208,9 +208,11 @@ export const handlePreOfferAnswer = (data) => {
   }
 };
 
-export const changedCamera = (state, username, id, role, teacherUrl) => {
-  console.log('step2', {screenStatus: state, username: username, streamId: id, role: role, teacherUrl: teacherUrl});
-  wss.changedCamera( state, username, id, role, teacherUrl );
+export const changedCamera = (state, username, id, role, teacherUrl, studentsOfGroup) => {
+  console.log('step2', {screenStatus: state, username: username, streamId: id, role: role, teacherUrl: teacherUrl, studentsOfGroup: studentsOfGroup});
+  debugger
+  wss.changedCamera( state, username, id, role, teacherUrl, studentsOfGroup );
+  debugger
   console.log('step7', ls)
 };
 
@@ -282,7 +284,8 @@ export const checkIfCallIsPossible = () => {
 //   getLocalStream();
 // };
 
-export const switchForScreenSharingStream = async (state, username, id, role, teacherUrl) => {
+export const switchForScreenSharingStream = async (state, username, id, role, teacherUrl, studentsOfGroup) => {
+  debugger
   const screenSharingActive = store.getState().call.screenSharingActive;
   const localStream = store.getState().call.localStream;
   const audioTrack = localStream.getAudioTracks()[0];
@@ -296,7 +299,9 @@ export const switchForScreenSharingStream = async (state, username, id, role, te
       screenSharingStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
       audioTrack && screenSharingStream.addTrack(audioTrack);
       store.dispatch(setScreenSharingActive(true));
-      wss.changedCamera( state, username, id, role, teacherUrl );
+
+      wss.changedCamera( state, username, id, role, teacherUrl, studentsOfGroup );
+
       getLocalStream();
     } else {
       // Switch back to camera
@@ -306,7 +311,9 @@ export const switchForScreenSharingStream = async (state, username, id, role, te
       sender.replaceTrack(localStream.getVideoTracks()[0]);
       store.dispatch(setScreenSharingActive(false));
       screenSharingStream.getVideoTracks().forEach(track => track.stop());
-      wss.changedCamera( state, username, id, role, teacherUrl );
+
+      wss.changedCamera( state, username, id, role, teacherUrl, studentsOfGroup );
+
       getLocalStream();
     }
 

@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Provider, useSelector, useDispatch } from 'react-redux';
-import { registerNewUser, connectWithWebSocket } from '../../src/utils/wssConnection/wssConnection';
+import { registerNewUser, connectWithWebSocket, getLocalUsername } from '../../src/utils/wssConnection/wssConnection';
 import { setUsername } from '../../src/store/actions/dashboardActions';
 import styles from './lesson.module.css';
 import logo from '../../src/resources/logo.png';
@@ -46,8 +46,10 @@ const Index = () => {
 	}, [router.query, actualRoom]);
 
 	const groupStudents = async () => {
+		// debugger
 		debugger
-		if (router.query.groupId && router.query.role == 'teacher') {
+		if (router.query.groupId != "undefined" && router.query.role == 'teacher') {
+			debugger
 			let test = (+router.query.groupId)
 			const dataStudents = {
 			  id: teacher.teacher_id,
@@ -60,10 +62,16 @@ const Index = () => {
 			setStudentsOfGroup(filteredStudents)
 		} else {
 			setStudentsOfGroup(student)
+			debugger
 		}
 	}
 	useEffect(() => {
 		groupStudents()
+		// debugger
+		if (teacher && student) {
+			getLocalUsername(router.query.role == 'teacher' ? teacher.url : student.nickname)
+		}
+		// debugger
 	}, [router, teacher])
 
 	// console.log('router', room) 
@@ -91,11 +99,11 @@ const Index = () => {
 	  	// console.log('status', check)
 	  	connectWithWebSocket()
 	  	if (!room || !student || username || !role || !teacher){
-			debugger
+			// debugger
 	  		registerNewUser(username);
 	    	dispatch(setUsername(username));
 	  	} else {
-			debugger
+			// debugger
 	  		registerNewUser((role == 'teacher')?teacher?.url:student?.nickname);
 	    	dispatch(setUsername((role == 'teacher')?teacher?.url:student?.nickname));
 	  	}

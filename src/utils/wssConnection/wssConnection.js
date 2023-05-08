@@ -15,6 +15,12 @@ const broadcastEventTypes = {
 };
 
 let socket;
+let localUsername
+
+export const getLocalUsername = (value) => {
+  localUsername = value
+  debugger
+}
 
 export const connectWithWebSocket = () => {
   socket = socketClient(SERVER);
@@ -87,16 +93,21 @@ export const connectWithWebSocket = () => {
     }
 
     if (userName != webRTCGroupCallHandler.username) {
-  //debugger
- // studentsOfGroup?.map(async el => { ///role here is studentsOfGroup
-   //debugger
-    //if (el.nickname === webRTCGroupCallHandler.username) {
-      //debugger
-      await webRTCGroupCallHandler.leaveGroupCall();
-      await firstFunction();
-      await webRTCGroupCallHandler.joinGroupCall(room.socketId, room.roomId);
-      await secondFunction();
-    //}}) ///VOT OTSUDA
+    const streams = store.getState().call.groupCallStreams;
+    const result = streams.find(item => item.username != undefined);
+    studentsOfGroup?.map(async el => { ///role here is studentsOfGroup
+    debugger
+      if (el.nickname === localUsername) {
+        debugger
+        await webRTCGroupCallHandler.leaveGroupCall();
+        debugger
+        await firstFunction();
+        // registerNewUser("sfesfsf");
+        await webRTCGroupCallHandler.joinGroupCall(room.socketId, room.roomId);
+        await secondFunction();
+        debugger
+      }
+    }) ///VOT OTSUDA
     }
   }
   

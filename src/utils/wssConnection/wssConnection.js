@@ -87,16 +87,16 @@ export const connectWithWebSocket = () => {
     }
 
     if (userName != webRTCGroupCallHandler.username) {
-  debugger
-  studentsOfGroup?.map(async el => { ///role here is studentsOfGroup
-    debugger
-    if (el.nickname === webRTCGroupCallHandler.username) {
-      debugger
+  //debugger
+ // studentsOfGroup?.map(async el => { ///role here is studentsOfGroup
+   //debugger
+    //if (el.nickname === webRTCGroupCallHandler.username) {
+      //debugger
       await webRTCGroupCallHandler.leaveGroupCall();
       await firstFunction();
       await webRTCGroupCallHandler.joinGroupCall(room.socketId, room.roomId);
       await secondFunction();
-    }}) ///VOT OTSUDA
+    //}}) ///VOT OTSUDA
     }
   }
   

@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import styles from "./RemoteVideoView.module.css";
 
 const RemoteVideoView = props => {
-  const { remoteStream, teacher, student, role } = props;
+  const { remoteStream, teacher, student, role, activeUsers, index } = props;
   const remoteVideoRef = useRef();
   const [stream, setStream] = useState(remoteStream);
   
@@ -50,7 +50,12 @@ const RemoteVideoView = props => {
       <video className={styles.videoElement} ref={remoteVideoRef} autoPlay srcObject={stream}/>
       <div className={styles.infoRow}>
         {/*<div className={styles.litera}>{stream.id.slice(0, 10)}</div>*/}
-        {props.role == 'teacher' ? <div className={styles.litera}>{student?.name}</div> : <div className={styles.litera}>{teacher?.name}</div>}
+
+        {/* {props.role == 'teacher' ? <div className={styles.litera}>{student?.name}</div> : <div className={styles.litera}>{teacher?.name}</div>} */}
+
+        <div className={styles.litera}>
+          {activeUsers[index]?.username}
+        </div>
       </div>
     </div>
   );

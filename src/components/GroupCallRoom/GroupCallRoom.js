@@ -20,7 +20,8 @@ const GroupCallRoom = (props) => {
     role, 
     teacher, 
     student,
-    groupCallRooms
+    groupCallRooms,
+    activeUsers
   } = props;
 
 
@@ -42,7 +43,7 @@ const GroupCallRoom = (props) => {
         {
           activeStreams.map((stream, index) => {
             return <>
-              {stream && callState && <RemoteVideoView role={role} teacher={teacher} student={student} username={props.username} key={stream.id} remoteStream={stream} />}
+              {stream && callState && <RemoteVideoView role={role} teacher={teacher} student={student} username={props.username} key={stream.id} remoteStream={stream} activeUsers={activeUsers} index={index}/>}
             </>
           })
         }

@@ -17,6 +17,7 @@ const GroupCall = (props) => {
     console.log('xcx2 groupCallStreams', groupCallStreams)
     console.log('xcx2 groupCallRooms', groupCallRooms)
     console.log('xcx2 localStream', localStream)
+    console.log('GroupCall.js props', props);
     getLoStream()
     groupCallStreams.map(stream => {
       console.log('xcx2 streamsDetails', stream.getTracks())
@@ -51,7 +52,7 @@ const GroupCall = (props) => {
         //<GroupCallButton onClickHandler={createRoom} label='Create room' />
         <></>
       }
-      {groupCallActive && <GroupCallRoom groupCallRooms={groupCallRooms} role={props.role} teacher={props.teacher} student={props.student} username={props.username} goMeet={props.goMeet} setGoMeet={props.setGoMeet} check={props.check} setCheck={props.setCheck} {...props} studentsOfGroup={props.studentsOfGroup}/>}
+      {groupCallActive && <GroupCallRoom groupCallRooms={groupCallRooms} role={props.role} teacher={props.teacher} student={props.student} username={props.username} goMeet={props.goMeet} setGoMeet={props.setGoMeet} check={props.check} setCheck={props.setCheck} {...props} studentsOfGroup={props.studentsOfGroup} activeUsers={props.activeUsers}/>}
       {groupCallActive && 
         //<GroupCallButton onClickHandler={leaveRoom} label='Leave room' />
         <></>

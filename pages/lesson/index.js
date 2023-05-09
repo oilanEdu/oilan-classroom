@@ -28,7 +28,7 @@ const Index = () => {
 	const router = useRouter()
 	const [student, setStudent] = useState('')
 	const [teacher, setTeacher] = useState('')
-	const [studentsOfGroup, setStudentsOfGroup] = useState()
+	const [studentsOfGroup, setStudentsOfGroup] = useState([])
 	const [selectedStudentId, setSelectedStudentId] = useState(0);
 	const [room, setRoom] = useState(null)
 	const [role, setRole] = useState(null)
@@ -61,7 +61,7 @@ const Index = () => {
 			let filteredStudents = teacherGroups['data'].filter(el => getStudentsByGroupId['data'].some(el2 => el.student_id === el2.student_id && el.course_id === el2.course_id && el.program_id === el2.program_id && el.title === currentGroupLocal.title)) 
 			setStudentsOfGroup(filteredStudents)
 		} else {
-			setStudentsOfGroup(student)
+			setStudentsOfGroup([student])
 			debugger
 		}
 	}

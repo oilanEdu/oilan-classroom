@@ -26,6 +26,7 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
+import GuideModal from "../../../../src/components/GuideModal/GuideModal";
 
 function TeacherCabinet(props) {
   const [teacher, setTeacher] = useState([])
@@ -41,6 +42,14 @@ function TeacherCabinet(props) {
   const [lessonsLoaded, setLessonsLoaded] = useState(false)
   const [studentsLoaded, setStudentsLoaded] = useState(false)
   const [allStudentsLessons, setAllStudentsLessons] = useState([])
+  const [showGuide, setShowGuide] = useState(false)
+  const [guide, setGuide] = useState()
+  
+  const loadGuide = async (id) => {
+    let getGuideById = await axios.post(`${globals.productionServerDomain}/getGuideById/` + id)
+    setGuide(getGuideById['data'][0])
+    console.log('guide', getGuideById, guide)
+  }
   // useEffect(() => {
   //   if (allStudentsLessons.length > 0 && dataLoaded === true) {
   //     async function test() {
@@ -939,6 +948,7 @@ function TeacherCabinet(props) {
               isInMainPage={isInMainPage}
             />
             <div className={styles.cantainer}>
+              <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
               <GoToLessonWithTimerComponent isTeacher={true} url={props.url} />
               {showSubscriptionLoss && teacher.register_date != undefined && Math.floor(dateOfSubscriptionLoss/86400000) > 0 ?
                           <div className={styles.subscriptionLoss}>
@@ -963,22 +973,34 @@ function TeacherCabinet(props) {
                   </p> : ''}
   
                   {/* <p>Занятие №{closerLesson.lesson_number} {closerLesson.title}</p> */}
-                  <button
-                    className={styles.goToLessonButton}
-                    disabled={disableButton}
-                    onClick={() => {
-                      closerLesson.personal_lesson_link ||
-                        closerLesson.default_lesson_link
-                        ? startLessonLink(
-                          closerLesson.personal_lesson_link
-                            ? closerLesson.personal_lesson_link
-                            : closerLesson.default_lesson_link
-                        )
-                        : startNewLesson()
-                    }}
-                  >
-                    Перейти к занятию
-                  </button>
+                  <div style={{display: 'flex', flexDirection: 'row'}}>
+                    <button
+                      className={styles.goToLessonButton}
+                      disabled={disableButton}
+                      onClick={() => {
+                        closerLesson.personal_lesson_link ||
+                          closerLesson.default_lesson_link
+                          ? startLessonLink(
+                            closerLesson.personal_lesson_link
+                              ? closerLesson.personal_lesson_link
+                              : closerLesson.default_lesson_link
+                          )
+                          : startNewLesson()
+                      }}
+                    >
+                      Перейти к занятию
+                    </button>
+                    <Image 
+                      width='20px'
+                      height='20px'
+                      src="https://realibi.kz/file/628410.png"
+                      style={{marginLeft: '10px'}}
+                      onClick={() => {
+                        loadGuide(2)
+                        setShowGuide(true)
+                      }}
+                    />
+                  </div>
                   {/* {closerLesson !== undefined && students.length > 0 && closerStudent != undefined ?
                     <>
                       <p className={styles.closerLessonInfo}>Занятие №{closerLesson.lesson_order} Тема - {closerLesson.title}  </p>

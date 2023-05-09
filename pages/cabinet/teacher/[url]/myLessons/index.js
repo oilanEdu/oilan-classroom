@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import styles from './index.module.css'
 import globals from "../../../../../src/globals";
+import { Image } from "react-bootstrap";
 import axios from "axios";
 import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
+import GuideModal from "../../../../../src/components/GuideModal/GuideModal";
 
 const myPrograms = () => {
   const router = useRouter();
@@ -14,6 +16,8 @@ const myPrograms = () => {
   const [program, setProgram] = useState([])
   const [baseDataLoaded, setBaseDataLoaded] = useState(false)
   const [lessons, setLessons] = useState([])
+  const [showGuide, setShowGuide] = useState(false)
+  const [guide, setGuide] = useState()
 
   const isInMainPage = true;
 
@@ -27,6 +31,12 @@ const myPrograms = () => {
     console.log('router', router)
 
   }, [teacherUrl, teacher]);
+
+  const loadGuide = async (id) => {
+    let getGuideById = await axios.post(`${globals.productionServerDomain}/getGuideById/` + id)
+    setGuide(getGuideById['data'][0])
+    console.log('guide', getGuideById, guide)
+  }
 
   const loadBaseData = async () => {
     let data = teacherUrl
@@ -52,12 +62,33 @@ const myPrograms = () => {
       />
             <GoToLessonWithTimerComponent isTeacher={true} url={teacherUrl} />
       <div className={styles.wrapperAll}>
+        <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
         <div onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/myCourses`)} className={styles.titleRow}>
           {program?.course_title}
         </div>
         <div className={styles.mainRow}>
-          <h1>{program?.title}</h1>
-          <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/createLesson?program=${programId}`)}>Создать урок</button>
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+            <h1>{program?.title}</h1>
+            <Image 
+              src="https://realibi.kz/file/628410.png"
+              style={{marginLeft: '10px', width: '20px', height: '20px'}}
+              onClick={() => {
+                loadGuide(5)
+                setShowGuide(true)
+              }}
+            />
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+            <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/createLesson?program=${programId}`)}>Создать урок</button>
+            <Image 
+              src="https://realibi.kz/file/628410.png"
+              style={{marginLeft: '10px', width: '20px', height: '20px'}}
+              onClick={() => {
+                loadGuide(4)
+                setShowGuide(true)
+              }}
+            />
+          </div>
         </div>
         {lessons.length > 0 ?
           <>

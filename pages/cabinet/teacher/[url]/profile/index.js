@@ -6,6 +6,7 @@ import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_H
 import globals from "../../../../../src/globals";
 import styles from './styles.module.css'
 import { Image } from "react-bootstrap";
+import GuideModal from "../../../../../src/components/GuideModal/GuideModal";
 ///getTeacherByUrl/:url
 // фамилия имя отчество, почта, телефон, пароль, о себе, навыки, опыт работы, никнеймн-логин лучше логин
 function TeacherProfile(props) {
@@ -27,6 +28,10 @@ function TeacherProfile(props) {
     const [passwordIsChanging, setPasswordIsChanging] = useState(false)
     const [passwordIsChanged, setPasswordIsChanged] = useState()
     const [teacherLoginIsChanged, setTeacherLoginIsChanged] = useState(false)
+
+    const [showGuide, setShowGuide] = useState(false)
+    const [guide, setGuide] = useState()
+
     useEffect(() => {
         console.log(teacherLoginIsChanged, "teacherLoginIsChanged");
     }, [teacherLoginIsChanged])
@@ -34,6 +39,12 @@ function TeacherProfile(props) {
         setFileName(teacher?.avatar)
     }, [teacher])
     const router = useRouter();
+
+    const loadGuide = async (id) => {
+        let getGuideById = await axios.post(`${globals.productionServerDomain}/getGuideById/` + id)
+        setGuide(getGuideById['data'][0])
+        console.log('guide', getGuideById, guide)
+      }
 
     const handleSubmit = (event) => {
         files
@@ -188,6 +199,7 @@ function TeacherProfile(props) {
                 {/* <HeaderTeacher white={true} teacher={teacher} /> */}
 
                 <div className={styles.cantainer}>
+                    <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
                     <div className={styles.programBlock}>
                         <div className={styles.wrapper_head}>
                             <div className={styles.wrapper_teacher_image}>
@@ -202,7 +214,17 @@ function TeacherProfile(props) {
                                         </div>
                                     </div>
                                     <div className={styles.header_btn}>
-                                        <button onClick={() => setChangeMod(true)}>Редактировать</button>
+                                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                                            <button onClick={() => setChangeMod(true)}>Редактировать</button>
+                                            <Image 
+                                                src="https://realibi.kz/file/628410.png"
+                                                style={{marginLeft: '10px', width: '20px', height: '20px'}}
+                                                onClick={() => {
+                                                    loadGuide(9)
+                                                    setShowGuide(true)
+                                                }}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>

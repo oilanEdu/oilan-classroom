@@ -11,6 +11,7 @@
 	width: 40%;
 	align-items: center;
 	padding: 10px;
+	z-index: 100
 }
 
 .closeBtnRow{
@@ -29,4 +30,8 @@
 	border-radius: 15px;
 	width: 90%;
 	aspect-ratio: 5/3;
+}
+
+.content p{
+	width: 100%
 }

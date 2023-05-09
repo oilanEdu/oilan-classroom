@@ -3,9 +3,11 @@ import { useRouter } from 'next/router';
 import styles from './index.module.css'
 import globals from "../../../../../src/globals";
 import axios from "axios";
+import { Image } from "react-bootstrap";
 import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import { ClickAwayListener } from "@mui/base";
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
+import GuideModal from "../../../../../src/components/GuideModal/GuideModal";
 
 const myStudents = () => {
   const router = useRouter();
@@ -20,6 +22,8 @@ const myStudents = () => {
   const [lessons, setLessons] = useState([]);
   const [showSort, setShowSort] = useState(false);
   const [sortMode, setSortMode] = useState(false)
+  const [showGuide, setShowGuide] = useState(false)
+  const [guide, setGuide] = useState()
 
   const isInMainPage = true;
   
@@ -32,6 +36,12 @@ const myStudents = () => {
     router
     // debugger
   }, [])
+
+  const loadGuide = async (id) => {
+    let getGuideById = await axios.post(`${globals.productionServerDomain}/getGuideById/` + id)
+    setGuide(getGuideById['data'][0])
+    console.log('guide', getGuideById, guide)
+  }
 
   const loadStudentLessons = async (studentId, programId) => {
     setLessonsLoaded(true)
@@ -232,6 +242,7 @@ const myStudents = () => {
       />
        <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
       <div className={styles.contentWrapper}>
+        <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
         <div className={styles.groupClicker}>
           <span className={isStudents?styles.blueSpan:styles.whiteSpan} onClick={() => setIsStudents(true)}>Студенты</span>
           <span className={!isStudents?styles.blueSpan:styles.whiteSpan} onClick={() => setIsStudents(false)}>Группы</span>
@@ -240,8 +251,28 @@ const myStudents = () => {
           {isStudents
             ? <div>
               <div className={styles.students_head}>
-                <h4>Список студентов</h4>
-                <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/myStudents/add_new_student`)}>Создать студента</button>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <h4>Список студентов</h4>
+                  <Image 
+                    src="https://realibi.kz/file/628410.png"
+                    style={{marginLeft: '10px', width: '20px', height: '20px'}}
+                    onClick={() => {
+                      loadGuide(11)
+                      setShowGuide(true)
+                    }}
+                  />
+                </div>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/myStudents/add_new_student`)}>Создать студента</button>
+                  <Image 
+                    src="https://realibi.kz/file/628410.png"
+                    style={{marginLeft: '10px', width: '20px', height: '20px'}}
+                    onClick={() => {
+                      loadGuide(10)
+                      setShowGuide(true)
+                    }}
+                  />
+                </div>
                 <ClickAwayListener onClickAway={() => setShowSort(false)}>
                   <div className={styles.sortContainer}>
                     <div
@@ -322,7 +353,17 @@ const myStudents = () => {
             : <div>
               <div className={styles.students_head}>
                 <h4>Список групп</h4>
-                <button onClick={() => router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents/new_group`)}>Создать группу</button>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <button onClick={() => router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents/new_group`)}>Создать группу</button>
+                  <Image 
+                    src="https://realibi.kz/file/628410.png"
+                    style={{marginLeft: '10px', width: '20px', height: '20px'}}
+                    onClick={() => {
+                      loadGuide(12)
+                      setShowGuide(true)
+                    }}
+                  />
+                </div>
                 <ClickAwayListener onClickAway={() => setShowSort(false)}>
                   <div className={styles.sortContainer}>
                     <div

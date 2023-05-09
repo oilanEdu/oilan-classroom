@@ -18,7 +18,7 @@ const myCourses = () => {
   const [programs, setPrograms] = useState([])
   const [showAllPrograms, setShowAllPrograms] = useState(false);
   const [showGuide, setShowGuide] = useState(false)
-  const [guideVideo, setGuideVideo] = useState()
+  const [guide, setGuide] = useState()
 
   const isInMainPage = true;
 
@@ -34,6 +34,13 @@ const myCourses = () => {
   }, [teacherUrl, teacher]);
 
   const [baseDataIsLoading, setBaseDataIsLoading] = useState(true)
+
+  const loadGuide = async (id) => {
+    let getGuideById = await axios.post(`${globals.productionServerDomain}/getGuideById/` + id)
+    setGuide(getGuideById['data'][0])
+    console.log('guide', getGuideById, guide)
+  }
+
   const loadBaseData = async () => {
     setBaseDataIsLoading(true)
     let data = teacherUrl
@@ -62,17 +69,26 @@ const myCourses = () => {
             {baseDataIsLoading ? '' : <>      {courses.length > 0 ?
         <>
           <div className={styles.wrapperAll}>
+            <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
             <div className={styles.mainRow}>
-              <h1>Мои курсы</h1>
-              <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} video={guideVideo}/>
-              <div>
+              <div style={{display: 'flex', flexDirection: 'row'}}>
+                <h1>Мои курсы</h1>
+                <Image 
+                  src="https://realibi.kz/file/628410.png"
+                  style={{marginLeft: '10px', width: '20px', height: '20px'}}
+                  onClick={() => {
+                    loadGuide(8)
+                    setShowGuide(true)
+                  }}
+                />
+              </div>
+              <div style={{display: 'flex', flexDirection: 'row'}}>
                 <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/createCourse`)}>Создать курс</button>
                 <Image 
-                  width='20px'
                   src="https://realibi.kz/file/628410.png"
-                  style={{marginLeft: '10px'}}
+                  style={{marginLeft: '10px', width: '20px', height: '20px'}}
                   onClick={() => {
-                    setGuideVideo('https://realibi.kz/file/732511.mp4')
+                    loadGuide(1)
                     setShowGuide(true)
                   }}
                 />
@@ -117,8 +133,19 @@ const myCourses = () => {
           <div className={styles.noCourses}>
             <img src='https://realibi.kz/file/296080.png' />
             <h1>У вас еще нет созданных курсов</h1>
+            <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
             <p>Для того, чтобы вести уроки на платформе, вам необходимо выбрать предмет, по которому будете обучать</p>
-            <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/createCourse`)}>Создать курс</button>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/createCourse`)}>Создать курс</button>
+              <Image 
+                src="https://realibi.kz/file/628410.png"
+                style={{marginLeft: '10px', width: '20px', height: '20px'}}
+                onClick={() => {
+                  loadGuide(3)
+                  setShowGuide(true)
+                }}
+              />
+            </div>
           </div>
         </>}</>}
 

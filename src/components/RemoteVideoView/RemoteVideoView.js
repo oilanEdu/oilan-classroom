@@ -49,13 +49,13 @@ const RemoteVideoView = props => {
     <div className={styles.videoContainer}>
       <video className={styles.videoElement} ref={remoteVideoRef} autoPlay srcObject={stream}/>
       <div className={styles.infoRow}>
-        {/*<div className={styles.litera}>{stream.id.slice(0, 10)}</div>*/}
+        <div className={styles.litera}>{stream.id.slice(0, 10)}</div>
 
         {/* {props.role == 'teacher' ? <div className={styles.litera}>{student?.name}</div> : <div className={styles.litera}>{teacher?.name}</div>} */}
 
-        <div className={styles.litera}>
+        {/* <div className={styles.litera}>
           {activeUsers[index]?.username}
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -51,7 +51,7 @@ const createCourse = () => {
     setCourseCategories(subjects.data);
   }
 
-  const handleSubmit = () => {
+  const handleSubmit2 = () => {
     if (step === 1 && subject && title && description) {
       setStep(2)
     } else if (step === 2 && programTitle && programType  && daysOfTheWeek.length !== 0 && newProgramTimes !== undefined) {
@@ -62,6 +62,23 @@ const createCourse = () => {
       }
       createNewCourse()
     }
+  }
+
+  const handleSubmit = () => {
+    if (step === 1 && subject && title && description) {
+      setStep(2)
+    } else if (step === 2 && programTitle && programType) {
+      if (autoLessonsCancelled) {
+        setViewMidal(true)
+      } else {
+
+      }
+      createNewCourse()
+    }
+    // if (programTitle && programType) {
+    //   createNewCourse
+    //   setViewMidal(true)
+    // }
   }
 
   const generateUrl = (length) => {
@@ -471,7 +488,15 @@ const createCourse = () => {
               {/* <input placeholder={programLessTime} /> */}
               <input value={newProgramTimes} onChange={() => setDewProgramTimes(event.target.value)} className={styles.time} type="time"/>
             </div></>}
-            <button className={styles.form_button} onClick={() => { handleSubmit() }}>Создать курс</button>
+            <button className={styles.form_button} 
+            // onClick={() => { handleSubmit() }}
+            onClick={() => {if (autoLessonsCancelled) {
+              handleSubmit() 
+            } else {
+              handleSubmit2() 
+            }}}
+            
+            >Создать курс</button>
               </div>
             </div>
           </>

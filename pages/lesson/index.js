@@ -87,6 +87,10 @@ const Index = () => {
 		    setSelectedStudentId(student?.student_id);
 		    let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data);
 		    setTeacher(getTeacherByLessonKey['data'][0]);
+
+			// let room = router.query.room
+			// let getStudentsInfoByRoom = await axios.post(`${globals.productionServerDomain}/getStudentsByGroupId/` + room)
+			// debugger
         }
       })();
     }, [teacher, student]);

@@ -19,7 +19,7 @@ const NewStudentHomeworks = ({ index, lesson, student }) => {
         item.exer_number = counter
       })
       setExercises(res3.data);
-      debugger
+      // debugger
     });
   };
 

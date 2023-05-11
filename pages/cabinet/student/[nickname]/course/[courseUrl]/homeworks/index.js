@@ -28,7 +28,7 @@ const StudentPrograms = (props) => {
   const fetchData = async () => {
     const response = await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${nickname}&course_url=${courseUrl}`).then(async (res) => {
       let localStudent = res.data.filter(el => el.program_id === (+router.query.program))
-      setStudent(localStudent);
+      setStudent(localStudent[0]);
       console.log(res.data);
       console.log(res.data[0] !== undefined);
       if (localStudent.length !== 0) {

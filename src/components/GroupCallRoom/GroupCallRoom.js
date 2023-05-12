@@ -21,11 +21,20 @@ const GroupCallRoom = (props) => {
     teacher, 
     student,
     groupCallRooms,
-    activeUsers
+    activeUsers,
+    onStreamSelect
   } = props;
 
 
   const { groupCallStreams } = props;
+
+  const [selectedStream, setSelectedStream] = useState(null);
+
+  const handleStreamSelect = (stream) => {
+    setSelectedStream(stream);
+    onStreamSelect(stream);
+    console.log('selectedStream', selectedStream)
+  };
 
   const activeStreams = useMemo(() => {
     return groupCallStreams.filter(stream => stream && callState);
@@ -43,7 +52,7 @@ const GroupCallRoom = (props) => {
         {
           activeStreams.map((stream, index) => {
             return <>
-              {stream && callState && <RemoteVideoView role={role} teacher={teacher} student={student} username={props.username} key={stream.id} remoteStream={stream} activeUsers={activeUsers} index={index}/>}
+              {stream && callState && <RemoteVideoView selectedStream={selectedStream} onStreamSelect={handleStreamSelect} role={role} teacher={teacher} student={student} username={props.username} key={stream.id} remoteStream={stream} activeUsers={activeUsers} index={index}/>}
             </>
           })
         }

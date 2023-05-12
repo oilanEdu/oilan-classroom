@@ -7,7 +7,6 @@ const BigVideo = props => {
 
   useEffect(() => {
     if (localStream) {
-      // console.log('localStream', localStream)
       const localVideo = localVideoRef.current;
       localVideo.srcObject = localStream;
 
@@ -17,9 +16,24 @@ const BigVideo = props => {
     }
   }, [localStream]);
 
+  const handleFullScreen = () => {
+    const localVideo = localVideoRef.current;
+
+    if (localVideo.requestFullscreen) {
+      localVideo.requestFullscreen();
+    } else if (localVideo.webkitRequestFullscreen) {
+      localVideo.webkitRequestFullscreen();
+    } else if (localVideo.mozRequestFullScreen) {
+      localVideo.mozRequestFullScreen();
+    } else if (localVideo.msRequestFullscreen) {
+      localVideo.msRequestFullscreen();
+    }
+  }
+
   return (
     <div className={styles.videoContainer}>
       <video className={styles.videoElement} ref={localVideoRef} autoPlay muted />
+      <button className={styles.fullScreen} onClick={handleFullScreen}>Full Screen</button>
     </div>
   );
 };

@@ -16,13 +16,21 @@
   /* aspect-ratio: 16/9; */
   background-color: black;
   /* width: 100%; */
-  border-radius: 16px;
+  border-radius: 16px 16px 0px 0px;
 
   /* height: 50vh; */
   height: 40vh;
 
   width: 75%;
   margin: 0 auto 0 auto;
+}
+.fullScreen {
+  border-radius: 0px 0px 16px 16px;
+  margin: 0 auto 0 auto;
+  width: 75%;
+  color: white;
+  background-color: rgb(38, 114, 237);
+  border: none;
 }
 
 @media screen and (max-width: 480px) {

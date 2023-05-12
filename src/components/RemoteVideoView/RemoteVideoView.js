@@ -2,10 +2,13 @@ import React, { useRef, useState, useEffect } from 'react';
 import styles from "./RemoteVideoView.module.css";
 
 const RemoteVideoView = props => {
-  const { remoteStream, teacher, student, role, activeUsers, index } = props;
+  const { remoteStream, teacher, student, role, activeUsers, index, onStreamSelect, selectedStream } = props;
   const remoteVideoRef = useRef();
   const [stream, setStream] = useState(remoteStream);
-  
+
+  const handleVideoClick = () => {
+    props.onStreamSelect(remoteStream);
+  };
   
   useEffect(() => {
     setStream(remoteStream);
@@ -47,7 +50,7 @@ const RemoteVideoView = props => {
 
   return (
     <div className={styles.videoContainer}>
-      <video className={styles.videoElement} ref={remoteVideoRef} autoPlay srcObject={stream}/>
+      <video style={((role == 'student') && (stream.id == selectedStream?.id))?{border: '2px solid blue'}:{}} onClick={handleVideoClick} className={styles.videoElement} ref={remoteVideoRef} autoPlay srcObject={stream}/>
       <div className={styles.infoRow}>
         <div className={styles.litera}>{stream.id.slice(0, 10)}</div>
 

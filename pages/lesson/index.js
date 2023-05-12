@@ -46,13 +46,10 @@ const Index = () => {
 	}, [router.query, actualRoom]);
 
 	const groupStudents = async () => {
-		// debugger
-		debugger
 		if (router.query.groupId != "undefined" && router.query.role == 'teacher') {
-			debugger
 			let test = (+router.query.groupId)
 			const dataStudents = {
-			  id: teacher.teacher_id,
+			  id: teacher?.teacher_id,
 			  sort: ""
 			}
 			let teacherGroups = await axios.post(`${globals.productionServerDomain}/getStudentsGroupsByTeacherId/`, dataStudents)
@@ -62,7 +59,6 @@ const Index = () => {
 			setStudentsOfGroup(filteredStudents)
 		} else {
 			setStudentsOfGroup([student])
-			debugger
 		}
 	}
 	useEffect(() => {

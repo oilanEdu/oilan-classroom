@@ -19,7 +19,6 @@ let localUsername
 
 export const getLocalUsername = (value) => {
   localUsername = value
-  debugger
 }
 
 export const connectWithWebSocket = () => {

@@ -11,6 +11,7 @@ const GroupCall = (props) => {
 
   // eslint-disable-next-line
   const [mainIndex, setMainIndex] = useState()
+  const [selectedStream, setSelectedStream] = useState(null);
   const { callState, localStream, groupCallActive, groupCallStreams, groupCallRooms } = props;
   let x
   useEffect(() => {
@@ -22,7 +23,13 @@ const GroupCall = (props) => {
     groupCallStreams.map(stream => {
       console.log('xcx2 streamsDetails', stream.getTracks())
     }) 
-  }, [groupCallStreams]);
+  }, [groupCallStreams, selectedStream]);
+
+  const handleStreamSelect = (stream) => {
+    setSelectedStream(stream);
+    console.log('selectedStream', selectedStream);
+  };
+
   const createRoom = () => {
     webRTCGroupCallHandler.createNewGroupCall();
   };
@@ -30,6 +37,11 @@ const GroupCall = (props) => {
   const leaveRoom = () => {
     webRTCGroupCallHandler.leaveGroupCall();
   };
+
+  const streamToUse = selectedStream ? 
+  groupCallStreams.includes(selectedStream) ? 
+    selectedStream : groupCallStreams[0] 
+  : groupCallStreams[0];
 
   const getLoStream = () => {
     if (groupCallStreams.length === 1) {
@@ -47,12 +59,13 @@ const GroupCall = (props) => {
 
   return (
     <>
-      <DirectCall role={props.role} lo={mainIndex?(groupCallStreams[0]?.id === mainIndex)?groupCallStreams[0]:groupCallStreams[1]:(groupCallStreams.length === 1)?groupCallStreams[0]:groupCallStreams[1]}/>
+      {/*<DirectCall role={props.role} lo={mainIndex?(groupCallStreams[0]?.id === mainIndex)?groupCallStreams[0]:groupCallStreams[1]:(groupCallStreams.length === 1)?groupCallStreams[0]:groupCallStreams[1]}/>*/}
+      <DirectCall role={props.role} lo={streamToUse}/>
       {!groupCallActive && localStream && callState !== callStates.CALL_IN_PROGRESS && 
         //<GroupCallButton onClickHandler={createRoom} label='Create room' />
         <></>
       }
-      {groupCallActive && <GroupCallRoom groupCallRooms={groupCallRooms} role={props.role} teacher={props.teacher} student={props.student} username={props.username} goMeet={props.goMeet} setGoMeet={props.setGoMeet} check={props.check} setCheck={props.setCheck} {...props} studentsOfGroup={props.studentsOfGroup} activeUsers={props.activeUsers}/>}
+      {groupCallActive && <GroupCallRoom onStreamSelect={handleStreamSelect} groupCallRooms={groupCallRooms} role={props.role} teacher={props.teacher} student={props.student} username={props.username} goMeet={props.goMeet} setGoMeet={props.setGoMeet} check={props.check} setCheck={props.setCheck} {...props} studentsOfGroup={props.studentsOfGroup} activeUsers={props.activeUsers}/>}
       {groupCallActive && 
         //<GroupCallButton onClickHandler={leaveRoom} label='Leave room' />
         <></>

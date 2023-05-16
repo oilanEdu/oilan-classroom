@@ -140,16 +140,10 @@ const Index = () => {
 
 	const joinRoom = (groupCallRooms) => {
 		groupCallRooms?.forEach(roomy => {
-			// console.log('roomy', roomy)
-			if (roomy.hostName == student?.nickname || roomy.hostName == teacher?.url){
+			if (roomy.hostName == teacher?.url){
 				setNeedRoom(false)
 				if (role == 'student'){
 					const roomy = groupCallRooms.find(roomy => roomy.hostName === teacher?.url);
-					webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId, role === 'student' ? teacher?.url : student?.nickname);
-					setActualRoom(roomy)
-				}
-				if (role == 'teacher'){
-					const roomy = groupCallRooms.find(roomy => roomy.hostName === student?.nickname);
 					webRTCGroupCallHandler.joinGroupCall(roomy.socketId, roomy.roomId, role === 'student' ? teacher?.url : student?.nickname);
 					setActualRoom(roomy)
 				}
@@ -277,10 +271,9 @@ const Index = () => {
                   }}
                   // className="px-4 py-2 bg-blue-700 rounded-lg text-white"
                   onClick={() => {
-									if (!roomExists){
+									if (role == 'teacher') {
 										createRoom(groupCallRooms)
-									} 
-									if (roomExists) {
+									} else {
 										joinRoom(groupCallRooms)
 										setGoMeet(true)
 									}

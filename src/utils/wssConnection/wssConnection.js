@@ -95,16 +95,12 @@ export const connectWithWebSocket = () => {
     const streams = store.getState().call.groupCallStreams;
     const result = streams.find(item => item.username != undefined);
     studentsOfGroup?.map(async el => { ///role here is studentsOfGroup
-    debugger
       if (el.nickname === localUsername) {
-        debugger
         await webRTCGroupCallHandler.leaveGroupCall();
-        debugger
         await firstFunction();
         // registerNewUser("sfesfsf");
         await webRTCGroupCallHandler.joinGroupCall(room.socketId, room.roomId);
         await secondFunction();
-        debugger
       }
     }) ///VOT OTSUDA
     }

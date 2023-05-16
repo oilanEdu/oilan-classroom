@@ -22,13 +22,14 @@ const GroupCallRoom = (props) => {
     student,
     groupCallRooms,
     activeUsers,
-    onStreamSelect
+    onStreamSelect,
+    studentsInfoByRoom
   } = props;
-
 
   const { groupCallStreams } = props;
 
   const [selectedStream, setSelectedStream] = useState(null);
+  const [activeStreams, setActiveStreams] = useState([]);
 
   const handleStreamSelect = (stream) => {
     setSelectedStream(stream);
@@ -36,14 +37,27 @@ const GroupCallRoom = (props) => {
     console.log('selectedStream', selectedStream)
   };
 
-  const activeStreams = useMemo(() => {
-    return groupCallStreams.filter(stream => stream && callState);
-  }, [groupCallStreams, callState]); 
-
   useEffect(() => {
-    console.log('eee activeStreams', activeStreams)
-    console.log('groupCallStreams', groupCallStreams)
-  }, [activeStreams.length]);
+    const checkVideoMuted = () => {
+      const streams = groupCallStreams.filter(stream => stream && callState);
+      setActiveStreams(streams);
+    };
+
+    checkVideoMuted(); // Первоначальный вызов
+
+    const interval = setInterval(() => {
+      const newActiveStreams = groupCallStreams.filter(stream => stream && callState && !stream.getVideoTracks()[0]?.muted);
+      setActiveStreams(newActiveStreams);
+    }, 10000); // Проверять каждые 10 секунд
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [groupCallStreams, callState]);
+
+  // useEffect(() => {
+  //   console.log('activeStreams', activeStreams)
+  // }, [activeStreams]);
 
   return (
     <div className={styles.group_call_room_container}>
@@ -51,13 +65,11 @@ const GroupCallRoom = (props) => {
         <LocalVideoView role={role} teacher={teacher} student={student} localStream={localStream} />
         {
           activeStreams.map((stream, index) => {
-            return <>
-              {stream && callState && <RemoteVideoView selectedStream={selectedStream} onStreamSelect={handleStreamSelect} role={role} teacher={teacher} student={student} username={props.username} key={stream.id} remoteStream={stream} activeUsers={activeUsers} index={index}/>}
-            </>
+            return <RemoteVideoView selectedStream={selectedStream} onStreamSelect={handleStreamSelect} role={role} teacher={teacher} student={student} username={props.username} key={stream.id} remoteStream={stream} activeUsers={activeUsers} index={index}/>
           })
         }
       </div>
-      <ConversationButtons groupCallRooms={groupCallRooms} teacher={teacher} role={props.role} {...props} studentsOfGroup={props.studentsOfGroup}/>
+      <ConversationButtons studentsInfoByRoom={studentsInfoByRoom} groupCallRooms={groupCallRooms} teacher={teacher} role={props.role} {...props} studentsOfGroup={props.studentsOfGroup}/>
     </div>
   );
 };

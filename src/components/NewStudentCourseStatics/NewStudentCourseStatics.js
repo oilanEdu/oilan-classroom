@@ -164,7 +164,7 @@ const NewStudentCourseStatics = ({ programDesc, student, lesson, lessons, scores
 
     await router.push(redirectUrl)
   }
-  console.log(student);
+
   const startNewLesson = async () => {
     console.log('proverkha2')
     let alphabet = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789";
@@ -248,8 +248,6 @@ const NewStudentCourseStatics = ({ programDesc, student, lesson, lessons, scores
       getStudentCoursesAndPrograms()
     }
   }, [student])
-
-  console.log(lessons);
 
   const changeCurrentCourseAndProgram = async (coureMiddleWareId) => {
     await router.push(`/cabinet/student/${student[0]?.nickname}/course/${coursesOfStudent.find(el => el.id === (+coureMiddleWareId))?.url}?program=${coursesOfStudent.find(el => el.id === (+coureMiddleWareId))?.program_id}`);

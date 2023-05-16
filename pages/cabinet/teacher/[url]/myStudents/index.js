@@ -35,7 +35,6 @@ const myStudents = () => {
     setIsStudents(false)  
     }
     router
-    // debugger
   }, [])
 
   const loadGuide = async (id) => {
@@ -81,10 +80,8 @@ const myStudents = () => {
     }
     let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
     let teacherStudentsGroup = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherIdGroup/`, dataStudents)
-    debugger
     let teacherGroups = await axios.post(`${globals.productionServerDomain}/getGroupsByTeacherId/`, dataStudents)
     await teacherStudents['data'].forEach(async student => {
-      // debugger
       student.check = 0
       let diff = 604800000 * 7
       if (!lessonsLoaded) { loadStudentLessons(student.student_id, student.program_id) }
@@ -112,7 +109,6 @@ const myStudents = () => {
           let dateStr = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time);
           let closerDate
           if ((Date.parse(dateStr) > Date.parse(new Date())) && (Date.parse(dateStr) - Date.parse(new Date()) < diff)) {
-            // debugger
             closerDate = lessonDate
             let closerLesson
             if (closerLesson) {
@@ -128,7 +124,6 @@ const myStudents = () => {
             // student.closer_date = closerDate 
             // student.curr_hours = curr_hours 
             // student.curr_minutes = curr_minutes 
-            // debugger
           }
           let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
             let exercises = res.data
@@ -195,7 +190,6 @@ const myStudents = () => {
 
     setStudents(teacherStudents['data'])
     setGroups(teacherGroups['data'])
-    debugger
     console.log(teacherStudents['data']);
   }
 

@@ -939,7 +939,6 @@ function TeacherCabinet(props) {
     useEffect(() => {
  
     dataLoaded
-    debugger
   }, [dataLoaded])
 
   if (dataLoaded === true) {

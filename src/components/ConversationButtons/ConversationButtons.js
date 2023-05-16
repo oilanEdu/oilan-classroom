@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import ConversationButton from './ConversationButton';
 import GroupCallButton from './../GroupCallButton/GroupCallButton';
-import { getLocalStream, switchForScreenSharingStream, hangUp, changedCamera } from '../../../src/utils/webRTC/webRTCHandler';
+import { getLocalStream, switchForScreenSharingStream, hangUp, changedCamera, closeCall } from '../../../src/utils/webRTC/webRTCHandler';
 import * as webRTCGroupCallHandler from '../../../src/utils/webRTC/webRTCGroupCallHandler';
 import styles from './ConversationButtons.module.css';
 import { setScreenSharingActive } from '../../../src/store/actions/callActions';
 import store from '../../../src/store/store.js';
+import { useRouter } from "next/router";
+import axios from "axios";
+import globals from "../../../src/globals";
 
 
 const ConversationButtons = (props) => {
@@ -24,8 +27,56 @@ const ConversationButtons = (props) => {
     role,
     groupCallRooms,
     teacher,
-    studentsOfGroup
+    studentsOfGroup,
+    studentsInfoByRoom
   } = props;
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      webRTCGroupCallHandler.leaveGroupCall();
+      closeCall();
+    };
+
+    router.events.on('routeChangeStart', handleRouteChange);
+      return () => {
+        router.events.off('routeChangeStart', handleRouteChange);
+      };
+  }, []);
+
+  const getStudentById = async (studentId) => {
+    try {
+      const response = await axios.post(`${globals.productionServerDomain}/getStudentById`, {
+        student_id: studentId
+      });
+      console.log('studentio', response.data);
+      return response.data[0];
+    } catch (error) {
+      console.error('studentio', error);
+      throw error;
+    }
+  };
+
+  const personalLink = async () => {
+    console.log('studentio', role);
+    if (role === 'teacher') {
+      const redirectUrl = `cabinet/teacher/${encodeURIComponent(props.teacher?.url)}`;
+      await router.push(redirectUrl).then(() => {
+        window.location.reload();
+      })
+    } else {
+      console.log('studentio tut')
+      const student = await getStudentById(router.query.id);
+      console.log('studentio student', student)
+      const redirectUrl = `cabinet/student/${student?.nickname}/course/${studentsInfoByRoom?.url}?program=${studentsInfoByRoom?.program_id}`;
+      console.log('studentio redirectUrl', redirectUrl)
+      await router.push(redirectUrl).then(() => {
+        console.log('studentio tut 2')
+        window.location.reload();
+      })
+    }
+  };
+
+  const router = useRouter()
   
   const handleMicButtonPressed = () => {
     const micEnabled = localMicrophoneEnabled;
@@ -56,6 +107,8 @@ const ConversationButtons = (props) => {
   const leaveRoom = () => {
     webRTCGroupCallHandler.leaveGroupCall();
     setGoMeet(!goMeet)
+    closeCall()
+    personalLink()
   };
 
   const reconnect = () => {

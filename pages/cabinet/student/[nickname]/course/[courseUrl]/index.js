@@ -25,12 +25,10 @@ const StudentCourse = (props) => {
 
   const fetchData = async () => {
     const response = await axios.get(`${globals.productionServerDomain}/getStudentCourseInfo?student_nick=${nickname}&course_url=${courseUrl}`).then(async (res) => {
-      debugger
       let localStudent = res.data.filter(el => el.program_id === (+router.query.program))
       setStudent(localStudent);
       console.log(res.data);
       console.log(res.data[0] !== undefined);
-      debugger
       if (localStudent.length !== 0) {
         await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${courseUrl}&program_id=${programId == !undefined ? programId : localStudent[0]?.program_id}&student_id=${localStudent[0]?.id}`).then(res => {
           let array = res.data
@@ -42,7 +40,6 @@ const StudentCourse = (props) => {
           setLesson(uniqueLessons[0]);
           setLessons(uniqueLessons);
           setDataLoaded(true) 
-          debugger
         });
       } else {
         return;

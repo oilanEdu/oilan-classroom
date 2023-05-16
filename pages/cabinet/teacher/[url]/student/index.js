@@ -142,7 +142,6 @@ export default function Student({ programs }) {
     console.log('ee', student)
     let findProgram = result.data.find(el => el.course_id === +router.query.courseId && el.program_id === +router.query.programId)
     setStudentPrograms(findProgram);
-    debugger
     console.log(studentPrograms)
   }
 
@@ -511,9 +510,7 @@ export default function Student({ programs }) {
 }
 
 Student.getInitialProps = async (ctx) => {
-  // debugger
   if (ctx.query.nick !== undefined) {
-    // debugger
     return {
       nick: ctx.query.nick,
     }

@@ -210,9 +210,7 @@ export const handlePreOfferAnswer = (data) => {
 
 export const changedCamera = (state, username, id, role, teacherUrl, studentsOfGroup) => {
   console.log('step2', {screenStatus: state, username: username, streamId: id, role: role, teacherUrl: teacherUrl, studentsOfGroup: studentsOfGroup});
-  debugger
   wss.changedCamera( state, username, id, role, teacherUrl, studentsOfGroup );
-  debugger
   console.log('step7', ls)
 };
 
@@ -285,7 +283,6 @@ export const checkIfCallIsPossible = () => {
 // };
 
 export const switchForScreenSharingStream = async (state, username, id, role, teacherUrl, studentsOfGroup) => {
-  debugger
   const screenSharingActive = store.getState().call.screenSharingActive;
   const localStream = store.getState().call.localStream;
   const audioTrack = localStream.getAudioTracks()[0];
@@ -337,6 +334,14 @@ export const hangUp = () => {
 
   resetCallDataAfterHangUp();
 };
+
+export const closeCall = () => {
+  wss.sendUserHangedUp({
+    connectedUserSocketId: connectedUserSocketId
+  });
+  peerConnection.close();
+  
+}
 
 const resetCallDataAfterHangUp = () => {
   peerConnection.close();

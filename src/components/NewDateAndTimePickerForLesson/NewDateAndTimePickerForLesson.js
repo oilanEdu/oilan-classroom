@@ -17,7 +17,6 @@ function NewDateAndTimePickerForLesson(props) {
 
   let dateStr = new Date(props.lesson.personal_time ? props.lesson.personal_time : props.lesson.start_time)
   let dateStrTime = new Date(props.lesson.personal_time ? props.lesson.personal_time : props.lesson.start_time).toLocaleTimeString(); 
-  debugger 
   useEffect(() => {
     const newLessons = [...props.lessons2];
     const index2 = newLessons.findIndex(el => el.id === props.lesson_id);
@@ -39,7 +38,6 @@ function NewDateAndTimePickerForLesson(props) {
     }
     setDateState(formated_date)
     setTimeState(dateStrTime)
-    // debugger
 
     console.log("testo", props.lessons2.map(el => new Date(dateAndTimeMerger).getTime() > new Date(el.personal_time).getTime() && props.lesson_order > el.lesson_order));
     // if (props.lessons2.map(el => new Date(dateAndTimeMerger).getTime() > new Date(el.personal_time).getTime() && props.lesson_order > el.lesson_order )) {
@@ -80,7 +78,6 @@ function NewDateAndTimePickerForLesson(props) {
   const [dateState, setDateState] = useState(formated_date);
   // useEffect(() => {
   //   dateState
-  //   debugger
   //   if (dateState === "1970-01-01") {
       
   //   }
@@ -160,13 +157,11 @@ function NewDateAndTimePickerForLesson(props) {
         const test1 = new Date(date).getTime()
         const test2 = new Date(datesArray[i].personal_time).getTime()
         if ((differenceInMs < durationOfLessonInMs && differenceInMs != 0 && datesArray[i].id != props.lesson_id) || (differenceInMs === 0 && datesArray[i].id != props.lesson_id)) {
-          // debugger
           setErrorOfDateOfGoingLesson(true)
           setErrorOfDateOfGoingLessonLesson(datesArray[i])
           return true; // если разница в один час, вернуть true
         }
       }
-      // debugger
       setErrorOfDateOfGoingLesson(false)
       return false; // если ни одна дата не отличается на один час, вернуть false
     }
@@ -184,7 +179,6 @@ function NewDateAndTimePickerForLesson(props) {
     compareDates(props.lesson.personal_time, mergedArr)
     mergedArr
     props.allStudentsLessons
-    // debugger
   }, [props.lessons2])
 
 

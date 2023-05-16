@@ -44,7 +44,7 @@ const Index = () => {
 			let room = router.query.room
 			let getStudentsInfoByRoom = await axios.post(`${globals.productionServerDomain}/getStudentsInfoByRoom/` + room).then(res => {
 				setStudentsInfoByRoom(res['data'][0])
-				debugger 
+				console.log('getStudentsInfoByRoom', res['data'][0])
 			})
 			.catch((err) => {
 				err
@@ -206,7 +206,7 @@ const Index = () => {
 								
 								<div className={styles.translationBlock}>
 									{/*<DirectCall role={role}/>*/}
-									<GroupCall role={role} teacher={teacher} student={student} groupCallRooms={groupCallRooms} activeUsers={activeUsers} username={username} check={check} setCheck={setCheck} goMeet={goMeet} setGoMeet={setGoMeet} studentsOfGroup={studentsOfGroup}/>
+									<GroupCall studentsInfoByRoom={studentsInfoByRoom} role={role} teacher={teacher} student={student} groupCallRooms={groupCallRooms} activeUsers={activeUsers} username={username} check={check} setCheck={setCheck} goMeet={goMeet} setGoMeet={setGoMeet} studentsOfGroup={studentsOfGroup}/>
 									{callState !== callStates.CALL_IN_PROGRESS && (
 										//<DashboardInformation username={username} />
 										<></>

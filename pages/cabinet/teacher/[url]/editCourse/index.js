@@ -6,6 +6,7 @@ import axios from "axios";
 import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import { Image } from "react-bootstrap";
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
+import Footer from "../../../../../src/components/Footer/Footer";
 
 const createCourse = () => {
   const router = useRouter();
@@ -104,13 +105,13 @@ const createCourse = () => {
   }
 
   return <>
-    <div className={styles.container}>
-      <HeaderTeacher
+        <HeaderTeacher
         white={true}
         url={teacherUrl}
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
+    <div className={styles.container}>
        <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
       <div className={styles.createCourse}>
         <div className={styles.stepOne}>
@@ -141,6 +142,7 @@ const createCourse = () => {
         </div>
       </div>
     </div>
+    <Footer />
   </>;
 };
 

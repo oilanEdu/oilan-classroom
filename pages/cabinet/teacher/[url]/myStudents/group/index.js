@@ -7,6 +7,7 @@ import HeaderTeacher from "../../../../../../src/components/new_HeaderTeacher/ne
 import { ClickAwayListener } from "@mui/base";
 import Link from "next/link";
 import GoToLessonWithTimerComponent from "../../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
+import Footer from "../../../../../../src/components/Footer/Footer";
 
 const Group = () => {
   const router = useRouter();
@@ -253,13 +254,13 @@ const Group = () => {
   }
 
   return <>
-    <div className={styles.container}>
-      <HeaderTeacher
+        <HeaderTeacher
         white={true}
         url={teacherUrl}
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
+    <div className={styles.container}>
        <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
       <div className={styles.contentWrapper}>
         <div className={styles.groupClicker}>
@@ -397,6 +398,7 @@ const Group = () => {
         </div>
       </div>
     </div>
+    <Footer />
   </>;
 };
 

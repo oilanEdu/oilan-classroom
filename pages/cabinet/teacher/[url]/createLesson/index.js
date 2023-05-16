@@ -7,6 +7,7 @@ import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_H
 import { Image } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
+import Footer from "../../../../../src/components/Footer/Footer";
 
 const createLesson = () => {
   const router = useRouter();
@@ -118,13 +119,14 @@ const createLesson = () => {
 
 
   return <>
-    <div className={styles.container}>
-      <HeaderTeacher
+        <HeaderTeacher
         white={true}
         url={teacherUrl}
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
+    <div className={styles.container}>
+
        <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
       <div className={styles.createLesson}>
         <div className={styles.contentContainer}>
@@ -170,6 +172,7 @@ const createLesson = () => {
         </div>
       </div>
     </div>
+    <Footer />
   </>;
 };
 

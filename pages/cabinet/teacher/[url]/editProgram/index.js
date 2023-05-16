@@ -6,6 +6,7 @@ import axios from "axios";
 import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import { Image } from "react-bootstrap";
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
+import Footer from "../../../../../src/components/Footer/Footer";
 
 const editProgramPage = () => {
   const router = useRouter();
@@ -100,13 +101,14 @@ const editProgramPage = () => {
   }
 
   return <>
-    <div className={styles.container}>
-      <HeaderTeacher
+        <HeaderTeacher
         white={true}
         url={teacherUrl}
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
+    <div className={styles.container}>
+
        <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
       <div className={styles.editProgram}>
         <div className={styles.stepTwo}>
@@ -177,6 +179,7 @@ const editProgramPage = () => {
         </div>
       </div>
     </div>
+    <Footer />
   </>;
 };
 

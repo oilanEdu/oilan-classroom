@@ -103,6 +103,9 @@
   position: sticky;
   top: 0;
   background-color: #FCFDFF;
+
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .logo {

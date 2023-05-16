@@ -335,7 +335,8 @@ a {
 }
 @media screen and (max-width: 480px) {
     .py-1-5 {
-        width: 50px;
+        width: 35px;
+        height: 58px;
     }
 }
 

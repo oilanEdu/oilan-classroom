@@ -22,6 +22,7 @@ import axios from "axios";
 import HeaderStudent from "../../src/components/NewHeaderStudent/NewHeaderStudent";
 import HeaderTeacher from "../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import Footer from "../../src/components/Footer/Footer";
+import NewHeaderStudent from '../../src/components/NewHeaderStudent/NewHeaderStudent';
 
 const Index = () => {
 	const [check, setCheck] = useState('empty')
@@ -36,6 +37,24 @@ const Index = () => {
 	const [goMeet, setGoMeet] = useState(false)
 	const [actualRoom, setActualRoom] = useState('')
   const [isRoom, setIsRoom] = useState(false)
+	const [studentsInfoByRoom, setStudentsInfoByRoom] = useState()
+
+	const getStudentInfoByRoom = async () => {
+		if (router.query.room) {
+			let room = router.query.room
+			let getStudentsInfoByRoom = await axios.post(`${globals.productionServerDomain}/getStudentsInfoByRoom/` + room).then(res => {
+				setStudentsInfoByRoom(res['data'][0])
+				debugger 
+			})
+			.catch((err) => {
+				err
+			}
+			)
+		}
+	}
+	useEffect(() => {
+		getStudentInfoByRoom()
+	}, [router.query.room])
 
 	useEffect(() => {
 		// console.log('localStorage', localStorage)
@@ -83,10 +102,6 @@ const Index = () => {
 		    setSelectedStudentId(student?.student_id);
 		    let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data);
 		    setTeacher(getTeacherByLessonKey['data'][0]);
-
-			// let room = router.query.room
-			// let getStudentsInfoByRoom = await axios.post(`${globals.productionServerDomain}/getStudentsByGroupId/` + room)
-			// debugger
         }
       })();
     }, [teacher, student]);
@@ -181,7 +196,7 @@ const Index = () => {
 					<>
 						{role === "student" 
         				  ? 
-        				  <HeaderStudent name={student?.name} surname={student?.surname} nickname={student?.nickname} courseUrl={student?.url} />
+        				  <NewHeaderStudent name={student?.name} surname={student?.surname} nickname={student?.nickname} courseUrl={studentsInfoByRoom?.url} programId={studentsInfoByRoom?.program_id}/>
         				  : <HeaderTeacher white={true} teacher={teacher} />
         				}
 						<div className={styles.all}>
@@ -233,7 +248,7 @@ const Index = () => {
       <div style={{backgroundColor: "#white", width: "100%"}}>
         {role === "student" 
           ? 
-          <HeaderStudent name={student?.name} surname={student?.surname} nickname={student?.nickname} courseUrl={student?.url} />
+          <NewHeaderStudent name={student?.name} surname={student?.surname} nickname={student?.nickname} courseUrl={studentsInfoByRoom?.url} programId={studentsInfoByRoom?.program_id}/>
           : <HeaderTeacher white={true} teacher={teacher} />
         }
         <div className={styles.cantainer}>

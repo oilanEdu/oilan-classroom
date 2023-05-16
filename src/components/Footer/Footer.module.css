@@ -25,6 +25,7 @@
     width: 100%;
     /* padding: 50px; */
     left: 0px;
+    padding: 0 100px;
 }
 
 .container {
@@ -244,5 +245,8 @@
         grid-template-areas: 'logo' 'instagram' 'partner' 'phone' 'email'
             'privacy';
         grid-template-columns: 1fr;
+    }
+    .outerContainer {
+        padding: 0 20px;
     }
 }

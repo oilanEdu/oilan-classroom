@@ -936,17 +936,24 @@ function TeacherCabinet(props) {
     // let test2 = test.getTime() - new Date(teacher?.register_date).getTime() 
   }, [teacher]) 
 
+    useEffect(() => {
+ 
+    dataLoaded
+    debugger
+  }, [dataLoaded])
+
   if (dataLoaded === true) {
     if (typeof localStorage !== "undefined" && localStorage.getItem('login') !== null) {
       return (localStorage && teacher.url === localStorage.getItem('login') ?
         <>
-          <div className={styles.container}>
-            <HeaderTeacher
+                    <HeaderTeacher
               white={true}
               url={props.url}
               teacher={teacher}
               isInMainPage={isInMainPage}
             />
+          <div className={styles.container}>
+
             <div className={styles.cantainer}>
               <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
               <GoToLessonWithTimerComponent isTeacher={true} url={props.url} />
@@ -1014,12 +1021,14 @@ function TeacherCabinet(props) {
               </div>
             </div>
   
-            <Footer />
+            {/* <Footer /> */}
           </div>
+          <Footer />
         </>
-        : <div
+        : <>
+        <div
           style={{
-            backgroundColor: "#f1faff",
+            // backgroundColor: "#f1faff",
             overflowX: "auto"
           }}
         >
@@ -1033,14 +1042,17 @@ function TeacherCabinet(props) {
               <a> Личный кабинет</a>
             </span>
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </div>
+        <Footer />
+        </>
       )
     } else {
       return (
+        <>
         <div
           style={{
-            backgroundColor: "#f1faff",
+            // backgroundColor: "#f1faff",
             overflowX: "auto"
           }}
         >
@@ -1051,25 +1063,32 @@ function TeacherCabinet(props) {
               <a> авторизации</a>
             </Link>
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </div>
+        <Footer />
+        </>
+        
       )
     } 
   } else {
     return (
-      <div className={styles.container}>
-      <HeaderTeacher
-        white={true}
-        url={props.url}
-        teacher={teacher}
-        isInMainPage={isInMainPage}
-      />
-      <div className={styles.cantainer}>
-        
+      <>
+      <div
+      style={{
+        // backgroundColor: "#f1faff",
+        overflowX: "auto",
+        minHeight: "100vh"
+      }}
+    >
+      <Header white={true} />
+      <div className={styles.not_in}>
+        Загрузка...
       </div>
-
-      <Footer />
+      {/* <Footer /> */}
     </div>
+    <Footer />
+      </>
+      
     )
   }
 }

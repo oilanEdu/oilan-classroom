@@ -8,6 +8,7 @@ import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_H
 import { ClickAwayListener } from "@mui/base";
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 import GuideModal from "../../../../../src/components/GuideModal/GuideModal";
+import Footer from "../../../../../src/components/Footer/Footer";
 
 const myStudents = () => {
   const router = useRouter();
@@ -233,13 +234,14 @@ const myStudents = () => {
   }
 
   return <>
-    <div className={styles.container}>
-      <HeaderTeacher
+        <HeaderTeacher
         white={true}
         url={teacherUrl}
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
+    <div className={styles.container}>
+
        <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
       <div className={styles.contentWrapper}>
         <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
@@ -447,6 +449,7 @@ const myStudents = () => {
         </div>
       </div>
     </div>
+    <Footer />
   </>;
 };
 

@@ -7,6 +7,7 @@ import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_H
 import { Image } from "react-bootstrap";
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 import { addDays, getDay } from "date-fns";
+import Footer from "../../../../../src/components/Footer/Footer";
 
 const createProgram = () => {
   const router = useRouter();
@@ -195,13 +196,13 @@ const createProgram = () => {
   }
 
   return <>
-    <div className={styles.container}>
-      <HeaderTeacher
+        <HeaderTeacher
         white={true}
         url={teacherUrl}
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
+    <div className={styles.container}>
        <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
       <div className={styles.modal} style={viewModal?{display: 'flex'}:{display: 'none'}}>
         <h1>Поздравляем, вы создали новую программу</h1>
@@ -414,6 +415,7 @@ const createProgram = () => {
         </div>
       </div>
     </div>
+    <Footer />
   </>;
 };
 

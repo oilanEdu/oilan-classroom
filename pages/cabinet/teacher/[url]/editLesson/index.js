@@ -7,6 +7,7 @@ import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_H
 import { Image } from "react-bootstrap";
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 import EditLessonHomeworkComponent from "../../../../../src/components/EditLessonHomeworkComponent/EditLessonHomeworkComponent";
+import Footer from "../../../../../src/components/Footer/Footer";
 
 const createCourse = () => {
   const router = useRouter();
@@ -230,13 +231,14 @@ const createCourse = () => {
 
   const [handleSubmitIsClicked, setHandleSubmitIsClicked] = useState(false)
   return <>
-    <div className={styles.container}>
-      <HeaderTeacher
+        <HeaderTeacher
         white={true}
         url={teacherUrl}
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
+    <div className={styles.container}>
+
       <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
       <div className={styles.editLesson}>
         <span className={styles.whichProgramm}>Программа {lesson?.program_title}</span>
@@ -314,6 +316,7 @@ const createCourse = () => {
         </div>
       </div>
     </div>
+    <Footer />
   </>;
 };
 

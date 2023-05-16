@@ -192,8 +192,10 @@ function TeacherProfile(props) {
     //     // let test = teacherSkills?.split(";")
     // }, [teacherSkills])
     return (
-        <>  <div className={styles.container}>
-            <HeaderTeacher white={true} teacher={teacher} />
+        <>  
+                    <HeaderTeacher white={true} teacher={teacher} />
+        <div className={styles.container}>
+
             <div className={styles.mainWrapperOfEditProgram}
             >
                 {/* <HeaderTeacher white={true} teacher={teacher} /> */}
@@ -352,9 +354,10 @@ function TeacherProfile(props) {
                     </div>
                 </div>
 
-                <Footer />
+                {/* <Footer /> */}
             </div>
-        </div>
+            </div>
+        <Footer />
         </>
     )
 }

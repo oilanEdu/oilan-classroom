@@ -25,7 +25,7 @@
   justify-content: space-between;
   align-items: center;
   background: transparent;
-  padding: 10px 100px;
+  /* padding: 10px 100px; */
 }
 
 .menuButtonBody {
@@ -58,6 +58,9 @@
   padding-right: 5%;
   position: sticky;
   top: 0;
+
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .logo {

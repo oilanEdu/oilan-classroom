@@ -9,11 +9,14 @@ import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_H
 import NewDateAndTimePickerForLesson from "../../../../../src/components/NewDateAndTimePickerForLesson/NewDateAndTimePickerForLesson";
 import HomeworksByTeacher from "../../../../../src/components/HomeworksByTeacher/HomeworksByTeacher";
 import pkg from 'react';
+import { useClipboard } from "use-clipboard-copy";
+import Footer from "../../../../../src/components/Footer/Footer";
 const { useCallback, useRef } = pkg;
 
 const axios = require("axios").default;
 
 export default function Student({ programs }) {
+  const clipboard = useClipboard()
   const router = useRouter();
   const teacherUrl = router.query.url
   const [teacher, setTeacher] = useState([])
@@ -318,12 +321,14 @@ export default function Student({ programs }) {
   }
 
   return (
-    <div className={styles.container}>
-      <HeaderTeacher
+    <>
+          <HeaderTeacher
         white={true}
         url={teacherUrl}
         teacher={teacher}
       />
+        <div className={styles.container}>
+
       <div className={styles.detailInfo}>
         <div className={styles.menu}>
           <div className={styles.menu_tabs}>
@@ -369,7 +374,15 @@ export default function Student({ programs }) {
             <div className={styles.input_wrapper}>
               <div className={styles.input_container}>
                 <p>Ссылка на личный кабинет</p>
-                <input value={"www.oilan-classroom.com/cabinet/student/" + student?.nickname + "/course/" + studentPrograms?.course_url + "?program=" + studentPrograms?.program_id} />
+                <div className={styles.input_inner_container}>
+                  <input value={"www.oilan-classroom.com/cabinet/student/" + student?.nickname + "/course/" + studentPrograms?.course_url + "?program=" + studentPrograms?.program_id} 
+                  ref={clipboard.target}
+                  />
+                  <span 
+                    className={styles.generate_pass_copy} 
+                    onClick={clipboard.copy}
+                  ></span>
+                </div>
               </div>
               <div className={styles.input_container}>
                 <p>Курс</p>
@@ -491,6 +504,9 @@ export default function Student({ programs }) {
         {tabNum === 2 && <HomeworksByTeacher student={student} />}
       </div>
     </div>
+    <Footer />
+    </>
+
   );
 }
 

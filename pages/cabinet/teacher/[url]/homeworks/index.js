@@ -8,6 +8,7 @@ import HomeworksByTeacher from "../../../../../src/components/HomeworksByTeacher
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 import LessonDataComponent from "../../../../../src/components/LessonDataComponent/LessonDataComponent";
 import AnswersHomeWorksOfTeacherComponent from "../../../../../src/components/AnswersHomeWorksOfTeacherComponent/AnswersHomeWorksOfTeacherComponent";
+import Footer from "../../../../../src/components/Footer/Footer";
 
 const homeworks = () => {
   const router = useRouter();
@@ -308,13 +309,14 @@ const homeworks = () => {
   // }
 
   return <>
-    <div className={styles.container}>
-      <HeaderTeacher
+        <HeaderTeacher
         white={true}
         url={teacherUrl}
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
+    <div className={styles.container}>
+
        <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
       <div className={styles.wrapperAll}>
         <div><h1>Домашние задания</h1></div>
@@ -331,6 +333,7 @@ const homeworks = () => {
         </div>
       </div>
     </div>
+    <Footer />
   </>;
 };
 

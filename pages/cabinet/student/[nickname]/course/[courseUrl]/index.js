@@ -76,8 +76,9 @@ const StudentCourse = (props) => {
             </>
           )
       }
-      <Footer />
+      {/* <Footer /> */}
     </div>
+    <Footer />
   </>
 }
 

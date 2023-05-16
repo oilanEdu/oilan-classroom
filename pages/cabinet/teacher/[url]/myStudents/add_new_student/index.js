@@ -5,6 +5,7 @@ import globals from "../../../../../../src/globals";
 import axios from "axios";
 import HeaderTeacher from "../../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import GoToLessonWithTimerComponent from "../../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
+import Footer from "../../../../../../src/components/Footer/Footer";
 
 const AddNewStudent = () => {
   const router = useRouter();
@@ -161,13 +162,14 @@ const AddNewStudent = () => {
 
   return (
     <>
-      <div className={styles.container}>
-        <HeaderTeacher
+            <HeaderTeacher
           white={true}
           url={teacherUrl}
           teacher={teacher}
           isInMainPage={isInMainPage}
         />
+      <div className={styles.container}>
+
          <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
         <div className={styles.contentWrapper}>
           <div className={styles.detailInfo}>
@@ -297,6 +299,7 @@ const AddNewStudent = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

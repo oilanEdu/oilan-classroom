@@ -76,7 +76,10 @@
   position: sticky;
   top: 0;
   padding-top: 15px;
-  background-color: #FCFDFF
+  background-color: #FCFDFF;
+
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .logo {

@@ -23,6 +23,8 @@
 	position: relative;
 	padding: 0 100px;
 	background: #FBFDFF;
+
+	min-height: 80vh;
 }
 
 .stepOne,

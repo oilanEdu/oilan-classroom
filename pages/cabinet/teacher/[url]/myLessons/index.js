@@ -7,6 +7,7 @@ import axios from "axios";
 import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 import GuideModal from "../../../../../src/components/GuideModal/GuideModal";
+import Footer from "../../../../../src/components/Footer/Footer";
 
 const myPrograms = () => {
   const router = useRouter();
@@ -53,13 +54,14 @@ const myPrograms = () => {
   }
 
   return <>
-    <div className={styles.container}>
-      <HeaderTeacher
+        <HeaderTeacher
         white={true}
         url={teacherUrl}
         teacher={teacher}
         isInMainPage={isInMainPage}
       />
+    <div className={styles.container}>
+
             <GoToLessonWithTimerComponent isTeacher={true} url={teacherUrl} />
       <div className={styles.wrapperAll}>
         <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
@@ -120,6 +122,7 @@ const myPrograms = () => {
         }
       </div>
     </div>
+    <Footer />
   </>;
 };
 

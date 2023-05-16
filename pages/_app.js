@@ -14,10 +14,10 @@ const tagManagerArgs = {
 }
 
 function MyApp({ Component, pageProps }) {
-  useEffect(() => {
-    document.documentElement.style.backgroundColor = '#F1FAFF';
-    TagManager.initialize(tagManagerArgs);
-  }, []);
+  // useEffect(() => {
+  //   document.documentElement.style.backgroundColor = '#F1FAFF';
+  //   TagManager.initialize(tagManagerArgs);
+  // }, []);
 
   return <>
       <Provider store={store}>

@@ -7,6 +7,7 @@ import HeaderTeacher from "../../../../../../src/components/new_HeaderTeacher/ne
 import GoToLessonWithTimerComponent from "../../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
 import stylesOfEditLesson from "../../myLessons/index.module.css"
 import NewDateAndTimePickerForLesson from "../../../../../../src/components/NewDateAndTimePickerForLesson/NewDateAndTimePickerForLesson";
+import Footer from "../../../../../../src/components/Footer/Footer";
 
 const AddNewGroup = () => {
   const router = useRouter();
@@ -351,6 +352,7 @@ const AddNewGroup = () => {
             })
               .then(function (res) {
                 // alert("Данные успешно изменены"); 
+                setSaveIsClicked(!saveIsClicked)
               })
               .catch((err) => {
                 alert("Произошла ошибка", err);
@@ -369,7 +371,6 @@ const AddNewGroup = () => {
               studentId: element
               // groupId, programId, studentId, courseId
             }; 
-            debugger
             await axios({
               method: "delete",
               url: `${globals.productionServerDomain}/deleteGroupMiddleware`, 
@@ -465,17 +466,21 @@ const saveLessonDateAndTime = async (dateAndTimeMerger, lesson_id, course_id) =>
   }
 }
 
+  // useEffect(() => {
+  //   setSaveIsClicked(!saveIsClicked)
+  // }, [lessons])
 
 
 return (
     <>
-      <div className={styles.container}>
-        <HeaderTeacher
+            <HeaderTeacher
           white={true}
           url={teacherUrl}
           teacher={teacher}
           isInMainPage={isInMainPage}
         />
+      <div className={styles.container}>
+
               <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
         <div className={styles.contentWrapper}>
           <div className={styles.detailInfo}>
@@ -654,6 +659,7 @@ return (
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

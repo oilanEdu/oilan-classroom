@@ -23,6 +23,8 @@
   position: relative;
   padding: 0 100px;
   background: #FBFDFF;
+
+  min-height: 100vh;
 }
 
 .profile_header,
@@ -141,6 +143,16 @@
 .input_container {
   margin-bottom: 20px;
   /* width: 100%; */
+  position: relative;
+}
+
+.input_inner_container {
+  display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 10px;
 }
 
 
@@ -214,6 +226,16 @@
   font-family: 'Gotham Medium';
 }
 
+.generate_pass_copy {
+  background: url(https://realibi.kz/file/401602.png) no-repeat;
+  background-size: contain;
+  width: 15px;
+  display: block;
+  height: 16px;
+  top: 13px;
+  right: 10px;
+  cursor: pointer;
+}
 
 @media screen and (max-width:575px) {
 

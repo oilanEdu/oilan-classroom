@@ -1,9 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../pages/preview/index.module.css'
 
 const Authenticator = ({ children }) => {
   const router = useRouter();
+
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      const persons = document.getElementById('persons');
+      if (persons.getBoundingClientRect().top <= 0) {
+        setShowScrollButton(true);
+      } else {
+        setShowScrollButton(false);
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  function handleScrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }
 
   useEffect(() => {
     const login = localStorage.getItem('login');
@@ -56,6 +82,11 @@ const Authenticator = ({ children }) => {
         <div className={styles.persons} id="persons">
           <div>
             <h2>Кому подойдёт платформа?</h2>
+            {showScrollButton && (
+              <button className={styles.scrollButton} onClick={handleScrollToTop}>
+                &#x25B2;
+              </button>
+            )}
           </div>
           <div className={styles.wrapper_person}>
             <div className={styles.person}>

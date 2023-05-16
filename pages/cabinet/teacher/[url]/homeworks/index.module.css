@@ -76,7 +76,7 @@
   display: flex;
   display: block;
   padding: 10px 20px;
-  border: 1px solid #2E8CF2;
+  /*border: 1px solid #2E8CF2;*/
   color: #000;
   align-self: flex-end;
   justify-self: flex-end;
@@ -145,10 +145,15 @@
   border: none;
   margin-left: 15px;
   font-size: 25px;
-  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+}
+
+.plusButton.rotate {
+  transform: rotate(90deg); /* поворачиваем на 45 градусов */
 }
 
 .answer_block {

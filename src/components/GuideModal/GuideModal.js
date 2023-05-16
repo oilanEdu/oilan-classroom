@@ -33,6 +33,7 @@ const GuideModal = (props) => {
             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
+          <div>Не загружается видео? Перейдите по прямой <a href={guide?.video_link}>ссылке </a> на видеофайл</div>
         </div>
   </>
 };

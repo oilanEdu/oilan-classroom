@@ -304,7 +304,15 @@ const AnswersHomeWorksOfTeacherComponent = ({answer, index, answers, setAnswers,
               <p>{answer?.student_comment ? 'Ученик оставил комментарий к заданию' : 'Студент не оставил комментарий'}</p>
             </div>
             <div className={styles.lesson_grade_wrapper}>
-              <div className={styles.lesson_grade}>
+              <div className={styles.lesson_grade} style={{backgroundColor: 
+                (answer?.average_mark == 2) || (answer?.average_mark === 1) ? '#CC525F' :
+                answer?.average_mark == 3 ? 'orange' :
+                answer?.average_mark == 4 ? '#A7E577' :
+                answer?.average_mark == 5 ? 'green' :
+                'white',
+                border: answer?.average_mark > 0 ? 'none' : '1px solid #2E8CF2',
+                color: answer?.average_mark > 0 ? 'white' : 'black'
+              }}>
                 {answer?.total_obtained_mark ? `Оценка - ${answer?.average_mark} (${answer?.percent_completed}%)` : 'Ждет проверки'}
               </div>
             </div>
@@ -464,8 +472,12 @@ const AnswersHomeWorksOfTeacherComponent = ({answer, index, answers, setAnswers,
           </div>
           
         </div>
-        <button className={styles.plusButton} onClick={() => toggleAnswer(index)}>{answer.isExpanded ? "-" : "+"}</button>
-       
+        <button 
+          className={`${styles.plusButton} ${answer.isExpanded ? styles.rotate : ""}`}
+          onClick={() => toggleAnswer(index)}
+        >
+          &#9587;
+        </button>
       </div>
     )
 }

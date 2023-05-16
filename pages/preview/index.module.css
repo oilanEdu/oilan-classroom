@@ -40,6 +40,28 @@
     /* width: 80%; */
 }
 
+.scrollButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background-color: #2e8cf2;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.scrollButton:hover {
+  opacity: 1;
+}
+
 .header_nav {
     font-family: 'gotham regular';
 }

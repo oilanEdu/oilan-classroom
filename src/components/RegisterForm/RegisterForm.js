@@ -47,7 +47,6 @@ const RegisterForm = () => {
   }
  
   const checkPassword = (password) => {
-    debugger
     // const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/;
     // if(!regex.test(password)) {
     //   return false;
@@ -58,6 +57,24 @@ const RegisterForm = () => {
     }
 
     return true;
+  }
+
+  const checkPhone = (phone) => {
+    const regex = /^\+?([0-9]{1,3})\)?[- ]?([0-9]{3})[- ]?([0-9]{3})[- ]?([0-9]{2})[- ]?([0-9]{2})$/;
+    if(!regex.test(phone)) {
+      return false;
+    } else {
+      return true;
+    }  
+  }
+
+  const checkEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!regex.test(email)) {
+      return false;
+    } else {
+      return true;
+    }  
   }
   
   const handlerOfProccessOfCaptcha = (value) => {
@@ -134,25 +151,33 @@ const loadCaptcha = async () => {
   };
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-    let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
-    const captchaFin = captcha['data'][0]
-    loadCaptcha()
-    console.log('CAPTCHI',captchaFin.text,captchaText)
-    if (randomizedCaptchaData[0]?.text == captchaText) {
-      handlerOfProccessOfCaptcha(3)
-      setProccessOfCaptcha(3)
+  // event.preventDefault();
+  let captcha = await axios.get(`${globals.productionServerDomain}/getCaptcha/`);
+  const captchaFin = captcha['data'][0]
+  loadCaptcha()
+  console.log('CAPTCHI',captchaFin.text,captchaText)
+  if (randomizedCaptchaData[0]?.text == captchaText) {
+    handlerOfProccessOfCaptcha(3)
+    setProccessOfCaptcha(3)
       
-      setShowCaptcha(false);
-      setCaptchaText("");
-      // setCheck(false);
-      loadCaptcha();
-      setCaptchaCheck(false);
-      setProccessOfCaptcha(0);
-      setProccessOfCaptchaUrl("https://realibi.kz/file/633881.png");
+    setShowCaptcha(false);
+    setCaptchaText("");
+    // setCheck(false);
+    loadCaptcha();
+    setCaptchaCheck(false);
+    setProccessOfCaptcha(0);
+    setProccessOfCaptchaUrl("https://realibi.kz/file/633881.png");
 
-      if (role && name && surname && phone && email && login && password){
-        if (checkPassword(password)) {
+    const isPhoneValid = checkPhone(phone);
+    const isEmailValid = checkEmail(email);
+
+    if (role && name && surname && phone && email && login && password){
+      if (checkPassword(password)) {
+        if (!isPhoneValid) {
+          setErrorMessage("Некорректный номер телефона");
+        } else if (!isEmailValid) {
+          setErrorMessage("Некорректный адрес электронной почты");
+        } else {
           const data = { 
             role, 
             name, 
@@ -162,10 +187,8 @@ const loadCaptcha = async () => {
             login, 
             password 
           };
-          debugger
           await axios.post(`${globals.productionServerDomain}/register`, data).then((res) => {
             console.log('proshlo', res);
-            // setErrorMessage('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!');
             alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
             loginHandler(role, login, password)
           }).catch((error) => {
@@ -174,21 +197,21 @@ const loadCaptcha = async () => {
             }
             console.log('ne proshlo', error)
           });
-        } else {
-          debugger
-          setErrorMessage("Ваш пароль небезопасен")
         }
-
       } else {
-        setErrorMessage("Введены не все данные");
+        setErrorMessage("Ваш пароль небезопасен");
       }
+
     } else {
-      setInsertCaptchaText('Неверный ввод текста с картинки!')
-      setProccessOfCaptcha(1)
-      handlerOfProccessOfCaptcha(1)
-      console.log("proccessOfCaptchaUrl", proccessOfCaptchaUrl);
+      setErrorMessage("Введены не все данные");
     }
-  };
+  } else {
+    setInsertCaptchaText('Неверный ввод текста с картинки!')
+    setProccessOfCaptcha(1)
+    handlerOfProccessOfCaptcha(1)
+    console.log("proccessOfCaptchaUrl", proccessOfCaptchaUrl);
+  }
+};
 
   const buttonActivateCapt = () => {
     if (role && name && surname && phone && email && login && password) {

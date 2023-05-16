@@ -46,7 +46,8 @@ const GroupCallRoom = (props) => {
     checkVideoMuted(); // Первоначальный вызов
 
     const interval = setInterval(() => {
-      const newActiveStreams = groupCallStreams.filter(stream => stream && callState && !stream.getVideoTracks()[0]?.muted);
+      // const newActiveStreams = groupCallStreams.filter(stream => stream && callState && !stream.getVideoTracks()[0]?.muted);
+      const newActiveStreams = groupCallStreams.filter(stream => stream && callState);
       setActiveStreams(newActiveStreams);
     }, 10000); // Проверять каждые 10 секунд
 

@@ -49,7 +49,7 @@
   flex-direction: column;
   /* padding: 0 100px; */
   border-radius: 16px;
-  height: 80vh;
+  min-height: 80vh;
   margin-bottom: 50px;
 }
 
@@ -72,7 +72,7 @@
   padding-top: 20px;
   /* margin-bottom: 40px; */
   /* height: 55vh; */
-  height: 60vh;
+  min-height: 60vh;
 }
 
 .personVideo{

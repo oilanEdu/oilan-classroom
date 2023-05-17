@@ -1,4 +1,8 @@
 /* captchaSection */
+.captchaWrapper {
+  margin-bottom: 20px;
+  width: 100%;
+}
 .captchaText {
     text-align: start;
     margin-bottom: 10px;
@@ -41,7 +45,7 @@
   }
 
   .captchaButton {
-    background: #007AFF;
+    background: #2e8cf2;
     border-radius: 8px;
     border: none;
     padding: 13px;

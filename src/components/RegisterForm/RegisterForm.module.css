@@ -108,6 +108,7 @@
   padding: 20px;
   box-shadow: 0px 4px 4px #DBE8F5;
   border-radius: 3px;
+  z-index: 1;
 }
 
 .pass_data_left {

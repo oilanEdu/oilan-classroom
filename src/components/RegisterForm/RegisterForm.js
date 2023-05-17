@@ -6,6 +6,7 @@ import styles from './RegisterForm.module.css';
 import CaptchaComponent from "../Captcha/Captcha";
 import { Link } from 'react-router-dom';
 import { useClipboard } from 'use-clipboard-copy';
+import { ClickAwayListener } from '@material-ui/core';
 const generator = require('generate-password');
 
 const RegisterForm = () => {
@@ -292,7 +293,12 @@ const loadCaptcha = async () => {
           />
         </div>
         <div className={styles.form_input}>
+
+
+          {showPassData ? 
+          <ClickAwayListener onClickAway={() => {setShowPassData(false)}}>
           <div className={styles.pass_data} style={{display: showPassData ? "block" : "none"}}>
+          
             <p className={styles.pass_data_head}>Для защиты ваших данных придумайте безопасный пароль. </p>
             <p className={styles.pass_data_head}>Он должен содержать:</p>
             <p className={styles.pass_data_text}>8 и более символов</p>
@@ -314,7 +320,11 @@ const loadCaptcha = async () => {
               ></span>
             </div>
             <div className={styles.pass_data_left}></div>
+
           </div>
+          </ClickAwayListener> : ''}
+
+
           <input
             type="password"
             placeholder="Пароль"

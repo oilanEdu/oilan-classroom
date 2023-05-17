@@ -971,7 +971,7 @@ function TeacherCabinet(props) {
                         isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), today)).length 
                         ? 
                         lessons.filter((lesson2) =>
-                        isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), today)).length + " запланированных занятия" : "нету запланированных занятий"}
+                        isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), today)).length + " запланированных занятия" : " нету запланированных занятий"}
                   </h1>
                   {closerLesson ? <p>
                     Ближайшее занятие сегодня, в {formattedTime}, с учеником {closerStudent?.name} {closerStudent?.surname} 

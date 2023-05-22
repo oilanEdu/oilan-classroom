@@ -608,6 +608,7 @@
       }
       .cantainer {
           margin: 0;
+          padding: 0 10px;
       }
       .lessonInfoFirstRow {
           flex-direction: column;

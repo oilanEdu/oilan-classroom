@@ -275,6 +275,18 @@ export default function HeaderTeacher(props) {
       {showMobileMenu ? (
         <div style={{ display: "block" }} className={styles.mobileMenu}>
           <ul className={styles.menu_ul}>
+          <li>
+              <Link
+                href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/profile`}
+                target="_blank"
+                className={styles.titleLink}
+                style={{color: activeNavButton === "profile" ? "#2E8CF2" : "black"}}
+              >
+                <a className={styles.link} style={{ color: "black" }}>
+                  Профиль
+                </a>
+              </Link>
+            </li>
             <li>
               <Link
                 href={`/cabinet/teacher/${encodeURIComponent(props?.teacher?.url)}/myCourses`}

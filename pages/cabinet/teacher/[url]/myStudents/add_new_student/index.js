@@ -286,7 +286,7 @@ const AddNewStudent = () => {
                     }}
                   >
                     Добавить студента
-                  </button>
+                  </button> 
                   <span
                     style={{ display: succesMessage === "" ? "none" : "inline-block" }}
                     className={styles.success_message}

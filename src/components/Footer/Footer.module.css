@@ -249,4 +249,22 @@
     .outerContainer {
         padding: 0 20px;
     }
+    .logo {
+    width: 100%;
+    }
+    .instagram_container {
+        width: 100%;
+    }
+    .partner_container {
+        width: 100%;
+    }
+    .phone_container {
+        width: 100%;
+    }
+    .email_container {
+        width: 100%;
+    }
+    .privacy_policy_container {
+        width: 100%;
+    }
 }

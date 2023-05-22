@@ -447,4 +447,8 @@
     margin: 10px 0px;
     display: block;
   }
+  .whiteHeader {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }

@@ -15,6 +15,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
       loadTeacherData()          
     } 
   }, [url])
+
     const [showTimer, setShowTimer] = useState(false)
     const [teacher, setTeacher] = useState([])
     const [programs, setPrograms] = useState([])
@@ -69,6 +70,15 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
       }
     }, [idOfNearest])
 
+    // useEffect(() => {
+    //   closerLesson
+    //   // debugger
+    //   while (closerLesson.length === 0) {
+    //     console.log("While im here");
+    //     loadTeacherData() 
+    //   }
+    // }, [closerLesson])
+
 
     function nearestDate (dates, target) {
       // debugger
@@ -119,6 +129,13 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     }, [lessons])
     
     const updateTimer = () => {
+      console.log("IM HERE");
+      // if (closerLesson === undefined) {
+      //   loadTeacherData()
+      // } else if (closerLesson.length === 0) {
+      //   loadTeacherData()
+      // }
+
         const future = Date.parse(isTeacher ? closerLesson?.personal_time : closerLesson?.fact_date);
         const now = new Date();
         const diff = future - now; 
@@ -136,6 +153,8 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
         setHours(h + d  * 24);
         setMinutes(m  - h * 60);
         setSeconds(s  - m  * 60);
+        // console.log(d, y, h, m, s);
+        // debugger
       };
 
       const [count, setCount] = useState(0);
@@ -165,7 +184,19 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
         }   
     }, []) 
     
-    setInterval(() => {updateTimer()}, 1000);  
+    // setInterval(() => {updateTimer()}, 1000);  
+    useEffect(() => {
+      const interval = setInterval(() => {
+        // Ваш код, который должен выполняться с определенным интервалом
+        if (closerLesson.length > 0 || closerLesson != undefined) {
+          updateTimer() 
+        }
+      }, 1000); // Интервал в миллисекундах (здесь 1000 миллисекунд = 1 секунда)
+  
+      return () => {
+        clearInterval(interval); // Очистка интервала при размонтировании компонента
+      };
+    }, [closerLesson]);
 
     const loadStudentLessons = async (studentId, programId) => {
         const data = {
@@ -430,7 +461,9 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
          
          // console.log(lessonsOfAllStudents, "lessonsOfAllStudents");
          let test0 = lessonsOfAllStudents
+         
         //  debugger
+        // debugger
          try {
           let lessonsOfFuture = test0.filter(el => new Date(el.personal_time ? el.personal_time : el.start_time).getTime() - new Date().getTime() > 0)
           const dateDiffs = lessonsOfFuture.map((date) => Math.abs(new Date().getTime() - new Date(date.personal_time ? date.personal_time : date.start_time).getTime()));
@@ -442,6 +475,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
           test = closestDate
           setCloserLesson(test) 
           getCloserCourse(test?.course_id)
+          debugger
          } catch (error) {
           
          }
@@ -812,8 +846,11 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     useEffect(() => {
       const interval = setInterval(() => {
         if ((prevCountRefHours.current * 60 + prevCountRefMinutes.current) * 60 + prevCountRefSeconds.current < 3600) {
-          setShowTimer(true)
-          
+          if ((prevCountRefHours.current * 60 + prevCountRefMinutes.current) * 60 + prevCountRefSeconds.current === 0) { 
+
+          } else {
+            setShowTimer(true)
+          }
         } else {
           
         }

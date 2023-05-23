@@ -62,7 +62,17 @@ const NewStudentCourseStatics = ({ programDesc, student, lesson, lessons, scores
     }
   }, [seconds])
 
-  setInterval(() => { updateTimer() }, 1000);
+  // setInterval(() => { updateTimer() }, 1000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Ваш код, который должен выполняться с определенным интервалом
+      updateTimer()
+    }, 1000); // Интервал в миллисекундах (здесь 1000 миллисекунд = 1 секунда)
+
+    return () => {
+      clearInterval(interval); // Очистка интервала при размонтировании компонента
+    };
+  }, []);
 
   const overalScores = () => {
     lessons.forEach(lesson => {

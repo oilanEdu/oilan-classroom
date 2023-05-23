@@ -170,6 +170,7 @@ function TeacherCabinet(props) {
   const isInMainPage = true;
 
   const updateTimer = () => {
+    // console.log("IM HERE");
     const future = Date.parse(closerLesson?.personal_time);
     const now = new Date();
     const diff = future - now;
@@ -204,7 +205,17 @@ function TeacherCabinet(props) {
     loadTeacherData()
   }, [])
 
-  setInterval(() => { updateTimer() }, 1000);
+  // setInterval(() => { updateTimer() }, 1000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Ваш код, который должен выполняться с определенным интервалом
+      updateTimer()
+    }, 1000); // Интервал в миллисекундах (здесь 1000 миллисекунд = 1 секунда)
+
+    return () => {
+      clearInterval(interval); // Очистка интервала при размонтировании компонента
+    };
+  }, []);
 
   const loadStudentLessons = async (studentId, programId) => {
     setLessonsLoaded(true)

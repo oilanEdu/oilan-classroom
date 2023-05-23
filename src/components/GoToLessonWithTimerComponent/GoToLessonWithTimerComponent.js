@@ -52,7 +52,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     const [idOfNearest, setIdOfNearest] = useState()
     const [lessonsForNearestDate, setLessonsForNearestDate] = useState([])
     useEffect(() => { 
-      if (lessonsForNearestDate.length >= 1) {
+      if (lessonsForNearestDate.length >= 0) {
         nearestDate(lessonsForNearestDate, Date.now()) 
       }
     }, [lessonsForNearestDate])
@@ -119,7 +119,9 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
       // setWinnerIndex(Number(winner))
     }
     useEffect(() => {
-      if (lessons.length > 1) { 
+      debugger
+      if (lessons[0].id != undefined) { 
+        debugger
         // setCloserLesson(lessons[winnerIndex])
 
         setLessonsForNearestDate(lessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0)))
@@ -154,7 +156,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
         setMinutes(m  - h * 60);
         setSeconds(s  - m  * 60);
         // console.log(d, y, h, m, s);
-        // debugger
+        debugger
       };
 
       const [count, setCount] = useState(0);
@@ -789,6 +791,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
         await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${courseUrl}&program_id=${res.data[0]?.program_id}&student_id=${res.data[0]?.id}`).then(res => {
           setLessons(res.data);
           setData2Loaded(true)
+          debugger
         });
       });
     };

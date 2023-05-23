@@ -66,7 +66,9 @@ const NewStudentCourseStatics = ({ programDesc, student, lesson, lessons, scores
   useEffect(() => {
     const interval = setInterval(() => {
       // Ваш код, который должен выполняться с определенным интервалом
-      updateTimer()
+      if (closerLesson.length > 0 || closerLesson != undefined) {
+        updateTimer() 
+      }
     }, 1000); // Интервал в миллисекундах (здесь 1000 миллисекунд = 1 секунда)
 
     return () => {

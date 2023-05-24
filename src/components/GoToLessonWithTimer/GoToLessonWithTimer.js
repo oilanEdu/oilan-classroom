@@ -8,26 +8,36 @@ function GoToLessonWithTimer({closerLesson, hours, minutes, seconds, isTeacher, 
   const [hour, setHour] = useState()
   const [minute, setMinute] = useState()
   const [second, setSecond] = useState()
+  const [lessonStarted, setLessonStarted] = useState()
 
   useEffect(() => {
     //фикс дергающегося таймера, наверно
-    const hour1 = document.getElementById('hour').textContent;
-    const minute1 = document.getElementById('minute').textContent;
-    const second1 = document.getElementById('second').textContent;
-    setHour(parseInt(hour1, 10))
-    setMinute(parseInt(minute1, 10))
-    setSecond(parseInt(second1, 10))
+    // const hour1 = document.getElementById('hour').textContent;
+    // const minute1 = document.getElementById('minute').textContent;
+    // const second1 = document.getElementById('second').textContent;
+    // setHour(parseInt(hour1, 10))
+    // setMinute(parseInt(minute1, 10))
+    // setSecond(parseInt(second1, 10))
     // console.log(hour, "hour");
+    if (seconds != undefined) {
+      // debugger  
+      if ((hours) < 0) {
+        setLessonStarted(true)
+      } 
+    }
   }, [seconds])
   return (
       <div className={styles.next_lesson}>
         <div className={styles.next_lesson_content}>
           <div>
-            <p>
+          {lessonStarted ? <p>
+            Занятие началось
+          </p> : <p>
               Следующее занятие через <span id="hour">{hours ? hours.toString().padStart(2, "0") : prevCountRefHours.toString().padStart(2, "0")}:</span>
               <span id="minute">{minutes ? minutes.toString().padStart(2, "0") : prevCountRefMinutes.toString().padStart(2, "0")}</span>:
               <span id="second">{seconds ? seconds.toString().padStart(2, "0") : prevCountRefSeconds.toString().padStart(2, "0")}</span>
-            </p>
+            </p> }
+
             <p>
               Занятие №{closerLesson.lesson_number} {closerLesson.title}
             </p>

@@ -209,13 +209,19 @@ function TeacherCabinet(props) {
   useEffect(() => {
     const interval = setInterval(() => {
       // Ваш код, который должен выполняться с определенным интервалом
-      updateTimer()
+      // debugger
+      if (closerLesson.length === 0 || closerLesson === undefined) {
+        
+        
+      } else {
+        updateTimer() 
+      }
     }, 1000); // Интервал в миллисекундах (здесь 1000 миллисекунд = 1 секунда)
 
     return () => {
       clearInterval(interval); // Очистка интервала при размонтировании компонента
     };
-  }, []);
+  }, [closerLesson]);
 
   const loadStudentLessons = async (studentId, programId) => {
     setLessonsLoaded(true)

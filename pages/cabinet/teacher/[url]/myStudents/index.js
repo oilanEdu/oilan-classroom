@@ -81,112 +81,170 @@ const myStudents = () => {
     let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
     let teacherStudentsGroup = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherIdGroup/`, dataStudents)
     let teacherGroups = await axios.post(`${globals.productionServerDomain}/getGroupsByTeacherId/`, dataStudents)
-    await teacherStudents['data'].forEach(async student => {
+    for (let index = 0; index < teacherStudents['data'].length; index++) {
+      const student = teacherStudents['data'][index];
       student.check = 0
       let diff = 604800000 * 7
       if (!lessonsLoaded) { loadStudentLessons(student.student_id, student.program_id) }
       let answersCount = 0
       let studentCheck = 0
-      let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo?course_url=${student.course_url}&program_id=${student.program_id}&student_id=${student.student_id}`).then(async res => {
-        let lessons = res.data
-        console.log(lessons, "lessonsOfAllStudents");
-        lessonsOfAllStudents.push(...lessons);
-        await res.data.forEach(async lesson => {
-          if (+lesson.all_exer !== 0 && +lesson.all_exer === +lesson.done_exer) {
-            studentCheck += 1
-            student.check = studentCheck
-            student.progress = 100 / student.lessons_count * student.check
-          };
-          let currentDate = new Date().toLocaleDateString()
-          let lessonDate
-          if (lesson.personal_time) {
-            lesson.fact_time = lesson.personal_time
-            lessonDate = new Date(lesson.fact_time).toLocaleDateString()
-          } else {
-            lesson.fact_time = lesson.start_time
-            lessonDate = new Date(lesson.fact_time).toLocaleDateString()
-          }
-          let dateStr = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time);
-          let closerDate
-          if ((Date.parse(dateStr) > Date.parse(new Date())) && (Date.parse(dateStr) - Date.parse(new Date()) < diff)) {
-            closerDate = lessonDate
-            let closerLesson
-            if (closerLesson) {
-              if (closerDate < new Date(closerLesson.fact_time).toLocaleDateString()) {
-                // setCloserLesson(lesson)
-              }
-            } else {
-              // setCloserLesson(lesson)
-            }
-            let curr_hours = dateStr.getHours();
-            let curr_minutes = dateStr.getMinutes();
-            student.lesson_date = lesson.fact_time
-            // student.closer_date = closerDate 
-            // student.curr_hours = curr_hours 
-            // student.curr_minutes = curr_minutes 
-          }
-          let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
-            let exercises = res.data
-            if (exercises) {
-              exercises.forEach(async exercise => {
-                let studentId = student.student_id
-                let exerciseId = exercise.id
-                const data = {
-                  studentId,
-                  exerciseId
-                };
-                let exerciseAnswers = await axios({
-                  method: "post",
-                  url: `${globals.productionServerDomain}/getAnswersByStudExId`,
-                  data: data,
-                }).then(res => {
-                  // let answers = res.data
-                  // answersCount = answers.length
-                  // if ((exercises.length > 0) && (exercises.length == answersCount)){
-                  //     student.check += 1 
-                  //     studentCheck += 1
-                  //     console.log('studentCheck', studentCheck)
-                  //     setCheck(student.check)
-                  //     student.check = studentCheck 
-                  //     student.progress = 100/student.lessons_count*student.check
-                  // }  
-                  // else{ 
-                  //     console.log('')
-                  //     setCheck(0)
-                  //     studentCheck = 0
-                  //     student.check = 0
-                  //     student.progress = 0
-                  // }
-                })
-              })
-            }
-          })
-        })
-        var lessonsFuture = lessons.filter(el => (new Date() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() < 0))
-        var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
-        var withoutNan = temp.filter(function (n) { return !isNaN(n) })
-        var idx = withoutNan.indexOf(Math.min(...withoutNan));
-        if (lessonsFuture[idx] != undefined) {
-          let curr_hours = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getHours();
-          let curr_minutes = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getMinutes();
-          student.closer_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString()
-          student.closer_date_witout_local = lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time
-          student.curr_hours = curr_hours
-          student.curr_minutes = curr_minutes
-          student.lesson_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString()
-        } else {
-          let curr_hours = undefined
-          let curr_minutes = undefined
-          student.closer_date = undefined
-          student.closer_date_witout_local = undefined
-          student.curr_hours = undefined
-          student.curr_minutes = undefined
-          student.lesson_date = undefined
-        }
+      // let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${student?.course_url}&program_id=${student?.program_id}&student_id=${student?.student_id}`).then(async res => {
+      //   let lessons = res.data
+      //   debugger
+      //   console.log(lessons, "lessonsOfAllStudents");
+      //   lessonsOfAllStudents.push(...lessons);
+      //   await res.data.forEach(async lesson => {
+      //     if (+lesson.all_exer !== 0 && +lesson.all_exer === +lesson.done_exer) {
+      //       studentCheck += 1
+      //       student.check = studentCheck
+      //       student.progress = 100 / student.lessons_count * student.check
+      //     };
+      //     let currentDate = new Date().toLocaleDateString()
+      //     let lessonDate
+      //     if (lesson.personal_time) {
+      //       lesson.fact_time = lesson.personal_time
+      //       lessonDate = new Date(lesson.fact_time).toLocaleDateString()
+      //     } else {
+      //       lesson.fact_time = lesson.start_time
+      //       lessonDate = new Date(lesson.fact_time).toLocaleDateString()
+      //     }
+      //     let dateStr = new Date(lesson.personal_time ? lesson.personal_time : lesson.start_time);
+      //     let closerDate
+      //     if ((Date.parse(dateStr) > Date.parse(new Date())) && (Date.parse(dateStr) - Date.parse(new Date()) < diff)) {
+      //       closerDate = lessonDate
+      //       let closerLesson
+      //       if (closerLesson) {
+      //         if (closerDate < new Date(closerLesson.fact_time).toLocaleDateString()) {
+      //           // setCloserLesson(lesson)
+      //         }
+      //       } else {
+      //         // setCloserLesson(lesson)
+      //       }
+      //       let curr_hours = dateStr.getHours();
+      //       let curr_minutes = dateStr.getMinutes();
+      //       student.lesson_date = lesson.fact_time
+      //       // student.closer_date = closerDate 
+      //       // student.curr_hours = curr_hours 
+      //       // student.curr_minutes = curr_minutes 
+      //     }
+      //     let lessonExercises = await axios.post(`${globals.productionServerDomain}/getExercisesByLessonId/` + lesson.id).then(res => {
+      //       let exercises = res.data
+      //       if (exercises) {
+      //         exercises.forEach(async exercise => {
+      //           let studentId = student.student_id
+      //           let exerciseId = exercise.id
+      //           const data = {
+      //             studentId,
+      //             exerciseId
+      //           };
+      //           let exerciseAnswers = await axios({
+      //             method: "post",
+      //             url: `${globals.productionServerDomain}/getAnswersByStudExId`,
+      //             data: data,
+      //           }).then(res => {
+      //             // let answers = res.data
+      //             // answersCount = answers.length
+      //             // if ((exercises.length > 0) && (exercises.length == answersCount)){
+      //             //     student.check += 1 
+      //             //     studentCheck += 1
+      //             //     console.log('studentCheck', studentCheck)
+      //             //     setCheck(student.check)
+      //             //     student.check = studentCheck 
+      //             //     student.progress = 100/student.lessons_count*student.check
+      //             // }  
+      //             // else{ 
+      //             //     console.log('')
+      //             //     setCheck(0)
+      //             //     studentCheck = 0
+      //             //     student.check = 0
+      //             //     student.progress = 0
+      //             // }
+      //           })
+      //         })
+      //       }
+      //     })
+      //   })
+      //   var lessonsFuture = lessons.filter(el => (new Date() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() < 0))
+      //   var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
+      //   var withoutNan = temp.filter(function (n) { return !isNaN(n) })
+      //   var idx = withoutNan.indexOf(Math.min(...withoutNan));
+      //   if (lessonsFuture[idx] != undefined) {
+      //     let curr_hours = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getHours();
+      //     let curr_minutes = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getMinutes();
+      //     student.closer_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString()
+      //     student.closer_date_witout_local = lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time
+      //     student.curr_hours = curr_hours
+      //     student.curr_minutes = curr_minutes
+      //     student.lesson_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString()
+      //   } else {
+      //     let curr_hours = undefined
+      //     let curr_minutes = undefined
+      //     student.closer_date = undefined
+      //     student.closer_date_witout_local = undefined
+      //     student.curr_hours = undefined
+      //     student.curr_minutes = undefined
+      //     student.lesson_date = undefined
+      //   }
 
+      //   // await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${courseUrl}&program_id=${programId == !undefined ? programId : localStudent[0]?.program_id}&student_id=${localStudent[0]?.id}`).then(res => {
+      //   //   let array = res.data
+      //   //   const uniqueLessons = array.filter((item, index, self) => 
+      //   //     index === self.findIndex((t) => (
+      //   //       t.id === item.id
+      //   //     ))
+      //   //   );
+      //   //   setLesson(uniqueLessons[0]);
+      //   //   setLessons(uniqueLessons);
+      //   //   let lessonsForNearestDate = lessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0))
+      //   //   var temp = lessonsForNearestDate.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
+      //   //   // var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
+      //   //   var idx = temp.indexOf(Math.min(...temp));
+      //   //   let closerLessonLocal = lessonsForNearestDate[idx];
+      
+      //   //   let lessonIsGoingHandler = lessons.find(el => new Date().getTime() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() <= 3600000)
+      //   //   setCloserLesson(lessonIsGoingHandler ? lessonIsGoingHandler : closerLessonLocal)
+
+      // })
+      let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${student?.course_url}&program_id=${student?.program_id}&student_id=${student?.student_id}`).then(async res => {
+          let array = res.data
+          const uniqueLessons = array.filter((item, index, self) => 
+            index === self.findIndex((t) => (
+              t.id === item.id
+            ))
+          );
+          let lessonsForNearestDate = uniqueLessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0))
+          var temp = lessonsForNearestDate.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
+          // var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
+          var idx = temp.indexOf(Math.min(...temp));
+          let closerLessonLocal = lessonsForNearestDate[idx];
+      
+          let lessonIsGoingHandler = uniqueLessons.find(el => new Date().getTime() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() <= 3600000)
+          
+          let date = closerLessonLocal?.personal_time ? closerLessonLocal?.personal_time : closerLessonLocal?.start_time
+          const dateOfPersonalTime = new Date(date)
+          // const shiftedTime = new Date(dateOfPersonalTime.getTime() + millisecondsShift);
+          // Получаем часы и минуты из нового времени
+          const hours = dateOfPersonalTime.getHours();
+          const minutesFormatted = dateOfPersonalTime.getMinutes() < 10 ? `0${dateOfPersonalTime.getMinutes()}` : dateOfPersonalTime.getMinutes();
+          // Форматируем часы и минуты в строку в формате "hh:mm"
+          const formattedTime = `${hours < 10 ? '0' : ''}${hours}:${minutesFormatted}`;
+
+
+          const day = String(dateOfPersonalTime.getDate()).padStart(2, '0');
+          const month = String(dateOfPersonalTime.getMonth() + 1).padStart(2, '0'); // Месяцы в JavaScript начинаются с 0
+          const year = dateOfPersonalTime.getFullYear();
+
+          const formattedDate = `${day}.${month}.${year}`;
+          
+          student.closerLessonLocal = formattedDate + ' ' + formattedTime
+          // debugger
+          // setCloserLesson(lessonIsGoingHandler ? lessonIsGoingHandler : closerLessonLocal)
       })
     }
-    );
+    // await teacherStudents['data'].forEach(async student => {
+      
+    // }
+    // );
 
     setStudents(teacherStudents['data'])
     setGroups(teacherGroups['data'])
@@ -320,17 +378,17 @@ const myStudents = () => {
                         <p>
                           Следующий урок:
                           <span>
-                            {student?.curr_hours != undefined ? (
+                            {student?.closerLessonLocal != "NaN.NaN.NaN NaN:NaN" ? (
                               <>
-                                {student?.curr_hours < 10
+                                {/* {student?.curr_hours < 10
                                   ? "0" + student?.curr_hours
                                   : student?.curr_hours}
                                 :
                                 {student.curr_minutes < 10
                                   ? "0" + student?.curr_minutes
                                   : student?.curr_minutes}
-                                -
-                                {/*formattedTime*/}
+                                - */}
+                                 {' '} {student.closerLessonLocal}
                               </>
                             ) : (
                               "Не запланировано"

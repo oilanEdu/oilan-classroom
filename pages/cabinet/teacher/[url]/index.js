@@ -709,8 +709,12 @@ function TeacherCabinet(props) {
 
     loadTeacherData()
     const role = 'teacher'
-    const redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}&groupId=${closerStudent?.groupId}`
-
+    let redirectUrl
+    if (closerStudent?.groupId != undefined) {
+      redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}&groupId=${closerStudent?.groupId}` 
+    } else {
+      redirectUrl = `/lesson?room=${encodeURIComponent(translationLink)}&role=${role}`
+    }
     await router.push(redirectUrl)
   }
 

@@ -120,11 +120,12 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     }
     useEffect(() => {
       // debugger
-      if (lessons[0].id != undefined) { 
+      if (lessons[0]?.id != undefined) { 
         // debugger
         // setCloserLesson(lessons[winnerIndex])
 
         setLessonsForNearestDate(lessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0)))
+        // debugger
         // nearestDate(lessons, Date.now())  
       }   
 
@@ -190,7 +191,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     useEffect(() => {
       const interval = setInterval(() => {
         // Ваш код, который должен выполняться с определенным интервалом
-        if (closerLesson.length > 0 || closerLesson != undefined) {
+        if (closerLesson?.length > 0 || closerLesson != undefined) {
           updateTimer() 
         }
       }, 1000); // Интервал в миллисекундах (здесь 1000 миллисекунд = 1 секунда)
@@ -858,6 +859,7 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
           
         }
       }, 2000);
+      
       return () => clearInterval(interval);
     }, []);
     

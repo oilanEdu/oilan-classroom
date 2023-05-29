@@ -65,7 +65,7 @@ const Index = () => {
 	}, [router.query, actualRoom]);
 
 	const groupStudents = async () => {
-		if (router.query.groupId != "undefined" && router.query.role == 'teacher') {
+		if (router.query.groupId != undefined && router.query.role == 'teacher') {
 			let test = (+router.query.groupId)
 			const dataStudents = {
 			  id: teacher?.teacher_id,

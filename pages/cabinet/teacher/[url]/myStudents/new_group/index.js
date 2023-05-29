@@ -105,8 +105,9 @@ const AddNewGroup = () => {
   const getPrograms = async () => {
     console.log(courseId);
     let result = await axios.post(`${globals.productionServerDomain}/getProgramsByCourseId/${courseId}`)
-    setProgramsAll(result.data);
-    console.log(result.data);
+    let onlyGroupPrograms = result.data.filter(el => el.type === "group")
+    setProgramsAll(onlyGroupPrograms);
+    console.log(onlyGroupPrograms);
   }
 
   const getLessons = async () => {

@@ -253,6 +253,16 @@ const Group = () => {
     return (a, b) => a[field] > b[field] ? 1 : -1;
   }
 
+  const addressUndefinedFixer = async () => {
+    await router.push(`/cabinet/teacher/${localStorage.login}`)
+    window.location.reload()
+  }
+  useEffect(() => {
+    if (router.query.url === "undefined") {
+      addressUndefinedFixer()
+    }
+  }, [router])
+
   return <>
         <HeaderTeacher
         white={true}

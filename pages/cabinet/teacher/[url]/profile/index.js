@@ -181,6 +181,7 @@ function TeacherProfile(props) {
     }, [])
     useEffect(() => {
         setTeacherSkillsSplitted(teacherSkills?.split(";"))
+        debugger 
     }, [teacherSkills])
 
     const [changeMod, setChangeMod] = useState(false)
@@ -191,6 +192,18 @@ function TeacherProfile(props) {
     //     setTeacherSkillsSplitted(teacherSkills?.split(";"))
     //     // let test = teacherSkills?.split(";")
     // }, [teacherSkills])
+
+    const addressUndefinedFixer = async () => {
+        await router.push(`/cabinet/teacher/${localStorage.login}`)
+        window.location.reload()
+      }
+      useEffect(() => {
+        if (router.query.url === "undefined") {
+          addressUndefinedFixer()
+        }
+      }, [router])
+
+      
     return (
         <>  
                     <HeaderTeacher white={true} teacher={teacher} />
@@ -304,8 +317,9 @@ function TeacherProfile(props) {
                                                                 //       newSkillValue + ";"
                                                                 //     ]
                                                                 //   })
-                                                                test = teacherSkills + " " + newSkillValue + ";"
+                                                                test = (teacherSkills === null ? "" : teacherSkills) + " " + newSkillValue + ";"
                                                                 setTeacherSkills(test)
+                                                                debugger
                                                                 debugger}} 
                                                 className={styles.skillWordsAdd}>✓
                                             </p>

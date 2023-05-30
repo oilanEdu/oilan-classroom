@@ -230,6 +230,17 @@ const createCourse = () => {
   }
 
   const [handleSubmitIsClicked, setHandleSubmitIsClicked] = useState(false)
+
+  const addressUndefinedFixer = async () => {
+    await router.push(`/cabinet/teacher/${localStorage.login}`)
+    window.location.reload()
+  }
+  useEffect(() => {
+    if (router.query.url === "undefined") {
+      addressUndefinedFixer()
+    }
+  }, [router])
+  
   return <>
         <HeaderTeacher
         white={true}

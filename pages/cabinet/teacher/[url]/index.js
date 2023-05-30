@@ -849,8 +849,19 @@ function TeacherCabinet(props) {
     dataLoaded
   }, [dataLoaded])
 
-  if (dataLoaded === true) {
+  const addressUndefinedFixer = async () => {
+    await router.push(`/cabinet/teacher/${localStorage.login}`)
+    window.location.reload()
+  }
+  useEffect(() => {
+    if (router.query.url === "undefined") {
+      addressUndefinedFixer()
+    }
+  }, [router])
+
+  if (dataLoaded === true && teacher.url != undefined) {
     if (typeof localStorage !== "undefined" && localStorage.getItem('login') !== null) {
+      debugger
       return (localStorage && teacher.url === localStorage.getItem('login') ?
         <>
                     <HeaderTeacher

@@ -184,6 +184,16 @@ const Index = () => {
       console.log('groupCallRooms', groupCallRooms)
 		}, [groupCallRooms, roomExists, webRTCHandler]);
 
+		// const addressUndefinedFixer = async () => {
+		// 	await router.push(`/cabinet/teacher/${localStorage.login}`)
+		// 	window.location.reload()
+		//   }
+		//   useEffect(() => {
+		// 	if (router.query.url === "undefined" && role != "student") {
+		// 	  addressUndefinedFixer()
+		// 	}
+		//   }, [router])
+
 		return (
 			<>
 				{goMeet?

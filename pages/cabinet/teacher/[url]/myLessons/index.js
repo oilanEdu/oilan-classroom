@@ -74,7 +74,7 @@ const myPrograms = () => {
 
             <GoToLessonWithTimerComponent isTeacher={true} url={teacherUrl} />
       <div className={styles.wrapperAll}>
-        <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
+        {showGuide && <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>}
         <div onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/myCourses`)} className={styles.titleRow}>
           {program?.course_title}
         </div>

@@ -16,6 +16,9 @@ function TeacherProfile(props) {
     const [link, setLink] = useState()
     const [teacher, setTeacher] = useState()
     const [teacherFIO, setTeacherFIO] = useState()
+    const [surname, setSurname] = useState()
+    const [name, setName] = useState()
+    const [patronymic, setPatronymic] = useState()
     const [teacherEmail, setTeacherEmail] = useState()
     const [teacherPhone, setTeacherPhone] = useState()
     const [teacherPassword, setTeacherPassword] = useState()
@@ -46,9 +49,9 @@ function TeacherProfile(props) {
         console.log('guide', getGuideById, guide)
       }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (files) => {
         files
-        event.preventDefault();
+        // event.preventDefault();
         const formData = new FormData();
         formData.append('file', files[0]);
         axios.post(`${globals.productionServerDomain}/file/upload`, formData, {
@@ -134,11 +137,14 @@ function TeacherProfile(props) {
     //   };
 
     const handleSubmitNewTeacherData = async () => {
-        let teacherFIOsplitter = teacherFIO.split(' ')
+        // let teacherFIOsplitter = teacherFIO.split(' ')
         const data = {
-            surname: teacherFIOsplitter[0],
-            name: teacherFIOsplitter[1],
-            patronymic: teacherFIOsplitter[2],
+            // surname: teacherFIOsplitter[0],
+            // name: teacherFIOsplitter[1],
+            // patronymic: teacherFIOsplitter[2],
+            surname: surname,
+            name: name,
+            patronymic: patronymic,
             email: teacherEmail,
             phone: teacherPhone,
             skills: teacherSkills,
@@ -166,7 +172,15 @@ function TeacherProfile(props) {
         const teacherInfo = getTeacherInfo.data[0]
         console.log(getTeacherInfo, "getTeacherInfo");
         setTeacher(teacherInfo)
-        setTeacherFIO(teacherInfo.surname + ' ' + teacherInfo.name + ' ' + teacherInfo.patronymic)
+        // setTeacherFIO(
+        //     (teacherInfo.surname != null ? teacherInfo.surname : ' ' )
+        //     + ' ' 
+        //     + (teacherInfo.name != null ? teacherInfo.name : ' ') 
+        //     + ' ' 
+        //     + (teacherInfo.patronymic != null ? teacherInfo.patronymic : ' '))
+        setSurname(teacherInfo.surname != null ? teacherInfo.surname : '')
+        setName(teacherInfo.name != null ? teacherInfo.name : '')
+        setPatronymic(teacherInfo.patronymic != null ? teacherInfo.patronymic : '')
         setTeacherEmail(teacherInfo.email)
         setTeacherPhone(teacherInfo.phone)
         setTeacherPassword()
@@ -214,23 +228,52 @@ function TeacherProfile(props) {
                 {/* <HeaderTeacher white={true} teacher={teacher} /> */}
 
                 <div className={styles.cantainer}>
-                    <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
+                    {showGuide && <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>}
                     <div className={styles.programBlock}>
                         <div className={styles.wrapper_head}>
                             <div className={styles.wrapper_teacher_image}>
                                 <div className={styles.teacher_image}>
                                     <div className={styles.teacher_info_wrapper}>
                                         <div className="">
+                                            {files[0]?.name != undefined ?
+                                            <Image className={styles.teacherPhoto} src={URL.createObjectURL(files[0])} />
+                                            :
                                             <Image className={styles.teacherPhoto} src={teacher?.avatar} />
+                                            }
                                         </div>
                                         <div className={styles.teacher_info}>
-                                            <p>{teacherFIO}</p>
+                                            <p>{surname} {name} {patronymic}</p>
                                             <p>Подписка закончится: 25.03.2023</p>
                                         </div>
                                     </div>
                                     <div className={styles.header_btn}>
                                         <div style={{display: 'flex', flexDirection: 'row'}}>
+                                            {passwordIsChanged === true || teacherLoginIsChanged || files[0]?.name != undefined === true ?
+                                            <button className={styles.btn_submit} onClick={async () => {
+                                                handleSubmitNewTeacherData()
+                                                // debugger
+                                                if (teacherLoginIsChanged) {
+                                                    await updateTeacherLogin()
+                                                }
+                                                if (passwordIsChanged) {
+                                                    await updateTeacherPassword()
+                                                }
+                                                if (teacherLoginIsChanged === true) {
+                                                    async function test() {
+                                                        await localStorage.setItem('login', teacherLogin);
+                                                        await router.push(`/cabinet/teacher/${teacherLogin}/profile`)
+                                                        await window.location.reload()
+                                                    }
+                                                    await test()
+                                                }
+                                                window.location.reload()
+                                            }}>
+                                                Сохранить
+                                            </button>
+                                            :
                                             <button onClick={() => setChangeMod(true)}>Редактировать</button>
+                                            }
+
                                             <Image 
                                                 src="https://realibi.kz/file/628410.png"
                                                 style={{marginLeft: '10px', width: '20px', height: '20px'}}
@@ -244,18 +287,32 @@ function TeacherProfile(props) {
                                 </div>
                             </div>
                             {changeMod ? <><form className={styles.image_upload_wrapper} onSubmit={handleSubmit}>
-                                <input type="file" name="file" onChange={(event) => setFiles(event.target.files)} />
-                                <input type="submit" value="Upload" />
+                                <input type="file" name="file" onChange={(event) => {setFiles(event.target.files)
+                                                                                     handleSubmit(event.target.files)}} />
+                                {/* <input type="submit" value="Upload" /> */}
                             </form></> : ''}
 
                         </div>
                         <div className={styles.inputs_wrapper}>
                             <div className={styles.input_container}>
                                 <h2>Ф.И.О</h2>
-                                <input type="text"
-                                disabled={!changeMod}
-                                    onChange={(event) => setTeacherFIO(event.target.value)}
-                                    value={teacherFIO} />
+                                <div className={styles.fio}>
+                                    <input type="text"
+                                        disabled={!changeMod}
+                                        onChange={(event) => setSurname(event.target.value)}
+                                        value={surname} 
+                                        placeholder="Фамилия"/>
+                                    <input type="text"
+                                        disabled={!changeMod}
+                                        onChange={(event) => setName(event.target.value)}
+                                        value={name} 
+                                        placeholder="Имя"/>
+                                    <input type="text"
+                                        disabled={!changeMod}
+                                        onChange={(event) => setPatronymic(event.target.value)}
+                                        value={patronymic} 
+                                        placeholder="Отчество"/>
+                                </div>
                             </div>
                             <div className={styles.input_container}>
                                 <h2>Почта</h2>
@@ -345,14 +402,14 @@ function TeacherProfile(props) {
                                     value={teacherLogin} />
                             </div>
                         </div>
-                        <button className={styles.btn_submit} onClick={() => {
+                        <button className={styles.btn_submit} onClick={async () => {
                             handleSubmitNewTeacherData()
                             // debugger
                             if (teacherLoginIsChanged) {
-                                updateTeacherLogin()
+                                await updateTeacherLogin()
                             }
                             if (passwordIsChanged) {
-                                updateTeacherPassword()
+                                await updateTeacherPassword()
                             }
                             if (teacherLoginIsChanged === true) {
                                 async function test() {
@@ -360,10 +417,11 @@ function TeacherProfile(props) {
                                     await router.push(`/cabinet/teacher/${teacherLogin}/profile`)
                                     await window.location.reload()
                                 }
-                                test()
+                                await test()
                             }
+                            window.location.reload()
                         }}>
-                            Save
+                            Сохранить
                         </button>
                     </div>
                 </div>

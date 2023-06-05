@@ -861,7 +861,7 @@ function TeacherCabinet(props) {
 
   if (dataLoaded === true && teacher.url != undefined) {
     if (typeof localStorage !== "undefined" && localStorage.getItem('login') !== null) {
-      debugger
+      // debugger
       return (localStorage && teacher.url === localStorage.getItem('login') ?
         <>
                     <HeaderTeacher
@@ -873,7 +873,7 @@ function TeacherCabinet(props) {
           <div className={styles.container}>
 
             <div className={styles.cantainer}>
-              <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
+              {showGuide && <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>}
               <GoToLessonWithTimerComponent isTeacher={true} url={props.url} />
               {showSubscriptionLoss && teacher.register_date != undefined && Math.floor(dateOfSubscriptionLoss/86400000) > 0 ?
                           <div className={styles.subscriptionLoss}>

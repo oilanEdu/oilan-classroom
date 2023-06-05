@@ -26,8 +26,36 @@ function GoToLessonWithTimer({closerLesson, hours, minutes, seconds, isTeacher, 
       } 
     }
   }, [seconds])
+
+  const [isFixed, setIsFixed] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      
+      const element = document.getElementById('myElementTimer');
+      const rect = element.getBoundingClientRect();
+      let test = rect.bottom <= 0 ? true : false
+      if (test) {
+        setIsFixed(true);
+        debugger
+      } else {
+        setIsFixed(false)
+        debugger
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  useEffect(() => {
+    isFixed
+    debugger
+  }, [isFixed])
   return (
-      <div className={styles.next_lesson}>
+      <div 
+      // className={styles.next_lesson} 
+       className={`${styles.next_lesson} ${isFixed ? styles.next_lesson_fixed : ''}`}>
         <div className={styles.next_lesson_content}>
           <div>
           {lessonStarted ? <p>

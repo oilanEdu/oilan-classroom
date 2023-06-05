@@ -81,7 +81,7 @@ const myCourses = () => {
             {baseDataIsLoading ? '' : <>      {courses.length > 0 ?
         <>
           <div className={styles.wrapperAll}>
-            <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
+            {showGuide && <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>}
             <div className={styles.mainRow}>
               <div style={{display: 'flex', flexDirection: 'row'}}>
                 <h1>Мои курсы</h1>
@@ -145,7 +145,7 @@ const myCourses = () => {
           <div className={styles.noCourses}>
             <img src='https://realibi.kz/file/296080.png' />
             <h1>У вас еще нет созданных курсов</h1>
-            <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
+            {showGuide && <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>}
             <p>Для того, чтобы вести уроки на платформе, вам необходимо выбрать предмет, по которому будете обучать</p>
             <div style={{display: 'flex', flexDirection: 'row'}}>
               <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/createCourse`)}>Создать курс</button>

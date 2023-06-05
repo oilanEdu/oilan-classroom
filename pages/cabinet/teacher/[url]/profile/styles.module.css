@@ -706,6 +706,11 @@
     align-items: baseline;
     width: 100%;
 }
+.fio {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
 @media screen and (max-width: 1000px) {
     .mainWrapperOfEditProgram {

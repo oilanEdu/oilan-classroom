@@ -9,8 +9,13 @@
     border: 2px solid #F3F3F3;
     margin-bottom: 40px;
     border-radius: 16px;
-    width: 87%;
+    width: 100%;
+    z-index: 3;
+    position: relative;
+  }
+  .next_lesson_fixed {
     position: fixed;
+    width: 87%;
     z-index: 3;
   }
   

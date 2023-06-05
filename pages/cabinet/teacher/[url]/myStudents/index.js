@@ -306,7 +306,7 @@ const myStudents = () => {
 
        <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
       <div className={styles.contentWrapper}>
-        <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>
+        {showGuide && <GuideModal showGuide={showGuide} setShowGuide={setShowGuide} guide={guide}/>}
         <div className={styles.groupClicker}>
           <span className={isStudents?styles.blueSpan:styles.whiteSpan} onClick={() => setIsStudents(true)}>Студенты</span>
           <span className={!isStudents?styles.blueSpan:styles.whiteSpan} onClick={() => setIsStudents(false)}>Группы</span>

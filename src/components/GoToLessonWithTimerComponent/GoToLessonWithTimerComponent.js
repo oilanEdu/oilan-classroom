@@ -865,7 +865,9 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
     
   return ( 
     (showTimer ?     
-    <GoToLessonWithTimer 
+      <>
+      <div id="myElementTimer"></div>
+      <GoToLessonWithTimer 
       closerLesson={closerLesson}
       hours={hours ? hours : 0}
       minutes={minutes ? minutes : 0}
@@ -880,7 +882,9 @@ function GoToLessonWithTimerComponent({ isTeacher, url, nickname, courseUrl }) {
       prevCountRefSeconds={prevCountRefSeconds.current ? prevCountRefSeconds.current : 0}
       startLessonLinkStudent={startLessonLinkStudent}
       startNewLessonStudent={startNewLessonStudent}
-    />  : '')
+    />
+      </>
+  : '')
 
   );
 }

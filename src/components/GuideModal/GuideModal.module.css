@@ -1,10 +1,30 @@
+@font-face {
+  font-family: "Gotham Regular";
+  src: url('../../../public/fonts/Gotham_pro/gothampro.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Medium';
+  src: url('../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Light';
+  src: url('../../../public/fonts/Gotham_pro/gothampro_light.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: 'Gotham Bold';
+  src: url('../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format(truetype);
+}
+
 .guideWrapper{
 	display: flex;
 	flex-direction: column;
 	border: 1px solid black;
 	position: fixed;
 	background-color: white;
-	border-radius: 15px;
+	border-radius: 5px;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -14,6 +34,26 @@
 	z-index: 100;
 	max-height: 80vh;
   	overflow-y: auto;
+}
+
+.guideWrapper::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+.guideWrapper::-webkit-scrollbar-thumb {
+  background-color: rgb(163, 206, 253);
+  border-radius: 5px;
+}
+
+.guideWrapper::-webkit-scrollbar-thumb:hover {
+  background-color: #2E8CF2;
+}
+
+.guideWrapper::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-radius: 5px;
 }
 
 .closeBtnRow{
@@ -36,4 +76,36 @@
 
 .content p{
 	width: 100%
+}
+
+@media (max-width: 767px) {
+
+  .guideWrapper {
+    width: 95%;
+    padding: 10px 5px;
+  }
+
+  .closeBtn {
+    font-size: 18px;
+  }
+
+  .guideVideo {
+    aspect-ratio: 16/9;
+  }
+
+  .instructionBlock {
+    font-size: 14px;
+  }
+
+  .guideWrapper h2 {
+    font-size: 20px;
+  }
+
+  .content {
+    font-size: 14px;
+  }
+
+  .guideWrapper a {
+    font-size: 14px;
+  }
 }

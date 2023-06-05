@@ -1,0 +1,62 @@
+@font-face {
+  font-family: "Gotham Regular";
+  src: url('../../../public/fonts/Gotham_pro/gothampro.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Gotham Medium';
+  src: url('../../../public/fonts/Gotham_pro/gothampro_medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Gotham Light';
+  src: url('../../../public/fonts/Gotham_pro/gothampro_light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Gotham Bold';
+  src: url('../../../public/fonts/Gotham_pro/gothampro_bold.ttf') format('truetype');
+}
+
+/* Обновляем стили */
+.modalWrapper {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  position: fixed;
+  background-color: white;
+  border-radius: 15px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px; /* Оптимальная ширина для контейнера на разных экранах */
+  align-items: center;
+  padding: 20px;
+  z-index: 100;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.title {
+  font-family: 'Gotham Bold', sans-serif; /* Используем жирный шрифт */
+  font-size: 24px; /* Увеличиваем размер заголовка */
+  margin-bottom: 10px; /* Добавляем отступ снизу */
+}
+
+.content {
+  font-family: 'Gotham Regular', sans-serif; /* Используем обычный шрифт */
+  font-size: 16px;
+  margin-bottom: 20px; /* Добавляем отступ снизу */
+  text-align: center; /* Выравниваем текст по центру */
+}
+
+.button {
+  background: #2E8CF2;
+  border-radius: 5px;
+  color: white;
+  padding: 15px 40px;
+  outline: none;
+  border: none;
+  width: fit-content;
+}

@@ -5,6 +5,7 @@ const RemoteVideoView = props => {
   const { remoteStream, teacher, student, role, activeUsers, index, onStreamSelect, selectedStream } = props;
   const remoteVideoRef = useRef();
   const [stream, setStream] = useState(remoteStream);
+  const [isVideoPaused, setIsVideoPaused] = useState(false)
 
   const handleVideoClick = () => {
     props.onStreamSelect(remoteStream);
@@ -32,8 +33,14 @@ const RemoteVideoView = props => {
       videoTrack.onunmute = () => {
         console.log('Remote video track unmuted');
       };
+
+      if (stream.getVideoTracks()[0]?.muted) {
+        setIsVideoPaused(true);
+      } else {
+        setIsVideoPaused(false);
+      }
     }
-  }, [stream]);
+  }, [stream, isVideoPaused]);
 
   useEffect(() => {
     // console.log('RVV', teacher, student)
@@ -50,15 +57,13 @@ const RemoteVideoView = props => {
 
   return (
     <div className={styles.videoContainer}>
-      <video style={((role == 'student') && (stream.id == selectedStream?.id))?{border: '2px solid blue'}:{}} onClick={handleVideoClick} className={styles.videoElement} ref={remoteVideoRef} autoPlay srcObject={stream}/>
+      {isVideoPaused ? (
+        <div className={styles.videoElement}>Paused</div>
+      ) : (
+        <video style={((role === 'student') && (stream.id === selectedStream?.id))?{border: '2px solid blue'}:{}} onClick={handleVideoClick} className={styles.videoElement} ref={remoteVideoRef} autoPlay srcObject={stream}/>
+      )}
       <div className={styles.infoRow}>
         <div className={styles.litera}>{stream.id.slice(0, 10)}</div>
-
-        {/* {props.role == 'teacher' ? <div className={styles.litera}>{student?.name}</div> : <div className={styles.litera}>{teacher?.name}</div>} */}
-
-        {/* <div className={styles.litera}>
-          {activeUsers[index]?.username}
-        </div> */}
       </div>
     </div>
   );

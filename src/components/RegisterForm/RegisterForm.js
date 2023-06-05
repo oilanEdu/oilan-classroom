@@ -7,6 +7,7 @@ import CaptchaComponent from "../Captcha/Captcha";
 import { Link } from 'react-router-dom';
 import { useClipboard } from 'use-clipboard-copy';
 import { ClickAwayListener } from '@material-ui/core';
+import AuthSuccessModal from '../AuthSuccessModal/AuthSuccessModal'
 const generator = require('generate-password');
 
 const RegisterForm = () => {
@@ -36,6 +37,8 @@ const RegisterForm = () => {
   const [showPassData, setShowPassData] = useState(false);
   const [generatePass, setGeneratePass] = useState("");
   const [showGenetarePass, setShowGeneratePass] = useState(false);
+
+  const [successModalVisible, setSuccessModalVisible] = useState(false)
 
   const generatePassHandler = (e) => {
     e.preventDefault()
@@ -190,8 +193,9 @@ const loadCaptcha = async () => {
           };
           await axios.post(`${globals.productionServerDomain}/register`, data).then((res) => {
             console.log('proshlo', res);
-            alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
-            loginHandler(role, login, password)
+            setSuccessModalVisible(true)
+            //alert('Вы успешно зарегистрированы на платформе Oilan-classroom! Сообщение с регистрационными данными отправлено Вам на электронную почту. Переходите на форму регистрации и начинайте пользоваться нашими услугами!')
+            //loginHandler(role, login, password)
           }).catch((error) => {
             if (error.response.status === 400) {
               setErrorMessage(error.response.data.message);
@@ -226,6 +230,7 @@ const loadCaptcha = async () => {
   console.log(errorMessage);
   return (
     <div className={styles.welcome_section}>
+      {successModalVisible && <AuthSuccessModal loginHandler={loginHandler} role={role} login={login} password={password} />}
       <h2 className={styles.welcome_header}>Рады сотрудничать с Вами!</h2>
       <h3 className={styles.enter_data_header}>Введите данные для регистрации</h3>
       <div className={styles.role_radio_section}>

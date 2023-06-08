@@ -128,6 +128,7 @@ function TeacherCabinet(props) {
   const [currentCourse, setCurrentCourse] = useState(0);
 
   const [formattedTime, setFormattedTime] = useState()
+  const [formattedDate, setFormattedDate] = useState()
 
   useEffect(() => {
     if (closerLesson != undefined && students != undefined) {
@@ -153,6 +154,12 @@ function TeacherCabinet(props) {
           
           // Возвращаем отформатированную строку
           setFormattedTime(formattedTime)
+
+          const day = String(dateOfPersonalTime.getDate()).padStart(2, '0');
+          const month = String(dateOfPersonalTime.getMonth() + 1).padStart(2, '0'); // Месяцы в JavaScript начинаются с 0
+          const year = dateOfPersonalTime.getFullYear();
+          const formattedDate = `${day}.${month}.${year}`;
+          setFormattedDate(formattedDate)
         } else {
           setFormattedTime("")
         }
@@ -638,6 +645,8 @@ function TeacherCabinet(props) {
           test = closestDate
         }
         setCloserLesson(test) 
+        let test44 = isSameDay(parseISO(test.personal_time ? test.personal_time : test.start_time), today)
+        debugger
         getCloserCourse(test?.course_id)
        } catch (error) {
         
@@ -893,7 +902,7 @@ function TeacherCabinet(props) {
                         isSameDay(parseISO(lesson2.personal_time ? lesson2.personal_time : lesson2.start_time), today)).length + " запланированных занятия" : " нету запланированных занятий"}
                   </h1>
                   {closerLesson ? <p>
-                    Ближайшее занятие сегодня, в {formattedTime}, с учеником {closerStudent?.name} {closerStudent?.surname} 
+                    Ближайшее занятие {isSameDay(parseISO(closerLesson.personal_time ? closerLesson.personal_time : closerLesson.start_time), today) ? "сегодня" : ("в " + formattedDate)}, в {formattedTime}, с учеником {closerStudent?.name} {closerStudent?.surname} 
                      по предмету {closerCourse?.title}
                   </p> : ''}
   

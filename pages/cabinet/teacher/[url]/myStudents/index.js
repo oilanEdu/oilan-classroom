@@ -241,6 +241,48 @@ const myStudents = () => {
           // setCloserLesson(lessonIsGoingHandler ? lessonIsGoingHandler : closerLessonLocal)
       })
     }
+    for (let index = 0; index < teacherGroups['data'].length; index++) {
+      const group = teacherGroups['data'][index];
+      let lessonsOfFirstStudent
+      let getStudentsByGroupId = await axios.post(`${globals.productionServerDomain}/getStudentsByGroupId/` + group?.id)
+      let filteredStudents = getStudentsByGroupId['data'].filter(el => getStudentsByGroupId['data'].some(el2 => el.student_id === el2.student_id && el.course_id === el2.course_id && el.program_id === el2.program_id && el.title === group.title))
+      let studentLessons = await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${group?.course_url}&program_id=${group?.program_id}&student_id=${getStudentsByGroupId['data'][0]?.student_id}`).then(async res => { 
+        lessonsOfFirstStudent = [...res['data']]
+      })
+      lessonsOfFirstStudent
+      let array = lessonsOfFirstStudent
+          const uniqueLessons = array.filter((item, index, self) => 
+            index === self.findIndex((t) => (
+              t.id === item.id
+            ))
+          );
+          let lessonsForNearestDate = uniqueLessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0))
+          var temp = lessonsForNearestDate.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
+          // var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
+          var idx = temp.indexOf(Math.min(...temp));
+          let closerLessonLocal = lessonsForNearestDate[idx];
+      
+          let lessonIsGoingHandler = uniqueLessons.find(el => new Date().getTime() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() <= 3600000)
+          
+          let date = closerLessonLocal?.personal_time ? closerLessonLocal?.personal_time : closerLessonLocal?.start_time
+          const dateOfPersonalTime = new Date(date)
+          // const shiftedTime = new Date(dateOfPersonalTime.getTime() + millisecondsShift);
+          // Получаем часы и минуты из нового времени
+          const hours = dateOfPersonalTime.getHours();
+          const minutesFormatted = dateOfPersonalTime.getMinutes() < 10 ? `0${dateOfPersonalTime.getMinutes()}` : dateOfPersonalTime.getMinutes();
+          // Форматируем часы и минуты в строку в формате "hh:mm"
+          const formattedTime = `${hours < 10 ? '0' : ''}${hours}:${minutesFormatted}`;
+
+
+          const day = String(dateOfPersonalTime.getDate()).padStart(2, '0');
+          const month = String(dateOfPersonalTime.getMonth() + 1).padStart(2, '0'); // Месяцы в JavaScript начинаются с 0
+          const year = dateOfPersonalTime.getFullYear();
+
+          const formattedDate = `${day}.${month}.${year}`;
+          
+          group.closerLessonLocal = formattedDate + ' ' + formattedTime
+          debugger
+    }
     // await teacherStudents['data'].forEach(async student => {
       
     // }
@@ -279,6 +321,7 @@ const myStudents = () => {
     setSortMode(true)
     students.sort(byField(field));
     // loadTeacherData()
+    setShowSort(!showSort)
   }
 
   function byField(field) {
@@ -405,6 +448,9 @@ const myStudents = () => {
                             )}
                           </span>
                         </p>
+                        <p>
+                          {student.groupId ? ("В составе группы " + groups.find(el => el.id === student.groupId).title) : "Индивидуальные занятия"}
+                        </p>
                       </div>
                       <div className={styles.student_btn_obman}><span></span></div>
                       <div className={styles.student_btn} onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/student?nick=${student?.nickname}&programId=${student?.program_id}&courseId=${student.course_id}&studentId=${student.student_id}`)}><img src="https://realibi.kz/file/897616.svg" alt="" /></div>
@@ -479,22 +525,22 @@ const myStudents = () => {
                         <p>
                           Следующий урок:
                           <span>
-                            {group?.curr_hours != undefined ? (
+                            {group?.closerLessonLocal != "NaN.NaN.NaN NaN:NaN" ? (
                               <>
-                                {group?.curr_hours < 10
-                                  ? "0" + group?.curr_hours
-                                  : group?.curr_hours}
+                                {/* {student?.curr_hours < 10
+                                  ? "0" + student?.curr_hours
+                                  : student?.curr_hours}
                                 :
-                                {group.curr_minutes < 10
-                                  ? "0" + group?.curr_minutes
-                                  : group?.curr_minutes}
-                                -
-                                {/*formattedTime*/}
+                                {student.curr_minutes < 10
+                                  ? "0" + student?.curr_minutes
+                                  : student?.curr_minutes}
+                                - */}
+                                 {' '} {group.closerLessonLocal}
                               </>
                             ) : (
                               "Не запланировано"
                             )}
-                          </span>
+                          </span>                         
                         </p>
                       </div>
                       <div className={styles.student_btn_obman}><span></span></div>

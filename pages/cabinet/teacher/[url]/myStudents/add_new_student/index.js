@@ -19,6 +19,7 @@ const AddNewStudent = () => {
   const [lessonProgramId, setLessonProgramId] = useState(0);
   const [courseId, setCourseId] = useState(0);
   const [gender, setGender] = useState("");
+  const [showError, setShowError] = useState(false)
 
   const [teacher, setTeacher] = useState([])
   const [teachers, setTeachers] = useState([])
@@ -170,6 +171,11 @@ const AddNewStudent = () => {
     }
   }, [router])
 
+  // useEffect(() => {
+  //   let test = studentSurname.length >! 0
+  //   debugger
+  // }, [studentSurname])
+
   return (
     <>
             <HeaderTeacher
@@ -205,12 +211,13 @@ const AddNewStudent = () => {
                     </div>
                   </div>
                   <div className={styles.input_container}>
-                    <p>Имя</p>
+                    <p>Имя *</p>
                     <input
-                      className={styles.input_block}
+                      className={showError && studentName.length <! 0 ? styles.input_block_error : styles.input_block}
                       type="text"
                       value={studentName}
                       onChange={(e) => setStudentName(e.target.value)}
+                      placeholder={showError ? 'Обязательное поле для заполнения' : ''}
                     />
                   </div>
                   <div className={styles.input_container}>
@@ -223,22 +230,24 @@ const AddNewStudent = () => {
                     />
                   </div>
                   <div className={styles.input_container}>
-                    <p>Фамилия</p>
+                    <p>Фамилия *</p>
                     <input
-                      className={styles.input_block}
+                      className={showError && studentSurname.length <! 0 ? styles.input_block_error : styles.input_block}
                       type="text"
                       value={studentSurname}
                       onChange={(e) => setStudentSurname(e.target.value)}
+                      placeholder={showError ? 'Обязательное поле для заполнения' : ''}
                     />
                   </div>
                   <div className={styles.url_input}>
                     <div className={styles.input_container}>
-                      <p>Логин</p>
+                      <p>Логин *</p>
                       <input
-                        className={styles.input_block}
+                        className={showError && nickname.length <! 0 ? styles.input_block_error : styles.input_block}
                         type="text"
                         value={nickname}
                         onChange={(e) => setNickname(e.target.value)}
+                        placeholder={showError ? 'Обязательное поле для заполнения' : ''}
                       />
                     </div>
                     <span onClick={() => setShowLogData(!showLogData)} className={styles.login_cr}></span>
@@ -291,8 +300,14 @@ const AddNewStudent = () => {
                     className={styles.form_button}
                     onClick={async() => {
                       await createStudentAndProgram();
-                      await router.push(`/cabinet/teacher/${teacherUrl}/myStudents`)
-                      await window.location.reload()
+                      if (studentSurname !== "" && studentName !== "" && nickname !== "" && lessonProgramId !== 0) {
+                        setShowError(false)
+                        await router.push(`/cabinet/teacher/${teacherUrl}/myStudents`)
+                        await window.location.reload()
+                      } else {
+                        setShowError(true)
+                      }
+
                     }}
                   >
                     Добавить студента

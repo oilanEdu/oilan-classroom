@@ -23,6 +23,7 @@ const Group = () => {
   const [showSort, setShowSort] = useState(false);
   const [sortMode, setSortMode] = useState(false)
   const [currentGroup, setCurrentGroup] = useState()
+  const [localFormattedTimeAndDate, setLocalFormattedTimeAndDate] = useState()
 
   const isInMainPage = true;
 
@@ -60,8 +61,12 @@ const Group = () => {
     const dataStudents = {
       id: teacherIdLocal
     }
+   
     // let teacherStudents = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId/`, dataStudents)
     let teacherGroups = await axios.post(`${globals.productionServerDomain}/getStudentsGroupsByTeacherId/`, dataStudents)
+    debugger
+    let currentGroupLocal = teacherGroups['data'].find(el => el.id === +router.query.groupId)
+    let studentLessons2 = await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${currentGroupLocal?.course_url}&program_id=${currentGroupLocal?.program_id}&student_id=${currentGroupLocal?.student_id}`)
     await teacherGroups['data'].forEach(async student => {
       // debugger
       student.check = 0
@@ -146,27 +151,57 @@ const Group = () => {
             }
           })
         })
-        var lessonsFuture = lessons.filter(el => (new Date() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() < 0))
-        var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
-        var withoutNan = temp.filter(function (n) { return !isNaN(n) })
-        var idx = withoutNan.indexOf(Math.min(...withoutNan));
-        if (lessonsFuture[idx] != undefined) {
-          let curr_hours = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getHours();
-          let curr_minutes = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getMinutes();
-          student.closer_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString()
-          student.closer_date_witout_local = lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time
-          student.curr_hours = curr_hours
-          student.curr_minutes = curr_minutes
-          student.lesson_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString()
-        } else {
-          let curr_hours = undefined
-          let curr_minutes = undefined
-          student.closer_date = undefined
-          student.closer_date_witout_local = undefined
-          student.curr_hours = undefined
-          student.curr_minutes = undefined
-          student.lesson_date = undefined
-        }
+        let array = studentLessons2['data']
+        const uniqueLessons = array.filter((item, index, self) => 
+          index === self.findIndex((t) => (
+            t.id === item.id
+          ))
+        );
+        let lessonsForNearestDate = uniqueLessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0))
+        var temp = lessonsForNearestDate.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
+        // var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
+        var idx = temp.indexOf(Math.min(...temp));
+        let closerLessonLocal = lessonsForNearestDate[idx];
+
+        let date = closerLessonLocal?.personal_time ? closerLessonLocal?.personal_time : closerLessonLocal?.start_time
+        const dateOfPersonalTime = new Date(date)
+        // const shiftedTime = new Date(dateOfPersonalTime.getTime() + millisecondsShift);
+        // Получаем часы и минуты из нового времени
+        const hours = dateOfPersonalTime.getHours();
+        const minutesFormatted = dateOfPersonalTime.getMinutes() < 10 ? `0${dateOfPersonalTime.getMinutes()}` : dateOfPersonalTime.getMinutes();
+        // Форматируем часы и минуты в строку в формате "hh:mm"
+        const formattedTime = `${hours < 10 ? '0' : ''}${hours}:${minutesFormatted}`;
+
+
+        const day = String(dateOfPersonalTime.getDate()).padStart(2, '0');
+        const month = String(dateOfPersonalTime.getMonth() + 1).padStart(2, '0'); // Месяцы в JavaScript начинаются с 0
+        const year = dateOfPersonalTime.getFullYear();
+
+        const formattedDate = `${day}.${month}.${year}`;
+        
+        student.closerLessonLocal = formattedDate + ' ' + formattedTime
+        // debugger
+        // var lessonsFuture = lessons.filter(el => (new Date() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() < 0))
+        // var temp = lessonsFuture.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
+        // var withoutNan = temp.filter(function (n) { return !isNaN(n) })
+        // var idx = withoutNan.indexOf(Math.min(...withoutNan));
+        // if (lessonsFuture[idx] != undefined) {
+        //   let curr_hours = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getHours();
+        //   let curr_minutes = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).getMinutes();
+        //   student.closer_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString()
+        //   student.closer_date_witout_local = lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time
+        //   student.curr_hours = curr_hours
+        //   student.curr_minutes = curr_minutes
+        //   student.lesson_date = new Date(lessonsFuture[idx]?.personal_time ? lessonsFuture[idx]?.personal_time : lessonsFuture[idx]?.start_time).toLocaleDateString()
+        // } else {
+        //   let curr_hours = undefined
+        //   let curr_minutes = undefined
+        //   student.closer_date = undefined
+        //   student.closer_date_witout_local = undefined
+        //   student.curr_hours = undefined
+        //   student.curr_minutes = undefined
+        //   student.lesson_date = undefined
+        // }
 
       })
     }
@@ -175,7 +210,6 @@ const Group = () => {
     // setStudents(teacherGroups['data'])
     setGroups(teacherGroups['data'])
 
-    let currentGroupLocal = teacherGroups['data'].find(el => el.id === +router.query.groupId)
     setCurrentGroup(currentGroupLocal)
     console.log(teacherGroups['data']);
 
@@ -188,7 +222,7 @@ const Group = () => {
 
     let programLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + currentGroupLocal?.program_id)
     // setLessons(programLessons['data'])
-    debugger
+    // debugger
 
     await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${currentGroupLocal?.course_url}&program_id=${currentGroupLocal?.program_id}&student_id=${currentGroupLocal?.student_id}`).then(res => {
       let array = res.data
@@ -263,6 +297,43 @@ const Group = () => {
     }
   }, [router])
 
+  useEffect(() => {
+    if (lessons) {
+      let array = lessons
+    const uniqueLessons = array.filter((item, index, self) => 
+      index === self.findIndex((t) => (
+        t.id === item.id
+      ))
+    );
+    let lessonsForNearestDate = uniqueLessons.filter(el => (new Date() - new Date(el.personal_time).getTime() < 0))
+    var temp = lessonsForNearestDate.map(d => Math.abs(new Date() - new Date(d.personal_time ? d.personal_time : d.start_time).getTime()));
+    // var withoutNan = temp.filter(function(n) { return !isNaN(n)}) 
+    var idx = temp.indexOf(Math.min(...temp));
+    let closerLessonLocal = lessonsForNearestDate[idx];
+
+    let lessonIsGoingHandler = uniqueLessons.find(el => new Date().getTime() - new Date(el.personal_time ? el.personal_time : el.start_time).getTime() <= 3600000)
+    
+    let date = closerLessonLocal?.personal_time ? closerLessonLocal?.personal_time : closerLessonLocal?.start_time
+    const dateOfPersonalTime = new Date(date)
+    // const shiftedTime = new Date(dateOfPersonalTime.getTime() + millisecondsShift);
+    // Получаем часы и минуты из нового времени
+    const hours = dateOfPersonalTime.getHours();
+    const minutesFormatted = dateOfPersonalTime.getMinutes() < 10 ? `0${dateOfPersonalTime.getMinutes()}` : dateOfPersonalTime.getMinutes();
+    // Форматируем часы и минуты в строку в формате "hh:mm"
+    const formattedTime = `${hours < 10 ? '0' : ''}${hours}:${minutesFormatted}`;
+
+
+    const day = String(dateOfPersonalTime.getDate()).padStart(2, '0');
+    const month = String(dateOfPersonalTime.getMonth() + 1).padStart(2, '0'); // Месяцы в JavaScript начинаются с 0
+    const year = dateOfPersonalTime.getFullYear();
+
+    const formattedDate = `${day}.${month}.${year}`;
+    
+    setLocalFormattedTimeAndDate(formattedDate + ' ' + formattedTime)
+    }
+    
+  }, [lessons])
+
   return <>
         <HeaderTeacher
         white={true}
@@ -318,10 +389,10 @@ const Group = () => {
               </div>
               <div className={styles.groupDesc}>
                 <p>
-                Курс - {currentGroup?.program_title}
+                Курс - {currentGroup?.course_title}
                 </p>
                 <p>
-                Программа - {currentGroup?.course_title}
+                Программа - {currentGroup?.program_title}
                 </p>
               </div>
 
@@ -341,23 +412,17 @@ const Group = () => {
                         <p>Курс: {student?.course_title} </p>
                         <p>Программа: {student?.program_title}</p>
                         <p>
-                          Следующий урок:
+                          Следующий урок: 
                           <span>
-                            {student?.curr_hours != undefined ? (
-                              <>
-                                {student?.curr_hours < 10
-                                  ? "0" + student?.curr_hours
-                                  : student?.curr_hours}
-                                :
-                                {student.curr_minutes < 10
-                                  ? "0" + student?.curr_minutes
-                                  : student?.curr_minutes}
-                                -
-                                {/*formattedTime*/}
-                              </>
+                          {localFormattedTimeAndDate.length > 0 ?
+                          ' ' + localFormattedTimeAndDate 
+                          : 
+                          ' ' + 'Не запланировано'}
+                            {/* { (
+                              student.closerLessonLocal
                             ) : (
                               "Не запланировано"
-                            )}
+                            )} */}
                           </span>
                         </p>
                       </div>

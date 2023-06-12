@@ -46,6 +46,7 @@ export default function Student({ programs }) {
   const [roles, setRoles] = useState([])
   const [lessonProgramId, setLessonProgramId] = useState(0);
   const [studentPrograms, setStudentPrograms] = useState([]);
+  const [closedPrograms, setClosedPrograms] = useState([])
   const [editShow, setEditShow] = useState(false);
   const [allStudentsLessons, setAllStudentsLessons] = useState([])
 
@@ -141,7 +142,9 @@ export default function Student({ programs }) {
     let result2 = await axios.post(`${globals.productionServerDomain}/getProgramsByStudentIdGroup/` + student?.id)
     console.log('ee', student)
     let findProgram = result.data.find(el => el.course_id === +router.query.courseId && el.program_id === +router.query.programId)
-    setStudentPrograms(findProgram);
+    setStudentPrograms(findProgram); 
+    setClosedPrograms(result.data)
+    debugger
     console.log(studentPrograms)
   }
 
@@ -425,8 +428,8 @@ export default function Student({ programs }) {
                     value={lessonProgramId}
                   >
                     <option value="0" disabled>Выберите программу</option>
-                    {programsAll.map(program => (
-                      <option value={program.id}>{program.title}</option>
+                    {programsAll.filter(el => el.type === 'individual').map(program => (
+                      <option disabled={closedPrograms.some(el => el.program_id === program.id)} value={program.id}>{program.title}</option>
                     ))}
                   </select>
                   : <input value={studentPrograms?.title} />

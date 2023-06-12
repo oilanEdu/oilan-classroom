@@ -14,6 +14,7 @@ const AddNewGroup = () => {
   const teacherUrl = router.query.url
   const isInMainPage = true;
 
+  const [allGroupStudentsOfTeacher, setAllGroupStudentsOfTeacher] = useState([])
   const [groupTitle, setGroupTitle] = useState("");
   const [currentGroup, setCurrentGroup] = useState()
   const [currentCourseId, setCurrentCourseId] = useState()
@@ -44,6 +45,8 @@ const AddNewGroup = () => {
 
   const [saveIsClicked, setSaveIsClicked] = useState(false)
   const [editData, setEditData] = useState(false);
+
+  const [studentsToShow, setStudentsToShow] = useState([])
 
   const studentsHandler = () => {
     
@@ -120,10 +123,13 @@ const AddNewGroup = () => {
     let groupId = router.query.groupId
     // debugger
     let getStudentsByGroupId = await axios.post(`${globals.productionServerDomain}/getStudentsByGroupId/` + groupId)
-
+      // debugger
     let filteredStudents = teacherGroups['data'].filter(el => getStudentsByGroupId['data'].some(el2 => el.student_id === el2.student_id && el.course_id === el2.course_id && el.program_id === el2.program_id && el.title === currentGroupLocal.title))
     const idArrayFilteredStudents = filteredStudents.map(obj => obj.student_id);
     // setStudents(filteredStudents)
+
+    setAllGroupStudentsOfTeacher(teacherGroups['data'])
+    // debugger
     
     setStudentsByGroup(idArrayFilteredStudents)
     setStudentsByGroupPrevious(idArrayFilteredStudents)
@@ -131,7 +137,7 @@ const AddNewGroup = () => {
 
     let programLessons = await axios.post(`${globals.productionServerDomain}/getLessonsByProgramId/` + currentGroupLocal?.program_id)
     // setLessons(programLessons['data'])
-    debugger
+    // debugger
 
     await axios.get(`${globals.productionServerDomain}/getLessonInfo_v2?course_url=${currentGroupLocal?.course_url}&program_id=${currentGroupLocal?.program_id}&student_id=${currentGroupLocal?.student_id}`).then(res => {
       let array = res.data
@@ -193,6 +199,7 @@ const AddNewGroup = () => {
   const getStudents = async () => {
     let result = await axios.post(`${globals.productionServerDomain}/getStudentsByTeacherId`, {id: teacher?.id, sort: 'name'})
     setStudents(result.data);
+    // debugger
     setSelectedStudent(result.data[0]?.student_id)
     // debugger
     console.log('result.data', result.data)
@@ -334,7 +341,7 @@ const AddNewGroup = () => {
         ///Update students of group list
         const whichStudentsToAdd = studentsByGroup.filter(el => !studentsByGroupPrevious.includes(el))
         const whichStudentsToDelete = studentsByGroupPrevious.filter(el => !studentsByGroup.includes(el))
-        debugger
+        // debugger
 
         if (whichStudentsToAdd.length >= 1) {
           for (let index = 0; index < whichStudentsToAdd.length; index++) {
@@ -481,6 +488,38 @@ const saveLessonDateAndTime = async (dateAndTimeMerger, lesson_id, course_id) =>
     }
   }, [router])
 
+  const disableStudent = () => {
+    if (students.length > 0 && allGroupStudentsOfTeacher.length > 0) {
+      let localStudentsArray = [...students];
+      debugger
+      localStudentsArray.forEach(student => {
+        if (
+          allGroupStudentsOfTeacher.some(
+            el =>
+              el.student_id === student.student_id &&
+              el.program_id === lessonProgramId &&
+              el.course_id === courseId
+              // student.groupId
+          )
+        ) {
+          student.disabled = true;
+        }
+      });
+  
+      debugger
+      localStudentsArray
+      setStudentsToShow(
+        localStudentsArray.filter((student, index, self) => index === self.findIndex(s => s.student_id === student.student_id) 
+        )
+      );
+    }
+  };
+  
+  useEffect(() => {
+    disableStudent()
+  }, [students, lessonProgramId, courseId])
+  //program and course
+
 return (
     <>
             <HeaderTeacher
@@ -545,6 +584,7 @@ return (
                   <div className={styles.input_container}>
                     <p>Добавьте студентов</p>
                     <select
+                      disabled={studentsToShow.length <= 0}
                       className={styles.input_block}
                       // onChange={() => {
                       //   console.log(e.target.value);
@@ -563,8 +603,8 @@ return (
                       
                     >
                       <option value={selectedStudent}>Студенты</option>
-                      {students.map(student => (
-                        <option value={student.student_id}>{student.surname} {student.name}</option>
+                      {studentsToShow.map(student => (
+                        <option disabled={student.disabled} value={student.student_id}>{student.surname} {student.name}</option>
                       ))}
                     </select>
                   </div>

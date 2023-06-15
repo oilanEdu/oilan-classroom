@@ -17,6 +17,7 @@ const myStudents = () => {
   const [baseDataLoaded, setBaseDataLoaded] = useState(false)
   const [isStudents, setIsStudents] = useState(true);
   const [students, setStudents] = useState([]);
+  const [otherCoursesAndProgramsOfStudents, setOtherCoursesAndProgramsOfStudents] = useState([])
   const [groups, setGroups] = useState([]);
   const [sortType, setSortType] = useState("");
   const [lessonsLoaded, setLessonsLoaded] = useState(false);
@@ -281,14 +282,64 @@ const myStudents = () => {
           const formattedDate = `${day}.${month}.${year}`;
           
           group.closerLessonLocal = formattedDate + ' ' + formattedTime
-          debugger
+          // debugger
     }
     // await teacherStudents['data'].forEach(async student => {
       
     // }
     // );
 
-    setStudents(teacherStudents['data'])
+    const mergedData = Object.values(teacherStudents['data'].reduce((acc, obj) => {
+      const key = obj.student_id;
+      if (!acc[key]) {
+        acc[key] = { ...obj, course_ids: [], program_ids: [], program_titles: [], course_titles: [] };
+      }
+      acc[key].course_ids.push(obj.course_id);
+      acc[key].program_ids.push(obj.program_id);
+      acc[key].program_titles.push(obj.program_title);
+      acc[key].course_titles.push(obj.course_title);
+      return acc;
+    }, {}));
+    setOtherCoursesAndProgramsOfStudents(mergedData)
+    function filterByRepetitiveIdAndClosestDate(objects) {
+      // Group objects by ID
+      const groupedById = {};
+      objects.forEach((obj) => {
+        if (groupedById[obj.student_id]) {
+          groupedById[obj.student_id].push(obj);
+        } else {
+          groupedById[obj.student_id] = [obj];
+        }
+      });
+    
+      // Filter objects by closest date
+      const result = [];
+      Object.values(groupedById).forEach((group) => {
+        if (group.length > 1) {
+          // Sort the group by date in ascending order
+          group.sort((a, b) => {
+            const dateA = new Date(a.closerLessonLocal.replace(/(\d{2}).(\d{2}).(\d{4}) (\d{2}):(\d{2})/, '$3-$2-$1T$4:$5'));
+            const dateB = new Date(b.closerLessonLocal.replace(/(\d{2}).(\d{2}).(\d{4}) (\d{2}):(\d{2})/, '$3-$2-$1T$4:$5'));
+            return dateA - dateB;
+          });
+    
+          // Find the object with the closest date
+          const closestDate = new Date(group[0].closerLessonLocal.replace(/(\d{2}).(\d{2}).(\d{4}) (\d{2}):(\d{2})/, '$3-$2-$1T$4:$5'));
+          const closestObj = group.find((obj) => {
+            const objDate = new Date(obj.closerLessonLocal.replace(/(\d{2}).(\d{2}).(\d{4}) (\d{2}):(\d{2})/, '$3-$2-$1T$4:$5'));
+            return objDate.getTime() === closestDate.getTime();
+          });
+    
+          result.push(closestObj || group[0]); // Pick the first object if no exact match found
+        } else {
+          result.push(group[0]);
+        }
+      });
+    
+      return result;
+    }
+
+    setStudents(filterByRepetitiveIdAndClosestDate(teacherStudents['data']))
     setGroups(teacherGroups['data'])
     console.log(teacherStudents['data']);
   }
@@ -448,9 +499,20 @@ const myStudents = () => {
                             )}
                           </span>
                         </p>
-                        <p>
+                        <p>Состоит в:</p>
+                        {/* {otherCoursesAndProgramsOfStudents.find(el => el.student_id === student.student_id)} */}
+                        {/* // .course_titles.map(el => <p>{el}</p>) */}
+                        {/* <p>Course - program</p> */}
+                        {otherCoursesAndProgramsOfStudents.find(el => el.student_id === student.student_id).course_titles.map((course, index) =><p
+                          onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/student?nick=${student?.nickname}&programId=${otherCoursesAndProgramsOfStudents.find(el => el.student_id === student.student_id)?.program_ids[index]}&courseId=${otherCoursesAndProgramsOfStudents.find(el => el.student_id === student.student_id).course_ids[index]}&studentId=${student.student_id}`)}
+                          className={styles.otherCourseLink}>
+                          {otherCoursesAndProgramsOfStudents.find(el => el.student_id === student.student_id).course_titles[index]} 
+                          {' '}- {' '}
+                          {otherCoursesAndProgramsOfStudents.find(el => el.student_id === student.student_id).program_titles[index]}
+                          </p>)}
+                        {/* <p>
                           {student.groupId ? ("В составе группы " + groups.find(el => el.id === student.groupId).title) : "Индивидуальные занятия"}
-                        </p>
+                        </p> */}
                       </div>
                       <div className={styles.student_btn_obman}><span></span></div>
                       <div className={styles.student_btn} onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/student?nick=${student?.nickname}&programId=${student?.program_id}&courseId=${student.course_id}&studentId=${student.student_id}`)}><img src="https://realibi.kz/file/897616.svg" alt="" /></div>

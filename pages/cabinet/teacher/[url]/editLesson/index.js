@@ -41,7 +41,7 @@ const createCourse = () => {
   const [links, setLinks] = useState(undefined)
   const [materials, setMaterials] = useState()
   const handleOptionChange = (event) => {
-      setSelectedOption(event.target.value);
+    setSelectedOption(event.target.value);
   };
   const [files, setFiles] = useState([])
 
@@ -129,7 +129,9 @@ const createCourse = () => {
     }
     let getLessonAttendance = await axios.post(`${globals.productionServerDomain}/getLessonAttendance/`, dataLesson)
     setLocalAttendance(getLessonAttendance['data'])
-    debugger
+    // debugger
+
+    fetch()
   }
 
   const loadBaseDataSecond = async () => {
@@ -335,17 +337,18 @@ const createCourse = () => {
 
 
   const fetch = async () => {
-    const response = await axios.post(`${globals.productionServerDomain}/getLessonMaterialsOC`, { lessonId: router.query.lesson });
+    const response = await axios.post(`${globals.productionServerDomain}/getLessonMaterialsOC`, { lessonId: lessonId });
     const links = response['data']['data'].filter(obj => obj.is_lesson_link === true);
     const materials = response['data']['data'].filter(obj => obj.is_lesson_link === false);
     setLinks(links)
     setMaterials(materials)
     console.log(materials, "materials")
     console.log(links, "links")
+    // debugger 
   }
-  useEffect(() => {
-    fetch()
-  }, [])
+  // useEffect(() => {
+  //   fetch()
+  // }, [])
 
   const handleSubmit2 = async () => {
     if (selectedOption === 'fileRadio') {
@@ -471,8 +474,9 @@ const createCourse = () => {
               onChange={(e) => setLessonDesc(e.target.value)}>
             </textarea>
 
+            <div style={{ marginTop: '60px' }} ></div>
             {/* ////////// */}
-            {/* {materials?.length > 0 ?
+            {materials?.length > 0 ?
               <div className={styles.lessonInfoBlock}>
                 <p style={{ marginBottom: '20px' }} className={styles.answer_text}>
                   Материалы:
@@ -480,23 +484,24 @@ const createCourse = () => {
                 <div className={styles.materials}>
                   {materials.map(el => (
                     <div className={styles.material}
-                    // onClick={() => deleteMaterial(el.link)}
+                      // onClick={() => deleteMaterial(el.link)}
+                      style={{ width: '100px' }}
                     >
-                      <img src="/icons/defaulFile.svg"></img>
+                      <img src="https://realibi.kz/file/146797.png"></img>
                       <p>{el.title}.{el.file_type}</p>
                     </div>))}
                 </div>
               </div>
-              : ''} */}
-            <div style={{marginTop: '60px'}} className={styles.lessonInfoBlock}>
+              : ''}
+            <div className={styles.lessonInfoBlock}>
               <span className={styles.label}>Материал:</span>
               <input className={styles.input} onChange={(e) => setMaterialTitle(e.target.value)} value={materialTitle} placeholder="Название"></input>
               <input className={styles.input} onChange={(e) => setMaterialDescription(e.target.value)} value={materialDescription} placeholder="Описание"></input>
             </div>
             <div className={styles.lessonInfoBlock}>
               <span className={styles.label}>Тип материала:</span>
-              <span 
-              style={{display: 'flex', flexDirection: 'row-reverse', alignItems: 'center'}}>
+              <span
+                style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
                 <input
                   type="radio"
                   id="radio1"
@@ -508,7 +513,7 @@ const createCourse = () => {
                 <label htmlFor="radio1">Ссылка на материал</label>
               </span>
               <span
-              style={{display: 'flex', flexDirection: 'row-reverse', alignItems: 'center'}}>
+                style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
                 <input
                   type="radio"
                   id="radio2"

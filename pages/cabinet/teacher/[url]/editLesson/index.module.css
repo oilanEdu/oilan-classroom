@@ -91,7 +91,7 @@
 
 .input_container input,
 .input_container textarea {
-	width: 40%;
+	width: 100%;
 	outline: none;
 	background: #FFFFFF;
 	border: 0.5px solid #A3CEFD;
@@ -250,6 +250,65 @@
 	line-height: 24px;
 }
 
+.attendanceWrapper {
+	display: flex;
+    flex-direction: column;
+	margin-top: 50px;
+	width: 698px;
+	height: 681px;
+	border: 1px solid var(--secondary, #A3CEFD);
+	padding: 30px;
+	border-radius: 5px;
+	overflow: scroll;
+}
+.attendanceWrapper {
+	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none; /* IE/Edge */
+  }
+  
+  .attendanceWrapper::-webkit-scrollbar {
+	display: none; /* WebKit (Chrome, Safari, etc.) */
+  }
+.attendanceItem {
+	width: 638px;
+	height: 72px;
+	border-radius: 5px;
+	border: 1px solid var(--secondary, #A3CEFD);
+	padding: 15px;
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+	justify-content: space-between;
+}
+
+.programRow {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	box-shadow: 0px 0px 11px 4px #A3CEFD40;
+	margin: 15px 0;
+	border-radius: 10px;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	padding: 30px;
+}
+
+.programRow:hover {
+	transition: all 0.1s linear;
+	box-shadow: 0px 0px 11px 6px #a3cefd6f;
+	cursor: pointer;
+}
+
+.lessonInfoBlock {
+	margin-bottom: 30px;
+	width: 100%;
+	flex-direction: column;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-wrap: wrap;
+}
 
 @media screen and (max-width:575px) {
 

@@ -481,11 +481,12 @@ const createCourse = () => {
                 <p style={{ marginBottom: '20px' }} className={styles.answer_text}>
                   Материалы:
                 </p>
-                <div className={styles.materials}>
+                <div style={{display: 'flex', alignItems: 'flex-start'}}
+                 className={styles.materials}>
                   {materials.map(el => (
                     <div className={styles.material}
                       // onClick={() => deleteMaterial(el.link)}
-                      style={{ width: '100px' }}
+                      style={{ width: '100px', wordBreak: 'break-all' }}
                     >
                       <img src="https://realibi.kz/file/146797.png"></img>
                       <p>{el.title}.{el.file_type}</p>

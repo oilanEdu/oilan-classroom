@@ -132,7 +132,7 @@ const myPrograms = () => {
         </div>
       </div>
     </div>
-    <Footer />
+    {/* Footer /> */}
   </>;
 };
 

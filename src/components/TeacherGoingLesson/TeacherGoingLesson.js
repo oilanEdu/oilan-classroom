@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
-import styles from './index.module.css'
-import globals from "../../../../../src/globals";
+import styles from '../../../pages/cabinet/teacher/[url]/editLesson/index.module.css'
+import globals from "../../globals";
 import axios from "axios";
-import HeaderTeacher from "../../../../../src/components/new_HeaderTeacher/new_HeaderTeacher";
-import { Image } from "react-bootstrap";
-import GoToLessonWithTimerComponent from "../../../../../src/components/GoToLessonWithTimerComponent/GoToLessonWithTimerComponent";
-import EditLessonHomeworkComponent from "../../../../../src/components/EditLessonHomeworkComponent/EditLessonHomeworkComponent";
-import Footer from "../../../../../src/components/Footer/Footer";
+import HeaderTeacher from "../new_HeaderTeacher/new_HeaderTeacher";
+import EditLessonHomeworkComponent from "../EditLessonHomeworkComponent/EditLessonHomeworkComponent";
 
-const createCourse = () => {
+const TeacherGoingLesson = ({teacherUrl, lessonId}) => {
   const router = useRouter();
-  const teacherUrl = router.query.url
-  const lessonId = router.query.lesson
+//   const teacherUrl = router.query.url
+//   const lessonId = router.query.lesson
   const [teacher, setTeacher] = useState([])
   const [baseDataLoaded, setBaseDataLoaded] = useState(false)
   const [students, setStudents] = useState([]);
@@ -445,8 +442,6 @@ const createCourse = () => {
       isInMainPage={isInMainPage}
     />
     <div className={styles.container}>
-
-      <GoToLessonWithTimerComponent isTeacher={true} url={router.query.url} />
       <div className={styles.editLesson}>
         <span className={styles.whichProgramm}>Программа {lesson?.program_title}</span>
         <div className={styles.row}>
@@ -624,8 +619,7 @@ const createCourse = () => {
         </div>
       </div>
     </div>
-    {/* Footer /> */}
   </>;
 };
 
-export default createCourse;
+export default TeacherGoingLesson;

@@ -324,7 +324,7 @@ const AddNewStudent = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      {/* Footer /> */}
     </>
   );
 }

@@ -349,7 +349,7 @@ export default function Student({ programs }) {
             <p style={{color: tabNum === 1 ? "#2E8CF2" : "#000"}}  onClick={() => setTabNum(1)}>Программа</p>
             <p style={{color: tabNum === 2 ? "#2E8CF2" : "#000"}}  onClick={() => setTabNum(2)}>Домашние задания</p>
           </div>
-          <div>
+          {/* <div>
             {tabNum === 0 && <p 
               className={styles.studentDelete}
               onClick={() => {
@@ -357,12 +357,12 @@ export default function Student({ programs }) {
                 router.push(`/cabinet/teacher/${teacherUrl}/myStudents`)
               }}
             >Удалить студента</p>}
-          </div>
+          </div> */}
         </div>
         {tabNum === 0 && <div className={styles.profile}>
           <div className={styles.profile_header}>
             <h3>Общая информация</h3>
-            {editProgramData
+            {/* {editProgramData
               ? <button
                 onClick={() => {
                   newProgramForStudent()
@@ -372,7 +372,7 @@ export default function Student({ programs }) {
                 Сохранить
               </button>
               : <button onClick={() => setEditProgramData(true)}>Редактировать</button>
-            }
+            } */}
           </div>
           <div className={styles.profile_info}>
             <div className={styles.student_info__wrapper}>
@@ -517,7 +517,7 @@ export default function Student({ programs }) {
         {tabNum === 2 && <HomeworksByTeacher student={student} />}
       </div>
     </div>
-    <Footer />
+    {/* Footer /> */}
     </>
 
   );

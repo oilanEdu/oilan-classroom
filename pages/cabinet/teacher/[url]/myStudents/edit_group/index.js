@@ -534,7 +534,7 @@ return (
         <div className={styles.contentWrapper}>
           <div className={styles.detailInfo}>
             <div className={styles.showDetailInfoContain}>
-              <div className={styles.detailInfoHeader}>
+              {/* <div className={styles.detailInfoHeader}>
                 <p>Редактирование группы</p>
               </div>
               <div className={styles.dataBlock}>
@@ -644,7 +644,7 @@ return (
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
               {/* {lessons?.map(lesson =>
                   <NewDateAndTimePickerForLesson
                     lessons2={lessons}
@@ -709,7 +709,7 @@ return (
           </div>
         </div>
       </div>
-      <Footer />
+      {/* Footer /> */}
     </>
   );
 }

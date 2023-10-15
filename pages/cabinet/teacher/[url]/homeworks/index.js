@@ -343,7 +343,7 @@ const homeworks = () => {
         </div>
       </div>
     </div>
-    <Footer />
+    {/* Footer /> */}
   </>;
 };
 

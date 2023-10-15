@@ -425,7 +425,7 @@ const createProgram = () => {
         </div>
       </div>
     </div>
-    <Footer />
+    {/* Footer /> */}
   </>;
 };
 

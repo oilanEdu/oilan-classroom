@@ -254,9 +254,9 @@ function StudentProfile(props) {
                     </div>
                 </div>
                 
-                {/* <Footer /> */}
+                {/* Footer /> */}
             </div>
-            <Footer />
+            {/* Footer /> */}
         </>
        )
 }

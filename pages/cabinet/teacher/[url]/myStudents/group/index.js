@@ -473,7 +473,7 @@ const Group = () => {
         </div>
       </div>
     </div>
-    <Footer />
+    {/* Footer /> */}
   </>;
 };
 

@@ -23,6 +23,7 @@ import HeaderStudent from "../../src/components/NewHeaderStudent/NewHeaderStuden
 import HeaderTeacher from "../../src/components/new_HeaderTeacher/new_HeaderTeacher";
 import Footer from "../../src/components/Footer/Footer";
 import NewHeaderStudent from '../../src/components/NewHeaderStudent/NewHeaderStudent';
+import TeacherGoingLesson from '../../src/components/TeacherGoingLesson/TeacherGoingLesson';
 
 const Index = () => {
 	const [check, setCheck] = useState('empty')
@@ -36,6 +37,7 @@ const Index = () => {
 	const [needRoom, setNeedRoom] = useState(true)
 	const [goMeet, setGoMeet] = useState(false)
 	const [actualRoom, setActualRoom] = useState('')
+	const [lesson, setLesson] = useState()
   const [isRoom, setIsRoom] = useState(false)
 	const [studentsInfoByRoom, setStudentsInfoByRoom] = useState()
 
@@ -102,6 +104,9 @@ const Index = () => {
 		    setSelectedStudentId(student?.student_id);
 		    let getTeacherByLessonKey = await axios.post(`${globals.productionServerDomain}/getTeacherByLessonKey/` + data);
 		    setTeacher(getTeacherByLessonKey['data'][0]);
+
+			let getLessonByRoomKey = await axios.post(`${globals.productionServerDomain}/getLessonByRoomKey/` + data);
+    		setLesson(getLessonByRoomKey['data'][0]);
         }
       })();
     }, [teacher, student]);
@@ -195,119 +200,128 @@ const Index = () => {
 		//   }, [router])
 
 		return (
-			<>
-				{goMeet?
-					<>
-						{role === "student" 
-        				  ? 
-        				  <NewHeaderStudent name={student?.name} surname={student?.surname} nickname={student?.nickname} courseUrl={studentsInfoByRoom?.url} programId={studentsInfoByRoom?.program_id}/>
-        				  : <HeaderTeacher white={true} teacher={teacher} />
-        				}
-						<div className={styles.all}>
-      					<div style={{backgroundColor: "#white", width: "100%"}}>
-						<div className={styles.cantainer}>
-							<div className={styles.dashboard_left_section}>
+	// 		<>
+	// 			{goMeet?
+	// 				<>
+	// 					{role === "student" 
+    //     				  ? 
+    //     				  <NewHeaderStudent name={student?.name} surname={student?.surname} nickname={student?.nickname} courseUrl={studentsInfoByRoom?.url} programId={studentsInfoByRoom?.program_id}/>
+    //     				  : <HeaderTeacher white={true} teacher={teacher} />
+    //     				}
+	// 					<div className={styles.all}>
+    //   					<div style={{backgroundColor: "#white", width: "100%"}}>
+	// 					<div className={styles.cantainer}>
+	// 						<div className={styles.dashboard_left_section}>
 								
-								<div className={styles.translationBlock}>
-									{/*<DirectCall role={role}/>*/}
-									<GroupCall studentsInfoByRoom={studentsInfoByRoom} role={role} teacher={teacher} student={student} groupCallRooms={groupCallRooms} activeUsers={activeUsers} username={username} check={check} setCheck={setCheck} goMeet={goMeet} setGoMeet={setGoMeet} studentsOfGroup={studentsOfGroup}/>
-									{callState !== callStates.CALL_IN_PROGRESS && (
-										//<DashboardInformation username={username} />
-										<></>
-									)}
-								</div>
-								{/*<div className={styles['dashboard_rooms_container']}>
-									<GroupCallRoomsList />
-								</div>*/}
-							</div>
-							{/*<div className={styles['dashboard_right_section']}>
-								<ActiveUsersList />
-							</div>
-							<button onClick={() => {leaveClick()}}>Leave</button>*/}
-						</div>
-						</div>
-						</div>
-						<Footer />
-					</>:
-					// <>
-					// 	<img src="https://realibi.kz/file/756332.png" style={{width: "80%", marginLeft: '10%'}} />
-					// 	<div className={styles.joinButtonBlock}>
-					// 		<button 
-					// 			className={styles.joinButton}
-					// 			onClick={() => {
-					// 				if (!roomExists){
-					// 					createRoom(groupCallRooms)
-					// 				} 
-					// 				if (roomExists) {
-					// 					joinRoom(groupCallRooms)
-					// 					setGoMeet(true)
-					// 				}
-					// 		}}>
-					// 			Перейти к занятию
-					// 		</button>
-					// 	</div>
-					// </>
+	// 							<div className={styles.translationBlock}>
+	// 								{/*<DirectCall role={role}/>*/}
+	// 								<GroupCall studentsInfoByRoom={studentsInfoByRoom} role={role} teacher={teacher} student={student} groupCallRooms={groupCallRooms} activeUsers={activeUsers} username={username} check={check} setCheck={setCheck} goMeet={goMeet} setGoMeet={setGoMeet} studentsOfGroup={studentsOfGroup}/>
+	// 								{callState !== callStates.CALL_IN_PROGRESS && (
+	// 									//<DashboardInformation username={username} />
+	// 									<></>
+	// 								)}
+	// 							</div>
+	// 							{/*<div className={styles['dashboard_rooms_container']}>
+	// 								<GroupCallRoomsList />
+	// 							</div>*/}
+	// 						</div>
+	// 						{/*<div className={styles['dashboard_right_section']}>
+	// 							<ActiveUsersList />
+	// 						</div>
+	// 						<button onClick={() => {leaveClick()}}>Leave</button>*/}
+	// 					</div>
+	// 					</div>
+	// 					</div>
+	// 					{/* Footer /> */}
+	// 				</>:
+	// 				// <>
+	// 				// 	<img src="https://realibi.kz/file/756332.png" style={{width: "80%", marginLeft: '10%'}} />
+	// 				// 	<div className={styles.joinButtonBlock}>
+	// 				// 		<button 
+	// 				// 			className={styles.joinButton}
+	// 				// 			onClick={() => {
+	// 				// 				if (!roomExists){
+	// 				// 					createRoom(groupCallRooms)
+	// 				// 				} 
+	// 				// 				if (roomExists) {
+	// 				// 					joinRoom(groupCallRooms)
+	// 				// 					setGoMeet(true)
+	// 				// 				}
+	// 				// 		}}>
+	// 				// 			Перейти к занятию
+	// 				// 		</button>
+	// 				// 	</div>
+	// 				// </>
 
-              <div className={styles.all}>
-      <div style={{backgroundColor: "#white", width: "100%"}}>
-        {role === "student" 
-          ? 
-          <NewHeaderStudent name={student?.name} surname={student?.surname} nickname={student?.nickname} courseUrl={studentsInfoByRoom?.url} programId={studentsInfoByRoom?.program_id}/>
-          : <HeaderTeacher white={true} teacher={teacher} />
-        }
-        <div className={styles.cantainer}>
-          <div className={styles.allReady}>
-          {/* <p>Всё готово и настроено</p>
-          <button>Присоедениться к уроку</button> */}
-          <h1 style={{color: "white", marginBottom: "40px"}}>{(isRoom || role === "teacher")? "Всё готово и настроено" : "Ожидание преподавателя"}</h1>
-          <form
-                style={{textAlign: "end"}}
-                onSubmit={(e) => {
-                  // e.preventDefault();
-                  // getToken()
-                  // // createRoom()
-                  // // handleSubmit(userName);
-                }}
-              >
-                {(isRoom || role === "teacher") && <button 
-                  style={{
-                    background: "#ffffff",
-                    borderRadius: "5px",
-                    border: "none",
-                    marginBottom: "15%",
-                    color: "black",
-                    fontSize: "24px",
-                    padding: "20px 40px"
-                  }}
-                  // className="px-4 py-2 bg-blue-700 rounded-lg text-white"
-                  onClick={() => {
-									if (role == 'teacher') {
-										createRoom(groupCallRooms)
-									} else {
-										joinRoom(groupCallRooms)
-										setGoMeet(true)
-									}
-							}}
-                >
-                  <span
-                    style={{
-                      // background: "url(https://realibi.kz/file/892662.png) no-repeat",
-                      // backgroundPosition: "right",
-                      // backgroundSize: "18px",
-                      // paddingRight: "30px",
-                    }}
-                  >
-                    Присоедениться к уроку
-                  </span>
-                </button>}
-              </form>
-          </div>
-          </div>
-          </div>
-		  <Footer />
-          </div>
-				}
-			</>
+    //           <div className={styles.all}>
+    //   <div style={{backgroundColor: "#white", width: "100%"}}>
+    //     {role === "student" 
+    //       ? 
+    //       <NewHeaderStudent name={student?.name} surname={student?.surname} nickname={student?.nickname} courseUrl={studentsInfoByRoom?.url} programId={studentsInfoByRoom?.program_id}/>
+    //       : <HeaderTeacher white={true} teacher={teacher} />
+    //     }
+    //     <div className={styles.cantainer}>
+    //       <div className={styles.allReady}>
+    //       {/* <p>Всё готово и настроено</p>
+    //       <button>Присоедениться к уроку</button> */}
+    //       <h1 style={{color: "white", marginBottom: "40px"}}>{(isRoom || role === "teacher")? "Всё готово и настроено" : "Ожидание преподавателя"}</h1>
+    //       <form
+    //             style={{textAlign: "end"}}
+    //             onSubmit={(e) => {
+    //               // e.preventDefault();
+    //               // getToken()
+    //               // // createRoom()
+    //               // // handleSubmit(userName);
+    //             }}
+    //           >
+    //             {(isRoom || role === "teacher") && <button 
+    //               style={{
+    //                 background: "#ffffff",
+    //                 borderRadius: "5px",
+    //                 border: "none",
+    //                 marginBottom: "15%",
+    //                 color: "black",
+    //                 fontSize: "24px",
+    //                 padding: "20px 40px"
+    //               }}
+    //               // className="px-4 py-2 bg-blue-700 rounded-lg text-white"
+    //               onClick={() => {
+	// 								if (role == 'teacher') {
+	// 									createRoom(groupCallRooms)
+	// 								} else {
+	// 									joinRoom(groupCallRooms)
+	// 									setGoMeet(true)
+	// 								}
+	// 						}}
+    //             >
+    //               <span
+    //                 style={{
+    //                   // background: "url(https://realibi.kz/file/892662.png) no-repeat",
+    //                   // backgroundPosition: "right",
+    //                   // backgroundSize: "18px",
+    //                   // paddingRight: "30px",
+    //                 }}
+    //               >
+    //                 Присоедениться к уроку
+    //               </span>
+    //             </button>}
+    //           </form>
+    //       </div>
+    //       </div>
+    //       </div>
+	// 	  {/* Footer /> */}
+    //       </div>
+	// 			}
+	// 		</>
+
+	<>
+		{role === "student" ? 
+		<></> 
+		: 
+		<>
+		<TeacherGoingLesson teacherUrl={teacher.url} lessonId={lesson?.lesson_id} />
+		</>}
+	</>
 					
 		);
 	}
@@ -1542,7 +1556,7 @@ export default Index
 //             : <LessonExercisesForStudent exercises={exercises} student={student?.id} padding={"40px 0"} brickBorder={"3px solid #f1faff"}/>
 //           } */}
 //         </div>            
-//         <Footer />
+//         {/* Footer /> */}
 //       </div>
 //     </div>)
 //     //:<></>

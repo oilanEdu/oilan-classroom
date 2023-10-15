@@ -426,10 +426,10 @@ function TeacherProfile(props) {
                     </div>
                 </div>
 
-                {/* <Footer /> */}
+                {/* Footer /> */}
             </div>
             </div>
-        <Footer />
+        {/* Footer /> */}
         </>
     )
 }

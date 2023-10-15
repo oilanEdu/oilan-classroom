@@ -46,7 +46,7 @@ const LoginForm = () => {
           {isSignup ? <SignupForm /> : <RegisterForm />}
         </div>
       </div>
-      {/* <Footer /> */}
+      {/* Footer /> */}
     </>
   );
 };

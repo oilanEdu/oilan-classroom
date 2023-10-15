@@ -189,7 +189,7 @@ const editProgramPage = () => {
         </div>
       </div>
     </div>
-    <Footer />
+    {/* Footer /> */}
   </>;
 };
 

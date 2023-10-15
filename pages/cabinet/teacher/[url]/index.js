@@ -948,9 +948,9 @@ function TeacherCabinet(props) {
               </div>
             </div>
   
-            {/* <Footer /> */}
+            {/* Footer /> */}
           </div>
-          <Footer />
+          {/* Footer /> */}
         </>
         : <>
         <div
@@ -969,9 +969,9 @@ function TeacherCabinet(props) {
               <a> Личный кабинет</a>
             </span>
           </div>
-          {/* <Footer /> */}
+          {/* Footer /> */}
         </div>
-        <Footer />
+        {/* Footer /> */}
         </>
       )
     } else {
@@ -990,9 +990,9 @@ function TeacherCabinet(props) {
               <a> авторизации</a>
             </Link>
           </div>
-          {/* <Footer /> */}
+          {/* Footer /> */}
         </div>
-        <Footer />
+        {/* Footer /> */}
         </>
         
       )
@@ -1011,9 +1011,9 @@ function TeacherCabinet(props) {
       <div className={styles.not_in}>
         Загрузка...
       </div>
-      {/* <Footer /> */}
+      {/* Footer /> */}
     </div>
-    <Footer />
+    {/* Footer /> */}
       </>
       
     )

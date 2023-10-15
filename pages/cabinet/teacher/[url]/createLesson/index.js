@@ -181,7 +181,7 @@ const createLesson = () => {
         </div>
       </div>
     </div>
-    <Footer />
+    {/* Footer /> */}
   </>;
 };
 

@@ -162,7 +162,7 @@ const myCourses = () => {
         </>}</>}
 
     </div>
-    <Footer />
+    {/* Footer /> */}
   </>;
 };
 

@@ -515,7 +515,7 @@ const createCourse = () => {
         )}
       </div>
     </div>
-    <Footer />
+    {/* Footer /> */}
   </>;
 };
 

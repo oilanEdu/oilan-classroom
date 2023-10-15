@@ -152,7 +152,7 @@ const createCourse = () => {
         </div>
       </div>
     </div>
-    <Footer />
+    {/* Footer /> */}
   </>;
 };
 

@@ -291,11 +291,11 @@ const TeacherGoingLesson = ({teacherUrl, lessonId}) => {
     await router.push(`/cabinet/teacher/${localStorage.login}`)
     window.location.reload()
   }
-  useEffect(() => {
-    if (router.query.url === "undefined") {
-      addressUndefinedFixer()
-    }
-  }, [router])
+//   useEffect(() => {
+//     if (router.query.url === "undefined") {
+//       addressUndefinedFixer()
+//     }
+//   }, [router])
 
   const attendanceAll = async () => {
     let newArray = [...localAttendance]
@@ -341,6 +341,7 @@ const TeacherGoingLesson = ({teacherUrl, lessonId}) => {
     setMaterials(materials)
     console.log(materials, "materials")
     console.log(links, "links")
+    debugger
     // debugger 
   }
   // useEffect(() => {
@@ -434,6 +435,39 @@ const TeacherGoingLesson = ({teacherUrl, lessonId}) => {
     }
   }
 
+  const handleLessonLinkSubmit = async () => {
+    const data = {
+        title: 'Ссылка на видеоконференцию',
+        description: 'Ссылка',
+        file_type: 'link_lesson',
+        // link: materialLink,
+        link: selectedOption === 'fileRadio' ? uploadedFileName : materialLink,
+        is_lesson_link: true,
+        lesson_id: lessonId
+    }
+    try {
+        const create = await axios.post(`${globals.productionServerDomain}/addLessonMaterialOC/`, data)
+        debugger
+        if (create.status === 200) {
+            // addAlert("Ссылка отправлена", "accepted", alerts, setAlerts);
+
+            setMaterialTitle('')
+            setMaterialDescription('')
+            setMaterialLink('')
+            setShowMaterial(false)
+            setSelectedOption('linkRadio')
+            // return { success: true, message: 'Program created succesfully' };
+        } else {
+            // addAlert("Ошибка при отправлении ссылки", "error", alerts, setAlerts);
+            // return { success: false, message: 'Error in creating program' };
+        }
+    } catch (error) {
+        // addAlert("Ошибка сети", "error", alerts, setAlerts);
+        // console.error('Error:', error);
+        // return { success: false, message: 'Network error or unexpected issue occurred' };
+    }
+}
+
   return <>
     <HeaderTeacher
       white={true}
@@ -445,10 +479,23 @@ const TeacherGoingLesson = ({teacherUrl, lessonId}) => {
       <div className={styles.editLesson}>
         <span className={styles.whichProgramm}>Программа {lesson?.program_title}</span>
         <div className={styles.row}>
-          <h1>Изменение урока</h1>
-          <span onClick={() => {
+          <h1>Урок</h1>
+          {/* <span onClick={() => {
             deleteLesson(lessonId)
-          }}>Удалить урок</span>
+          }}>Удалить урок</span> */}
+        </div>
+        <div style={{marginTop: '40px'}}>
+        {links?.length > 0 ? <div className={styles.lessonInfoBlock}>
+                        <label className={styles.label}>Ссылка на онлайн-урок: </label>
+                        <a className={styles.label} style={{ wordBreak: 'break-word', width: '45%' }} href={links[0].link}>{links[0].link}</a></div> : <div className={styles.lessonInfoBlock}>
+                        <label htmlFor="title" className={styles.label}>Ссылка на онлайн-урок: </label>
+                        <input id="tesis" className={styles.input} value={materialLink} onChange={(e) => setMaterialLink(e.target.value)} placeholder="Приложить ссылку на онлайн-урок"></input>
+                        <button className={styles.saveButton} onClick={() => {
+                            handleLessonLinkSubmit()
+                            setLinks([{ link: materialLink }])
+                        }}>Отправить ссылку на онлайн-урок</button>
+
+                    </div>}
         </div>
         <div style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', marginBottom: '40px' }}>
           <div style={{ width: '40%', marginRight: '40px' }} className={styles.input_container}>

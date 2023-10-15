@@ -24,6 +24,7 @@ import HeaderTeacher from "../../src/components/new_HeaderTeacher/new_HeaderTeac
 import Footer from "../../src/components/Footer/Footer";
 import NewHeaderStudent from '../../src/components/NewHeaderStudent/NewHeaderStudent';
 import TeacherGoingLesson from '../../src/components/TeacherGoingLesson/TeacherGoingLesson';
+import StudentGoingLesson from '../../src/components/StudentGoingLesson/StudentGoingLesson';
 
 const Index = () => {
 	const [check, setCheck] = useState('empty')
@@ -107,6 +108,7 @@ const Index = () => {
 
 			let getLessonByRoomKey = await axios.post(`${globals.productionServerDomain}/getLessonByRoomKey/` + data);
     		setLesson(getLessonByRoomKey['data'][0]);
+			console.log(getLessonByRoomKey['data'][0], 'lessonGoing')
         }
       })();
     }, [teacher, student]);
@@ -316,7 +318,7 @@ const Index = () => {
 
 	<>
 		{role === "student" ? 
-		<></> 
+		<StudentGoingLesson lesson={lesson}/>
 		: 
 		<>
 		<TeacherGoingLesson teacherUrl={teacher.url} lessonId={lesson?.lesson_id} />

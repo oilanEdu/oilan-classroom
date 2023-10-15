@@ -1,0 +1,451 @@
+.WrapperAll {
+    padding: 40px 80px;
+    
+}
+
+
+
+.lesson_content {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-bottom: 0.5px solid #a3cefd83;
+  /* gap: 366px; */
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  }
+
+  .lesson_order_wrapper {
+    width: 15%;
+  }
+  .lesson_tesis {
+    width: 60%;
+  }
+  .lesson_mark {
+    width: 15%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px 30px;
+    border-radius: 6px;
+    color: white;
+    text-align: center;
+  }
+  
+  .lesson {
+    margin-top: 20px;
+    box-shadow: 0px 0px 11px 3px #A3CEFD40;
+    padding: 25px 20px;
+    width: 90%;
+  }
+  
+  .lesson_order {
+    font-family: 'Gotham Medium';
+    font-size: 25px;
+    margin-bottom: 0;
+  }
+  
+  .lesson_order_wrapper {
+    width: 40%;
+  }
+  
+  .lesson_grade_wrapper {
+    /* width: 15%; */
+  }
+  
+  .lesson_grade {
+    display: flex;
+    display: block;
+    padding: 10px 20px;
+    border: 1px solid #2E8CF2;
+    color: #000;
+    align-self: flex-end;
+    justify-self: flex-end;
+    border-radius: 4px;
+    margin-left: 15px;
+    font-family: 'Gotham Regular';
+  }
+  
+  #plusButton {
+    width: 75px;
+    height: 75px;
+    background: #2E8CF2;
+    color: #fff;
+    border-radius: 50%;
+    border: none;
+    margin-left: 15px;
+    font-size: 25px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .wrapperAll {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .wrapperAll h2 {
+    font-family: 'Gotham Medium';
+  }
+  
+  
+  .lesson_order span {
+    /* font-family: 'Gotham Regular'; */
+    color: #2E8CF2;
+  }
+  
+  
+  @media screen and (max-width:575px) {
+    .lesson_content {
+      flex-direction: column;
+      flex-wrap: wrap;
+    }
+  
+    .lesson_title_wrapper,
+    .lesson_grade_wrapper,
+    .lesson_tesis {
+      width: 100%;
+      margin: 10px 0;
+      border-bottom: 0.5px solid #a3cefd83;
+      border-left: none;
+      border-right: none;
+    }
+  
+    .lesson_title_wrapper span {
+      font-size: 18px;
+      margin-bottom: 10px;
+      display: block;
+    }
+  
+    .lesson_grade {
+      margin-left: 0;
+    }
+  
+    .lesson_order {
+      font-size: 18px;
+    }
+  
+    .lesson_order_wrapper {
+      width: 100%;
+      text-align: center;
+    }
+  
+    .lesson_grade_wrapper {
+      width: 100%;
+      align-self: center;
+      justify-self: center;
+      text-align: center;
+    }
+  
+  }
+/* .WrapperAll h2 {
+    font-family: 'Gotham Medium';
+} */
+
+.lesson_complete_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 25px;
+}
+
+.lesson_complete_wrapper p {
+  font-family: 'Gotham Regular';
+  margin-bottom: 5px;
+}
+
+.lesson_content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    /* border-bottom: 0.5px solid #a3cefd83; */
+    /* gap: 366px; */
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    }
+  
+    .lesson_order_wrapper {
+      width: 15%;
+    }
+    .lesson_tesis {
+      width: 60%;
+    }
+    .lesson_mark {
+      width: 15%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    
+    .lesson {
+      margin-top: 20px;
+      box-shadow: 0px 0px 11px 3px #A3CEFD40;
+      padding: 25px 20px;
+      width: 90%;
+    }
+    
+    .lesson_order {
+      font-family: 'Gotham Medium';
+      font-size: 25px;
+      margin-bottom: 0;
+    }
+    
+    .lesson_order_wrapper {
+      width: 40%;
+    }
+    
+    .lesson_grade_wrapper {
+      /* width: 15%; */
+    }
+    
+    .lesson_grade {
+      display: flex;
+      display: block;
+      padding: 10px 20px;
+      border: 1px solid #2E8CF2;
+      color: #000;
+      align-self: flex-end;
+      justify-self: flex-end;
+      border-radius: 4px;
+      margin-left: 15px;
+      font-family: 'Gotham Regular';
+    }
+    
+    #plusButton {
+      width: 75px;
+      height: 75px;
+      background: #2E8CF2;
+      color: #fff;
+      border-radius: 50%;
+      border: none;
+      margin-left: 15px;
+      font-size: 25px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .wrapperAll {
+      display: flex;
+      align-items: center
+    }
+    
+    .wrapperAll h2 {
+      font-family: 'Gotham Medium';
+    }
+    
+    
+    .lesson_order span {
+      /* font-family: 'Gotham Regular'; */
+      color: #2E8CF2;
+    }
+    
+    
+    @media screen and (max-width:575px) {
+      .lesson_content {
+        flex-direction: column;
+        flex-wrap: wrap;
+      }
+    
+      .lesson_title_wrapper,
+      .lesson_grade_wrapper,
+      .lesson_tesis {
+        width: 100%;
+        margin: 10px 0;
+        border-bottom: 0.5px solid #a3cefd83;
+        border-left: none;
+        border-right: none;
+      }
+    
+      .lesson_title_wrapper span {
+        font-size: 18px;
+        margin-bottom: 10px;
+        display: block;
+      }
+    
+      .lesson_grade {
+        margin-left: 0;
+      }
+    
+      .lesson_order {
+        font-size: 18px;
+      }
+    
+      .lesson_order_wrapper {
+        width: 100%;
+        text-align: center;
+      }
+    
+      .lesson_grade_wrapper {
+        width: 100%;
+        align-self: center;
+        justify-self: center;
+        text-align: center;
+      }
+    
+    }
+
+@media screen and (max-width:575px) {
+    .WrapperAll {
+        padding: 0 20px;
+    }
+    .lesson_complete_wrapper {
+      margin-right: 15px;
+      margin-bottom: 15px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* ///// */
+
+
+.exercises {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+}
+
+#exerItem {
+  margin-right: 10px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 3px;
+  width: fit-content;
+  /*background: #A3CEFD;*/
+  color: white;
+  font-family: 'Gotham Regular';
+  outline: none;
+  cursor: pointer;
+}
+
+.blueBrickBorder {
+  background-color: #2E8CF2;
+}
+
+.whiteBrickBorder {
+  background-color: #A3CEFD;
+}
+
+.input_container p {
+  font-family: 'Gotham Regular';
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.input_container {
+  margin: 20px 0;
+  font-family: 'Gotham Medium';
+}
+
+.exercises p {
+  font-family: 'Gotham Medium';
+}
+
+.input_container input,
+.input_container textarea {
+  height: fit-content;
+  width: 40%;
+  outline: none;
+  background: #FFFFFF;
+  border: 0.5px solid #A3CEFD;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: 'Gotham Regular';
+  margin-top: 10px;
+}
+
+.input_container_text_reTry {
+  height: fit-content;
+  width: 70%;
+  outline: none;
+  background: #FFFFFF;
+  border: 0.5px solid #A3CEFD;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: 'Gotham Regular';
+  margin-top: 10px;
+}
+
+.answer_text {
+  /* background: red; */
+  color: black;
+}
+
+.answer_btn,
+.reanswer_btn {
+  background: #2E8CF2;
+  border-radius: 5px;
+  color: white;
+  padding: 15px 40px;
+  outline: none;
+  border: none;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-top: 15px;
+}
+
+.teacherComment {
+  margin-top: 20px;
+}
+
+.comment {
+  height: fit-content;
+  width: 70%;
+  outline: none;
+  background: #FFFFFF;
+  border: 0.5px solid #A3CEFD;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: 'Gotham Regular';
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.teacherComment span {
+  font-family: 'Gotham Medium';
+}
+
+
+@media screen and (max-width:575px) {
+
+  .input_container,
+  .teacherComment {
+      width: 100%;
+  }
+
+  .input_container input,
+  .input_container textarea,
+  .input_container_text_reTry {
+      width: 100%;
+  }
+
+  #exerItem {
+      font-size: 12px;
+      padding: 5px 15px;
+  }
+
+  .answer_text,
+  .input_container p,
+  .input_container {
+      font-size: 13px;
+  }
+}

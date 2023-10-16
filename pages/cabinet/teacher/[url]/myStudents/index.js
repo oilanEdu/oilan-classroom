@@ -420,7 +420,7 @@ const myStudents = () => {
                     }}
                   />
                 </div>
-                {/* <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
                   <button onClick={() => router.push(`/cabinet/teacher/${teacherUrl}/myStudents/add_new_student`)}>Создать студента</button>
                   <Image 
                     src="https://realibi.kz/file/628410.png"
@@ -430,7 +430,7 @@ const myStudents = () => {
                       setShowGuide(true)
                     }}
                   />
-                </div> */}
+                </div>
                 <ClickAwayListener onClickAway={() => setShowSort(false)}>
                   <div className={styles.sortContainer}>
                     <div
@@ -525,7 +525,7 @@ const myStudents = () => {
             : <div>
               <div className={styles.students_head}>
                 <h4>Список групп</h4>
-                {/* <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
                   <button onClick={() => router.push(`/cabinet/teacher/${encodeURIComponent(teacherUrl)}/myStudents/new_group`)}>Создать группу</button>
                   <Image 
                     src="https://realibi.kz/file/628410.png"
@@ -535,7 +535,7 @@ const myStudents = () => {
                       setShowGuide(true)
                     }}
                   />
-                </div> */}
+                </div>
                 <ClickAwayListener onClickAway={() => setShowSort(false)}>
                   <div className={styles.sortContainer}>
                     <div
